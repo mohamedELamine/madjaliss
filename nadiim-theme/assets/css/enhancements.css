@@ -459,6 +459,64 @@ button:hover .nadiim-icon {
 }
 
 /* =================================================================
+   تحسينات الفلاتر
+   ================================================================= */
+
+/* تأثير hover على بطاقات الفلاتر */
+.filter-group:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+}
+
+/* تحسين مظهر القوائم المنسدلة */
+.filter-select:hover {
+    border-color: var(--color-primary);
+}
+
+.filter-select:focus {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(var(--color-primary-rgb), 0.1);
+    outline: none;
+    background: #fff;
+}
+
+/* تأثير تمييز للخيارات */
+.filter-select option {
+    padding: 10px;
+}
+
+.filter-select option:hover {
+    background: var(--color-primary);
+    color: #fff;
+}
+
+/* تحسين عرض الفلاتر على الشاشات الصغيرة */
+@media (max-width: 768px) {
+    .filters-inner {
+        grid-template-columns: 1fr !important;
+    }
+
+    .filter-group {
+        margin-bottom: var(--spacing-md);
+    }
+}
+
+/* تأثير النبض على الفلتر النشط */
+.filter-select[data-active="true"] {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(var(--color-primary-rgb), 0.15);
+}
+
+/* أيقونات الفلاتر */
+.filter-group label span {
+    transition: transform 0.3s ease;
+}
+
+.filter-group:hover label span {
+    transform: scale(1.1) rotate(5deg);
+}
+
+/* =================================================================
    لمسات نهائية
    ================================================================= */
 
