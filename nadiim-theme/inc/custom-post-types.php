@@ -109,9 +109,81 @@ function nadiim_register_post_types() {
 
     register_post_type( 'esdar', $esdar_args );
 
-    // سيتم إضافة المزيد من CPTs في المراحل القادمة:
-    // - نوادي القراءة (reading_clubs)
-    // - الاستفسارات (inquiries)
+    // ============================================
+    // CPT: نوادي القراءة (reading_clubs)
+    // ============================================
+
+    $reading_clubs_labels = array(
+        'name'                  => _x( 'نوادي القراءة', 'Post type general name', 'nadiim' ),
+        'singular_name'         => _x( 'نادي قراءة', 'Post type singular name', 'nadiim' ),
+        'menu_name'             => _x( 'نوادي القراءة', 'Admin Menu text', 'nadiim' ),
+        'name_admin_bar'        => _x( 'نادي قراءة', 'Add New on Toolbar', 'nadiim' ),
+        'add_new'               => __( 'إضافة نادٍ جديد', 'nadiim' ),
+        'add_new_item'          => __( 'إضافة نادي قراءة جديد', 'nadiim' ),
+        'new_item'              => __( 'نادي جديد', 'nadiim' ),
+        'edit_item'             => __( 'تحرير النادي', 'nadiim' ),
+        'view_item'             => __( 'عرض النادي', 'nadiim' ),
+        'all_items'             => __( 'جميع النوادي', 'nadiim' ),
+        'search_items'          => __( 'بحث في النوادي', 'nadiim' ),
+        'not_found'             => __( 'لم يُعثر على نوادي', 'nadiim' ),
+        'not_found_in_trash'    => __( 'لم يُعثر على نوادي في سلة المهملات', 'nadiim' ),
+        'featured_image'        => _x( 'صورة النادي', 'Overrides the "Featured Image" phrase', 'nadiim' ),
+        'set_featured_image'    => _x( 'تعيين صورة النادي', 'Overrides the "Set featured image" phrase', 'nadiim' ),
+        'archives'              => _x( 'أرشيف نوادي القراءة', 'The post type archive label', 'nadiim' ),
+    );
+
+    $reading_clubs_args = array(
+        'labels'             => $reading_clubs_labels,
+        'public'             => true,
+        'publicly_queryable' => true,
+        'show_ui'            => true,
+        'show_in_menu'       => true,
+        'query_var'          => true,
+        'rewrite'            => array( 'slug' => 'reading-clubs', 'with_front' => false ),
+        'capability_type'    => 'post',
+        'has_archive'        => true,
+        'hierarchical'       => false,
+        'menu_position'      => 7,
+        'menu_icon'          => 'dashicons-groups',
+        'supports'           => array( 'title', 'editor', 'thumbnail', 'excerpt', 'comments' ),
+        'show_in_rest'       => true,
+    );
+
+    register_post_type( 'reading_clubs', $reading_clubs_args );
+
+    // ============================================
+    // CPT: الاستفسارات (inquiries) - لصفحة اتصل بنا
+    // ============================================
+
+    $inquiries_labels = array(
+        'name'               => _x( 'الاستفسارات', 'Post type general name', 'nadiim' ),
+        'singular_name'      => _x( 'استفسار', 'Post type singular name', 'nadiim' ),
+        'menu_name'          => _x( 'الاستفسارات', 'Admin Menu text', 'nadiim' ),
+        'all_items'          => __( 'جميع الاستفسارات', 'nadiim' ),
+        'view_item'          => __( 'عرض الاستفسار', 'nadiim' ),
+        'search_items'       => __( 'بحث في الاستفسارات', 'nadiim' ),
+        'not_found'          => __( 'لم يُعثر على استفسارات', 'nadiim' ),
+    );
+
+    $inquiries_args = array(
+        'labels'             => $inquiries_labels,
+        'public'             => false,
+        'show_ui'            => true,
+        'show_in_menu'       => true,
+        'query_var'          => true,
+        'capability_type'    => 'post',
+        'has_archive'        => false,
+        'hierarchical'       => false,
+        'menu_position'      => 25,
+        'menu_icon'          => 'dashicons-email',
+        'supports'           => array( 'title', 'editor' ),
+        'capabilities'       => array(
+            'create_posts' => false,
+        ),
+        'map_meta_cap'       => true,
+    );
+
+    register_post_type( 'inquiries', $inquiries_args );
 }
 add_action( 'init', 'nadiim_register_post_types' );
 
@@ -214,5 +286,31 @@ function nadiim_register_taxonomies() {
     );
 
     register_taxonomy( 'release_type', array( 'esdar' ), $release_type_args );
+
+    // ============================================
+    // Taxonomy: نوع النادي (club_type)
+    // ============================================
+
+    $club_type_labels = array(
+        'name'          => _x( 'أنواع النوادي', 'taxonomy general name', 'nadiim' ),
+        'singular_name' => _x( 'نوع النادي', 'taxonomy singular name', 'nadiim' ),
+        'search_items'  => __( 'بحث في الأنواع', 'nadiim' ),
+        'all_items'     => __( 'جميع الأنواع', 'nadiim' ),
+        'edit_item'     => __( 'تحرير النوع', 'nadiim' ),
+        'add_new_item'  => __( 'إضافة نوع جديد', 'nadiim' ),
+        'menu_name'     => __( 'أنواع النوادي', 'nadiim' ),
+    );
+
+    $club_type_args = array(
+        'hierarchical'      => true,
+        'labels'            => $club_type_labels,
+        'show_ui'           => true,
+        'show_admin_column' => true,
+        'query_var'         => true,
+        'rewrite'           => array( 'slug' => 'club-type' ),
+        'show_in_rest'      => true,
+    );
+
+    register_taxonomy( 'club_type', array( 'reading_clubs' ), $club_type_args );
 }
 add_action( 'init', 'nadiim_register_taxonomies' );
