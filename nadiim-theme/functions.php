@@ -244,6 +244,9 @@ require_once NADIIM_THEME_DIR . '/inc/template-functions.php';
 // تضمين ملف Template Tags
 require_once NADIIM_THEME_DIR . '/inc/template-tags.php';
 
+// تضمين ملف Demo Content
+require_once NADIIM_THEME_DIR . '/inc/demo-content.php';
+
 /**
  * دالة مساعدة للحصول على مقتطف مخصص
  */
