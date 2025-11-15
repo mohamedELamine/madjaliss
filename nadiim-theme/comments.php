@@ -13,6 +13,11 @@ if ( post_password_required() ) {
     return;
 }
 
+// عرض المشاركين فقط في صفحات الحوارات (نوع المنشور: howarat)
+if ( get_post_type() !== 'howarat' ) {
+    return;
+}
+
 // جلب المشاركين المخصصين من post meta
 $participants = get_post_meta( get_the_ID(), 'dialogue_participants', true );
 ?>
