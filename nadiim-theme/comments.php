@@ -22,18 +22,9 @@ if ( get_post_type() !== 'howarat' ) {
 $participants = get_post_meta( get_the_ID(), 'dialogue_participants', true );
 ?>
 
-<div id="participants" class="participants-section">
+<div id="participants" class="participants-section" style="padding-top: var(--spacing-xl); border-top: 2px solid var(--color-border); margin-top: var(--spacing-xl);">
 
     <?php if ( ! empty( $participants ) && is_array( $participants ) ) : ?>
-
-        <div class="section-header" style="text-align: center; margin-bottom: var(--spacing-xl); padding-top: var(--spacing-xl); border-top: 2px solid var(--color-border);">
-            <h2 class="participants-title" style="font-size: var(--font-size-2xl); margin-bottom: var(--spacing-sm);">
-                <?php esc_html_e( 'المشاركون في الحوار', 'nadiim' ); ?>
-            </h2>
-            <p class="participants-description" style="color: var(--color-text-secondary); font-size: var(--font-size-lg);">
-                <?php printf( esc_html__( '%d مشارك', 'nadiim' ), count( $participants ) ); ?>
-            </p>
-        </div>
 
         <div class="participants-list" style="display: grid; gap: var(--spacing-xl);">
             <?php foreach ( $participants as $index => $participant ) :
