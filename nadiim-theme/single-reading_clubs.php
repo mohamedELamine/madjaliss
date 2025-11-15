@@ -18,24 +18,47 @@ while ( have_posts() ) : the_post();
     $meeting_url = get_post_meta( get_the_ID(), 'club_meeting_url', true );
     ?>
 
-    <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
+    <article id="post-<?php the_ID(); ?>" <?php post_class( 'club-single' ); ?>>
         <div class="container container-narrow">
 
-            <!-- Hero -->
-            <div class="club-hero" style="text-align: center; padding: var(--spacing-xl) 0; background-color: var(--color-bg-section); margin: 0 calc(-1 * var(--spacing-md)) var(--spacing-xl); border-radius: var(--radius-lg);">
-                <h1 class="entry-title"><?php the_title(); ?></h1>
-                <?php if ( $schedule ) : ?>
-                    <p style="color: var(--color-text-secondary); font-size: var(--font-size-lg); margin-top: var(--spacing-sm);">
-                        📅 <?php echo esc_html( $schedule ); ?>
-                    </p>
-                <?php endif; ?>
-                <?php if ( $join_url ) : ?>
-                    <div style="margin-top: var(--spacing-md);">
-                        <a href="<?php echo esc_url( $join_url ); ?>" class="btn btn-primary" target="_blank">
-                            <?php esc_html_e( 'انضم الآن', 'nadiim' ); ?>
-                        </a>
+            <!-- Hero بتصميم محسّن -->
+            <div class="club-hero" style="text-align: center; padding: var(--spacing-xxl) var(--spacing-xl); background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%); margin: 0 calc(-1 * var(--spacing-lg)) var(--spacing-xl); border-radius: var(--radius-xl); color: #fff; position: relative; overflow: hidden; box-shadow: 0 15px 50px rgba(0,0,0,0.15);">
+                <!-- خلفية زخرفية -->
+                <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; opacity: 0.1; background-image: url('data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cpath d=\'M0 0h60v60H0z\' fill=\'none\'/%3E%3Cpath d=\'M30 0v60M0 30h60\' stroke=\'%23fff\' stroke-width=\'1\' opacity=\'.2\'/%3E%3C/svg%3E');"></div>
+
+                <div style="position: relative; z-index: 1;">
+                    <?php if ( has_post_thumbnail() ) : ?>
+                        <div style="width: 120px; height: 120px; margin: 0 auto var(--spacing-md); border-radius: 50%; overflow: hidden; border: 5px solid rgba(255,255,255,0.3); box-shadow: 0 10px 30px rgba(0,0,0,0.2);">
+                            <?php the_post_thumbnail( 'thumbnail', array( 'style' => 'width: 100%; height: 100%; object-fit: cover;' ) ); ?>
+                        </div>
+                    <?php endif; ?>
+
+                    <h1 class="entry-title" style="color: #fff; font-size: var(--font-size-3xl); margin-bottom: var(--spacing-md);">
+                        <?php the_title(); ?>
+                    </h1>
+
+                    <?php if ( $schedule ) : ?>
+                        <p style="color: rgba(255,255,255,0.95); font-size: var(--font-size-xl); margin-bottom: var(--spacing-lg); display: flex; align-items: center; justify-content: center; gap: var(--spacing-xs);">
+                            <span style="font-size: 24px;">📅</span>
+                            <span><?php echo esc_html( $schedule ); ?></span>
+                        </p>
+                    <?php endif; ?>
+
+                    <div style="display: flex; gap: var(--spacing-sm); justify-content: center; flex-wrap: wrap;">
+                        <?php if ( $join_url ) : ?>
+                            <a href="<?php echo esc_url( $join_url ); ?>" class="btn" style="background: #fff; color: var(--color-primary); border: none; font-size: var(--font-size-lg); padding: 14px 32px; box-shadow: 0 4px 15px rgba(0,0,0,0.2);" target="_blank">
+                                <?php esc_html_e( 'انضم الآن', 'nadiim' ); ?>
+                                <span style="margin-right: 8px;">→</span>
+                            </a>
+                        <?php endif; ?>
+
+                        <?php if ( $meeting_url ) : ?>
+                            <a href="<?php echo esc_url( $meeting_url ); ?>" class="btn btn-outline" style="border-color: rgba(255,255,255,0.5); color: #fff; font-size: var(--font-size-lg); padding: 14px 32px;" target="_blank">
+                                <?php esc_html_e( 'رابط الاجتماع', 'nadiim' ); ?>
+                            </a>
+                        <?php endif; ?>
                     </div>
-                <?php endif; ?>
+                </div>
             </div>
 
             <!-- الوصف -->

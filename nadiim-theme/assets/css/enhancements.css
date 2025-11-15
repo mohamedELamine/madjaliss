@@ -1,0 +1,486 @@
+/**
+ * اللمسات الجمالية - تحسينات التصميم
+ *
+ * @package Nadiim
+ * @since 1.0.0
+ */
+
+/* =================================================================
+   تأثيرات حركية عامة
+   ================================================================= */
+
+/* حركة سلسة لجميع العناصر التفاعلية */
+a, button, .btn, .card, input, textarea, select {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* تأثير الارتفاع عند التحويم */
+.card:hover,
+.post-card:hover,
+.team-member-card:hover,
+.search-result-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+}
+
+/* تأثير تكبير الصور عند التحويم */
+.card-image-hover:hover {
+    transform: scale(1.1);
+}
+
+.release-cover-image:hover {
+    transform: scale(1.05);
+}
+
+/* =================================================================
+   تحسينات الأزرار
+   ================================================================= */
+
+.btn {
+    position: relative;
+    overflow: hidden;
+}
+
+/* تأثير الموجة عند النقر */
+.btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.btn:active::before {
+    width: 300px;
+    height: 300px;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(var(--color-primary-rgb), 0.3);
+}
+
+.btn-outline:hover {
+    background: var(--color-primary);
+    color: #fff;
+    border-color: var(--color-primary);
+}
+
+/* =================================================================
+   تحسينات الحقول النصية
+   ================================================================= */
+
+input:focus,
+textarea:focus,
+select:focus {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(var(--color-primary-rgb), 0.1);
+    outline: none;
+}
+
+/* تأثير التسطير المتحرك */
+input[type="text"],
+input[type="email"],
+input[type="search"],
+textarea {
+    position: relative;
+}
+
+input[type="text"]::after,
+input[type="email"]::after,
+input[type="search"]::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--color-primary);
+    transition: width 0.3s ease;
+}
+
+input[type="text"]:focus::after,
+input[type="email"]:focus::after,
+input[type="search"]:focus::after {
+    width: 100%;
+}
+
+/* =================================================================
+   تأثيرات التمرير
+   ================================================================= */
+
+/* ظهور تدريجي عند التمرير */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.card,
+.post-card,
+.team-member-card {
+    animation: fadeInUp 0.6s ease-out;
+    animation-fill-mode: both;
+}
+
+/* تأخير متدرج للبطاقات */
+.card:nth-child(1) { animation-delay: 0.1s; }
+.card:nth-child(2) { animation-delay: 0.2s; }
+.card:nth-child(3) { animation-delay: 0.3s; }
+.card:nth-child(4) { animation-delay: 0.4s; }
+.card:nth-child(5) { animation-delay: 0.5s; }
+.card:nth-child(6) { animation-delay: 0.6s; }
+
+/* =================================================================
+   تحسينات الروابط
+   ================================================================= */
+
+a:not(.btn) {
+    position: relative;
+    transition: color 0.3s ease;
+}
+
+/* تسطير متحرك للروابط */
+.entry-content a:not(.btn) {
+    text-decoration: none;
+    background-image: linear-gradient(to right, var(--color-primary), var(--color-primary));
+    background-position: 0 100%;
+    background-size: 0 2px;
+    background-repeat: no-repeat;
+    transition: background-size 0.3s ease;
+}
+
+.entry-content a:not(.btn):hover {
+    background-size: 100% 2px;
+    color: var(--color-primary);
+}
+
+/* =================================================================
+   تأثيرات الخلفيات المتدرجة
+   ================================================================= */
+
+/* تدرج لوني متحرك */
+@keyframes gradientShift {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+.hero-section,
+.club-hero,
+.page-contact .page-header {
+    background-size: 200% 200%;
+    animation: gradientShift 15s ease infinite;
+}
+
+/* =================================================================
+   تحسينات الظلال
+   ================================================================= */
+
+/* ظلال ناعمة ومتعددة المستويات */
+.card,
+.release-cover,
+.team-member-card,
+.contact-form {
+    box-shadow:
+        0 2px 4px rgba(0, 0, 0, 0.04),
+        0 4px 8px rgba(0, 0, 0, 0.06),
+        0 8px 16px rgba(0, 0, 0, 0.08);
+}
+
+.card:hover,
+.team-member-card:hover {
+    box-shadow:
+        0 4px 8px rgba(0, 0, 0, 0.06),
+        0 8px 16px rgba(0, 0, 0, 0.08),
+        0 16px 32px rgba(0, 0, 0, 0.12);
+}
+
+/* =================================================================
+   تحسينات الصور
+   ================================================================= */
+
+/* تأثير التكبير عند التحويم */
+.entry-featured-image-hero,
+.release-cover,
+.participant-image-wrapper {
+    overflow: hidden;
+}
+
+.entry-featured-image-hero img,
+.release-cover img {
+    transition: transform 0.5s ease;
+}
+
+.entry-featured-image-hero:hover img,
+.release-cover:hover img {
+    transform: scale(1.05);
+}
+
+/* فلتر ملون عند التحويم */
+.card-image-hover {
+    filter: brightness(0.95);
+    transition: filter 0.3s ease, transform 0.5s ease;
+}
+
+.card-image-hover:hover {
+    filter: brightness(1.05);
+}
+
+/* =================================================================
+   تأثيرات النصوص
+   ================================================================= */
+
+/* تأثير التظليل للعناوين الكبيرة */
+h1, h2, .page-title {
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+/* تأثير التدرج اللوني للعناوين المميزة */
+.gradient-text {
+    background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* =================================================================
+   تحسينات البطاقات
+   ================================================================= */
+
+/* خط زخرفي في الأعلى */
+.card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--color-primary), var(--color-primary-dark));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease;
+}
+
+.card:hover::before {
+    transform: scaleX(1);
+}
+
+/* =================================================================
+   تحسينات شريط التمرير
+   ================================================================= */
+
+/* شريط تمرير مخصص */
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--color-bg-section);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--color-primary);
+    border-radius: var(--radius-full);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--color-primary-dark);
+}
+
+/* =================================================================
+   تأثيرات التحميل
+   ================================================================= */
+
+/* تأثير النبض للعناصر القابلة للتحميل */
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.5;
+    }
+}
+
+.loading {
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* =================================================================
+   تحسينات الاستجابة
+   ================================================================= */
+
+@media (max-width: 768px) {
+    /* تقليل التأثيرات الحركية على الأجهزة المحمولة */
+    .card:hover,
+    .post-card:hover,
+    .team-member-card:hover {
+        transform: translateY(0);
+    }
+
+    /* إلغاء التأثيرات المتحركة */
+    .hero-section,
+    .club-hero {
+        animation: none;
+    }
+}
+
+/* =================================================================
+   تحسينات إمكانية الوصول
+   ================================================================= */
+
+/* تحسين رؤية التركيز بلوحة المفاتيح */
+*:focus-visible {
+    outline: 3px solid var(--color-primary);
+    outline-offset: 2px;
+    border-radius: var(--radius-sm);
+}
+
+/* إخفاء outline للفأرة فقط */
+*:focus:not(:focus-visible) {
+    outline: none;
+}
+
+/* =================================================================
+   تأثيرات خاصة للمشاركين
+   ================================================================= */
+
+.participant-card {
+    position: relative;
+    overflow: hidden;
+}
+
+/* تأثير الموجة في الخلفية */
+.participant-card::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(var(--color-primary-rgb), 0.05) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    pointer-events: none;
+}
+
+.participant-card:hover::after {
+    opacity: 1;
+}
+
+/* =================================================================
+   تحسينات قسم فريق العمل
+   ================================================================= */
+
+.team-member-card {
+    border-top: 4px solid transparent;
+    transition: all 0.3s ease;
+}
+
+.team-member-card:hover {
+    border-top-color: var(--color-primary);
+}
+
+/* تأثير دوران خفيف للصورة */
+.team-member-card img {
+    transition: transform 0.5s ease;
+}
+
+.team-member-card:hover img {
+    transform: rotate(5deg) scale(1.1);
+}
+
+/* =================================================================
+   تحسينات صفحة البحث
+   ================================================================= */
+
+.search-result-item {
+    border-right-width: 4px;
+    transition: all 0.3s ease;
+}
+
+.search-result-item:hover {
+    border-right-width: 8px;
+    padding-right: calc(var(--spacing-lg) - 4px);
+}
+
+/* =================================================================
+   تأثيرات إضافية للصفحة 404
+   ================================================================= */
+
+.error-404-page h1 {
+    animation: pulse 3s ease-in-out infinite;
+}
+
+/* =================================================================
+   تحسينات الترقيم
+   ================================================================= */
+
+.pagination .page-numbers {
+    transition: all 0.3s ease;
+    border-radius: var(--radius-full);
+}
+
+.pagination .page-numbers:hover,
+.pagination .page-numbers.current {
+    background: var(--color-primary);
+    color: #fff;
+    transform: scale(1.1);
+}
+
+/* =================================================================
+   تأثيرات الأيقونات
+   ================================================================= */
+
+.nadiim-icon {
+    transition: transform 0.3s ease;
+}
+
+a:hover .nadiim-icon,
+button:hover .nadiim-icon {
+    transform: scale(1.2);
+}
+
+/* =================================================================
+   لمسات نهائية
+   ================================================================= */
+
+/* تحسين المظهر العام للموقع */
+body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* إضافة نعومة لجميع الصور */
+img {
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+}
+
+/* تحسين الأداء */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}

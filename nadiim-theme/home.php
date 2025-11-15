@@ -152,6 +152,11 @@ get_header();
                         endwhile;
                         wp_reset_postdata(); ?>
                     </div>
+                    <div class="text-center" style="margin-top: var(--spacing-lg);">
+                        <a href="<?php echo esc_url( get_permalink( get_option( 'page_for_posts' ) ) ?: home_url( '/blog' ) ); ?>" class="btn btn-outline">
+                            <?php esc_html_e( 'الاطلاع على باقي المقالات', 'nadiim' ); ?>
+                        </a>
+                    </div>
                 </div>
             </section>
         <?php endif;

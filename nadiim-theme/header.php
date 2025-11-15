@@ -122,20 +122,6 @@
                     <button class="search-toggle" aria-label="<?php esc_attr_e( 'فتح البحث', 'nadiim' ); ?>">
                         <?php echo nadiim_get_icon( 'search' ); ?>
                     </button>
-
-                    <?php if ( get_theme_mod( 'nadiim_header_login_button', true ) ) : ?>
-                        <!-- زر تسجيل الدخول / الحساب -->
-                        <?php if ( is_user_logged_in() ) : ?>
-                            <a href="<?php echo esc_url( get_author_posts_url( get_current_user_id() ) ); ?>" class="btn btn-outline btn-sm">
-                                <?php echo nadiim_get_icon( 'user' ); ?>
-                                <?php esc_html_e( 'حسابي', 'nadiim' ); ?>
-                            </a>
-                        <?php else : ?>
-                            <a href="<?php echo esc_url( wp_login_url() ); ?>" class="btn btn-outline btn-sm">
-                                <?php esc_html_e( 'دخول', 'nadiim' ); ?>
-                            </a>
-                        <?php endif; ?>
-                    <?php endif; ?>
                 </div>
 
             </div>
