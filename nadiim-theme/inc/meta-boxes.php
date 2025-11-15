@@ -700,3 +700,94 @@ function nadiim_save_reading_clubs_meta( $post_id ) {
     }
 }
 add_action( 'save_post', 'nadiim_save_reading_clubs_meta' );
+
+// ============================================
+// Meta Boxes: الفعاليات (Events)
+// ============================================
+
+/**
+ * إضافة Meta Boxes للفعاليات
+ */
+function nadiim_add_events_meta_boxes() {
+    add_meta_box(
+        'event_details',
+        __( 'تفاصيل الفعالية', 'nadiim' ),
+        'nadiim_render_event_details_meta_box',
+        'events',
+        'normal',
+        'high'
+    );
+}
+add_action( 'add_meta_boxes', 'nadiim_add_events_meta_boxes' );
+
+/**
+ * عرض Meta Box: تفاصيل الفعالية
+ */
+function nadiim_render_event_details_meta_box( $post ) {
+    wp_nonce_field( 'nadiim_save_meta', 'nadiim_meta_nonce' );
+
+    // تاريخ البداية
+    nadiim_render_input_field( $post->ID, 'event_start_date', __( 'تاريخ بداية الفعالية', 'nadiim' ), 'datetime-local' );
+
+    // تاريخ النهاية
+    nadiim_render_input_field( $post->ID, 'event_end_date', __( 'تاريخ نهاية الفعالية', 'nadiim' ), 'datetime-local' );
+
+    // الموقع
+    nadiim_render_input_field( $post->ID, 'event_location', __( 'موقع الفعالية', 'nadiim' ), 'text', __( 'مثال: الرياض، المملكة العربية السعودية', 'nadiim' ) );
+
+    // رابط التسجيل أو المشاركة
+    nadiim_render_input_field( $post->ID, 'event_register_url', __( 'رابط التسجيل', 'nadiim' ), 'url', __( 'https://example.com/register', 'nadiim' ) );
+
+    // نص زر التسجيل
+    nadiim_render_input_field( $post->ID, 'event_register_text', __( 'نص زر التسجيل', 'nadiim' ), 'text', __( 'سجل الآن', 'nadiim' ) );
+
+    // الحد الأقصى للمشاركين
+    nadiim_render_input_field( $post->ID, 'event_max_attendees', __( 'الحد الأقصى للمشاركين', 'nadiim' ), 'number' );
+
+    // ملاحظات إضافية
+    nadiim_render_textarea_field( $post->ID, 'event_notes', __( 'ملاحظات إضافية', 'nadiim' ), 4, __( 'أي معلومات إضافية عن الفعالية', 'nadiim' ) );
+}
+
+/**
+ * حفظ Meta Data للفعاليات
+ */
+function nadiim_save_events_meta( $post_id ) {
+    // التحقق من نوع المنشور
+    if ( get_post_type( $post_id ) !== 'events' ) {
+        return;
+    }
+
+    // التحقق من nonce
+    if ( ! isset( $_POST['nadiim_meta_nonce'] ) || ! wp_verify_nonce( $_POST['nadiim_meta_nonce'], 'nadiim_save_meta' ) ) {
+        return;
+    }
+
+    // التحقق من autosave
+    if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
+        return;
+    }
+
+    // التحقق من الصلاحيات
+    if ( ! current_user_can( 'edit_post', $post_id ) ) {
+        return;
+    }
+
+    // حفظ الحقول
+    $fields = array(
+        'event_start_date'    => 'sanitize_text_field',
+        'event_end_date'      => 'sanitize_text_field',
+        'event_location'      => 'sanitize_text_field',
+        'event_register_url'  => 'esc_url_raw',
+        'event_register_text' => 'sanitize_text_field',
+        'event_max_attendees' => 'absint',
+        'event_notes'         => 'sanitize_textarea_field',
+    );
+
+    foreach ( $fields as $field => $sanitize_callback ) {
+        if ( isset( $_POST[ $field ] ) ) {
+            $value = call_user_func( $sanitize_callback, $_POST[ $field ] );
+            update_post_meta( $post_id, $field, $value );
+        }
+    }
+}
+add_action( 'save_post', 'nadiim_save_events_meta' );

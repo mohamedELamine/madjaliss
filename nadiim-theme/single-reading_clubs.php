@@ -44,67 +44,20 @@ while ( have_posts() ) : the_post();
                         </p>
                     <?php endif; ?>
 
-                    <div style="display: flex; gap: var(--spacing-sm); justify-content: center; flex-wrap: wrap;">
-                        <?php if ( $join_url ) : ?>
+                    <?php if ( $join_url ) : ?>
+                        <div style="text-align: center;">
                             <a href="<?php echo esc_url( $join_url ); ?>" class="btn" style="background: #fff; color: var(--color-primary); border: none; font-size: var(--font-size-lg); padding: 14px 32px; box-shadow: 0 4px 15px rgba(0,0,0,0.2);" target="_blank">
                                 <?php esc_html_e( 'انضم الآن', 'nadiim' ); ?>
                                 <span style="margin-right: 8px;">→</span>
                             </a>
-                        <?php endif; ?>
-
-                        <?php if ( $meeting_url ) : ?>
-                            <a href="<?php echo esc_url( $meeting_url ); ?>" class="btn btn-outline" style="border-color: rgba(255,255,255,0.5); color: #fff; font-size: var(--font-size-lg); padding: 14px 32px;" target="_blank">
-                                <?php esc_html_e( 'رابط الاجتماع', 'nadiim' ); ?>
-                            </a>
-                        <?php endif; ?>
-                    </div>
+                        </div>
+                    <?php endif; ?>
                 </div>
             </div>
 
             <!-- الوصف -->
             <div class="entry-content" style="margin-bottom: var(--spacing-xl);">
                 <?php the_content(); ?>
-            </div>
-
-            <!-- المشرف والأعضاء -->
-            <div class="club-team" style="margin-bottom: var(--spacing-xl); background-color: var(--color-bg-section); padding: var(--spacing-lg); border-radius: var(--radius-lg);">
-                <h2 style="text-align: center; margin-bottom: var(--spacing-lg);"><?php esc_html_e( 'فريق النادي', 'nadiim' ); ?></h2>
-
-                <?php if ( $supervisor_id ) :
-                    $supervisor = get_user_by( 'ID', $supervisor_id );
-                    if ( $supervisor ) : ?>
-                        <div class="club-supervisor-box" style="text-align: center; margin-bottom: var(--spacing-lg); padding: var(--spacing-md); background: var(--color-bg-lighter); border-radius: var(--radius-md);">
-                            <h3 style="margin-bottom: var(--spacing-sm);"><?php esc_html_e( 'المشرف', 'nadiim' ); ?></h3>
-                            <a href="<?php echo esc_url( get_author_posts_url( $supervisor->ID ) ); ?>" style="display: inline-block;">
-                                <?php echo get_avatar( $supervisor->ID, 100, '', '', array( 'style' => 'border-radius: 50%; margin-bottom: var(--spacing-sm);' ) ); ?>
-                                <h4 style="margin: 0;"><?php echo esc_html( $supervisor->display_name ); ?></h4>
-                            </a>
-                        </div>
-                    <?php endif;
-                endif; ?>
-
-                <?php if ( ! empty( $members ) && is_array( $members ) ) : ?>
-                    <div class="club-members">
-                        <h3 style="text-align: center; margin-bottom: var(--spacing-md);">
-                            <?php printf( esc_html__( 'الأعضاء (%d)', 'nadiim' ), count( $members ) ); ?>
-                            <?php if ( $max_members ) : ?>
-                                / <?php echo esc_html( $max_members ); ?>
-                            <?php endif; ?>
-                        </h3>
-                        <div class="members-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: var(--spacing-md);">
-                            <?php foreach ( $members as $member_id ) :
-                                $member = get_user_by( 'ID', $member_id );
-                                if ( ! $member ) continue; ?>
-                                <div class="member-card" style="text-align: center;">
-                                    <a href="<?php echo esc_url( get_author_posts_url( $member->ID ) ); ?>">
-                                        <?php echo get_avatar( $member->ID, 80, '', '', array( 'style' => 'border-radius: 50%; margin-bottom: 8px;' ) ); ?>
-                                        <div style="font-size: 14px; font-weight: 600;"><?php echo esc_html( $member->display_name ); ?></div>
-                                    </a>
-                                </div>
-                            <?php endforeach; ?>
-                        </div>
-                    </div>
-                <?php endif; ?>
             </div>
 
             <!-- الكتاب الجاري قراءته -->
@@ -134,25 +87,6 @@ while ( have_posts() ) : the_post();
                     </div>
                 <?php endif;
             endif; ?>
-
-            <!-- معلومات الاجتماعات -->
-            <?php if ( $schedule || $meeting_url ) : ?>
-                <div class="meeting-info" style="margin-bottom: var(--spacing-xl); padding: var(--spacing-lg); background-color: var(--color-bg-section); border-radius: var(--radius-lg);">
-                    <h2 style="text-align: center; margin-bottom: var(--spacing-lg);"><?php esc_html_e( 'معلومات الاجتماعات', 'nadiim' ); ?></h2>
-                    <?php if ( $schedule ) : ?>
-                        <p style="text-align: center; font-size: var(--font-size-lg); margin-bottom: var(--spacing-md);">
-                            <strong><?php esc_html_e( 'الجدول:', 'nadiim' ); ?></strong> <?php echo esc_html( $schedule ); ?>
-                        </p>
-                    <?php endif; ?>
-                    <?php if ( $meeting_url ) : ?>
-                        <div style="text-align: center;">
-                            <a href="<?php echo esc_url( $meeting_url ); ?>" class="btn btn-primary" target="_blank">
-                                <?php esc_html_e( 'دخول الاجتماع', 'nadiim' ); ?>
-                            </a>
-                        </div>
-                    <?php endif; ?>
-                </div>
-            <?php endif; ?>
 
             <?php
             if ( comments_open() || get_comments_number() ) :

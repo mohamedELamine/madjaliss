@@ -36,19 +36,19 @@
                     </span>
                     <div class="topbar-events">
                         <?php
-                        // عرض الأحداث القادمة من CPT الحوارات
+                        // عرض الفعاليات القادمة
                         $upcoming_events = new WP_Query( array(
-                            'post_type'      => 'howarat',
+                            'post_type'      => 'events',
                             'posts_per_page' => get_theme_mod( 'nadiim_topbar_count', 3 ),
-                            'meta_key'       => 'dialogue_date',
+                            'meta_key'       => 'event_start_date',
                             'orderby'        => 'meta_value',
                             'order'          => 'ASC',
                             'meta_query'     => array(
                                 array(
-                                    'key'     => 'dialogue_date',
-                                    'value'   => date( 'Y-m-d' ),
+                                    'key'     => 'event_start_date',
+                                    'value'   => current_time( 'Y-m-d H:i' ),
                                     'compare' => '>=',
-                                    'type'    => 'DATE',
+                                    'type'    => 'DATETIME',
                                 ),
                             ),
                         ) );
@@ -56,18 +56,22 @@
                         if ( $upcoming_events->have_posts() ) :
                             while ( $upcoming_events->have_posts() ) :
                                 $upcoming_events->the_post();
-                                $dialogue_date = get_post_meta( get_the_ID(), 'dialogue_date', true );
+                                $event_start_date = get_post_meta( get_the_ID(), 'event_start_date', true );
+                                $event_location = get_post_meta( get_the_ID(), 'event_location', true );
                                 ?>
                                 <a href="<?php the_permalink(); ?>" class="topbar-event">
-                                    <?php if ( $dialogue_date ) : ?>
-                                        <span class="event-date"><?php echo date_i18n( 'j F', strtotime( $dialogue_date ) ); ?></span>
+                                    <?php if ( $event_start_date ) : ?>
+                                        <span class="event-date"><?php echo date_i18n( 'j F', strtotime( $event_start_date ) ); ?></span>
                                     <?php endif; ?>
                                     <span class="event-title"><?php the_title(); ?></span>
+                                    <?php if ( $event_location ) : ?>
+                                        <span class="event-location">📍 <?php echo esc_html( $event_location ); ?></span>
+                                    <?php endif; ?>
                                 </a>
                             <?php endwhile;
                             wp_reset_postdata();
                         else :
-                            echo '<span class="no-events">' . esc_html__( 'لا توجد أحداث قادمة حالياً', 'nadiim' ) . '</span>';
+                            echo '<span class="no-events">' . esc_html__( 'لا توجد فعاليات قادمة حالياً', 'nadiim' ) . '</span>';
                         endif;
                         ?>
                     </div>
