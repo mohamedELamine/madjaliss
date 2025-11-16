@@ -76,6 +76,103 @@ get_header();
     endif; ?>
 
     <?php
+    // قسم الفعاليات المنتهية
+    if ( get_theme_mod( 'nadiim_events_enable', true ) ) :
+        $events_count = get_theme_mod( 'nadiim_events_count', 3 );
+        $events_title = get_theme_mod( 'nadiim_events_title', __( 'الفعاليات', 'nadiim' ) );
+
+        // عرض الفعاليات المنتهية فقط
+        $past_events_query = new WP_Query( array(
+            'post_type'      => 'events',
+            'posts_per_page' => $events_count,
+            'meta_key'       => 'event_start_date',
+            'orderby'        => 'meta_value',
+            'order'          => 'DESC',
+            'meta_query'     => array(
+                array(
+                    'key'     => 'event_start_date',
+                    'value'   => current_time( 'Y-m-d H:i' ),
+                    'compare' => '<',
+                    'type'    => 'DATETIME',
+                ),
+            ),
+        ) );
+
+        if ( $past_events_query->have_posts() ) :
+            ?>
+            <section class="events-section section" style="background-color: var(--color-bg-section);">
+                <div class="container">
+                    <div class="section-title">
+                        <h2><?php echo esc_html( $events_title ); ?></h2>
+                        <p class="section-description"><?php esc_html_e( 'فعالياتٌ ماضية نظمناها، شاركنا فيها بالأفكار والمناقشات الثرية', 'nadiim' ); ?></p>
+                    </div>
+                    <div class="grid grid-3" style="gap: var(--spacing-lg);">
+                        <?php while ( $past_events_query->have_posts() ) : $past_events_query->the_post(); ?>
+                            <article <?php post_class( 'card event-card' ); ?> style="border-radius: var(--radius-xl); overflow: hidden; background: #fff; box-shadow: 0 4px 15px rgba(0,0,0,0.08); transition: all 0.4s ease; position: relative; height: 350px; display: flex; flex-direction: column;">
+                                <a href="<?php the_permalink(); ?>" style="position: relative; flex: 1; display: block; overflow: hidden;">
+                                    <!-- الصورة البارزة -->
+                                    <?php if ( has_post_thumbnail() ) : ?>
+                                        <?php the_post_thumbnail( 'nadiim-card', array(
+                                            'style' => 'width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease;',
+                                            'class' => 'event-cover-image'
+                                        ) ); ?>
+                                    <?php else : ?>
+                                        <div style="width: 100%; height: 100%; background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%); display: flex; align-items: center; justify-content: center; font-size: 64px; color: rgba(255,255,255,0.3);">
+                                            📅
+                                        </div>
+                                    <?php endif; ?>
+
+                                    <!-- تدرج لوني وعنوان الفعالية -->
+                                    <div style="position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.3) 40%, rgba(0,0,0,0.85) 100%); display: flex; flex-direction: column; justify-content: flex-end; padding: var(--spacing-lg);">
+                                        <?php
+                                        $event_start_date = get_post_meta( get_the_ID(), 'event_start_date', true );
+                                        if ( $event_start_date ) :
+                                        ?>
+                                            <div style="background: rgba(255,255,255,0.2); backdrop-filter: blur(10px); color: #fff; padding: 6px 12px; border-radius: var(--radius-md); font-size: 13px; font-weight: 600; display: inline-flex; align-items: center; gap: 6px; align-self: flex-start; margin-bottom: var(--spacing-sm);">
+                                                📅 <?php echo date_i18n( 'j F Y', strtotime( $event_start_date ) ); ?>
+                                            </div>
+                                        <?php endif; ?>
+
+                                        <h3 style="color: #fff; font-size: var(--font-size-xl); font-weight: 700; margin: 0; line-height: 1.3; text-shadow: 0 2px 10px rgba(0,0,0,0.5);">
+                                            <?php the_title(); ?>
+                                        </h3>
+
+                                        <?php
+                                        $event_location = get_post_meta( get_the_ID(), 'event_location', true );
+                                        if ( $event_location ) :
+                                        ?>
+                                            <p style="color: rgba(255,255,255,0.9); font-size: 14px; margin: var(--spacing-xs) 0 0 0; text-shadow: 0 1px 5px rgba(0,0,0,0.5);">
+                                                📍 <?php echo esc_html( $event_location ); ?>
+                                            </p>
+                                        <?php endif; ?>
+                                    </div>
+                                </a>
+                            </article>
+                        <?php endwhile;
+                        wp_reset_postdata(); ?>
+                    </div>
+                    <div class="text-center" style="margin-top: var(--spacing-xl);">
+                        <a href="<?php echo esc_url( get_post_type_archive_link( 'events' ) ); ?>" class="btn btn-outline">
+                            <?php esc_html_e( 'المزيد من الفعاليات', 'nadiim' ); ?>
+                        </a>
+                    </div>
+                </div>
+            </section>
+
+            <style>
+            .event-card:hover {
+                transform: translateY(-8px);
+                box-shadow: 0 12px 35px rgba(0,0,0,0.15);
+            }
+
+            .event-card:hover .event-cover-image {
+                transform: scale(1.08);
+            }
+            </style>
+        <?php endif;
+    endif; ?>
+
+    <?php
     // قسم الإصدارات
     if ( get_theme_mod( 'nadiim_releases_enable', true ) ) :
         $releases_count = get_theme_mod( 'nadiim_releases_count', 4 );
