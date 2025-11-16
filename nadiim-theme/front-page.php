@@ -268,13 +268,12 @@ get_header();
                         <h2><?php echo esc_html( $posts_title ); ?></h2>
                     </div>
 
-                    <!-- السلايدر - 8/12 من الشاشة -->
-                    <div style="max-width: 66.67%; margin: 0 auto;">
-                        <div class="posts-slider swiper">
-                            <div class="swiper-wrapper">
-                                <?php while ( $posts_query->have_posts() ) : $posts_query->the_post(); ?>
-                                    <div class="swiper-slide">
-                                        <article class="post-slide" style="position: relative; height: 500px; border-radius: var(--radius-xl); overflow: hidden; box-shadow: 0 8px 30px rgba(0,0,0,0.12);">
+                    <!-- السلايدر - عرض كامل -->
+                    <div class="posts-slider swiper">
+                        <div class="swiper-wrapper">
+                            <?php while ( $posts_query->have_posts() ) : $posts_query->the_post(); ?>
+                                <div class="swiper-slide">
+                                    <article class="post-slide" style="position: relative; height: 500px; border-radius: var(--radius-2xl); overflow: hidden; box-shadow: 0 8px 30px rgba(0,0,0,0.12);">
                                             <!-- الصورة البارزة كخلفية -->
                                             <?php if ( has_post_thumbnail() ) : ?>
                                                 <div style="position: absolute; inset: 0; z-index: 0;">
@@ -381,17 +380,18 @@ get_header();
                 background: #fff;
             }
 
-            @media (max-width: 992px) {
-                .posts-section .swiper {
-                    max-width: 90% !important;
+            /* تجاوب مع الشاشات الصغيرة */
+            @media (max-width: 768px) {
+                .post-slide {
+                    height: 450px !important;
+                }
+
+                .post-slide h3 {
+                    font-size: 1.5rem !important;
                 }
             }
 
-            @media (max-width: 640px) {
-                .posts-section .swiper {
-                    max-width: 100% !important;
-                }
-
+            @media (max-width: 480px) {
                 .post-slide {
                     height: 400px !important;
                 }
