@@ -52,6 +52,21 @@
     }
 
     /**
+     * تأثير الهيدر عند التمرير
+     */
+    function initHeaderScroll() {
+        var $header = $('.site-header');
+
+        $(window).on('scroll', function() {
+            if ($(this).scrollTop() > 50) {
+                $header.addClass('scrolled');
+            } else {
+                $header.removeClass('scrolled');
+            }
+        });
+    }
+
+    /**
      * زر العودة إلى الأعلى
      */
     function initBackToTop() {
@@ -195,6 +210,7 @@
     $(document).ready(function() {
         initMobileMenu();
         initSearchModal();
+        initHeaderScroll();
         initBackToTop();
         improveSubmenuAccessibility();
         initLazyLoading();

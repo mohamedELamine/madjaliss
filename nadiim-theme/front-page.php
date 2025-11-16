@@ -1,6 +1,17 @@
 <?php
 /**
- * قالب الصفحة الرئيسية
+ * قالب الصفحة الرئيسية (Front Page)
+ *
+ * هذا القالب له الأولوية الأعلى في التسلسل الهرمي لقوالب WordPress
+ * ويُستخدم لعرض الصفحة الرئيسية عندما يتم تعيين صفحة ثابتة كصفحة رئيسية
+ *
+ * يعرض هذا القالب:
+ * - قسم Hero الترحيبي
+ * - أحدث الحوارات
+ * - أحدث الإصدارات
+ * - عينة من المقالات
+ * - نوادي القراءة
+ * - نموذج النشرة البريدية
  *
  * @package Nadiim
  * @since 1.0.0
@@ -9,10 +20,10 @@
 get_header();
 ?>
 
-<main id="primary" class="site-main home-page">
+<main id="primary" class="site-main home-page front-page">
 
     <?php
-    // قسم Hero
+    // قسم Hero الترحيبي
     if ( get_theme_mod( 'nadiim_hero_enable', true ) ) :
         $hero_title = get_theme_mod( 'nadiim_hero_title', __( 'مرحباً بكم في نديم', 'nadiim' ) );
         $hero_desc = get_theme_mod( 'nadiim_hero_description', __( 'فضاءٌ هادئ للحوارات الرصينة والإصدارات النافعة ونوادي القراءة الممتعة', 'nadiim' ) );
