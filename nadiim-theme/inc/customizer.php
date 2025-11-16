@@ -283,6 +283,19 @@ function nadiim_customize_register( $wp_customize ) {
         'type'     => 'textarea',
     ) );
 
+    // صورة خلفية صفحة المدونة
+    $wp_customize->add_setting( 'nadiim_blog_bg_image', array(
+        'default'           => '',
+        'sanitize_callback' => 'absint',
+    ) );
+
+    $wp_customize->add_control( new WP_Customize_Media_Control( $wp_customize, 'nadiim_blog_bg_image', array(
+        'label'      => __( 'صورة خلفية صفحة المدونة', 'nadiim' ),
+        'section'    => 'nadiim_blog_settings',
+        'mime_type'  => 'image',
+        'description' => __( 'اختر صورة خلفية لعرضها في header صفحة المدونة', 'nadiim' ),
+    ) ) );
+
     // سيتم إضافة المزيد من الأقسام في المراحل القادمة
 }
 add_action( 'customize_register', 'nadiim_customize_register' );

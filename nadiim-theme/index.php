@@ -14,23 +14,22 @@ get_header();
 
 <main id="primary" class="site-main blog-page">
 
-    <?php if ( is_home() && ! is_front_page() ) : ?>
+    <?php if ( is_home() && ! is_front_page() ) :
+        $blog_title = get_theme_mod( 'nadiim_blog_title', __( 'المدونة', 'nadiim' ) );
+        $blog_desc = get_theme_mod( 'nadiim_blog_description', __( 'مقالات ومواضيع متنوعة في الفكر والثقافة والأدب', 'nadiim' ) );
+        $blog_bg_image = get_theme_mod( 'nadiim_blog_bg_image' );
+        ?>
         <!-- عنوان صفحة المدونة -->
-        <section class="blog-header" style="background: linear-gradient(135deg, var(--color-bg-section) 0%, var(--color-bg-light) 100%); padding: calc(var(--spacing-xl) + 30px) 0 var(--spacing-xl); position: relative; overflow: hidden; border-bottom: 3px solid var(--color-primary);">
-            <div style="position: absolute; top: -80px; left: 10%; width: 250px; height: 250px; background: radial-gradient(circle, rgba(51, 144, 99, 0.08) 0%, transparent 70%); border-radius: 50%;"></div>
-            <div style="position: absolute; bottom: -60px; right: 15%; width: 200px; height: 200px; background: radial-gradient(circle, rgba(51, 144, 99, 0.06) 0%, transparent 70%); border-radius: 50%;"></div>
+        <section class="blog-header" style="<?php if ( $blog_bg_image ) : ?>background-image: url(<?php echo esc_url( wp_get_attachment_image_url( $blog_bg_image, 'full' ) ); ?>); background-size: cover; background-position: center;<?php else : ?>background: linear-gradient(135deg, var(--color-bg-section) 0%, var(--color-bg-light) 100%);<?php endif; ?> padding: calc(var(--spacing-xxl)) 0; position: relative; overflow: hidden; min-height: 350px; display: flex; align-items: center; justify-content: center;">
+            <!-- طبقة شفافة -->
+            <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(250, 250, 250, 0.85); z-index: 1;"></div>
+
             <div class="container text-center" style="position: relative; z-index: 2;">
-                <h1 class="page-title" style="font-size: clamp(32px, 4vw, var(--font-size-3xl)); font-weight: 800; margin-bottom: var(--spacing-sm); color: var(--color-text-primary);">
-                    <?php
-                    $blog_title = get_theme_mod( 'nadiim_blog_title', __( 'المدونة', 'nadiim' ) );
-                    echo esc_html( $blog_title );
-                    ?>
+                <h1 class="page-title" style="font-size: clamp(36px, 5vw, 48px); font-weight: 800; margin-bottom: var(--spacing-md); color: var(--color-text-primary); text-shadow: 0 2px 4px rgba(255,255,255,0.8);">
+                    <?php echo esc_html( $blog_title ); ?>
                 </h1>
-                <p class="blog-description" style="font-size: var(--font-size-lg); color: var(--color-text-secondary); max-width: 600px; margin: 0 auto; line-height: 1.8;">
-                    <?php
-                    $blog_desc = get_theme_mod( 'nadiim_blog_description', __( 'مقالات ومحتوى متنوع حول الثقافة والأدب والفكر', 'nadiim' ) );
-                    echo esc_html( $blog_desc );
-                    ?>
+                <p class="blog-description" style="font-size: clamp(18px, 2.5vw, 22px); color: var(--color-text-secondary); max-width: 700px; margin: 0 auto; line-height: 1.8; font-weight: 500;">
+                    <?php echo esc_html( $blog_desc ); ?>
                 </p>
             </div>
         </section>
@@ -41,11 +40,11 @@ get_header();
 
             <?php if ( have_posts() ) : ?>
 
-                <div class="posts-grid grid grid-3">
+                <div class="posts-list blog-posts-list">
                     <?php
                     while ( have_posts() ) :
                         the_post();
-                        get_template_part( 'template-parts/content', get_post_type() );
+                        get_template_part( 'template-parts/content', 'blog' );
                     endwhile;
                     ?>
                 </div>
