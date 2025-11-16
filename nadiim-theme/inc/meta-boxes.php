@@ -791,3 +791,73 @@ function nadiim_save_events_meta( $post_id ) {
     }
 }
 add_action( 'save_post', 'nadiim_save_events_meta' );
+
+// ============================================
+// Meta Boxes: المقالات (Posts) - ملف صوتي
+// ============================================
+
+/**
+ * إضافة Meta Box لملف الصوت في المقالات
+ */
+function nadiim_add_post_audio_meta_box() {
+    add_meta_box(
+        'post_audio_meta',
+        __( 'ملف صوتي للمقال', 'nadiim' ),
+        'nadiim_render_post_audio_meta_box',
+        'post',
+        'side',
+        'default'
+    );
+}
+add_action( 'add_meta_boxes', 'nadiim_add_post_audio_meta_box' );
+
+/**
+ * عرض Meta Box: ملف الصوت
+ */
+function nadiim_render_post_audio_meta_box( $post ) {
+    wp_nonce_field( 'nadiim_save_meta', 'nadiim_meta_nonce' );
+
+    // رابط الملف الصوتي
+    nadiim_render_input_field(
+        $post->ID,
+        'article_audio_url',
+        __( 'رابط الملف الصوتي', 'nadiim' ),
+        'url',
+        __( 'https://example.com/audio.mp3', 'nadiim' )
+    );
+
+    echo '<p><small style="color: #666;">' . esc_html__( 'أضف رابط ملف MP3 للاستماع للمقال. سيظهر مشغل الصوت في صفحة المقال.', 'nadiim' ) . '</small></p>';
+}
+
+/**
+ * حفظ Meta Data للملف الصوتي
+ */
+function nadiim_save_post_audio_meta( $post_id ) {
+    // التحقق من نوع المنشور
+    if ( get_post_type( $post_id ) !== 'post' ) {
+        return;
+    }
+
+    // التحقق من nonce
+    if ( ! isset( $_POST['nadiim_meta_nonce'] ) || ! wp_verify_nonce( $_POST['nadiim_meta_nonce'], 'nadiim_save_meta' ) ) {
+        return;
+    }
+
+    // التحقق من autosave
+    if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
+        return;
+    }
+
+    // التحقق من الصلاحيات
+    if ( ! current_user_can( 'edit_post', $post_id ) ) {
+        return;
+    }
+
+    // حفظ رابط الملف الصوتي
+    if ( isset( $_POST['article_audio_url'] ) ) {
+        update_post_meta( $post_id, 'article_audio_url', esc_url_raw( $_POST['article_audio_url'] ) );
+    } else {
+        delete_post_meta( $post_id, 'article_audio_url' );
+    }
+}
+add_action( 'save_post', 'nadiim_save_post_audio_meta' );
