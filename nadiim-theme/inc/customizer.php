@@ -249,6 +249,40 @@ function nadiim_customize_register( $wp_customize ) {
         'section'  => 'nadiim_hero_settings',
     ) ) );
 
+    // ============================================
+    // قسم صفحة المدونة
+    // ============================================
+
+    $wp_customize->add_section( 'nadiim_blog_settings', array(
+        'title'       => __( 'صفحة المدونة', 'nadiim' ),
+        'description' => __( 'إعدادات صفحة المدونة المنفصلة عن الصفحة الرئيسية', 'nadiim' ),
+        'priority'    => 55,
+    ) );
+
+    // عنوان صفحة المدونة
+    $wp_customize->add_setting( 'nadiim_blog_title', array(
+        'default'           => __( 'المدونة', 'nadiim' ),
+        'sanitize_callback' => 'sanitize_text_field',
+    ) );
+
+    $wp_customize->add_control( 'nadiim_blog_title', array(
+        'label'    => __( 'عنوان صفحة المدونة', 'nadiim' ),
+        'section'  => 'nadiim_blog_settings',
+        'type'     => 'text',
+    ) );
+
+    // وصف صفحة المدونة
+    $wp_customize->add_setting( 'nadiim_blog_description', array(
+        'default'           => __( 'مقالات ومحتوى متنوع حول الثقافة والأدب والفكر', 'nadiim' ),
+        'sanitize_callback' => 'sanitize_textarea_field',
+    ) );
+
+    $wp_customize->add_control( 'nadiim_blog_description', array(
+        'label'    => __( 'وصف صفحة المدونة', 'nadiim' ),
+        'section'  => 'nadiim_blog_settings',
+        'type'     => 'textarea',
+    ) );
+
     // سيتم إضافة المزيد من الأقسام في المراحل القادمة
 }
 add_action( 'customize_register', 'nadiim_customize_register' );
