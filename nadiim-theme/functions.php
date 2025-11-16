@@ -188,6 +188,14 @@ function nadiim_enqueue_scripts() {
         NADIIM_VERSION
     );
 
+    // تحميل ملف التحسينات الجمالية
+    wp_enqueue_style(
+        'nadiim-enhancements',
+        NADIIM_THEME_URI . '/assets/css/enhancements.css',
+        array( 'nadiim-main' ),
+        NADIIM_VERSION
+    );
+
     // تحميل JavaScript الرئيسي
     wp_enqueue_script(
         'nadiim-main',
