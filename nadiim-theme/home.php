@@ -1,6 +1,6 @@
 <?php
 /**
- * قالب الصفحة الرئيسية
+ * قالب أرشيف المقالات - المدونة
  *
  * @package Nadiim
  * @since 1.0.0
@@ -9,230 +9,189 @@
 get_header();
 ?>
 
-<main id="primary" class="site-main home-page">
+<main id="primary" class="site-main blog-archive">
 
-    <?php
-    // قسم Hero
-    if ( get_theme_mod( 'nadiim_hero_enable', true ) ) :
-        $hero_title = get_theme_mod( 'nadiim_hero_title', __( 'مرحباً بكم في نديم', 'nadiim' ) );
-        $hero_desc = get_theme_mod( 'nadiim_hero_description', __( 'فضاءٌ هادئ للحوارات الرصينة والإصدارات النافعة ونوادي القراءة الممتعة', 'nadiim' ) );
-        $hero_button_text = get_theme_mod( 'nadiim_hero_button_text', __( 'استكشف المحتوى', 'nadiim' ) );
-        $hero_button_url = get_theme_mod( 'nadiim_hero_button_url', '#' );
-        $hero_bg_color = get_theme_mod( 'nadiim_hero_bg_color', '#f5f5f5' );
-        $hero_bg_image = get_theme_mod( 'nadiim_hero_bg_image' );
-        ?>
-        <section class="hero-section" style="background-color: <?php echo esc_attr( $hero_bg_color ); ?>; <?php if ( $hero_bg_image ) : ?>background-image: url(<?php echo esc_url( wp_get_attachment_image_url( $hero_bg_image, 'full' ) ); ?>); background-size: cover; background-position: center;<?php endif; ?> padding: var(--spacing-xxl) 0; position: relative;">
-            <div class="container text-center">
-                <h1 class="hero-title" style="font-size: var(--font-size-3xl); margin-bottom: var(--spacing-md);">
-                    <?php echo esc_html( $hero_title ); ?>
+    <!-- Hero Section -->
+    <div class="archive-hero" style="background: linear-gradient(135deg, #339063 0%, #4db080 100%); padding: var(--spacing-3xl) 0; margin-bottom: var(--spacing-3xl); position: relative; overflow: hidden;">
+        <!-- نمط خلفية -->
+        <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; opacity: 0.1; background-image: radial-gradient(circle, #fff 1px, transparent 1px); background-size: 20px 20px;"></div>
+
+        <div class="container" style="position: relative; z-index: 1;">
+            <header class="page-header" style="text-align: center; color: #fff;">
+                <h1 class="page-title" style="font-size: clamp(2rem, 5vw, 3.5rem); margin-bottom: var(--spacing-md); font-weight: 700; text-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+                    <?php esc_html_e( 'المدونة', 'nadiim' ); ?>
                 </h1>
-                <p class="hero-description" style="font-size: var(--font-size-xl); color: var(--color-text-secondary); max-width: 700px; margin: 0 auto var(--spacing-lg);">
-                    <?php echo esc_html( $hero_desc ); ?>
-                </p>
-                <?php if ( $hero_button_url && $hero_button_text ) : ?>
-                    <a href="<?php echo esc_url( $hero_button_url ); ?>" class="btn btn-primary btn-lg">
-                        <?php echo esc_html( $hero_button_text ); ?>
-                    </a>
-                <?php endif; ?>
-            </div>
-        </section>
-    <?php endif; ?>
-
-    <?php
-    // قسم الحوارات المميزة
-    if ( get_theme_mod( 'nadiim_dialogues_enable', true ) ) :
-        $dialogues_count = get_theme_mod( 'nadiim_dialogues_count', 3 );
-        $dialogues_title = get_theme_mod( 'nadiim_dialogues_title', __( 'أحدث الحوارات', 'nadiim' ) );
-
-        $dialogues_query = new WP_Query( array(
-            'post_type'      => 'howarat',
-            'posts_per_page' => $dialogues_count,
-            'orderby'        => 'date',
-            'order'          => 'DESC',
-        ) );
-
-        if ( $dialogues_query->have_posts() ) :
-            ?>
-            <section class="dialogues-section section">
-                <div class="container">
-                    <div class="section-title">
-                        <h2><?php echo esc_html( $dialogues_title ); ?></h2>
-                        <p class="section-description"><?php esc_html_e( 'حواراتٌ رصينة مع أهل العلم والفكر، نستمع فيها إلى أصواتٍ متنوعة وأفكارٍ عميقة', 'nadiim' ); ?></p>
-                    </div>
-                    <div class="grid grid-3">
-                        <?php while ( $dialogues_query->have_posts() ) : $dialogues_query->the_post();
-                            get_template_part( 'template-parts/content', 'howarat-card' );
-                        endwhile;
-                        wp_reset_postdata(); ?>
-                    </div>
-                    <div class="text-center" style="margin-top: var(--spacing-lg);">
-                        <a href="<?php echo esc_url( get_post_type_archive_link( 'howarat' ) ); ?>" class="btn btn-outline">
-                            <?php esc_html_e( 'جميع الحوارات', 'nadiim' ); ?>
-                        </a>
-                    </div>
+                <div class="archive-description" style="font-size: var(--font-size-lg); max-width: 700px; margin: 0 auto; line-height: 1.8; opacity: 0.95;">
+                    <p><?php esc_html_e( 'مقالات ومواضيع متنوعة في الفكر والثقافة والأدب', 'nadiim' ); ?></p>
                 </div>
-            </section>
-        <?php endif;
-    endif; ?>
 
-    <?php
-    // قسم الإصدارات
-    if ( get_theme_mod( 'nadiim_releases_enable', true ) ) :
-        $releases_count = get_theme_mod( 'nadiim_releases_count', 4 );
-        $releases_title = get_theme_mod( 'nadiim_releases_title', __( 'أحدث الإصدارات', 'nadiim' ) );
+                <div class="archive-meta" style="margin-top: var(--spacing-lg); display: inline-flex; align-items: center; gap: var(--spacing-sm); background: rgba(255,255,255,0.2); padding: var(--spacing-sm) var(--spacing-lg); border-radius: var(--radius-full); backdrop-filter: blur(10px);">
+                    <span style="font-size: 20px;">📚</span>
+                    <span style="font-weight: 600;">
+                        <?php
+                        $count = wp_count_posts()->publish;
+                        printf(
+                            esc_html( _n( '%s مقال', '%s مقالات', $count, 'nadiim' ) ),
+                            number_format_i18n( $count )
+                        );
+                        ?>
+                    </span>
+                </div>
+            </header>
+        </div>
+    </div>
 
-        $releases_query = new WP_Query( array(
-            'post_type'      => 'esdar',
-            'posts_per_page' => $releases_count,
-            'orderby'        => 'date',
-            'order'          => 'DESC',
-        ) );
+    <div class="container">
+        <?php if ( have_posts() ) : ?>
 
-        if ( $releases_query->have_posts() ) :
-            ?>
-            <section class="releases-section section" style="background-color: var(--color-bg-section);">
-                <div class="container">
-                    <div class="section-title">
-                        <h2><?php echo esc_html( $releases_title ); ?></h2>
-                        <p class="section-description"><?php esc_html_e( 'كتبٌ ونشراتٌ وبحوث منتقاة بعناية، تثري العقل وتغذي الروح', 'nadiim' ); ?></p>
-                    </div>
-                    <div class="grid grid-4">
-                        <?php while ( $releases_query->have_posts() ) : $releases_query->the_post(); ?>
-                            <article <?php post_class( 'card release-card' ); ?>>
-                                <?php if ( has_post_thumbnail() ) : ?>
-                                    <a href="<?php the_permalink(); ?>">
-                                        <?php the_post_thumbnail( 'nadiim-card', array( 'class' => 'card-image' ) ); ?>
-                                    </a>
-                                <?php endif; ?>
-                                <div class="card-content">
-                                    <h3 class="card-title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
+            <div class="archive-content">
+                <div class="posts-grid grid grid-3" style="gap: var(--spacing-xl); margin-bottom: var(--spacing-3xl);">
+                    <?php
+                    while ( have_posts() ) :
+                        the_post();
+                        ?>
+                        <article <?php post_class( 'card post-card' ); ?> style="border-radius: var(--radius-xl); overflow: hidden; background: var(--color-bg-lighter); box-shadow: 0 4px 15px rgba(0,0,0,0.06); transition: all 0.4s ease; display: flex; flex-direction: column; height: 100%;">
+
+                            <?php if ( has_post_thumbnail() ) : ?>
+                                <a href="<?php the_permalink(); ?>" style="display: block; position: relative; overflow: hidden; aspect-ratio: 16/9; flex-shrink: 0;">
+                                    <?php the_post_thumbnail( 'nadiim-card', array(
+                                        'style' => 'width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease;',
+                                        'class' => 'card-image-hover'
+                                    ) ); ?>
+
+                                    <!-- تدرج لوني مع بادج التصنيف -->
+                                    <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(to bottom, rgba(0,0,0,0.4) 0%, transparent 50%, rgba(0,0,0,0.3) 100%);"></div>
+
+                                    <!-- بادج التصنيف -->
                                     <?php
-                                    $author = get_post_meta( get_the_ID(), 'release_author', true );
-                                    if ( $author ) : ?>
-                                        <p style="color: var(--color-text-secondary); font-size: 14px;"><?php echo esc_html( $author ); ?></p>
+                                    $categories = get_the_category();
+                                    if ( ! empty( $categories ) ) : ?>
+                                        <span style="position: absolute; top: var(--spacing-md); left: var(--spacing-md); background: var(--color-primary); color: #fff; padding: 6px 16px; border-radius: var(--radius-full); font-size: 13px; font-weight: 600; box-shadow: 0 4px 10px rgba(0,0,0,0.2);">
+                                            <?php echo esc_html( $categories[0]->name ); ?>
+                                        </span>
+                                    <?php endif; ?>
+                                </a>
+                            <?php else : ?>
+                                <!-- صورة افتراضية إذا لم تكن هناك صورة بارزة -->
+                                <div style="aspect-ratio: 16/9; background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 100%); display: flex; align-items: center; justify-content: center; color: #fff; font-size: 48px; position: relative; overflow: hidden;">
+                                    <div style="position: absolute; inset: 0; opacity: 0.1; background-image: radial-gradient(circle, #fff 1px, transparent 1px); background-size: 20px 20px;"></div>
+                                    <span style="position: relative; z-index: 1;">📝</span>
+                                </div>
+                            <?php endif; ?>
+
+                            <div class="card-content" style="padding: var(--spacing-lg); display: flex; flex-direction: column; flex-grow: 1;">
+
+                                <h2 class="card-title" style="margin-bottom: var(--spacing-md);">
+                                    <a href="<?php the_permalink(); ?>" style="color: var(--color-text); text-decoration: none; font-size: var(--font-size-xl); line-height: 1.4; display: block; transition: color 0.3s ease; font-weight: 700;">
+                                        <?php the_title(); ?>
+                                    </a>
+                                </h2>
+
+                                <div class="card-meta" style="display: flex; flex-wrap: wrap; gap: var(--spacing-sm); align-items: center; color: var(--color-text-secondary); font-size: 13px; margin-bottom: var(--spacing-md); padding-bottom: var(--spacing-md); border-bottom: 1px solid var(--color-border);">
+                                    <span style="display: flex; align-items: center; gap: 4px;">
+                                        📅 <?php echo get_the_date(); ?>
+                                    </span>
+                                    <span>•</span>
+                                    <span style="display: flex; align-items: center; gap: 4px;">
+                                        ✍️ <?php the_author(); ?>
+                                    </span>
+                                    <?php
+                                    // حساب وقت القراءة
+                                    $word_count = str_word_count( strip_tags( get_the_content() ) );
+                                    $reading_time = ceil( $word_count / 200 );
+                                    if ( $reading_time > 0 ) :
+                                    ?>
+                                        <span>•</span>
+                                        <span style="display: flex; align-items: center; gap: 4px;">
+                                            ⏱️ <?php printf( esc_html__( '%d دقائق قراءة', 'nadiim' ), $reading_time ); ?>
+                                        </span>
                                     <?php endif; ?>
                                 </div>
-                            </article>
-                        <?php endwhile;
-                        wp_reset_postdata(); ?>
-                    </div>
-                    <div class="text-center" style="margin-top: var(--spacing-lg);">
-                        <a href="<?php echo esc_url( get_post_type_archive_link( 'esdar' ) ); ?>" class="btn btn-outline">
-                            <?php esc_html_e( 'جميع الإصدارات', 'nadiim' ); ?>
-                        </a>
-                    </div>
-                </div>
-            </section>
-        <?php endif;
-    endif; ?>
 
-    <?php
-    // قسم المقالات
-    if ( get_theme_mod( 'nadiim_posts_enable', true ) ) :
-        $posts_count = get_theme_mod( 'nadiim_posts_count', 3 );
-        $posts_title = get_theme_mod( 'nadiim_posts_title', __( 'آخر المقالات', 'nadiim' ) );
-
-        $posts_query = new WP_Query( array(
-            'post_type'      => 'post',
-            'posts_per_page' => $posts_count,
-            'orderby'        => 'date',
-            'order'          => 'DESC',
-        ) );
-
-        if ( $posts_query->have_posts() ) :
-            ?>
-            <section class="posts-section section">
-                <div class="container">
-                    <div class="section-title">
-                        <h2><?php echo esc_html( $posts_title ); ?></h2>
-                    </div>
-                    <div class="grid grid-3">
-                        <?php while ( $posts_query->have_posts() ) : $posts_query->the_post();
-                            get_template_part( 'template-parts/content' );
-                        endwhile;
-                        wp_reset_postdata(); ?>
-                    </div>
-                    <div class="text-center" style="margin-top: var(--spacing-lg);">
-                        <a href="<?php echo esc_url( get_permalink( get_option( 'page_for_posts' ) ) ?: home_url( '/blog' ) ); ?>" class="btn btn-outline">
-                            <?php esc_html_e( 'الاطلاع على باقي المقالات', 'nadiim' ); ?>
-                        </a>
-                    </div>
-                </div>
-            </section>
-        <?php endif;
-    endif; ?>
-
-    <?php
-    // قسم نوادي القراءة
-    if ( get_theme_mod( 'nadiim_clubs_enable', true ) ) :
-        $clubs_count = get_theme_mod( 'nadiim_clubs_count', 3 );
-        $clubs_title = get_theme_mod( 'nadiim_clubs_title', __( 'نوادي القراءة', 'nadiim' ) );
-
-        $clubs_query = new WP_Query( array(
-            'post_type'      => 'reading_clubs',
-            'posts_per_page' => $clubs_count,
-            'orderby'        => 'date',
-            'order'          => 'DESC',
-        ) );
-
-        if ( $clubs_query->have_posts() ) :
-            ?>
-            <section class="clubs-section section" style="background-color: var(--color-bg-section);">
-                <div class="container">
-                    <div class="section-title">
-                        <h2><?php echo esc_html( $clubs_title ); ?></h2>
-                        <p class="section-description"><?php esc_html_e( 'مجتمعاتٌ هادئة للقراءة والنقاش، نجتمع فيها على حب الكتب وتبادل الأفكار', 'nadiim' ); ?></p>
-                    </div>
-                    <div class="grid grid-3">
-                        <?php while ( $clubs_query->have_posts() ) : $clubs_query->the_post(); ?>
-                            <article <?php post_class( 'card' ); ?>>
-                                <?php if ( has_post_thumbnail() ) : ?>
-                                    <a href="<?php the_permalink(); ?>">
-                                        <?php the_post_thumbnail( 'nadiim-card', array( 'class' => 'card-image' ) ); ?>
-                                    </a>
-                                <?php endif; ?>
-                                <div class="card-content">
-                                    <h3 class="card-title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
-                                    <div class="card-excerpt"><?php echo nadiim_get_excerpt( 15 ); ?></div>
-                                    <?php echo nadiim_read_more_link( __( 'تفاصيل النادي', 'nadiim' ) ); ?>
+                                <div class="card-excerpt" style="color: var(--color-text-secondary); line-height: 1.7; margin-bottom: var(--spacing-lg); flex-grow: 1; font-size: 15px;">
+                                    <?php echo nadiim_get_excerpt( 25 ); ?>
                                 </div>
-                            </article>
-                        <?php endwhile;
-                        wp_reset_postdata(); ?>
-                    </div>
-                    <div class="text-center" style="margin-top: var(--spacing-lg);">
-                        <a href="<?php echo esc_url( get_post_type_archive_link( 'reading_clubs' ) ); ?>" class="btn btn-outline">
-                            <?php esc_html_e( 'جميع النوادي', 'nadiim' ); ?>
-                        </a>
-                    </div>
+
+                                <a href="<?php the_permalink(); ?>" class="read-more-link" style="display: inline-flex; align-items: center; gap: var(--spacing-xs); color: var(--color-primary); font-weight: 600; text-decoration: none; font-size: 15px; transition: gap 0.3s ease; margin-top: auto;">
+                                    <span><?php esc_html_e( 'قراءة المزيد', 'nadiim' ); ?></span>
+                                    <span style="transition: transform 0.3s ease;">←</span>
+                                </a>
+                            </div>
+                        </article>
+                    <?php endwhile; ?>
                 </div>
-            </section>
-        <?php endif;
-    endif; ?>
 
-    <?php
-    // قسم النشرة البريدية
-    if ( get_theme_mod( 'nadiim_newsletter_enable', true ) ) :
-        $newsletter_title = get_theme_mod( 'nadiim_newsletter_title', __( 'اشترك في نشرتنا البريدية', 'nadiim' ) );
-        $newsletter_desc = get_theme_mod( 'nadiim_newsletter_description', __( 'تلقَّ آخر الأخبار والإصدارات والفعاليات مباشرة في بريدك', 'nadiim' ) );
-        ?>
-        <section class="newsletter-section section" style="background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%); color: #fff;">
-            <div class="container text-center">
-                <h2 style="color: #fff; margin-bottom: var(--spacing-sm);"><?php echo esc_html( $newsletter_title ); ?></h2>
-                <p style="color: rgba(255,255,255,0.9); font-size: var(--font-size-lg); margin-bottom: var(--spacing-lg); max-width: 600px; margin-left: auto; margin-right: auto;">
-                    <?php echo esc_html( $newsletter_desc ); ?>
-                </p>
-                <form class="newsletter-form" style="max-width: 500px; margin: 0 auto; display: flex; gap: var(--spacing-sm);">
-                    <input type="email" placeholder="<?php esc_attr_e( 'بريدك الإلكتروني', 'nadiim' ); ?>" required style="flex: 1; padding: 12px 20px; border: none; border-radius: var(--radius-md); font-size: var(--font-size-base);">
-                    <button type="submit" class="btn" style="background: #fff; color: var(--color-primary); border: none; padding: 12px 32px; font-weight: 600;">
-                        <?php esc_html_e( 'اشترك', 'nadiim' ); ?>
-                    </button>
-                </form>
+                <?php
+                // الترقيم
+                the_posts_pagination( array(
+                    'mid_size'  => 2,
+                    'prev_text' => '<span style="display: inline-flex; align-items: center; gap: 8px;"><span>→</span>' . __( 'السابق', 'nadiim' ) . '</span>',
+                    'next_text' => '<span style="display: inline-flex; align-items: center; gap: 8px;">' . __( 'التالي', 'nadiim' ) . '<span>←</span></span>',
+                    'before_page_number' => '<span class="screen-reader-text">' . __( 'صفحة', 'nadiim' ) . ' </span>',
+                ) );
+                ?>
             </div>
-        </section>
-    <?php endif; ?>
 
+        <?php else : ?>
+
+            <div class="no-results" style="text-align: center; padding: var(--spacing-3xl); background: linear-gradient(135deg, var(--color-bg-section) 0%, var(--color-bg-lighter) 100%); border-radius: var(--radius-2xl); box-shadow: 0 4px 20px rgba(0,0,0,0.05); max-width: 600px; margin: var(--spacing-3xl) auto;">
+                <span style="font-size: 80px; display: block; margin-bottom: var(--spacing-lg); filter: grayscale(50%);">📄</span>
+                <h2 style="font-size: var(--font-size-2xl); margin-bottom: var(--spacing-md); font-weight: 700;">
+                    <?php esc_html_e( 'لا توجد مقالات', 'nadiim' ); ?>
+                </h2>
+                <p style="color: var(--color-text-secondary); font-size: var(--font-size-lg); margin-bottom: var(--spacing-xl); line-height: 1.7;">
+                    <?php esc_html_e( 'لم يتم العثور على أي مقالات بعد.', 'nadiim' ); ?>
+                </p>
+                <a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="btn btn-primary" style="padding: var(--spacing-md) var(--spacing-xl); font-size: 16px;">
+                    <?php esc_html_e( 'العودة للرئيسية', 'nadiim' ); ?>
+                </a>
+            </div>
+
+        <?php endif; ?>
+
+    </div>
 </main>
+
+<style>
+/* تأثيرات إضافية للبطاقات */
+.post-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.12);
+}
+
+.post-card:hover .card-image-hover {
+    transform: scale(1.05);
+}
+
+.post-card:hover .card-title a {
+    color: var(--color-primary);
+}
+
+.post-card:hover .read-more-link {
+    gap: var(--spacing-sm);
+}
+
+.post-card:hover .read-more-link span:last-child {
+    transform: translateX(-4px);
+}
+
+/* تجاوب الشبكة */
+@media (max-width: 992px) {
+    .posts-grid.grid-3 {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 640px) {
+    .posts-grid.grid-3 {
+        grid-template-columns: 1fr;
+    }
+
+    .archive-hero {
+        padding: var(--spacing-2xl) 0;
+    }
+}
+</style>
 
 <?php
 get_footer();
