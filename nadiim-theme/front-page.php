@@ -96,45 +96,68 @@ get_header();
                         <h2><?php echo esc_html( $releases_title ); ?></h2>
                         <p class="section-description"><?php esc_html_e( 'كتبٌ ونشراتٌ وبحوث منتقاة بعناية، تثري العقل وتغذي الروح', 'nadiim' ); ?></p>
                     </div>
-                    <div class="grid grid-4">
+                    <div class="grid grid-4" style="gap: var(--spacing-lg);">
                         <?php while ( $releases_query->have_posts() ) : $releases_query->the_post(); ?>
-                            <article <?php post_class( 'card release-card' ); ?>>
-                                <?php if ( has_post_thumbnail() ) : ?>
-                                    <a href="<?php the_permalink(); ?>">
-                                        <?php the_post_thumbnail( 'nadiim-card', array( 'class' => 'card-image' ) ); ?>
-                                    </a>
-                                <?php endif; ?>
-                                <div class="card-content">
-                                    <h3 class="card-title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
-                                    <?php
-                                    $author = get_post_meta( get_the_ID(), 'release_author', true );
-                                    if ( $author ) : ?>
-                                        <p style="color: var(--color-text-secondary); font-size: 14px;"><?php echo esc_html( $author ); ?></p>
+                            <article <?php post_class( 'card release-card' ); ?> style="border-radius: var(--radius-lg); overflow: hidden; background: #fff; box-shadow: 0 4px 15px rgba(0,0,0,0.08); transition: all 0.4s ease; position: relative; height: 400px; display: flex; flex-direction: column;">
+                                <a href="<?php the_permalink(); ?>" style="position: relative; flex: 1; display: block; overflow: hidden;">
+                                    <?php if ( has_post_thumbnail() ) : ?>
+                                        <?php the_post_thumbnail( 'nadiim-card', array(
+                                            'style' => 'width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease;',
+                                            'class' => 'release-cover-image'
+                                        ) ); ?>
+                                    <?php else : ?>
+                                        <div style="width: 100%; height: 100%; background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%); display: flex; align-items: center; justify-content: center; font-size: 64px; color: rgba(255,255,255,0.3);">
+                                            📚
+                                        </div>
                                     <?php endif; ?>
-                                </div>
+
+                                    <!-- تدرج لوني في الأسفل -->
+                                    <div style="position: absolute; bottom: 0; left: 0; right: 0; height: 50%; background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.6) 50%, transparent 100%); padding: var(--spacing-lg); display: flex; flex-direction: column; justify-content: flex-end;">
+                                        <h3 style="color: #fff; font-size: var(--font-size-lg); font-weight: 700; margin: 0 0 var(--spacing-xs) 0; line-height: 1.3; text-shadow: 0 2px 10px rgba(0,0,0,0.5);">
+                                            <?php the_title(); ?>
+                                        </h3>
+                                        <?php
+                                        $author = get_post_meta( get_the_ID(), 'release_author', true );
+                                        if ( $author ) : ?>
+                                            <p style="color: rgba(255,255,255,0.9); font-size: 14px; margin: 0; text-shadow: 0 1px 5px rgba(0,0,0,0.5);">
+                                                <?php echo esc_html( $author ); ?>
+                                            </p>
+                                        <?php endif; ?>
+                                    </div>
+                                </a>
                             </article>
                         <?php endwhile;
                         wp_reset_postdata(); ?>
                     </div>
-                    <div class="text-center" style="margin-top: var(--spacing-lg);">
+                    <div class="text-center" style="margin-top: var(--spacing-xl);">
                         <a href="<?php echo esc_url( get_post_type_archive_link( 'esdar' ) ); ?>" class="btn btn-outline">
                             <?php esc_html_e( 'جميع الإصدارات', 'nadiim' ); ?>
                         </a>
                     </div>
                 </div>
             </section>
+
+            <style>
+            .release-card:hover {
+                transform: translateY(-8px);
+                box-shadow: 0 12px 35px rgba(0,0,0,0.15);
+            }
+
+            .release-card:hover .release-cover-image {
+                transform: scale(1.08);
+            }
+            </style>
         <?php endif;
     endif; ?>
 
     <?php
-    // قسم المقالات
+    // قسم المقالات - سلايدر
     if ( get_theme_mod( 'nadiim_posts_enable', true ) ) :
-        $posts_count = get_theme_mod( 'nadiim_posts_count', 3 );
-        $posts_title = get_theme_mod( 'nadiim_posts_title', __( 'آخر المقالات', 'nadiim' ) );
+        $posts_title = get_theme_mod( 'nadiim_posts_title', __( 'أحدث المقالات', 'nadiim' ) );
 
         $posts_query = new WP_Query( array(
             'post_type'      => 'post',
-            'posts_per_page' => $posts_count,
+            'posts_per_page' => 4,
             'orderby'        => 'date',
             'order'          => 'DESC',
         ) );
@@ -143,22 +166,140 @@ get_header();
             ?>
             <section class="posts-section section">
                 <div class="container">
-                    <div class="section-title">
+                    <!-- عنوان القسم -->
+                    <div class="section-title" style="text-align: center; margin-bottom: var(--spacing-xl);">
                         <h2><?php echo esc_html( $posts_title ); ?></h2>
                     </div>
-                    <div class="grid grid-3">
-                        <?php while ( $posts_query->have_posts() ) : $posts_query->the_post();
-                            get_template_part( 'template-parts/content' );
-                        endwhile;
-                        wp_reset_postdata(); ?>
+
+                    <!-- السلايدر - 8/12 من الشاشة -->
+                    <div style="max-width: 66.67%; margin: 0 auto;">
+                        <div class="posts-slider swiper">
+                            <div class="swiper-wrapper">
+                                <?php while ( $posts_query->have_posts() ) : $posts_query->the_post(); ?>
+                                    <div class="swiper-slide">
+                                        <article class="post-slide" style="position: relative; height: 500px; border-radius: var(--radius-xl); overflow: hidden; box-shadow: 0 8px 30px rgba(0,0,0,0.12);">
+                                            <!-- الصورة البارزة كخلفية -->
+                                            <?php if ( has_post_thumbnail() ) : ?>
+                                                <div style="position: absolute; inset: 0; z-index: 0;">
+                                                    <?php the_post_thumbnail( 'full', array(
+                                                        'style' => 'width: 100%; height: 100%; object-fit: cover;'
+                                                    ) ); ?>
+                                                    <!-- طبقة شفافة -->
+                                                    <div style="position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.7) 100%);"></div>
+                                                </div>
+                                            <?php else : ?>
+                                                <!-- خلفية افتراضية -->
+                                                <div style="position: absolute; inset: 0; background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%); opacity: 0.7;"></div>
+                                            <?php endif; ?>
+
+                                            <!-- المحتوى -->
+                                            <div style="position: relative; z-index: 1; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: var(--spacing-xl); text-align: center; color: #fff;">
+                                                <!-- العنوان في المنتصف -->
+                                                <h3 style="font-size: clamp(1.5rem, 3vw, 2.5rem); font-weight: 700; margin-bottom: var(--spacing-md); color: #fff; text-shadow: 0 2px 15px rgba(0,0,0,0.5); line-height: 1.3; max-width: 90%;">
+                                                    <?php the_title(); ?>
+                                                </h3>
+
+                                                <!-- مقتطف صغير -->
+                                                <p style="font-size: var(--font-size-lg); color: rgba(255,255,255,0.95); margin-bottom: var(--spacing-lg); max-width: 80%; line-height: 1.6; text-shadow: 0 1px 10px rgba(0,0,0,0.5);">
+                                                    <?php echo nadiim_get_excerpt( 20 ); ?>
+                                                </p>
+
+                                                <!-- زر اقرأ من هنا -->
+                                                <a href="<?php the_permalink(); ?>" class="btn" style="background: #fff; color: var(--color-primary); border: none; padding: 14px 32px; font-weight: 600; box-shadow: 0 4px 20px rgba(0,0,0,0.3); transition: all 0.3s ease;">
+                                                    <?php esc_html_e( 'اقرأ من هنا', 'nadiim' ); ?>
+                                                    <span style="margin-right: 8px;">←</span>
+                                                </a>
+                                            </div>
+                                        </article>
+                                    </div>
+                                <?php endwhile;
+                                wp_reset_postdata(); ?>
+                            </div>
+
+                            <!-- أزرار التنقل -->
+                            <div class="swiper-button-next" style="color: #fff; filter: drop-shadow(0 2px 10px rgba(0,0,0,0.5));"></div>
+                            <div class="swiper-button-prev" style="color: #fff; filter: drop-shadow(0 2px 10px rgba(0,0,0,0.5));"></div>
+
+                            <!-- النقاط -->
+                            <div class="swiper-pagination" style="bottom: 20px;"></div>
+                        </div>
                     </div>
-                    <div class="text-center" style="margin-top: var(--spacing-lg);">
+
+                    <!-- زر المزيد -->
+                    <div class="text-center" style="margin-top: var(--spacing-xl);">
                         <a href="<?php echo esc_url( get_permalink( get_option( 'page_for_posts' ) ) ?: home_url( '/blog' ) ); ?>" class="btn btn-outline">
-                            <?php esc_html_e( 'الاطلاع على باقي المقالات', 'nadiim' ); ?>
+                            <?php esc_html_e( 'المزيد من المقالات', 'nadiim' ); ?>
                         </a>
                     </div>
                 </div>
             </section>
+
+            <!-- Swiper CSS -->
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+            <!-- Swiper JS -->
+            <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+            <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const postsSwiper = new Swiper('.posts-slider', {
+                    loop: true,
+                    autoplay: {
+                        delay: 5000,
+                        disableOnInteraction: false,
+                    },
+                    speed: 800,
+                    effect: 'fade',
+                    fadeEffect: {
+                        crossFade: true
+                    },
+                    pagination: {
+                        el: '.swiper-pagination',
+                        clickable: true,
+                        dynamicBullets: true,
+                    },
+                    navigation: {
+                        nextEl: '.swiper-button-next',
+                        prevEl: '.swiper-button-prev',
+                    },
+                });
+            });
+            </script>
+
+            <style>
+            .post-slide .btn:hover {
+                background: var(--color-primary);
+                color: #fff;
+                transform: translateY(-2px);
+                box-shadow: 0 6px 25px rgba(0,0,0,0.4);
+            }
+
+            .swiper-pagination-bullet {
+                background: #fff;
+                opacity: 0.5;
+            }
+
+            .swiper-pagination-bullet-active {
+                opacity: 1;
+                background: #fff;
+            }
+
+            @media (max-width: 992px) {
+                .posts-section .swiper {
+                    max-width: 90% !important;
+                }
+            }
+
+            @media (max-width: 640px) {
+                .posts-section .swiper {
+                    max-width: 100% !important;
+                }
+
+                .post-slide {
+                    height: 400px !important;
+                }
+            }
+            </style>
         <?php endif;
     endif; ?>
 
