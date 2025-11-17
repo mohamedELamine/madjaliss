@@ -201,45 +201,49 @@ function nadiim_create_demo_users() {
 }
 
 /**
- * Create demo dialogues
+ * Create demo dialogues (Front Page Version)
+ * المحتوى التجريبي للصفحة الرئيسية - حسب المواصفات المطلوبة
  */
 function nadiim_create_demo_dialogues( $users ) {
 	$dialogues = array(
 		array(
-			'title'       => 'حوار حول مستقبل الفكر العربي المعاصر',
-			'content'     => '<p>في هذا الحوار الثري، نناقش التحديات التي تواجه الفكر العربي في العصر الحديث، ونستكشف السبل الممكنة لتجديد الخطاب الفكري والثقافي.</p><p>تطرق الحوار إلى عدة محاور رئيسية، منها: دور المثقف في المجتمع، أزمة المنهج في الدراسات العربية، وضرورة الانفتاح على التجارب الإنسانية المختلفة مع الحفاظ على الهوية.</p><p>كما ناقشنا أهمية القراءة النقدية للتراث، وعدم الوقوع في فخ التقديس أو الإسقاط، بل التعامل مع التراث كمنجز إنساني قابل للدراسة والتحليل.</p>',
+			'title'       => 'حوارة مع فلان: عن القراءة والمدينة',
+			'content'     => '<p>جلسة خفيفة تناقش مفاهيم القراءة اليومية وعلاقتها بالحياة الحضرية المعاصرة، نستكشف فيها كيف تشكل المدن تجربة القراءة وكيف تؤثر القراءة في فهمنا للمكان.</p><p>في هذه الجلسة الممتعة، نستضيف أحد المفكرين المهتمين بالعلاقة بين القراءة والمدينة. نناقش كيف تؤثر البيئة الحضرية على عاداتنا القرائية، وكيف يمكن للقراءة أن تغير نظرتنا للمدن التي نسكنها.</p><p>تطرقنا إلى موضوعات متنوعة منها: المكتبات العامة ودورها في الحياة الثقافية، المقاهي كفضاءات للقراءة، وتأثير الحياة السريعة على أنماط القراءة المختلفة.</p>',
 			'media_type'  => 'video',
-			'media_url'   => 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
-			'date'        => '2024-10-15',
-			'location'    => 'القاهرة - مصر',
-			'transcript'  => 'هذا نص تجريبي للحوار الكامل. في الحوار الحقيقي، سيكون هنا النص الكامل للحوار أو المقابلة...',
+			'media_url'   => 'https://youtu.be/xxxxx',
+			'duration'    => '45 دقيقة',
+			'date'        => '2026-03-02',
+			'location'    => '',
+			'transcript'  => '',
 			'participants' => array( $users[0], $users[1] ),
-			'type'        => 'مقابلة',
-			'topic'       => 'فكر',
+			'type'        => 'مقابلة مسجلة',
+			'topic'       => 'قراءة',
 		),
 		array(
-			'title'       => 'ندوة: الأدب العربي بين الأصالة والمعاصرة',
-			'content'     => '<p>ندوة علمية شارك فيها نخبة من الأدباء والنقاد، تناولت العلاقة بين التراث الأدبي العربي والأشكال الأدبية الحديثة.</p><p>ناقش المشاركون كيفية الاستفادة من التراث دون الوقوع في التقليد، وأهمية التجديد في الأشكال والمضامين مع الحفاظ على الروح العربية للنص.</p>',
+			'title'       => 'جلسة: قراءات في الأدب الجزائري',
+			'content'     => '<p>حوارات عن المنحى الحداثي في الرواية الجزائرية المعاصرة، نستعرض أبرز الأعمال والكتّاب الذين أثروا المشهد الأدبي الجزائري.</p><p>نغوص في هذه الجلسة في عالم الأدب الجزائري المعاصر، مركزين على التيارات الحداثية التي ظهرت خلال العقود الأخيرة. نناقش أعمال كتّاب مثل واسيني الأعرج، أحلام مستغانمي، وياسمينة خضرا.</p><p>نتطرق إلى كيفية تناول هؤلاء الكتّاب لقضايا الهوية، التاريخ، والحداثة في سياق جزائري معقد ومتعدد الأبعاد.</p>',
 			'media_type'  => 'audio',
-			'media_url'   => 'https://soundcloud.com/example/track',
-			'date'        => '2024-09-20',
-			'location'    => 'بيروت - لبنان',
-			'transcript'  => 'نص الندوة الكامل...',
-			'participants' => array( $users[1], $users[2], $users[3] ),
-			'type'        => 'ندوة',
+			'media_url'   => 'audio/file2.mp3',
+			'duration'    => '60 دقيقة',
+			'date'        => '2026-04-10',
+			'location'    => '',
+			'transcript'  => '',
+			'participants' => array( $users[1] ),
+			'type'        => 'نقاش',
 			'topic'       => 'أدب',
 		),
 		array(
-			'title'       => 'حوار مكتوب: قراءة في مشروع محمود شاكر الفكري',
-			'content'     => '<p><strong>السؤال الأول: ما الذي يميز مشروع محمود شاكر الفكري؟</strong></p><p>الإجابة: يتميز مشروع الأستاذ محمود شاكر بعمق التحليل ودقة التوثيق، وبنظرته الشاملة للتراث العربي...</p><p><strong>السؤال الثاني: كيف يمكن الاستفادة من منهجه اليوم؟</strong></p><p>الإجابة: منهج محمود شاكر في قراءة النصوص وتحليلها يقدم لنا نموذجاً للقراءة العميقة...</p>',
-			'media_type'  => 'written',
-			'media_url'   => '',
-			'date'        => '2024-11-01',
+			'title'       => 'حوار خاص: الكتاب والصوت',
+			'content'     => '<p>حديث حول العلاقة بين النص المكتوب والتجربة السمعية، وكيف يمكن للصوت أن يضيف بُعداً جديداً لتجربة القراءة.</p><p>في هذا الحوار الخاص، نستكشف العلاقة الفريدة بين الكلمة المكتوبة والصوت المنطوق. مع انتشار الكتب الصوتية والبودكاست، أصبح السؤال ملحاً: هل تغير طبيعة التجربة الأدبية عندما ننتقل من القراءة إلى الاستماع؟</p><p>نناقش مع ضيوفنا تجاربهم في إنتاج المحتوى الصوتي، وكيف يختارون النصوص المناسبة للتسجيل، والتحديات التي يواجهونها في نقل المعنى والمشاعر عبر الصوت.</p>',
+			'media_type'  => 'podcast',
+			'media_url'   => 'https://youtu.be/yyyyy',
+			'duration'    => '52 دقيقة',
+			'date'        => '2026-05-18',
 			'location'    => '',
 			'transcript'  => '',
-			'participants' => array( $users[0] ),
-			'type'        => 'حوار مكتوب',
-			'topic'       => 'تراث',
+			'participants' => array( $users[2], $users[3] ),
+			'type'        => 'بودكاست',
+			'topic'       => 'صوت',
 		),
 	);
 
@@ -260,6 +264,9 @@ function nadiim_create_demo_dialogues( $users ) {
 
 			// Set meta fields.
 			update_post_meta( $post_id, 'dialogue_date', $dialogue['date'] );
+			update_post_meta( $post_id, 'dialogue_type', $dialogue['type'] );
+			update_post_meta( $post_id, 'dialogue_duration', $dialogue['duration'] );
+			update_post_meta( $post_id, 'dialogue_media', $dialogue['media_url'] );
 			update_post_meta( $post_id, 'dialogue_media_type', $dialogue['media_type'] );
 			update_post_meta( $post_id, 'dialogue_media_url', $dialogue['media_url'] );
 			update_post_meta( $post_id, 'dialogue_location', $dialogue['location'] );
@@ -274,65 +281,52 @@ function nadiim_create_demo_dialogues( $users ) {
 }
 
 /**
- * Create demo releases
+ * Create demo releases (Front Page Version)
+ * الإصدارات التجريبية للصفحة الرئيسية
  */
 function nadiim_create_demo_releases( $users ) {
 	$releases = array(
 		array(
-			'title'          => 'مداخل إعجاز القرآن',
-			'content'        => '<p>كتاب رائد في دراسة إعجاز القرآن الكريم، يقدم مداخل جديدة لفهم هذا الموضوع الشائك من خلال منهج علمي دقيق.</p><p>يتناول الكتاب الإعجاز البياني والبلاغي واللغوي، مع دراسات تطبيقية على آيات قرآنية مختارة.</p>',
-			'author_name'    => 'محمود شاكر',
-			'publish_date'   => '1976-01-01',
-			'isbn'           => '978-1234567890',
-			'pages'          => 450,
-			'publisher'      => 'دار المعارف',
-			'pdf_url'        => '',
+			'title'          => 'كتاب: خطوات نحو القراءة',
+			'content'        => '<p>دليل عملي للقراء المبتدئين، يقدم نصائح واستراتيجيات لبناء عادة القراءة اليومية وتطوير مهارات الفهم والنقد.</p><p>يقدم هذا الكتاب منهجية شاملة لمن يرغب في بناء عادة قرائية صحية ومستدامة. يبدأ بأساسيات اختيار الكتب المناسبة، ثم ينتقل إلى تقنيات القراءة الفعّالة، وينتهي بكيفية الاحتفاظ بالمعلومات وتطبيقها في الحياة اليومية.</p><p>الكتاب مقسم إلى ثلاثة أقسام رئيسية: 1) الأساسيات: كيف تبدأ رحلة القراءة 2) التقنيات: استراتيجيات القراءة الفعّالة 3) الممارسة: كيف تحافظ على استمرارية القراءة</p>',
+			'author_name'    => 'د. أحمد الكاتب',
+			'publish_date'   => '2025-11-01',
+			'isbn'           => '978-1-234567-89-0',
+			'pages'          => 180,
+			'publisher'      => '',
+			'pdf_url'        => 'book1.pdf',
 			'purchase_url'   => '#',
 			'preview_url'    => '#',
 			'type'           => 'كتاب',
-			'topic'          => 'دراسات قرآنية',
+			'topic'          => 'قراءة',
 		),
 		array(
-			'title'          => 'أباطيل وأسمار',
-			'content'        => '<p>مجموعة من المقالات النقدية التي تناقش قضايا فكرية وأدبية معاصرة بأسلوب رصين وحجة قوية.</p>',
-			'author_name'    => 'محمود شاكر',
-			'publish_date'   => '1972-06-15',
-			'isbn'           => '978-1234567891',
-			'pages'          => 320,
-			'publisher'      => 'مكتبة الخانجي',
-			'pdf_url'        => '',
+			'title'          => 'مجلة: أعداد الخريف 2025',
+			'content'        => '<p>العدد الخاص من مجلة نديم الفصلية، يحتوي على مقالات ومراجعات وحوارات حول أبرز الإصدارات الأدبية لموسم الخريف.</p><p>يتضمن هذا العدد: مراجعة معمقة لـ 10 كتب صدرت في خريف 2025، حوار مع الروائي الجزائري الشاب، ملف خاص: الشعر العربي المعاصر، دليل نوادي القراءة للموسم القادم، قراءات نقدية في الأدب المترجم.</p><p>كتب هذا العدد نخبة من النقاد والكتّاب العرب، وهو متاح للقراءة والتحميل مجاناً.</p>',
+			'author_name'    => 'هيئة التحرير - نديم',
+			'publish_date'   => '2025-09-15',
+			'isbn'           => '',
+			'pages'          => 96,
+			'publisher'      => '',
+			'pdf_url'        => 'mag1.pdf',
 			'purchase_url'   => '#',
 			'preview_url'    => '#',
-			'type'           => 'كتاب',
-			'topic'          => 'نقد أدبي',
-		),
-		array(
-			'title'          => 'تجديد الفكر الديني في الإسلام',
-			'content'        => '<p>دراسة معمقة حول ضرورة تجديد الفكر الديني وفق منهجية علمية تراعي الأصول وتستجيب لتحديات العصر.</p>',
-			'author_name'    => 'أحمد منصور',
-			'publish_date'   => '2020-03-10',
-			'isbn'           => '978-1234567892',
-			'pages'          => 280,
-			'publisher'      => 'دار الفكر المعاصر',
-			'pdf_url'        => '',
-			'purchase_url'   => '#',
-			'preview_url'    => '#',
-			'type'           => 'بحث',
-			'topic'          => 'فكر إسلامي',
-		),
-		array(
-			'title'          => 'معجم المصطلحات الأدبية المعاصرة',
-			'content'        => '<p>معجم شامل يضم أهم المصطلحات الأدبية والنقدية المعاصرة مع شرح وافٍ لكل مصطلح.</p>',
-			'author_name'    => 'فاطمة علي',
-			'publish_date'   => '2019-11-22',
-			'isbn'           => '978-1234567893',
-			'pages'          => 520,
-			'publisher'      => 'دار الكتب العلمية',
-			'pdf_url'        => '',
-			'purchase_url'   => '#',
-			'preview_url'    => '#',
-			'type'           => 'مرجع',
+			'type'           => 'مجلة',
 			'topic'          => 'أدب',
+		),
+		array(
+			'title'          => 'كتيب: دليل نوادي القراءة',
+			'content'        => '<p>دليل شامل لإنشاء وإدارة نوادي القراءة، يتضمن نصائح عملية واستراتيجيات مجربة لبناء مجتمع قرائي نشط.</p><p>هذا الدليل العملي موجه لكل من يرغب في تأسيس نادي قراءة أو تطوير نادٍ قائم. يغطي الدليل: كيفية اختيار الكتب المناسبة للنقاش، طرق إدارة الجلسات بفعالية، استراتيجيات لجذب أعضاء جدد، أدوات رقمية لتنظيم النادي، أمثلة على نوادي ناجحة في العالم العربي.</p><p>يتضمن الدليل أيضاً قوائم جاهزة وأسئلة نقاشية يمكن استخدامها مباشرة.</p>',
+			'author_name'    => 'فريق نديم',
+			'publish_date'   => '2026-01-01',
+			'isbn'           => '',
+			'pages'          => 48,
+			'publisher'      => '',
+			'pdf_url'        => 'guide1.pdf',
+			'purchase_url'   => '#',
+			'preview_url'    => '#',
+			'type'           => 'كتيب',
+			'topic'          => 'نوادي القراءة',
 		),
 	);
 
@@ -348,10 +342,14 @@ function nadiim_create_demo_releases( $users ) {
 		);
 
 		if ( $post_id ) {
-			// Set featured image (placeholder).
-			nadiim_set_placeholder_image( $post_id, 600, 900 );
+			// Set featured image (placeholder) - نسبة 1:1.4 (140×200)
+			nadiim_set_placeholder_image( $post_id, 420, 600 );
 
-			// Set meta fields.
+			// Set meta fields (متوافقة مع Front Page)
+			update_post_meta( $post_id, 'release_author', $release['author_name'] );
+			update_post_meta( $post_id, 'release_date', $release['publish_date'] );
+			update_post_meta( $post_id, 'release_isbn', $release['isbn'] );
+			update_post_meta( $post_id, 'release_file', $release['pdf_url'] );
 			update_post_meta( $post_id, 'esdar_author', $release['author_name'] );
 			update_post_meta( $post_id, 'esdar_publish_date', $release['publish_date'] );
 			update_post_meta( $post_id, 'esdar_isbn', $release['isbn'] );
@@ -369,7 +367,8 @@ function nadiim_create_demo_releases( $users ) {
 }
 
 /**
- * Create demo reading clubs
+ * Create demo reading clubs (Front Page Version)
+ * نوادي القراءة التجريبية للصفحة الرئيسية
  */
 function nadiim_create_demo_reading_clubs( $users ) {
 	// Get first release for linking.
@@ -383,26 +382,37 @@ function nadiim_create_demo_reading_clubs( $users ) {
 
 	$clubs = array(
 		array(
-			'title'         => 'نادي قراءة التراث',
-			'content'       => '<p>نادٍ متخصص في قراءة ومناقشة كتب التراث العربي والإسلامي، نجتمع كل أسبوعين لمناقشة كتاب مختار.</p><p>الهدف من النادي هو إحياء التراث وفهمه فهماً معاصراً، والاستفادة من كنوز الفكر الإسلامي في حياتنا.</p>',
+			'title'         => 'نادي الرواية العصري',
+			'content'       => '<p>نادي شهري مخصص لقراءة ومناقشة الروايات العربية والمترجمة المعاصرة.</p><p>نادي الرواية العصري هو مجتمع من عشاق الرواية يجتمعون شهرياً لمناقشة رواية مختارة بعناية. نركز على الروايات المعاصرة التي تتناول قضايا راهنة وتستخدم تقنيات سردية مبتكرة.</p><h3>ما نقرأه:</h3><ul><li>روايات عربية معاصرة</li><li>روايات عالمية مترجمة</li><li>أحياناً روايات كلاسيكية مؤثرة</li></ul><h3>كيف نجتمع:</h3><p>نلتقي في الأسبوع الأول من كل شهر، نحدد التاريخ والمكان قبل أسبوعين. الجلسة تستمر ساعتين تقريباً.</p><h3>من يمكنه الانضمام:</h3><p>النادي مفتوح للجميع، المهم فقط أن تكون قد قرأت الرواية المحددة.</p><p>انضم إلينا في رحلة استكشاف عوالم سردية جديدة!</p>',
 			'supervisor'    => $users[0],
 			'members'       => array( $users[1], $users[2] ),
 			'current_book'  => ! empty( $releases ) ? $releases[0] : 0,
-			'schedule'      => 'كل يوم جمعة الساعة 8 مساءً',
-			'meeting_url'   => 'https://zoom.us/j/123456789',
+			'schedule'      => '2026-03-05',
+			'meeting_url'   => '',
 			'join_url'      => '#',
 			'max_members'   => 20,
 		),
 		array(
-			'title'         => 'نادي الأدب المعاصر',
-			'content'       => '<p>نادي قراءة مخصص للأدب العربي المعاصر، نناقش الروايات والدواوين الشعرية الحديثة.</p>',
+			'title'         => 'نادي الشعر',
+			'content'       => '<p>نلتقي لقراءة ومناقشة الشعر العربي الكلاسيكي والمعاصر، ونستكشف جماليات اللغة الشعرية.</p><p>نادي الشعر هو ملتقى لمحبي الشعر العربي بجميع عصوره وأشكاله. نقرأ القصائد بصوت عالٍ، ونناقش معانيها وجمالياتها، ونتشارك تجاربنا مع الكلمة الشعرية.</p><h3>ما نقرأه:</h3><ul><li>الشعر العربي الكلاسيكي</li><li>شعر التفعيلة</li><li>قصيدة النثر</li><li>الشعر المترجم أحياناً</li></ul><h3>كيف نجتمع:</h3><p>جلساتنا أسبوعية، كل يوم خميس مساءً. نختار في كل جلسة شاعراً أو موضوعاً معيناً.</p><h3>الأنشطة:</h3><ul><li>قراءة جماعية</li><li>تحليل نقدي</li><li>ورش كتابة شعرية للمهتمين</li><li>استضافة شعراء أحياناً</li></ul><p>إذا كنت تحب الشعر، فهذا مكانك!</p>',
 			'supervisor'    => $users[1],
 			'members'       => array( $users[2], $users[3] ),
 			'current_book'  => ! empty( $releases ) ? $releases[0] : 0,
-			'schedule'      => 'كل يوم سبت الساعة 7 مساءً',
-			'meeting_url'   => 'https://meet.google.com/abc-defg-hij',
+			'schedule'      => '2026-03-07',
+			'meeting_url'   => '',
 			'join_url'      => '#',
 			'max_members'   => 15,
+		),
+		array(
+			'title'         => 'نادي دراسات نقدية',
+			'content'       => '<p>نادي متخصص في النقد الأدبي والدراسات الثقافية، موجه لمن يرغب في قراءة نقدية معمقة.</p><p>نادي دراسات نقدية مخصص لمن يرغب في تجاوز القراءة السطحية والدخول في عوالم النقد والتحليل الأدبي. نقرأ نصوصاً نقدية ونناقشها، ونطبق أدوات النقد على نصوص أدبية مختارة.</p><h3>ما نقرأه:</h3><ul><li>كتب في النقد الأدبي</li><li>دراسات ثقافية ونظرية</li><li>مقالات نقدية معاصرة</li><li>نصوص أدبية للتحليل</li></ul><h3>المستوى:</h3><p>النادي موجه لمن لديه خلفية أساسية في الأدب أو النقد. نرحب بالمبتدئين الجادين.</p><h3>كيف نجتمع:</h3><p>مرة كل أسبوعين، نحدد قراءة مسبقة ونناقشها في الجلسة.</p><h3>الهدف:</h3><p>تطوير أدوات قرائية نقدية وبناء مجتمع من القراء الواعين.</p><p>انضم إلينا لنقرأ بعمق أكبر!</p>',
+			'supervisor'    => $users[2],
+			'members'       => array( $users[0], $users[3] ),
+			'current_book'  => ! empty( $releases ) ? $releases[0] : 0,
+			'schedule'      => '2026-03-12',
+			'meeting_url'   => 'https://zoom.us/j/987654321',
+			'join_url'      => '#',
+			'max_members'   => 12,
 		),
 	);
 
@@ -418,14 +428,17 @@ function nadiim_create_demo_reading_clubs( $users ) {
 		);
 
 		if ( $post_id ) {
-			// Set featured image (placeholder).
-			nadiim_set_placeholder_image( $post_id, 800, 500 );
+			// Set featured image (placeholder) - دائري 80px
+			nadiim_set_placeholder_image( $post_id, 240, 240 );
 
-			// Set meta fields.
+			// Set meta fields (متوافقة مع Front Page)
+			update_post_meta( $post_id, 'club_leader', get_the_author_meta( 'display_name', $club['supervisor'] ) );
+			update_post_meta( $post_id, 'club_schedule', $club['schedule'] );
+			update_post_meta( $post_id, 'current_book', $club['current_book'] );
+			update_post_meta( $post_id, 'join_link', $club['join_url'] );
 			update_post_meta( $post_id, 'club_supervisor', $club['supervisor'] );
 			update_post_meta( $post_id, 'club_members', $club['members'] );
 			update_post_meta( $post_id, 'club_current_book', $club['current_book'] );
-			update_post_meta( $post_id, 'club_schedule', $club['schedule'] );
 			update_post_meta( $post_id, 'club_meeting_url', $club['meeting_url'] );
 			update_post_meta( $post_id, 'club_join_url', $club['join_url'] );
 			update_post_meta( $post_id, 'club_max_members', $club['max_members'] );
@@ -434,34 +447,25 @@ function nadiim_create_demo_reading_clubs( $users ) {
 }
 
 /**
- * Create demo posts
+ * Create demo posts (Front Page Version)
+ * المقالات التجريبية للصفحة الرئيسية
  */
 function nadiim_create_demo_posts( $users ) {
 	$posts = array(
 		array(
-			'title'   => 'أهمية القراءة في بناء الشخصية',
-			'content' => '<p>القراءة غذاء الروح والعقل، وهي المفتاح الأول لبناء شخصية متوازنة وواعية. في هذا المقال نستكشف الأبعاد المختلفة لأهمية القراءة.</p><p>من خلال القراءة، نكتسب المعرفة ونوسع آفاقنا، ونتعرف على تجارب الآخرين وثقافاتهم. القراءة ليست مجرد هواية، بل هي أسلوب حياة ومنهج تفكير.</p>',
+			'title'   => 'كيف تقرأ بمزاج',
+			'content' => '<p>نصائح وأفكار لجعل القراءة تجربة ممتعة ومريحة، بعيداً عن الضغوط والالتزامات.</p><p>القراءة ليست واجباً ولا مهمة يجب إنجازها. إنها متعة شخصية يمكن أن تصبح جزءاً طبيعياً من يومك إذا اقتربت منها بالطريقة الصحيحة.</p><p>في هذا المقال، نشارك بعض النصائح البسيطة:</p><p><strong>1. اختر الوقت المناسب:</strong> ليس عليك القراءة في وقت محدد. اقرأ عندما تشعر بالرغبة.</p><p><strong>2. لا تكمل كل كتاب:</strong> إذا لم يعجبك كتاب، اتركه واختر غيره. الحياة قصيرة والكتب كثيرة.</p><p><strong>3. نوّع قراءاتك:</strong> لا تقيد نفسك بنوع واحد. اقرأ الرواية والشعر والمقالة والقصة القصيرة.</p><p><strong>4. اصنع مكاناً مريحاً:</strong> زاوية هادئة، إضاءة جيدة، كرسي مريح، ومشروب دافئ.</p><p><strong>5. شارك ما تقرأ:</strong> الحديث عن الكتب مع الآخرين يضيف بُعداً جديداً للتجربة.</p><p>تذكر: القراءة رحلة شخصية، لا تقارن نفسك بأحد.</p>',
 			'author'  => $users[0],
 		),
 		array(
-			'title'   => 'مراجعة كتاب: مداخل إعجاز القرآن',
-			'content' => '<p>في هذه المراجعة نتناول كتاب "مداخل إعجاز القرآن" للأستاذ محمود شاكر، وهو من أهم الكتب في هذا المجال.</p><p>يتميز الكتاب بالعمق والدقة، ويقدم منهجاً علمياً في دراسة الإعجاز القرآني بعيداً عن المبالغات...</p>',
+			'title'   => 'تقرير: معرض الكتب المحلي',
+			'content' => '<p>جولة في معرض الكتاب السنوي، مع أبرز الإصدارات والفعاليات التي شهدها المعرض هذا العام.</p><p>شهد معرض الكتاب هذا العام حضوراً لافتاً وتنوعاً في العروض. زرنا المعرض وقضينا يوماً كاملاً بين الأجنحة، وهنا خلاصة ما رأيناه:</p><h3>الإصدارات الجديدة:</h3><p>تنوعت الإصدارات بين الرواية والشعر والدراسات النقدية. لفت انتباهنا صدور مجموعة من الروايات المترجمة لأول مرة إلى العربية.</p><h3>الفعاليات الثقافية:</h3><p>نظم المعرض عدة ندوات وحوارات مع كتّاب وناشرين. كانت جلسة "القراءة في العصر الرقمي" من أكثر الجلسات حضوراً ونقاشاً.</p><h3>ملاحظات:</h3><ul><li>الأسعار متفاوتة لكن معقولة بشكل عام</li><li>حضور الشباب كان ملفتاً</li><li>نقص في تمثيل الناشرين المستقلين</li></ul><p>ننصح بزيارة المعرض في الأيام الأخيرة للحصول على تخفيضات جيدة.</p>',
 			'author'  => $users[1],
 		),
 		array(
-			'title'   => 'التراث والمعاصرة: جدلية مستمرة',
-			'content' => '<p>العلاقة بين التراث والمعاصرة من القضايا الشائكة التي تثير جدلاً واسعاً في الأوساط الفكرية والثقافية.</p>',
+			'title'   => 'قراءة في قصيدة فلان',
+			'content' => '<p>تحليل أدبي لإحدى القصائد المعاصرة، نستكشف فيه الصور الشعرية والبنية اللغوية والسياق الثقافي.</p><p>القصيدة التي بين أيدينا تمثل نموذجاً مميزاً من الشعر العربي المعاصر. سنحاول في هذه القراءة أن نفكك بعض طبقات المعنى ونستكشف التقنيات الفنية التي وظفها الشاعر.</p><h3>البنية:</h3><p>القصيدة مكونة من أربعة مقاطع، كل مقطع يمثل لحظة زمنية مختلفة. يستخدم الشاعر تقنية القطع والوصل لخلق إيقاع متنوع.</p><h3>الصور الشعرية:</h3><p>يكثر الشاعر من استخدام صور الطبيعة، لكنه يوظفها في سياق حضري معاصر. هذا التوتر بين الطبيعي والصناعي يخلق جمالية خاصة.</p><h3>اللغة:</h3><p>اللغة بسيطة لكنها مكثفة. لا زخرف ولا تعقيد، بل بحث عن الكلمة الأدق التي تحمل المعنى الأعمق.</p><h3>الخاتمة:</h3><p>القصيدة دعوة للتأمل في التجربة الإنسانية المشتركة، وهي تنجح في ذلك من خلال بساطة خادعة وعمق حقيقي.</p>',
 			'author'  => $users[2],
-		),
-		array(
-			'title'   => 'منهجية البحث العلمي في الدراسات الأدبية',
-			'content' => '<p>البحث العلمي في الأدب يتطلب منهجية دقيقة وأدوات علمية محددة. في هذا المقال نستعرض أهم المناهج البحثية.</p>',
-			'author'  => $users[3],
-		),
-		array(
-			'title'   => 'دور المثقف في المجتمع المعاصر',
-			'content' => '<p>المثقف له دور محوري في توجيه المجتمع وتنويره، لكن هذا الدور يواجه تحديات كبيرة في عصرنا الحالي.</p>',
-			'author'  => $users[0],
 		),
 	);
 
@@ -645,10 +649,55 @@ function nadiim_setup_demo_menus() {
 }
 
 /**
- * Setup demo customizer settings
+ * Setup demo customizer settings (Front Page Version)
+ * إعدادات الصفحة الرئيسية التجريبية
  */
 function nadiim_setup_demo_customizer() {
+	// Front Page Settings (New)
+	// Topbar
+	set_theme_mod( 'home_topbar_enable', true );
+	set_theme_mod( 'home_topbar_count', 5 );
+	set_theme_mod( 'home_topbar_bg', '#26704A' );
+	set_theme_mod( 'home_topbar_text', '#FFFFFF' );
+	set_theme_mod( 'home_topbar_source', 'events' );
+
 	// Hero section settings.
+	set_theme_mod( 'home_hero_enable', true );
+	set_theme_mod( 'home_hero_title', 'مرحباً بكم في نديم' );
+	set_theme_mod( 'home_hero_subtitle', 'فضاءٌ هادئ للحوارات الرصينة والإصدارات النافعة ونوادي القراءة الممتعة' );
+	set_theme_mod( 'home_hero_cta_text', 'استكشف المحتوى' );
+	set_theme_mod( 'home_hero_cta_link', '#dialogues' );
+	set_theme_mod( 'home_hero_bg_type', 'gradient' );
+	set_theme_mod( 'home_hero_bg_color', '#F6FFF9' );
+	set_theme_mod( 'home_hero_overlay_opacity', 0.3 );
+
+	// Dialogues section.
+	set_theme_mod( 'home_dialogues_enable', true );
+	set_theme_mod( 'home_dialogues_count', 6 );
+	set_theme_mod( 'home_dialogues_layout', 'grid' );
+	set_theme_mod( 'home_dialogues_source', 'recent' );
+
+	// Releases section.
+	set_theme_mod( 'home_releases_enable', true );
+	set_theme_mod( 'home_releases_count', 8 );
+	set_theme_mod( 'home_releases_layout', 'carousel' );
+
+	// Posts section.
+	set_theme_mod( 'home_posts_enable', true );
+	set_theme_mod( 'home_posts_count', 3 );
+	set_theme_mod( 'home_posts_category', '' );
+
+	// Clubs section.
+	set_theme_mod( 'home_clubs_enable', true );
+	set_theme_mod( 'home_clubs_count', 3 );
+
+	// Newsletter section.
+	set_theme_mod( 'home_newsletter_enable', true );
+	set_theme_mod( 'home_newsletter_title', 'اشترك في نشرتنا البريدية' );
+	set_theme_mod( 'home_newsletter_desc', 'تلقَّ آخر الأخبار والإصدارات والفعاليات مباشرة في بريدك' );
+	set_theme_mod( 'home_newsletter_provider', 'mailchimp' );
+
+	// Old Settings (للتوافق مع المستقبل)
 	set_theme_mod( 'nadiim_hero_enable', true );
 	set_theme_mod( 'nadiim_hero_title', 'مرحباً بكم في نديم' );
 	set_theme_mod( 'nadiim_hero_description', 'منصة ثقافية فكرية تهدف إلى نشر المعرفة وتعزيز الحوار الفكري البناء' );
