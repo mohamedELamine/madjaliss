@@ -368,9 +368,20 @@ function nadiim_save_howarat_participants( $post_id ) {
 
 	// حفظ البيانات بصيغة JSON
 	if ( ! empty( $participants ) ) {
-		update_post_meta( $post_id, 'dialogue_participants', wp_json_encode( $participants, JSON_UNESCAPED_UNICODE ) );
+		$json_data = wp_json_encode( $participants, JSON_UNESCAPED_UNICODE );
+		update_post_meta( $post_id, 'dialogue_participants', $json_data );
+
+		// Debug: تسجيل البيانات المحفوظة
+		if ( defined( 'WP_DEBUG' ) && WP_DEBUG && defined( 'WP_DEBUG_LOG' ) && WP_DEBUG_LOG ) {
+			error_log( 'Howarat Participants Saved for Post ID ' . $post_id . ': ' . $json_data );
+		}
 	} else {
 		delete_post_meta( $post_id, 'dialogue_participants' );
+
+		// Debug: تسجيل حذف البيانات
+		if ( defined( 'WP_DEBUG' ) && WP_DEBUG && defined( 'WP_DEBUG_LOG' ) && WP_DEBUG_LOG ) {
+			error_log( 'Howarat Participants deleted for Post ID ' . $post_id . ' (empty array)' );
+		}
 	}
 }
 add_action( 'save_post_howarat', 'nadiim_save_howarat_participants' );

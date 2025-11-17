@@ -48,6 +48,12 @@ while ( have_posts() ) :
 		}
 	}
 
+	// Debug: طباعة البيانات للتحقق (يمكن إزالة هذا لاحقاً)
+	if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
+		echo '<!-- DEBUG - Participants JSON: ' . esc_html( $participants_json ) . ' -->';
+		echo '<!-- DEBUG - Participants Array: ' . esc_html( print_r( $participants, true ) ) . ' -->';
+	}
+
 	// تحديد نوع الميديا
 	if ( ! $media_type && $dialogue_media ) {
 		if ( strpos( $dialogue_media, 'youtube' ) !== false || strpos( $dialogue_media, 'youtu.be' ) !== false ) {

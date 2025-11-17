@@ -68,6 +68,16 @@ wp_enqueue_style( 'howarat-style', get_template_directory_uri() . '/assets/css/h
 
 					// تنسيق التاريخ
 					$formatted_date = $dialogue_date ? date_i18n( 'j F، Y', strtotime( $dialogue_date ) ) : get_the_date();
+
+					// جلب المشاركين
+					$participants_json = get_post_meta( get_the_ID(), 'dialogue_participants', true );
+					$participants      = array();
+					if ( ! empty( $participants_json ) && is_string( $participants_json ) ) {
+						$decoded = json_decode( $participants_json, true );
+						if ( ! is_null( $decoded ) && is_array( $decoded ) ) {
+							$participants = $decoded;
+						}
+					}
 					?>
 
 					<article <?php post_class( 'howarat-card' ); ?>>
@@ -119,6 +129,22 @@ wp_enqueue_style( 'howarat-style', get_template_directory_uri() . '/assets/css/h
 							<div class="howarat-card-excerpt">
 								<?php echo wp_trim_words( get_the_excerpt(), 20, '...' ); ?>
 							</div>
+
+							<!-- المشاركون -->
+							<?php if ( ! empty( $participants ) && is_array( $participants ) ) : ?>
+								<div class="howarat-card-participants">
+									<span class="participants-label">👥 المشاركون:</span>
+									<?php
+									$participant_names = array();
+									foreach ( $participants as $participant ) {
+										if ( isset( $participant['name'] ) && ! empty( $participant['name'] ) ) {
+											$participant_names[] = esc_html( $participant['name'] );
+										}
+									}
+									echo implode( '، ', $participant_names );
+									?>
+								</div>
+							<?php endif; ?>
 
 							<!-- البيانات الإضافية -->
 							<?php if ( $dialogue_duration ) : ?>

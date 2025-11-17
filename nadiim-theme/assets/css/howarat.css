@@ -832,6 +832,23 @@
 	flex: 1;
 }
 
+/* المشاركون في البطاقة */
+.howarat-card-participants {
+	font-size: 13px;
+	color: var(--howarat-text-muted);
+	margin-bottom: 12px;
+	padding: 8px 12px;
+	background: rgba(51, 144, 99, 0.05);
+	border-radius: 6px;
+	border-right: 3px solid var(--howarat-primary);
+}
+
+.howarat-card-participants .participants-label {
+	font-weight: 600;
+	color: var(--howarat-primary);
+	margin-left: 6px;
+}
+
 .howarat-card-duration {
 	font-size: 13px;
 	color: var(--howarat-text-muted);
