@@ -39,9 +39,11 @@ while ( have_posts() ) :
 	$participants_json = get_post_meta( get_the_ID(), 'dialogue_participants', true );
 	$participants      = array();
 
-	if ( ! empty( $participants_json ) ) {
+	if ( ! empty( $participants_json ) && is_string( $participants_json ) ) {
+		// تجربة فك التشفير بشكل آمن
 		$decoded = json_decode( $participants_json, true );
-		if ( is_array( $decoded ) ) {
+		// التحقق من أن النتيجة مصفوفة صالحة وليست null أو false
+		if ( ! is_null( $decoded ) && is_array( $decoded ) ) {
 			$participants = $decoded;
 		}
 	}
@@ -76,8 +78,11 @@ while ( have_posts() ) :
 				<div class="howarat-hero-container">
 					<!-- شارة التاريخ -->
 					<div class="howarat-date-badge">
-						<span class="date-day"><?php echo date_i18n( 'd', strtotime( $dialogue_date ?: 'now' ) ); ?></span>
-						<span class="date-month"><?php echo date_i18n( 'M', strtotime( $dialogue_date ?: 'now' ) ); ?></span>
+						<?php
+						$badge_date = ! empty( $dialogue_date ) ? $dialogue_date : current_time( 'mysql' );
+						?>
+						<span class="date-day"><?php echo date_i18n( 'd', strtotime( $badge_date ) ); ?></span>
+						<span class="date-month"><?php echo date_i18n( 'M', strtotime( $badge_date ) ); ?></span>
 					</div>
 
 					<!-- شارة النوع -->
