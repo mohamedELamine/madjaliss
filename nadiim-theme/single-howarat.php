@@ -226,29 +226,37 @@ while ( have_posts() ) :
 								}
 								?>
 
+								<?php
+								// الحصول على القيم بشكل آمن (التأكد من أنها strings وليست arrays)
+								$p_name = isset( $participant['name'] ) && is_string( $participant['name'] ) ? $participant['name'] : '';
+								$p_role = isset( $participant['role'] ) && is_string( $participant['role'] ) ? $participant['role'] : '';
+								$p_bio  = isset( $participant['bio'] ) && is_string( $participant['bio'] ) ? $participant['bio'] : '';
+								$p_link = isset( $participant['link'] ) && is_string( $participant['link'] ) ? $participant['link'] : '';
+								?>
+
 								<div class="participant-card">
 									<?php if ( $photo_url ) : ?>
 										<div class="participant-photo">
-											<img src="<?php echo esc_url( $photo_url ); ?>" alt="<?php echo esc_attr( isset( $participant['name'] ) ? $participant['name'] : '' ); ?>">
+											<img src="<?php echo esc_url( $photo_url ); ?>" alt="<?php echo esc_attr( $p_name ); ?>">
 										</div>
 									<?php endif; ?>
 
 									<div class="participant-info">
 										<h3 class="participant-name">
-											<?php echo esc_html( isset( $participant['name'] ) ? $participant['name'] : '' ); ?>
-											<?php if ( isset( $participant['link'] ) && ! empty( $participant['link'] ) ) : ?>
-												<a href="<?php echo esc_url( $participant['link'] ); ?>" target="_blank" class="participant-link-btn" title="تعرف عليه">
+											<?php echo esc_html( $p_name ); ?>
+											<?php if ( ! empty( $p_link ) ) : ?>
+												<a href="<?php echo esc_url( $p_link ); ?>" target="_blank" class="participant-link-btn" title="تعرف عليه">
 													<span class="link-icon">↗</span>
 												</a>
 											<?php endif; ?>
 										</h3>
 
-										<?php if ( isset( $participant['role'] ) && ! empty( $participant['role'] ) ) : ?>
-											<p class="participant-role"><?php echo esc_html( $participant['role'] ); ?></p>
+										<?php if ( ! empty( $p_role ) ) : ?>
+											<p class="participant-role"><?php echo esc_html( $p_role ); ?></p>
 										<?php endif; ?>
 
-										<?php if ( isset( $participant['bio'] ) && ! empty( $participant['bio'] ) ) : ?>
-											<p class="participant-bio"><?php echo esc_html( $participant['bio'] ); ?></p>
+										<?php if ( ! empty( $p_bio ) ) : ?>
+											<p class="participant-bio"><?php echo esc_html( $p_bio ); ?></p>
 										<?php endif; ?>
 									</div>
 								</div>
@@ -294,6 +302,7 @@ while ( have_posts() ) :
 						<div class="sidebar-participants">
 							<?php foreach ( $participants as $participant ) : ?>
 								<?php
+								// جلب الصورة
 								$photo_url = '';
 								if ( isset( $participant['photo_id'] ) && $participant['photo_id'] > 0 ) {
 									$photo_url = wp_get_attachment_image_url( $participant['photo_id'], 'thumbnail' );
@@ -301,15 +310,19 @@ while ( have_posts() ) :
 								if ( ! $photo_url && isset( $participant['type'] ) && $participant['type'] === 'user' && isset( $participant['id'] ) ) {
 									$photo_url = get_avatar_url( $participant['id'], array( 'size' => 64 ) );
 								}
+
+								// الحصول على القيم بشكل آمن
+								$sidebar_name = isset( $participant['name'] ) && is_string( $participant['name'] ) ? $participant['name'] : '';
+								$sidebar_role = isset( $participant['role'] ) && is_string( $participant['role'] ) ? $participant['role'] : '';
 								?>
 								<div class="sidebar-participant-item">
 									<?php if ( $photo_url ) : ?>
-										<img src="<?php echo esc_url( $photo_url ); ?>" alt="<?php echo esc_attr( isset( $participant['name'] ) ? $participant['name'] : '' ); ?>" class="sidebar-participant-photo">
+										<img src="<?php echo esc_url( $photo_url ); ?>" alt="<?php echo esc_attr( $sidebar_name ); ?>" class="sidebar-participant-photo">
 									<?php endif; ?>
 									<div class="sidebar-participant-text">
-										<p class="sidebar-participant-name"><?php echo esc_html( isset( $participant['name'] ) ? $participant['name'] : '' ); ?></p>
-										<?php if ( isset( $participant['role'] ) ) : ?>
-											<p class="sidebar-participant-role"><?php echo esc_html( $participant['role'] ); ?></p>
+										<p class="sidebar-participant-name"><?php echo esc_html( $sidebar_name ); ?></p>
+										<?php if ( ! empty( $sidebar_role ) ) : ?>
+											<p class="sidebar-participant-role"><?php echo esc_html( $sidebar_role ); ?></p>
 										<?php endif; ?>
 									</div>
 								</div>

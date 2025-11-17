@@ -137,7 +137,8 @@ wp_enqueue_style( 'howarat-style', get_template_directory_uri() . '/assets/css/h
 									<?php
 									$participant_names = array();
 									foreach ( $participants as $participant ) {
-										if ( isset( $participant['name'] ) && ! empty( $participant['name'] ) ) {
+										// التأكد من أن name هو string وليس array
+										if ( isset( $participant['name'] ) && is_string( $participant['name'] ) && ! empty( $participant['name'] ) ) {
 											$participant_names[] = esc_html( $participant['name'] );
 										}
 									}

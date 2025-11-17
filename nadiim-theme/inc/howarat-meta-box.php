@@ -326,7 +326,22 @@ function nadiim_save_howarat_participants( $post_id ) {
 	$participants_raw = isset( $_POST['participants'] ) ? $_POST['participants'] : array();
 	$participants     = array();
 
+	// Debug: تسجيل البيانات الواردة
+	if ( defined( 'WP_DEBUG' ) && WP_DEBUG && defined( 'WP_DEBUG_LOG' ) && WP_DEBUG_LOG ) {
+		error_log( 'Howarat - Raw POST participants for Post ID ' . $post_id . ': ' . print_r( $participants_raw, true ) );
+	}
+
+	// التحقق من أن البيانات الواردة هي مصفوفة
+	if ( ! is_array( $participants_raw ) ) {
+		$participants_raw = array();
+	}
+
 	foreach ( $participants_raw as $participant_data ) {
+		// تخطي إذا لم تكن البيانات مصفوفة
+		if ( ! is_array( $participant_data ) ) {
+			continue;
+		}
+
 		$participant = array();
 
 		// نوع المشارك
@@ -357,11 +372,11 @@ function nadiim_save_howarat_participants( $post_id ) {
 			}
 		}
 
-		// باقي الحقول
+		// باقي الحقول - التأكد من أنها strings وليست arrays
 		$participant['photo_id'] = isset( $participant_data['photo_id'] ) ? absint( $participant_data['photo_id'] ) : 0;
-		$participant['role']     = isset( $participant_data['role'] ) ? sanitize_text_field( $participant_data['role'] ) : '';
-		$participant['bio']      = isset( $participant_data['bio'] ) ? sanitize_textarea_field( $participant_data['bio'] ) : '';
-		$participant['link']     = isset( $participant_data['link'] ) ? esc_url_raw( $participant_data['link'] ) : '';
+		$participant['role']     = isset( $participant_data['role'] ) && is_string( $participant_data['role'] ) ? sanitize_text_field( $participant_data['role'] ) : '';
+		$participant['bio']      = isset( $participant_data['bio'] ) && is_string( $participant_data['bio'] ) ? sanitize_textarea_field( $participant_data['bio'] ) : '';
+		$participant['link']     = isset( $participant_data['link'] ) && is_string( $participant_data['link'] ) ? esc_url_raw( $participant_data['link'] ) : '';
 
 		$participants[] = $participant;
 	}
