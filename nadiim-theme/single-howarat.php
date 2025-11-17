@@ -1,340 +1,371 @@
 <?php
 /**
- * قالب الحوار المفرد
+ * قالب الصفحة المفردة للحوارات
  *
- * يعرض الحوار بتفاصيله الكاملة مع الوسائط والترانسكريبت والمشاركين
+ * تجربة المستخدم النهائية:
+ * - يشاهد المستخدم صفحة احترافية وهادئة للحوار
+ * - هيرو كامل بصورة الحوار، العنوان، التاريخ، والنوع
+ * - إذا كان هناك رابط فيديو/صوت، يظهر مشغل مدمج
+ * - يقرأ المحتوى الكامل مع مسافات واسعة ومريحة
+ * - يرى قائمة المشاركين بصورهم وسيرهم الذاتية
+ * - يجد في الـsidebar حوارات مشابهة وروابط ذات صلة
+ *
+ * التصميم:
+ * - ألوان هادئة تعتمد على #339063
+ * - مسافات كبيرة بين العناصر
+ * - خطوط واضحة ومريحة للقراءة
+ * - تأثيرات hover خفيفة وأنيقة
  *
  * @package Nadiim
- * @since 1.0.0
+ * @since 2.0.0
  */
 
 get_header();
 
+// تحميل ملف CSS الخاص بالحوارات
+wp_enqueue_style( 'howarat-style', get_template_directory_uri() . '/assets/css/howarat.css', array(), '1.0.0' );
+
 while ( have_posts() ) :
-    the_post();
+	the_post();
 
-    // جلب البيانات المخصصة
-    $dialogue_date       = get_post_meta( get_the_ID(), 'dialogue_date', true );
-    $dialogue_media_type = get_post_meta( get_the_ID(), 'dialogue_media_type', true );
-    $dialogue_media_url  = get_post_meta( get_the_ID(), 'dialogue_media_url', true );
-    $dialogue_location   = get_post_meta( get_the_ID(), 'dialogue_location', true );
-    $dialogue_transcript = get_post_meta( get_the_ID(), 'dialogue_transcript', true );
-    $participants        = get_post_meta( get_the_ID(), 'dialogue_participants', true );
+	// جلب البيانات الوصفية
+	$dialogue_date     = get_post_meta( get_the_ID(), 'dialogue_date', true );
+	$dialogue_type     = get_post_meta( get_the_ID(), 'dialogue_type', true );
+	$dialogue_duration = get_post_meta( get_the_ID(), 'dialogue_duration', true );
+	$dialogue_media    = get_post_meta( get_the_ID(), 'dialogue_media', true );
+	$media_type        = get_post_meta( get_the_ID(), 'dialogue_media_type', true );
+	$participants_json = get_post_meta( get_the_ID(), 'dialogue_participants', true );
+	$participants      = $participants_json ? json_decode( $participants_json, true ) : array();
 
-    // تحديد أيقونة ونص نوع الحوار
-    $media_icon  = 'document';
-    $media_label = __( 'حوار مكتوب', 'nadiim' );
-    $action_text = __( 'اقرأ النص', 'nadiim' );
+	// تحديد نوع الميديا
+	if ( ! $media_type && $dialogue_media ) {
+		if ( strpos( $dialogue_media, 'youtube' ) !== false || strpos( $dialogue_media, 'youtu.be' ) !== false ) {
+			$media_type = 'video';
+		} elseif ( strpos( $dialogue_media, '.mp3' ) !== false || strpos( $dialogue_media, 'audio' ) !== false ) {
+			$media_type = 'audio';
+		} else {
+			$media_type = 'podcast';
+		}
+	}
 
-    switch ( $dialogue_media_type ) {
-        case 'video':
-            $media_icon  = 'video';
-            $media_label = __( 'حوار مرئي', 'nadiim' );
-            $action_text = __( 'شاهد الآن', 'nadiim' );
-            break;
-        case 'audio':
-            $media_icon  = 'audio';
-            $media_label = __( 'حوار صوتي', 'nadiim' );
-            $action_text = __( 'استمع الآن', 'nadiim' );
-            break;
-    }
-    ?>
+	// تنسيق التاريخ
+	$formatted_date = $dialogue_date ? date_i18n( 'j F، Y', strtotime( $dialogue_date ) ) : get_the_date();
+	?>
 
-    <article id="post-<?php the_ID(); ?>" <?php post_class( 'single-howarat' ); ?>>
+	<article id="post-<?php the_ID(); ?>" <?php post_class( 'howarat-single' ); ?>>
 
-        <!-- Hero Section -->
-        <div class="dialogue-hero" style="position: relative; background-color: var(--color-text-primary); color: #ffffff; padding: var(--spacing-xxl) 0; margin-bottom: var(--spacing-xl);">
+		<!-- قسم الهيرو -->
+		<div class="howarat-hero">
+			<?php if ( has_post_thumbnail() ) : ?>
+				<div class="howarat-hero-image">
+					<?php the_post_thumbnail( 'full' ); ?>
+					<div class="howarat-hero-overlay"></div>
+				</div>
+			<?php endif; ?>
 
-            <?php if ( has_post_thumbnail() ) : ?>
-                <!-- صورة الخلفية -->
-                <div class="hero-background" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; opacity: 0.2; background-size: cover; background-position: center;">
-                    <?php the_post_thumbnail( 'nadiim-hero' ); ?>
-                </div>
-            <?php endif; ?>
+			<div class="howarat-hero-content">
+				<div class="howarat-hero-container">
+					<!-- شارة التاريخ -->
+					<div class="howarat-date-badge">
+						<span class="date-day"><?php echo date_i18n( 'd', strtotime( $dialogue_date ?: 'now' ) ); ?></span>
+						<span class="date-month"><?php echo date_i18n( 'M', strtotime( $dialogue_date ?: 'now' ) ); ?></span>
+					</div>
 
-            <div class="container" style="position: relative; z-index: 1;">
-                <div class="hero-content" style="max-width: 900px; margin: 0 auto; text-align: center;">
+					<!-- شارة النوع -->
+					<?php if ( $media_type ) : ?>
+						<div class="howarat-type-badge">
+							<?php
+							$type_icons = array(
+								'video'   => '▶️ فيديو',
+								'audio'   => '🎵 صوت',
+								'podcast' => '🎧 بودكاست',
+							);
+							echo isset( $type_icons[ $media_type ] ) ? $type_icons[ $media_type ] : '📻 حوار';
+							?>
+						</div>
+					<?php endif; ?>
 
-                    <!-- نوع الحوار -->
-                    <div class="dialogue-type" style="margin-bottom: var(--spacing-md); display: inline-flex; align-items: center; gap: 8px; background: rgba(255, 255, 255, 0.1); padding: 8px 20px; border-radius: var(--radius-lg); backdrop-filter: blur(10px);">
-                        <?php echo nadiim_get_icon( $media_icon ); ?>
-                        <span style="font-weight: 600;"><?php echo esc_html( $media_label ); ?></span>
-                    </div>
+					<!-- العنوان -->
+					<h1 class="howarat-title"><?php the_title(); ?></h1>
 
-                    <!-- العنوان -->
-                    <h1 class="entry-title" style="font-size: var(--font-size-3xl); margin-bottom: var(--spacing-md); color: #ffffff;">
-                        <?php the_title(); ?>
-                    </h1>
+					<!-- البيانات الوصفية -->
+					<div class="howarat-meta">
+						<span class="howarat-meta-item">
+							<span class="meta-icon">📅</span>
+							<?php echo esc_html( $formatted_date ); ?>
+						</span>
 
-                    <!-- الميتا -->
-                    <div class="dialogue-meta" style="display: flex; align-items: center; justify-content: center; gap: var(--spacing-md); flex-wrap: wrap; margin-bottom: var(--spacing-lg); color: rgba(255, 255, 255, 0.9);">
-                        <?php if ( $dialogue_date ) : ?>
-                            <span style="display: inline-flex; align-items: center; gap: 6px;">
-                                <?php echo nadiim_get_icon( 'calendar' ); ?>
-                                <?php echo esc_html( date_i18n( 'j F، Y', strtotime( $dialogue_date ) ) ); ?>
-                            </span>
-                        <?php endif; ?>
+						<?php if ( $dialogue_duration ) : ?>
+							<span class="howarat-meta-item">
+								<span class="meta-icon">⏱️</span>
+								<?php echo esc_html( $dialogue_duration ); ?>
+							</span>
+						<?php endif; ?>
 
-                        <?php if ( $dialogue_location ) : ?>
-                            <span style="display: inline-flex; align-items: center; gap: 6px;">
-                                📍 <?php echo esc_html( $dialogue_location ); ?>
-                            </span>
-                        <?php endif; ?>
-                    </div>
+						<?php if ( $dialogue_type ) : ?>
+							<span class="howarat-meta-item">
+								<span class="meta-icon">📻</span>
+								<?php echo esc_html( $dialogue_type ); ?>
+							</span>
+						<?php endif; ?>
+					</div>
 
-                    <!-- أزرار الإجراءات -->
-                    <div class="dialogue-actions" style="display: flex; gap: var(--spacing-sm); justify-content: center; flex-wrap: wrap;">
-                        <?php if ( $dialogue_media_url && in_array( $dialogue_media_type, array( 'video', 'audio' ), true ) ) : ?>
-                            <a href="#media-player" class="btn btn-primary" style="scroll-behavior: smooth;">
-                                <?php echo esc_html( $action_text ); ?>
-                            </a>
-                        <?php endif; ?>
+					<!-- أزرار CTA -->
+					<div class="howarat-cta-buttons">
+						<?php if ( $dialogue_media ) : ?>
+							<a href="#player" class="howarat-cta-btn howarat-cta-primary">
+								<?php echo $media_type === 'video' ? 'شاهد الحوار' : 'استمع للحوار'; ?>
+								<span class="cta-arrow">↓</span>
+							</a>
+						<?php endif; ?>
+						<a href="#content" class="howarat-cta-btn howarat-cta-secondary">
+							قراءة التلخيص
+							<span class="cta-arrow">↓</span>
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
 
-                        <?php if ( $dialogue_transcript ) : ?>
-                            <a href="#transcript" class="btn btn-outline" style="background-color: rgba(255, 255, 255, 0.1); color: #ffffff; border-color: rgba(255, 255, 255, 0.3);">
-                                <?php esc_html_e( 'اقرأ الملخص', 'nadiim' ); ?>
-                            </a>
-                        <?php endif; ?>
+		<!-- المحتوى الرئيسي -->
+		<div class="howarat-main-container">
+			<div class="howarat-content-wrapper">
 
-                        <button id="share-dialogue" class="btn btn-outline" style="background-color: rgba(255, 255, 255, 0.1); color: #ffffff; border-color: rgba(255, 255, 255, 0.3);">
-                            <?php esc_html_e( 'شارك', 'nadiim' ); ?>
-                        </button>
-                    </div>
+				<!-- المشغل (إذا كان هناك رابط فيديو/صوت) -->
+				<?php if ( $dialogue_media ) : ?>
+					<div id="player" class="howarat-player-section">
+						<h2 class="section-title">شاهد أو استمع للحوار</h2>
 
-                </div>
-            </div>
-        </div>
+						<?php if ( $media_type === 'video' ) : ?>
+							<!-- مشغل فيديو YouTube -->
+							<div class="howarat-video-player">
+								<?php
+								// استخدام WordPress oEmbed
+								$embed = wp_oembed_get( $dialogue_media );
+								if ( $embed ) {
+									echo $embed;
+								} else {
+									echo '<p>لم يتمكن من تحميل الفيديو. <a href="' . esc_url( $dialogue_media ) . '" target="_blank">شاهده على YouTube</a></p>';
+								}
+								?>
+							</div>
+						<?php elseif ( $media_type === 'audio' ) : ?>
+							<!-- مشغل صوت -->
+							<div class="howarat-audio-player">
+								<audio controls>
+									<source src="<?php echo esc_url( $dialogue_media ); ?>" type="audio/mpeg">
+									متصفحك لا يدعم تشغيل الملفات الصوتية.
+								</audio>
+							</div>
+						<?php else : ?>
+							<!-- رابط خارجي (بودكاست) -->
+							<div class="howarat-external-player">
+								<a href="<?php echo esc_url( $dialogue_media ); ?>" target="_blank" class="external-link-btn">
+									استمع على المنصة الأصلية
+									<span class="external-icon">↗</span>
+								</a>
+							</div>
+						<?php endif; ?>
+					</div>
+				<?php endif; ?>
 
-        <div class="container container-narrow">
+				<!-- ملخص الحوار -->
+				<?php if ( has_excerpt() ) : ?>
+					<div id="summary" class="howarat-summary-section">
+						<h2 class="section-title">ملخص الحوار</h2>
+						<div class="howarat-summary-content">
+							<?php the_excerpt(); ?>
+						</div>
+					</div>
+				<?php endif; ?>
 
-            <!-- المشاركون -->
-            <?php if ( ! empty( $participants ) && is_array( $participants ) ) : ?>
-                <section class="dialogue-participants-section" style="margin-bottom: var(--spacing-xl); padding: var(--spacing-lg); background-color: var(--color-bg-section); border-radius: var(--radius-lg);">
-                    <h2 style="text-align: center; margin-bottom: var(--spacing-lg);">
-                        <?php esc_html_e( 'المشاركون في الحوار', 'nadiim' ); ?>
-                    </h2>
+				<!-- المحتوى الكامل -->
+				<div id="content" class="howarat-content-section">
+					<h2 class="section-title">نص الحوار الكامل</h2>
+					<div class="howarat-content-body">
+						<?php the_content(); ?>
+					</div>
+				</div>
 
-                    <div class="participants-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--spacing-md);">
-                        <?php foreach ( $participants as $user_id ) :
-                            $user = get_user_by( 'ID', $user_id );
-                            if ( ! $user ) {
-                                continue;
-                            }
-                            ?>
-                            <div class="participant-card" style="text-align: center; padding: var(--spacing-md); background: var(--color-bg-lighter); border-radius: var(--radius-md); transition: transform 0.3s ease;">
-                                <a href="<?php echo esc_url( get_author_posts_url( $user->ID ) ); ?>" style="display: block;">
-                                    <?php echo get_avatar( $user->ID, 80, '', '', array( 'style' => 'border-radius: 50%; margin: 0 auto var(--spacing-sm);' ) ); ?>
-                                    <h4 style="margin: 0; color: var(--color-text-primary); font-size: var(--font-size-lg);">
-                                        <?php echo esc_html( $user->display_name ); ?>
-                                    </h4>
-                                    <?php if ( $user->description ) : ?>
-                                        <p style="margin: var(--spacing-sm) 0 0; font-size: var(--font-size-sm); color: var(--color-text-secondary);">
-                                            <?php echo esc_html( wp_trim_words( $user->description, 10 ) ); ?>
-                                        </p>
-                                    <?php endif; ?>
-                                </a>
-                            </div>
-                        <?php endforeach; ?>
-                    </div>
-                </section>
-            <?php endif; ?>
+				<!-- المشاركون -->
+				<?php if ( ! empty( $participants ) && is_array( $participants ) ) : ?>
+					<div id="participants" class="howarat-participants-section">
+						<h2 class="section-title">المشاركون في الحوار</h2>
+						<div class="howarat-participants-grid">
+							<?php foreach ( $participants as $participant ) : ?>
+								<?php
+								// الحصول على الصورة
+								$photo_url = '';
+								if ( isset( $participant['photo_id'] ) && $participant['photo_id'] > 0 ) {
+									$photo_url = wp_get_attachment_image_url( $participant['photo_id'], 'thumbnail' );
+								}
 
-            <!-- مشغل الوسائط -->
-            <?php if ( $dialogue_media_url && in_array( $dialogue_media_type, array( 'video', 'audio' ), true ) ) : ?>
-                <section id="media-player" class="dialogue-media" style="margin-bottom: var(--spacing-xl);">
-                    <h2 style="text-align: center; margin-bottom: var(--spacing-lg);">
-                        <?php
-                        if ( 'video' === $dialogue_media_type ) {
-                            esc_html_e( 'شاهد الحوار', 'nadiim' );
-                        } else {
-                            esc_html_e( 'استمع إلى الحوار', 'nadiim' );
-                        }
-                        ?>
-                    </h2>
+								// إذا كان مستخدماً، محاولة جلب صورة الملف الشخصي
+								if ( ! $photo_url && isset( $participant['type'] ) && $participant['type'] === 'user' && isset( $participant['id'] ) ) {
+									$photo_url = get_avatar_url( $participant['id'], array( 'size' => 128 ) );
+								}
+								?>
 
-                    <div class="media-embed" style="background-color: var(--color-bg-section); padding: var(--spacing-md); border-radius: var(--radius-lg);">
-                        <?php
-                        // استخدام wp_oembed لدعم YouTube, Vimeo, SoundCloud وغيرها
-                        echo wp_oembed_get( $dialogue_media_url, array( 'width' => 800 ) );
-                        ?>
-                    </div>
-                </section>
-            <?php endif; ?>
+								<div class="participant-card">
+									<?php if ( $photo_url ) : ?>
+										<div class="participant-photo">
+											<img src="<?php echo esc_url( $photo_url ); ?>" alt="<?php echo esc_attr( $participant['name'] ?? '' ); ?>">
+										</div>
+									<?php endif; ?>
 
-            <!-- المحتوى الرئيسي -->
-            <div class="entry-content" style="margin-bottom: var(--spacing-xl); line-height: 1.9; font-size: var(--font-size-lg);">
-                <?php the_content(); ?>
-            </div>
+									<div class="participant-info">
+										<h3 class="participant-name">
+											<?php echo esc_html( $participant['name'] ?? '' ); ?>
+											<?php if ( isset( $participant['link'] ) && ! empty( $participant['link'] ) ) : ?>
+												<a href="<?php echo esc_url( $participant['link'] ); ?>" target="_blank" class="participant-link-btn" title="تعرف عليه">
+													<span class="link-icon">↗</span>
+												</a>
+											<?php endif; ?>
+										</h3>
 
-            <!-- نص الترانسكريبت -->
-            <?php if ( $dialogue_transcript ) : ?>
-                <section id="transcript" class="dialogue-transcript" style="margin-bottom: var(--spacing-xl);">
-                    <h2 style="text-align: center; margin-bottom: var(--spacing-lg); padding-bottom: var(--spacing-md); border-bottom: 2px solid var(--color-primary);">
-                        <?php esc_html_e( 'نص الحوار الكامل', 'nadiim' ); ?>
-                    </h2>
+										<?php if ( isset( $participant['role'] ) && ! empty( $participant['role'] ) ) : ?>
+											<p class="participant-role"><?php echo esc_html( $participant['role'] ); ?></p>
+										<?php endif; ?>
 
-                    <div class="transcript-content" style="background-color: var(--color-bg-section); padding: var(--spacing-xl); border-radius: var(--radius-lg); border-right: 4px solid var(--color-primary); line-height: 2; font-size: var(--font-size-base);">
-                        <?php echo wp_kses_post( wpautop( $dialogue_transcript ) ); ?>
-                    </div>
-                </section>
-            <?php endif; ?>
+										<?php if ( isset( $participant['bio'] ) && ! empty( $participant['bio'] ) ) : ?>
+											<p class="participant-bio"><?php echo esc_html( $participant['bio'] ); ?></p>
+										<?php endif; ?>
+									</div>
+								</div>
 
-            <!-- المواضيع والتصنيفات -->
-            <div class="dialogue-taxonomies" style="margin-bottom: var(--spacing-xl); padding: var(--spacing-lg); background-color: var(--color-bg-section); border-radius: var(--radius-lg);">
-                <?php
-                // نوع الحوار
-                $types = get_the_terms( get_the_ID(), 'dialogue_type' );
-                if ( $types && ! is_wp_error( $types ) ) :
-                    ?>
-                    <div style="margin-bottom: var(--spacing-md);">
-                        <strong style="margin-left: var(--spacing-sm);"><?php esc_html_e( 'النوع:', 'nadiim' ); ?></strong>
-                        <?php foreach ( $types as $type ) : ?>
-                            <a href="<?php echo esc_url( get_term_link( $type ) ); ?>" class="badge">
-                                <?php echo esc_html( $type->name ); ?>
-                            </a>
-                        <?php endforeach; ?>
-                    </div>
-                <?php endif; ?>
+							<?php endforeach; ?>
+						</div>
+					</div>
+				<?php endif; ?>
 
-                <?php
-                // مواضيع الحوار
-                $topics = get_the_terms( get_the_ID(), 'dialogue_topic' );
-                if ( $topics && ! is_wp_error( $topics ) ) :
-                    ?>
-                    <div>
-                        <strong style="margin-left: var(--spacing-sm);"><?php esc_html_e( 'المواضيع:', 'nadiim' ); ?></strong>
-                        <?php foreach ( $topics as $topic ) : ?>
-                            <a href="<?php echo esc_url( get_term_link( $topic ) ); ?>" class="badge badge-outline">
-                                <?php echo esc_html( $topic->name ); ?>
-                            </a>
-                        <?php endforeach; ?>
-                    </div>
-                <?php endif; ?>
-            </div>
+				<!-- التنقل بين المنشورات -->
+				<div class="howarat-navigation">
+					<?php
+					$prev_post = get_previous_post();
+					$next_post = get_next_post();
+					?>
 
-            <!-- حوارات مشابهة -->
-            <?php
-            $related_howarat = new WP_Query( array(
-                'post_type'      => 'howarat',
-                'posts_per_page' => 3,
-                'post__not_in'   => array( get_the_ID() ),
-                'orderby'        => 'rand',
-                'tax_query'      => array(
-                    array(
-                        'taxonomy' => 'dialogue_topic',
-                        'terms'    => wp_get_post_terms( get_the_ID(), 'dialogue_topic', array( 'fields' => 'ids' ) ),
-                    ),
-                ),
-            ) );
+					<?php if ( $prev_post ) : ?>
+						<a href="<?php echo get_permalink( $prev_post ); ?>" class="nav-prev">
+							<span class="nav-arrow">→</span>
+							<span class="nav-label">الحوار السابق</span>
+							<span class="nav-title"><?php echo get_the_title( $prev_post ); ?></span>
+						</a>
+					<?php endif; ?>
 
-            if ( $related_howarat->have_posts() ) :
-                ?>
-                <section class="related-dialogues" style="margin-bottom: var(--spacing-xl);">
-                    <h2 style="text-align: center; margin-bottom: var(--spacing-lg);">
-                        <?php esc_html_e( 'حوارات مشابهة', 'nadiim' ); ?>
-                    </h2>
+					<?php if ( $next_post ) : ?>
+						<a href="<?php echo get_permalink( $next_post ); ?>" class="nav-next">
+							<span class="nav-label">الحوار التالي</span>
+							<span class="nav-title"><?php echo get_the_title( $next_post ); ?></span>
+							<span class="nav-arrow">←</span>
+						</a>
+					<?php endif; ?>
+				</div>
 
-                    <div class="grid grid-3">
-                        <?php
-                        while ( $related_howarat->have_posts() ) :
-                            $related_howarat->the_post();
-                            get_template_part( 'template-parts/content', 'howarat-card' );
-                        endwhile;
-                        wp_reset_postdata();
-                        ?>
-                    </div>
-                </section>
-            <?php endif; ?>
+			</div><!-- .howarat-content-wrapper -->
 
-            <!-- التعليقات -->
-            <?php
-            if ( comments_open() || get_comments_number() ) :
-                comments_template();
-            endif;
-            ?>
+			<!-- Sidebar -->
+			<aside class="howarat-sidebar">
 
-        </div>
+				<!-- المشاركون (نسخة مصغرة) -->
+				<?php if ( ! empty( $participants ) && is_array( $participants ) ) : ?>
+					<div class="sidebar-widget">
+						<h3 class="widget-title">المشاركون</h3>
+						<div class="sidebar-participants">
+							<?php foreach ( $participants as $participant ) : ?>
+								<?php
+								$photo_url = '';
+								if ( isset( $participant['photo_id'] ) && $participant['photo_id'] > 0 ) {
+									$photo_url = wp_get_attachment_image_url( $participant['photo_id'], 'thumbnail' );
+								}
+								if ( ! $photo_url && isset( $participant['type'] ) && $participant['type'] === 'user' && isset( $participant['id'] ) ) {
+									$photo_url = get_avatar_url( $participant['id'], array( 'size' => 64 ) );
+								}
+								?>
+								<div class="sidebar-participant-item">
+									<?php if ( $photo_url ) : ?>
+										<img src="<?php echo esc_url( $photo_url ); ?>" alt="<?php echo esc_attr( $participant['name'] ?? '' ); ?>" class="sidebar-participant-photo">
+									<?php endif; ?>
+									<div class="sidebar-participant-text">
+										<p class="sidebar-participant-name"><?php echo esc_html( $participant['name'] ?? '' ); ?></p>
+										<?php if ( isset( $participant['role'] ) ) : ?>
+											<p class="sidebar-participant-role"><?php echo esc_html( $participant['role'] ); ?></p>
+										<?php endif; ?>
+									</div>
+								</div>
+							<?php endforeach; ?>
+						</div>
+					</div>
+				<?php endif; ?>
 
-    </article>
+				<!-- حوارات مشابهة -->
+				<?php
+				$related_args = array(
+					'post_type'      => 'howarat',
+					'posts_per_page' => 3,
+					'post__not_in'   => array( get_the_ID() ),
+					'orderby'        => 'rand',
+				);
+				$related_query = new WP_Query( $related_args );
 
-    <?php
-    // إضافة Schema.org للحوار
-    nadiim_dialogue_schema();
-    ?>
+				if ( $related_query->have_posts() ) :
+					?>
+					<div class="sidebar-widget">
+						<h3 class="widget-title">حوارات مشابهة</h3>
+						<div class="sidebar-related-posts">
+							<?php while ( $related_query->have_posts() ) : $related_query->the_post(); ?>
+								<article class="sidebar-related-item">
+									<?php if ( has_post_thumbnail() ) : ?>
+										<a href="<?php the_permalink(); ?>" class="related-thumbnail">
+											<?php the_post_thumbnail( 'thumbnail' ); ?>
+										</a>
+									<?php endif; ?>
+									<div class="related-content">
+										<h4 class="related-title">
+											<a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
+										</h4>
+										<p class="related-date"><?php echo get_the_date(); ?></p>
+									</div>
+								</article>
+							<?php endwhile; wp_reset_postdata(); ?>
+						</div>
+					</div>
+				<?php endif; ?>
+
+				<!-- اقرأ أيضاً (من المدونة) -->
+				<?php
+				$blog_args = array(
+					'post_type'      => 'post',
+					'posts_per_page' => 3,
+					'orderby'        => 'date',
+					'order'          => 'DESC',
+				);
+				$blog_query = new WP_Query( $blog_args );
+
+				if ( $blog_query->have_posts() ) :
+					?>
+					<div class="sidebar-widget">
+						<h3 class="widget-title">اقرأ أيضاً</h3>
+						<div class="sidebar-blog-posts">
+							<?php while ( $blog_query->have_posts() ) : $blog_query->the_post(); ?>
+								<article class="sidebar-blog-item">
+									<h4 class="blog-title">
+										<a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
+									</h4>
+									<p class="blog-excerpt"><?php echo wp_trim_words( get_the_excerpt(), 12, '...' ); ?></p>
+								</article>
+							<?php endwhile; wp_reset_postdata(); ?>
+						</div>
+					</div>
+				<?php endif; ?>
+
+			</aside><!-- .howarat-sidebar -->
+
+		</div><!-- .howarat-main-container -->
+
+	</article><!-- #post-<?php the_ID(); ?> -->
 
 <?php
 endwhile;
 
 get_footer();
-
-/**
- * إضافة Schema.org للحوار
- */
-function nadiim_dialogue_schema() {
-    $dialogue_date = get_post_meta( get_the_ID(), 'dialogue_date', true );
-    $dialogue_location = get_post_meta( get_the_ID(), 'dialogue_location', true );
-    $participants = get_post_meta( get_the_ID(), 'dialogue_participants', true );
-
-    $schema = array(
-        '@context'      => 'https://schema.org',
-        '@type'         => 'Event',
-        'name'          => get_the_title(),
-        'description'   => get_the_excerpt(),
-        'startDate'     => $dialogue_date ? date( 'c', strtotime( $dialogue_date ) ) : get_the_date( 'c' ),
-        'eventStatus'   => 'https://schema.org/EventScheduled',
-        'eventAttendanceMode' => 'https://schema.org/OfflineEventAttendanceMode',
-    );
-
-    if ( $dialogue_location ) {
-        $schema['location'] = array(
-            '@type' => 'Place',
-            'name'  => $dialogue_location,
-        );
-    }
-
-    if ( has_post_thumbnail() ) {
-        $schema['image'] = get_the_post_thumbnail_url( null, 'full' );
-    }
-
-    if ( ! empty( $participants ) && is_array( $participants ) ) {
-        $schema['performer'] = array();
-        foreach ( $participants as $user_id ) {
-            $user = get_user_by( 'ID', $user_id );
-            if ( $user ) {
-                $schema['performer'][] = array(
-                    '@type' => 'Person',
-                    'name'  => $user->display_name,
-                );
-            }
-        }
-    }
-
-    echo '<script type="application/ld+json">' . wp_json_encode( $schema, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES ) . '</script>';
-}
-?>
-
-<script>
-// زر المشاركة
-jQuery(document).ready(function($) {
-    $('#share-dialogue').on('click', function() {
-        if (navigator.share) {
-            navigator.share({
-                title: '<?php echo esc_js( get_the_title() ); ?>',
-                text: '<?php echo esc_js( get_the_excerpt() ); ?>',
-                url: '<?php echo esc_js( get_permalink() ); ?>'
-            }).catch(function(error) {
-                console.log('Error sharing:', error);
-            });
-        } else {
-            // نسخ الرابط للحافظة
-            var tempInput = document.createElement('input');
-            tempInput.value = '<?php echo esc_js( get_permalink() ); ?>';
-            document.body.appendChild(tempInput);
-            tempInput.select();
-            document.execCommand('copy');
-            document.body.removeChild(tempInput);
-            alert('تم نسخ الرابط!');
-        }
-    });
-});
-</script>

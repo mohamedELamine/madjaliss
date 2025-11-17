@@ -240,8 +240,14 @@ add_action( 'admin_init', 'nadiim_editor_styles' );
 // تضمين ملف Custom Post Types
 require_once NADIIM_THEME_DIR . '/inc/custom-post-types.php';
 
+// تضمين ملف CPT الحوارات
+require_once NADIIM_THEME_DIR . '/inc/cpt-howarat.php';
+
 // تضمين ملف Meta Boxes
 require_once NADIIM_THEME_DIR . '/inc/meta-boxes.php';
+
+// تضمين ميتا بوكس الحوارات
+require_once NADIIM_THEME_DIR . '/inc/howarat-meta-box.php';
 
 // تضمين ملف Customizer
 require_once NADIIM_THEME_DIR . '/inc/customizer.php';
