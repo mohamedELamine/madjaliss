@@ -34,8 +34,17 @@ while ( have_posts() ) :
 	$dialogue_duration = get_post_meta( get_the_ID(), 'dialogue_duration', true );
 	$dialogue_media    = get_post_meta( get_the_ID(), 'dialogue_media', true );
 	$media_type        = get_post_meta( get_the_ID(), 'dialogue_media_type', true );
+
+	// جلب المشاركين مع معالجة آمنة
 	$participants_json = get_post_meta( get_the_ID(), 'dialogue_participants', true );
-	$participants      = $participants_json ? json_decode( $participants_json, true ) : array();
+	$participants      = array();
+
+	if ( ! empty( $participants_json ) ) {
+		$decoded = json_decode( $participants_json, true );
+		if ( is_array( $decoded ) ) {
+			$participants = $decoded;
+		}
+	}
 
 	// تحديد نوع الميديا
 	if ( ! $media_type && $dialogue_media ) {
@@ -209,13 +218,13 @@ while ( have_posts() ) :
 								<div class="participant-card">
 									<?php if ( $photo_url ) : ?>
 										<div class="participant-photo">
-											<img src="<?php echo esc_url( $photo_url ); ?>" alt="<?php echo esc_attr( $participant['name'] ?? '' ); ?>">
+											<img src="<?php echo esc_url( $photo_url ); ?>" alt="<?php echo esc_attr( isset( $participant['name'] ) ? $participant['name'] : '' ); ?>">
 										</div>
 									<?php endif; ?>
 
 									<div class="participant-info">
 										<h3 class="participant-name">
-											<?php echo esc_html( $participant['name'] ?? '' ); ?>
+											<?php echo esc_html( isset( $participant['name'] ) ? $participant['name'] : '' ); ?>
 											<?php if ( isset( $participant['link'] ) && ! empty( $participant['link'] ) ) : ?>
 												<a href="<?php echo esc_url( $participant['link'] ); ?>" target="_blank" class="participant-link-btn" title="تعرف عليه">
 													<span class="link-icon">↗</span>
@@ -284,10 +293,10 @@ while ( have_posts() ) :
 								?>
 								<div class="sidebar-participant-item">
 									<?php if ( $photo_url ) : ?>
-										<img src="<?php echo esc_url( $photo_url ); ?>" alt="<?php echo esc_attr( $participant['name'] ?? '' ); ?>" class="sidebar-participant-photo">
+										<img src="<?php echo esc_url( $photo_url ); ?>" alt="<?php echo esc_attr( isset( $participant['name'] ) ? $participant['name'] : '' ); ?>" class="sidebar-participant-photo">
 									<?php endif; ?>
 									<div class="sidebar-participant-text">
-										<p class="sidebar-participant-name"><?php echo esc_html( $participant['name'] ?? '' ); ?></p>
+										<p class="sidebar-participant-name"><?php echo esc_html( isset( $participant['name'] ) ? $participant['name'] : '' ); ?></p>
 										<?php if ( isset( $participant['role'] ) ) : ?>
 											<p class="sidebar-participant-role"><?php echo esc_html( $participant['role'] ); ?></p>
 										<?php endif; ?>
