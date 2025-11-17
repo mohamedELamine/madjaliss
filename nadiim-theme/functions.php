@@ -335,3 +335,49 @@ function nadiim_add_lazy_loading( $content ) {
 }
 add_filter( 'the_content', 'nadiim_add_lazy_loading' );
 add_filter( 'post_thumbnail_html', 'nadiim_add_lazy_loading' );
+
+/**
+ * AJAX Handler للنشرة البريدية
+ */
+function nadiim_subscribe_newsletter() {
+	// التحقق من الأمان
+	check_ajax_referer( 'nadiim-front-page-nonce', 'nonce' );
+
+	// الحصول على البريد الإلكتروني
+	$email = isset( $_POST['email'] ) ? sanitize_email( $_POST['email'] ) : '';
+
+	// التحقق من صحة البريد الإلكتروني
+	if ( empty( $email ) || ! is_email( $email ) ) {
+		wp_send_json_error( array(
+			'message' => __( 'يرجى إدخال بريد إلكتروني صحيح', 'nadiim' ),
+		) );
+	}
+
+	// حفظ البريد الإلكتروني في قاعدة البيانات
+	// يمكن استخدام جدول مخصص أو post meta أو تكامل مع خدمة خارجية
+	$subscribers = get_option( 'nadiim_newsletter_subscribers', array() );
+
+	// التحقق من عدم وجود البريد مسبقاً
+	if ( in_array( $email, $subscribers ) ) {
+		wp_send_json_error( array(
+			'message' => __( 'هذا البريد الإلكتروني مشترك بالفعل', 'nadiim' ),
+		) );
+	}
+
+	// إضافة البريد إلى القائمة
+	$subscribers[] = $email;
+	update_option( 'nadiim_newsletter_subscribers', $subscribers );
+
+	// إرسال إشعار للمدير (اختياري)
+	$admin_email = get_option( 'admin_email' );
+	$subject     = __( 'اشتراك جديد في النشرة البريدية', 'nadiim' );
+	$message     = sprintf( __( 'اشترك %s في النشرة البريدية', 'nadiim' ), $email );
+	wp_mail( $admin_email, $subject, $message );
+
+	// إرسال استجابة النجاح
+	wp_send_json_success( array(
+		'message' => __( 'تم الاشتراك بنجاح! شكراً لك.', 'nadiim' ),
+	) );
+}
+add_action( 'wp_ajax_nadiim_subscribe_newsletter', 'nadiim_subscribe_newsletter' );
+add_action( 'wp_ajax_nopriv_nadiim_subscribe_newsletter', 'nadiim_subscribe_newsletter' );

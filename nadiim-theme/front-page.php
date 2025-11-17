@@ -14,6 +14,12 @@ get_header();
 // تحميل CSS و JS الخاصة بالصفحة الرئيسية
 wp_enqueue_style( 'nadiim-front-page', get_template_directory_uri() . '/assets/css/front-page.css', array(), '2.0.0' );
 wp_enqueue_script( 'nadiim-front-page', get_template_directory_uri() . '/assets/js/front-page.js', array( 'jquery' ), '2.0.0', true );
+
+// تمرير متغيرات AJAX إلى JavaScript
+wp_localize_script( 'nadiim-front-page', 'nadiimFrontPage', array(
+	'ajax_url' => admin_url( 'admin-ajax.php' ),
+	'nonce'    => wp_create_nonce( 'nadiim-front-page-nonce' ),
+) );
 ?>
 
 <main id="primary" class="site-main front-page-main">
