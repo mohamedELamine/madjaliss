@@ -137,9 +137,10 @@ wp_enqueue_style( 'howarat-style', get_template_directory_uri() . '/assets/css/h
 									<?php
 									$participant_names = array();
 									foreach ( $participants as $participant ) {
-										// التأكد من أن name هو string وليس array
-										if ( isset( $participant['name'] ) && is_string( $participant['name'] ) && ! empty( $participant['name'] ) ) {
-											$participant_names[] = esc_html( $participant['name'] );
+										// استخدام الدالة المساعدة للحصول على الاسم بأمان
+										$name = nadiim_get_participant_field( $participant, 'name' );
+										if ( ! empty( $name ) ) {
+											$participant_names[] = esc_html( $name );
 										}
 									}
 									echo implode( '، ', $participant_names );

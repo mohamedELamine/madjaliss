@@ -249,6 +249,42 @@ require_once NADIIM_THEME_DIR . '/inc/meta-boxes.php';
 // تضمين ميتا بوكس الحوارات
 require_once NADIIM_THEME_DIR . '/inc/howarat-meta-box.php';
 
+/**
+ * دالة مساعدة لاستخراج قيمة string آمنة من مصفوفة المشارك
+ *
+ * تمنع خطأ "Array to string conversion" بالتحقق من نوع البيانات
+ *
+ * @param array  $participant مصفوفة بيانات المشارك
+ * @param string $key مفتاح الحقل المطلوب
+ * @param string $default القيمة الافتراضية
+ * @return string
+ */
+function nadiim_get_participant_field( $participant, $key, $default = '' ) {
+	if ( ! is_array( $participant ) || ! isset( $participant[ $key ] ) ) {
+		return $default;
+	}
+
+	$value = $participant[ $key ];
+
+	// إذا كانت القيمة string، نعيدها مباشرة
+	if ( is_string( $value ) ) {
+		return $value;
+	}
+
+	// إذا كانت array، نحولها إلى string بدمج العناصر
+	if ( is_array( $value ) ) {
+		return implode( ' ', array_filter( $value, 'is_string' ) );
+	}
+
+	// إذا كانت رقم، نحولها إلى string
+	if ( is_numeric( $value ) ) {
+		return (string) $value;
+	}
+
+	// في أي حالة أخرى، نعيد القيمة الافتراضية
+	return $default;
+}
+
 // تضمين ملف Customizer
 require_once NADIIM_THEME_DIR . '/inc/customizer.php';
 

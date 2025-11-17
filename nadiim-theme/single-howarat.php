@@ -227,11 +227,11 @@ while ( have_posts() ) :
 								?>
 
 								<?php
-								// الحصول على القيم بشكل آمن (التأكد من أنها strings وليست arrays)
-								$p_name = isset( $participant['name'] ) && is_string( $participant['name'] ) ? $participant['name'] : '';
-								$p_role = isset( $participant['role'] ) && is_string( $participant['role'] ) ? $participant['role'] : '';
-								$p_bio  = isset( $participant['bio'] ) && is_string( $participant['bio'] ) ? $participant['bio'] : '';
-								$p_link = isset( $participant['link'] ) && is_string( $participant['link'] ) ? $participant['link'] : '';
+								// الحصول على القيم بشكل آمن باستخدام الدالة المساعدة
+								$p_name = nadiim_get_participant_field( $participant, 'name' );
+								$p_role = nadiim_get_participant_field( $participant, 'role' );
+								$p_bio  = nadiim_get_participant_field( $participant, 'bio' );
+								$p_link = nadiim_get_participant_field( $participant, 'link' );
 								?>
 
 								<div class="participant-card">
@@ -311,9 +311,9 @@ while ( have_posts() ) :
 									$photo_url = get_avatar_url( $participant['id'], array( 'size' => 64 ) );
 								}
 
-								// الحصول على القيم بشكل آمن
-								$sidebar_name = isset( $participant['name'] ) && is_string( $participant['name'] ) ? $participant['name'] : '';
-								$sidebar_role = isset( $participant['role'] ) && is_string( $participant['role'] ) ? $participant['role'] : '';
+								// الحصول على القيم بشكل آمن باستخدام الدالة المساعدة
+								$sidebar_name = nadiim_get_participant_field( $participant, 'name' );
+								$sidebar_role = nadiim_get_participant_field( $participant, 'role' );
 								?>
 								<div class="sidebar-participant-item">
 									<?php if ( $photo_url ) : ?>
