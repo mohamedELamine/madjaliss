@@ -246,6 +246,9 @@ require_once NADIIM_THEME_DIR . '/inc/meta-boxes.php';
 // تضمين ملف Customizer
 require_once NADIIM_THEME_DIR . '/inc/customizer.php';
 
+// تضمين ملف Customizer للصفحة الرئيسية
+require_once NADIIM_THEME_DIR . '/inc/front-page-customizer.php';
+
 // تضمين ملف Template Functions
 require_once NADIIM_THEME_DIR . '/inc/template-functions.php';
 

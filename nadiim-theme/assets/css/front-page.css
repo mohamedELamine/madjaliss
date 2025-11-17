@@ -1,0 +1,1297 @@
+/**
+ * ملف CSS الصفحة الرئيسية - Front Page Styles
+ *
+ * يحتوي على جميع الأنماط للصفحة الرئيسية القابلة للتخصيص
+ * بما في ذلك المتغيرات، الأقسام، والمكونات
+ *
+ * @package Nadiim
+ * @since 2.0.0
+ */
+
+/* ===================================================================
+   1. متغيرات CSS (CSS Variables)
+   =================================================================== */
+
+:root {
+  /* الألوان */
+  --color-primary: #339063;
+  --color-primary-700: #26704A;
+  --color-accent: #F4A340;
+  --color-bg: #FFFFFF;
+  --color-surface: #F6FFF9;
+  --text-main: #1C2D27;
+  --text-muted: #425F54;
+
+  /* الحواف المستديرة */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 18px;
+  --radius-2xl: 24px;
+
+  /* المساحات */
+  --space-xs: 8px;
+  --space-sm: 12px;
+  --space-md: 16px;
+  --space-lg: 32px;
+  --space-xl: 48px;
+  --space-2xl: 64px;
+
+  /* الحاوية */
+  --container-max: 1200px;
+
+  /* أحجام الخطوط */
+  --font-size-sm: 14px;
+  --font-size-base: 16px;
+  --font-size-lg: 18px;
+  --font-size-xl: 20px;
+  --font-size-2xl: 24px;
+  --font-size-3xl: 32px;
+  --font-size-4xl: 42px;
+}
+
+/* ===================================================================
+   2. أنماط عامة (General Styles)
+   =================================================================== */
+
+.front-page-main {
+  overflow-x: hidden;
+  direction: rtl;
+  text-align: right;
+}
+
+.section-padding {
+  padding: var(--space-2xl) 0;
+}
+
+.section-container {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 0 var(--space-md);
+}
+
+.section-alt-bg {
+  background-color: var(--color-surface);
+}
+
+.section-primary-bg {
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-700) 100%);
+  color: #fff;
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: var(--space-xl);
+}
+
+.section-title {
+  font-size: var(--font-size-3xl);
+  font-weight: 700;
+  color: var(--text-main);
+  margin: 0 0 var(--space-sm) 0;
+  line-height: 1.2;
+}
+
+.section-primary-bg .section-title {
+  color: #fff;
+}
+
+.section-description {
+  font-size: var(--font-size-lg);
+  color: var(--text-muted);
+  max-width: 700px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+.section-primary-bg .section-description {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.section-footer {
+  text-align: center;
+  margin-top: var(--space-xl);
+}
+
+/* الأزرار */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: 12px 24px;
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  font-size: var(--font-size-base);
+  text-decoration: none;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  border: 2px solid transparent;
+}
+
+.btn-primary {
+  background-color: var(--color-primary);
+  color: #fff;
+}
+
+.btn-primary:hover {
+  background-color: var(--color-primary-700);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(51, 144, 99, 0.3);
+}
+
+.btn-outline {
+  background-color: transparent;
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+.btn-outline:hover {
+  background-color: var(--color-primary);
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+.btn-arrow {
+  margin-right: var(--space-xs);
+  transition: transform 0.3s ease;
+}
+
+.btn:hover .btn-arrow {
+  transform: translateX(-4px);
+}
+
+/* ===================================================================
+   3. قسم Topbar (الأحداث القادمة)
+   =================================================================== */
+
+.topbar-section {
+  height: 48px;
+  overflow: hidden;
+  position: relative;
+  z-index: 100;
+}
+
+.topbar-wrapper {
+  height: 100%;
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 0 var(--space-md);
+}
+
+.topbar-scroller {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  height: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE/Edge */
+}
+
+.topbar-scroller::-webkit-scrollbar {
+  display: none; /* Chrome/Safari */
+}
+
+.topbar-event-card {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  min-width: 280px;
+  padding: var(--space-xs) var(--space-sm);
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-sm);
+  flex-shrink: 0;
+  transition: all 0.3s ease;
+}
+
+.topbar-event-card:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.event-date-badge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: var(--radius-sm);
+  flex-shrink: 0;
+}
+
+.date-day {
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.date-month {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  margin-top: 2px;
+}
+
+.event-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.event-title {
+  font-size: 14px;
+  font-weight: 600;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.event-location {
+  font-size: 12px;
+  margin: 2px 0 0 0;
+  opacity: 0.9;
+}
+
+.event-cta-btn {
+  padding: 4px 12px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: var(--radius-sm);
+  font-size: 12px;
+  font-weight: 600;
+  text-decoration: none;
+  color: inherit;
+  flex-shrink: 0;
+  transition: all 0.3s ease;
+}
+
+.event-cta-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* ===================================================================
+   4. قسم Hero
+   =================================================================== */
+
+.hero-section {
+  position: relative;
+  min-height: 520px;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: 1;
+}
+
+.hero-container {
+  position: relative;
+  z-index: 2;
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: var(--space-xl) var(--space-md);
+  width: 100%;
+}
+
+.hero-content {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: var(--space-xl);
+  align-items: center;
+}
+
+.hero-text {
+  padding: var(--space-lg);
+}
+
+.hero-title {
+  font-size: var(--font-size-4xl);
+  font-weight: 700;
+  line-height: 1.05;
+  margin: 0 0 var(--space-md) 0;
+  color: var(--text-main);
+}
+
+.hero-lead {
+  font-size: var(--font-size-lg);
+  line-height: 1.6;
+  color: var(--text-muted);
+  margin: 0 0 var(--space-lg) 0;
+}
+
+.hero-cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: 14px 32px;
+  background-color: var(--color-primary);
+  color: #fff;
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  font-size: var(--font-size-lg);
+  text-decoration: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(51, 144, 99, 0.2);
+}
+
+.hero-cta-btn:hover {
+  background-color: var(--color-primary-700);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(51, 144, 99, 0.3);
+}
+
+.cta-arrow {
+  transition: transform 0.3s ease;
+}
+
+.hero-cta-btn:hover .cta-arrow {
+  transform: translateX(-4px);
+}
+
+.hero-image {
+  border-radius: var(--radius-2xl);
+  overflow: hidden;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+}
+
+.hero-img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+}
+
+.hero-placeholder {
+  width: 100%;
+  height: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, rgba(51, 144, 99, 0.1) 0%, rgba(51, 144, 99, 0.05) 100%);
+}
+
+/* ===================================================================
+   5. قسم Dialogues (الحوارات)
+   =================================================================== */
+
+.dialogues-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-lg);
+}
+
+.dialogues-layout-list {
+  grid-template-columns: 1fr;
+}
+
+.dialogue-card {
+  background: #fff;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  transition: all 0.4s ease;
+}
+
+.dialogue-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.15);
+}
+
+.dialogue-image-wrapper {
+  position: relative;
+  width: 100%;
+  padding-top: 56.25%; /* 16:9 Aspect Ratio */
+  overflow: hidden;
+}
+
+.dialogue-image-link {
+  position: absolute;
+  inset: 0;
+  display: block;
+}
+
+.dialogue-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.dialogue-card:hover .dialogue-image {
+  transform: scale(1.08);
+}
+
+.dialogue-image-placeholder {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-700) 100%);
+  font-size: 64px;
+}
+
+.dialogue-date-badge {
+  position: absolute;
+  top: var(--space-md);
+  right: var(--space-md);
+  width: 56px;
+  height: 56px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: var(--radius-md);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  z-index: 2;
+}
+
+.badge-day {
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--color-primary);
+}
+
+.badge-month {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  margin-top: 2px;
+  color: var(--text-muted);
+}
+
+.dialogue-media-badge {
+  position: absolute;
+  bottom: var(--space-sm);
+  left: var(--space-sm);
+  padding: 6px 10px;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(10px);
+  border-radius: var(--radius-sm);
+  z-index: 2;
+}
+
+.media-icon {
+  font-size: 16px;
+}
+
+.dialogue-content {
+  padding: var(--space-lg);
+}
+
+.dialogue-title {
+  font-size: var(--font-size-xl);
+  font-weight: 700;
+  margin: 0 0 var(--space-sm) 0;
+  line-height: 1.3;
+}
+
+.dialogue-title a {
+  color: var(--text-main);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.dialogue-title a:hover {
+  color: var(--color-primary);
+}
+
+.dialogue-excerpt {
+  font-size: var(--font-size-sm);
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin: 0 0 var(--space-md) 0;
+}
+
+.dialogue-meta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  padding: var(--space-sm) 0;
+  border-top: 1px solid #eee;
+  margin-bottom: var(--space-md);
+}
+
+.dialogue-type,
+.dialogue-duration {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.meta-icon {
+  font-size: 14px;
+}
+
+.dialogue-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: 8px 16px;
+  background-color: var(--color-primary);
+  color: #fff;
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.dialogue-cta:hover {
+  background-color: var(--color-primary-700);
+  transform: translateX(-2px);
+}
+
+/* ===================================================================
+   6. قسم Releases (الإصدارات)
+   =================================================================== */
+
+.releases-carousel-wrapper {
+  position: relative;
+  padding: 0 40px;
+}
+
+.releases-carousel.swiper {
+  overflow: visible;
+}
+
+.releases-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: var(--space-lg);
+}
+
+.release-card {
+  background: #fff;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  transition: all 0.4s ease;
+}
+
+.release-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.15);
+}
+
+.release-cover-wrapper {
+  position: relative;
+  width: 100%;
+  padding-top: 142.86%; /* 1:1.4 Aspect Ratio (200/140) */
+  overflow: hidden;
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-700) 100%);
+}
+
+.release-cover-link {
+  position: absolute;
+  inset: 0;
+  display: block;
+}
+
+.release-cover {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.release-card:hover .release-cover {
+  transform: scale(1.05);
+}
+
+.release-cover-placeholder {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 48px;
+  color: rgba(255, 255, 255, 0.3);
+}
+
+.release-file-badge {
+  position: absolute;
+  top: var(--space-sm);
+  left: var(--space-sm);
+  padding: 4px 8px;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(10px);
+  border-radius: var(--radius-sm);
+  z-index: 2;
+}
+
+.file-icon {
+  font-size: 11px;
+  font-weight: 700;
+  color: #fff;
+  text-transform: uppercase;
+}
+
+.release-content {
+  padding: var(--space-md);
+}
+
+.release-title {
+  font-size: var(--font-size-base);
+  font-weight: 700;
+  margin: 0 0 var(--space-xs) 0;
+  line-height: 1.3;
+}
+
+.release-title a {
+  color: var(--text-main);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.release-title a:hover {
+  color: var(--color-primary);
+}
+
+.release-author {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin: 0 0 4px 0;
+}
+
+.release-date {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+/* Swiper Navigation للإصدارات */
+.releases-prev,
+.releases-next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 40px;
+  background: var(--color-primary);
+  color: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+  transition: all 0.3s ease;
+}
+
+.releases-prev {
+  right: 0;
+}
+
+.releases-next {
+  left: 0;
+}
+
+.releases-prev:hover,
+.releases-next:hover {
+  background: var(--color-primary-700);
+  transform: translateY(-50%) scale(1.1);
+}
+
+.releases-pagination {
+  margin-top: var(--space-lg);
+  text-align: center;
+}
+
+/* ===================================================================
+   7. قسم Posts (المقالات)
+   =================================================================== */
+
+.posts-layout {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: var(--space-lg);
+}
+
+.post-featured {
+  grid-column: 1;
+  grid-row: 1 / 3;
+}
+
+.posts-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.post-card {
+  background: #fff;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  transition: all 0.4s ease;
+}
+
+.post-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+}
+
+.post-image {
+  position: relative;
+  width: 100%;
+  padding-top: 56.25%; /* 16:9 */
+  overflow: hidden;
+}
+
+.post-image a {
+  position: absolute;
+  inset: 0;
+}
+
+.post-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.post-card:hover .post-img {
+  transform: scale(1.05);
+}
+
+.post-content {
+  padding: var(--space-lg);
+}
+
+.post-meta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-sm);
+}
+
+.post-category,
+.post-date {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.post-category {
+  color: var(--color-primary);
+  font-weight: 600;
+}
+
+.post-title {
+  font-size: var(--font-size-2xl);
+  font-weight: 700;
+  margin: 0 0 var(--space-md) 0;
+  line-height: 1.3;
+}
+
+.post-title a {
+  color: var(--text-main);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.post-title a:hover {
+  color: var(--color-primary);
+}
+
+.post-excerpt {
+  font-size: var(--font-size-base);
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin: 0 0 var(--space-md) 0;
+}
+
+.post-read-more {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  color: var(--color-primary);
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.post-read-more:hover {
+  color: var(--color-primary-700);
+  transform: translateX(-2px);
+}
+
+/* المقالات المضغوطة */
+.post-compact {
+  display: flex;
+  gap: var(--space-md);
+}
+
+.post-image-compact {
+  position: relative;
+  width: 120px;
+  height: 90px;
+  flex-shrink: 0;
+  overflow: hidden;
+  border-radius: var(--radius-sm);
+}
+
+.post-img-compact {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.post-compact:hover .post-img-compact {
+  transform: scale(1.05);
+}
+
+.post-content-compact {
+  flex: 1;
+  min-width: 0;
+}
+
+.post-meta-compact {
+  margin-bottom: 4px;
+}
+
+.post-meta-compact .post-date {
+  font-size: 12px;
+}
+
+.post-title-compact {
+  font-size: var(--font-size-base);
+  font-weight: 700;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.post-title-compact a {
+  color: var(--text-main);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.post-title-compact a:hover {
+  color: var(--color-primary);
+}
+
+/* ===================================================================
+   8. قسم Clubs (نوادي القراءة)
+   =================================================================== */
+
+.clubs-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-lg);
+}
+
+.club-card {
+  background: #fff;
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+  text-align: center;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  transition: all 0.4s ease;
+}
+
+.club-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.15);
+}
+
+.club-avatar {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto var(--space-md);
+  border-radius: 50%;
+  overflow: hidden;
+  border: 3px solid var(--color-primary);
+}
+
+.club-avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.club-avatar-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-700) 100%);
+  font-size: 32px;
+}
+
+.club-title {
+  font-size: var(--font-size-xl);
+  font-weight: 700;
+  margin: 0 0 var(--space-sm) 0;
+}
+
+.club-title a {
+  color: var(--text-main);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.club-title a:hover {
+  color: var(--color-primary);
+}
+
+.club-description {
+  font-size: var(--font-size-sm);
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin: 0 0 var(--space-md) 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.club-meta {
+  margin-bottom: var(--space-sm);
+}
+
+.club-schedule {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.club-current-book {
+  padding: var(--space-sm);
+  background: var(--color-surface);
+  border-radius: var(--radius-sm);
+  margin-bottom: var(--space-md);
+  font-size: 13px;
+}
+
+.book-label {
+  display: block;
+  font-weight: 600;
+  color: var(--text-muted);
+  margin-bottom: 4px;
+}
+
+.book-title {
+  display: block;
+  color: var(--color-primary);
+  font-weight: 600;
+}
+
+.club-join-btn {
+  display: inline-block;
+  padding: 10px 24px;
+  background-color: var(--color-primary);
+  color: #fff;
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+  font-size: 14px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.club-join-btn:hover {
+  background-color: var(--color-primary-700);
+  transform: translateY(-2px);
+}
+
+/* ===================================================================
+   9. قسم Newsletter (النشرة البريدية)
+   =================================================================== */
+
+.newsletter-container {
+  max-width: 800px;
+  text-align: center;
+}
+
+.newsletter-title {
+  font-size: var(--font-size-3xl);
+  font-weight: 700;
+  margin: 0 0 var(--space-sm) 0;
+  color: #fff;
+}
+
+.newsletter-description {
+  font-size: var(--font-size-lg);
+  margin: 0 0 var(--space-xl) 0;
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.newsletter-form {
+  margin-bottom: var(--space-md);
+}
+
+.newsletter-form-group {
+  display: flex;
+  gap: var(--space-sm);
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.newsletter-input {
+  flex: 1;
+  height: 48px;
+  padding: 0 var(--space-md);
+  border: none;
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-base);
+  background: #fff;
+  color: var(--text-main);
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+.newsletter-input:focus {
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.3);
+}
+
+.newsletter-submit-btn {
+  height: 48px;
+  padding: 0 var(--space-lg);
+  background: #fff;
+  color: var(--color-primary);
+  border: none;
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  font-size: var(--font-size-base);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.newsletter-submit-btn:hover {
+  background: rgba(255, 255, 255, 0.9);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.newsletter-privacy {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 13px;
+}
+
+.newsletter-message {
+  padding: var(--space-md);
+  border-radius: var(--radius-md);
+  margin-top: var(--space-md);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.newsletter-message.success {
+  background: rgba(255, 255, 255, 0.2);
+  color: #fff;
+}
+
+.newsletter-message.error {
+  background: rgba(244, 163, 64, 0.2);
+  color: #fff;
+}
+
+/* ===================================================================
+   10. Media Queries (التجاوب)
+   =================================================================== */
+
+@media (max-width: 1280px) {
+  :root {
+    --container-max: 100%;
+  }
+}
+
+@media (max-width: 1024px) {
+  .hero-content {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-text {
+    order: 2;
+    text-align: center;
+  }
+
+  .hero-image {
+    order: 1;
+  }
+
+  .dialogues-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .posts-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .post-featured {
+    grid-column: 1;
+    grid-row: auto;
+  }
+
+  .posts-sidebar {
+    flex-direction: row;
+  }
+
+  .clubs-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  :root {
+    --font-size-3xl: 28px;
+    --font-size-4xl: 32px;
+    --space-2xl: 32px;
+  }
+
+  .section-padding {
+    padding: var(--space-xl) 0;
+  }
+
+  .hero-section {
+    min-height: 60vh;
+  }
+
+  .hero-title {
+    font-size: var(--font-size-3xl);
+  }
+
+  .hero-lead {
+    font-size: var(--font-size-base);
+  }
+
+  .topbar-scroller {
+    padding: 0 var(--space-sm);
+  }
+
+  .topbar-event-card {
+    min-width: 240px;
+  }
+
+  .dialogues-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .releases-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-md);
+  }
+
+  .posts-sidebar {
+    flex-direction: column;
+  }
+
+  .clubs-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .newsletter-form-group {
+    flex-direction: column;
+  }
+
+  .newsletter-input,
+  .newsletter-submit-btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  :root {
+    --font-size-3xl: 24px;
+    --font-size-4xl: 26px;
+  }
+
+  .hero-section {
+    min-height: 360px;
+  }
+
+  .hero-title {
+    font-size: 26px;
+  }
+
+  .releases-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .post-compact {
+    flex-direction: column;
+  }
+
+  .post-image-compact {
+    width: 100%;
+    height: 150px;
+  }
+}
+
+/* ===================================================================
+   11. Animations & Transitions
+   =================================================================== */
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.section-header,
+.dialogue-card,
+.release-card,
+.post-card,
+.club-card {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+/* تأخير تدريجي للبطاقات */
+.dialogue-card:nth-child(1),
+.release-card:nth-child(1),
+.club-card:nth-child(1) {
+  animation-delay: 0.1s;
+}
+
+.dialogue-card:nth-child(2),
+.release-card:nth-child(2),
+.club-card:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.dialogue-card:nth-child(3),
+.release-card:nth-child(3),
+.club-card:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+/* ===================================================================
+   12. Accessibility & Print
+   =================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@media print {
+  .topbar-section,
+  .newsletter-section {
+    display: none;
+  }
+}
