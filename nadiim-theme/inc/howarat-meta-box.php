@@ -43,13 +43,15 @@ function nadiim_render_howarat_participants_meta_box( $post ) {
 	// إضافة nonce للأمان
 	wp_nonce_field( 'nadiim_save_howarat_participants', 'nadiim_howarat_participants_nonce' );
 
-	// جلب البيانات المحفوظة
-	$participants = get_post_meta( $post->ID, 'dialogue_participants', true );
-	$participants = $participants ? json_decode( $participants, true ) : array();
+	// جلب البيانات المحفوظة مع معالجة آمنة
+	$participants_json = get_post_meta( $post->ID, 'dialogue_participants', true );
+	$participants      = array();
 
-	// إذا لم تكن البيانات مصفوفة صالحة
-	if ( ! is_array( $participants ) ) {
-		$participants = array();
+	if ( ! empty( $participants_json ) && is_string( $participants_json ) ) {
+		$decoded = json_decode( $participants_json, true );
+		if ( ! is_null( $decoded ) && is_array( $decoded ) ) {
+			$participants = $decoded;
+		}
 	}
 
 	// جلب قائمة المستخدمين لاستخدامها في Select
