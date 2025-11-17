@@ -462,6 +462,111 @@
 	color: var(--howarat-text);
 }
 
+/* المشاركون في الحوار - التصميم الجديد */
+.howarat-participants-section {
+	background: var(--howarat-bg);
+	padding: 32px;
+	border-radius: var(--howarat-radius);
+	margin-bottom: 48px;
+}
+
+.participants-grid {
+	display: grid;
+	gap: 24px;
+	margin-top: 24px;
+}
+
+.participant-item {
+	display: flex;
+	align-items: flex-start;
+	gap: 20px;
+	padding: 20px;
+	background: #FFFFFF;
+	border-radius: 12px;
+	border: 1px solid #E5E7EB;
+	transition: all 0.3s ease;
+}
+
+.participant-item:hover {
+	transform: translateY(-4px);
+	box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+.participant-avatar {
+	flex-shrink: 0;
+}
+
+.participant-avatar img {
+	width: 64px;
+	height: 64px;
+	border-radius: 50%;
+	object-fit: cover;
+	border: 2px solid var(--howarat-primary);
+}
+
+.participant-details {
+	flex: 1;
+}
+
+.participant-item .participant-name {
+	font-size: 18px;
+	font-weight: 700;
+	color: var(--howarat-text);
+	margin-bottom: 4px;
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	justify-content: flex-start;
+}
+
+.participant-item .participant-link-btn {
+	display: inline-flex;
+	align-items: center;
+	gap: 4px;
+	padding: 6px 12px;
+	background: var(--howarat-accent);
+	color: #FFFFFF;
+	border-radius: 6px;
+	font-size: 13px;
+	font-weight: 600;
+	text-decoration: none;
+	transition: all 0.3s ease;
+}
+
+.participant-item .participant-link-btn:hover {
+	background: #E89E2E;
+	transform: translateX(-2px);
+}
+
+.participant-item .participant-role {
+	font-size: 14px;
+	color: #6B7280;
+	margin-bottom: 8px;
+	font-weight: 500;
+}
+
+.participant-item .participant-bio {
+	font-size: 14px;
+	line-height: 1.7;
+	color: var(--howarat-text-muted);
+	margin: 0;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+	.participant-item {
+		flex-direction: column;
+		text-align: center;
+		align-items: center;
+	}
+
+	.participant-item .participant-name {
+		flex-direction: column;
+		gap: 8px;
+		justify-content: center;
+	}
+}
+
 /* التنقل بين المنشورات */
 .howarat-navigation {
 	display: grid;
