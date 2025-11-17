@@ -43,14 +43,21 @@ function nadiim_render_howarat_participants_meta_box( $post ) {
 	// إضافة nonce للأمان
 	wp_nonce_field( 'nadiim_save_howarat_participants', 'nadiim_howarat_participants_nonce' );
 
-	// جلب البيانات المحفوظة مع معالجة آمنة
-	$participants_json = get_post_meta( $post->ID, 'dialogue_participants', true );
+	// جلب البيانات المحفوظة مع معالجة آمنة (يدعم Array و JSON)
+	$participants_data = get_post_meta( $post->ID, 'dialogue_participants', true );
 	$participants      = array();
 
-	if ( ! empty( $participants_json ) && is_string( $participants_json ) ) {
-		$decoded = json_decode( $participants_json, true );
-		if ( ! is_null( $decoded ) && is_array( $decoded ) ) {
-			$participants = $decoded;
+	if ( ! empty( $participants_data ) ) {
+		// إذا كانت البيانات مصفوفة مباشرة (الطريقة الجديدة)
+		if ( is_array( $participants_data ) ) {
+			$participants = $participants_data;
+		}
+		// إذا كانت البيانات JSON string (البيانات القديمة - للتوافق)
+		elseif ( is_string( $participants_data ) ) {
+			$decoded = json_decode( $participants_data, true );
+			if ( ! is_null( $decoded ) && is_array( $decoded ) ) {
+				$participants = $decoded;
+			}
 		}
 	}
 
@@ -381,14 +388,14 @@ function nadiim_save_howarat_participants( $post_id ) {
 		$participants[] = $participant;
 	}
 
-	// حفظ البيانات بصيغة JSON
+	// حفظ البيانات بصيغة مصفوفة مباشرة (WordPress سيقوم بعمل serialize تلقائياً)
+	// ملاحظة: لا نستخدم JSON هنا لأن WordPress يتعامل مع arrays بشكل أفضل
 	if ( ! empty( $participants ) ) {
-		$json_data = wp_json_encode( $participants, JSON_UNESCAPED_UNICODE );
-		update_post_meta( $post_id, 'dialogue_participants', $json_data );
+		update_post_meta( $post_id, 'dialogue_participants', $participants );
 
 		// Debug: تسجيل البيانات المحفوظة
 		if ( defined( 'WP_DEBUG' ) && WP_DEBUG && defined( 'WP_DEBUG_LOG' ) && WP_DEBUG_LOG ) {
-			error_log( 'Howarat Participants Saved for Post ID ' . $post_id . ': ' . $json_data );
+			error_log( 'Howarat Participants Saved for Post ID ' . $post_id . ': ' . print_r( $participants, true ) );
 		}
 	} else {
 		delete_post_meta( $post_id, 'dialogue_participants' );

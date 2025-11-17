@@ -35,22 +35,28 @@ while ( have_posts() ) :
 	$dialogue_media    = get_post_meta( get_the_ID(), 'dialogue_media', true );
 	$media_type        = get_post_meta( get_the_ID(), 'dialogue_media_type', true );
 
-	// جلب المشاركين مع معالجة آمنة
-	$participants_json = get_post_meta( get_the_ID(), 'dialogue_participants', true );
+	// جلب المشاركين مع معالجة آمنة (يدعم كل من Array و JSON string)
+	$participants_data = get_post_meta( get_the_ID(), 'dialogue_participants', true );
 	$participants      = array();
 
-	if ( ! empty( $participants_json ) && is_string( $participants_json ) ) {
-		// تجربة فك التشفير بشكل آمن
-		$decoded = json_decode( $participants_json, true );
-		// التحقق من أن النتيجة مصفوفة صالحة وليست null أو false
-		if ( ! is_null( $decoded ) && is_array( $decoded ) ) {
-			$participants = $decoded;
+	if ( ! empty( $participants_data ) ) {
+		// إذا كانت البيانات مصفوفة مباشرة (الطريقة الجديدة)
+		if ( is_array( $participants_data ) ) {
+			$participants = $participants_data;
+		}
+		// إذا كانت البيانات JSON string (البيانات القديمة - للتوافق)
+		elseif ( is_string( $participants_data ) ) {
+			$decoded = json_decode( $participants_data, true );
+			if ( ! is_null( $decoded ) && is_array( $decoded ) ) {
+				$participants = $decoded;
+			}
 		}
 	}
 
 	// Debug: طباعة البيانات للتحقق (يمكن إزالة هذا لاحقاً)
 	if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
-		echo '<!-- DEBUG - Participants JSON: ' . esc_html( $participants_json ) . ' -->';
+		echo '<!-- DEBUG - Participants Data Type: ' . gettype( $participants_data ) . ' -->';
+		echo '<!-- DEBUG - Participants Count: ' . count( $participants ) . ' -->';
 		echo '<!-- DEBUG - Participants Array: ' . esc_html( print_r( $participants, true ) ) . ' -->';
 	}
 
@@ -206,65 +212,6 @@ while ( have_posts() ) :
 						<?php the_content(); ?>
 					</div>
 				</div>
-
-				<!-- المشاركون -->
-				<?php if ( ! empty( $participants ) && is_array( $participants ) ) : ?>
-					<div id="participants" class="howarat-participants-section">
-						<h2 class="section-title">المشاركون في الحوار</h2>
-						<div class="howarat-participants-grid">
-							<?php foreach ( $participants as $participant ) : ?>
-								<?php
-								// الحصول على الصورة
-								$photo_url = '';
-								if ( isset( $participant['photo_id'] ) && $participant['photo_id'] > 0 ) {
-									$photo_url = wp_get_attachment_image_url( $participant['photo_id'], 'thumbnail' );
-								}
-
-								// إذا كان مستخدماً، محاولة جلب صورة الملف الشخصي
-								if ( ! $photo_url && isset( $participant['type'] ) && $participant['type'] === 'user' && isset( $participant['id'] ) ) {
-									$photo_url = get_avatar_url( $participant['id'], array( 'size' => 128 ) );
-								}
-								?>
-
-								<?php
-								// الحصول على القيم بشكل آمن باستخدام الدالة المساعدة
-								$p_name = nadiim_get_participant_field( $participant, 'name' );
-								$p_role = nadiim_get_participant_field( $participant, 'role' );
-								$p_bio  = nadiim_get_participant_field( $participant, 'bio' );
-								$p_link = nadiim_get_participant_field( $participant, 'link' );
-								?>
-
-								<div class="participant-card">
-									<?php if ( $photo_url ) : ?>
-										<div class="participant-photo">
-											<img src="<?php echo esc_url( $photo_url ); ?>" alt="<?php echo esc_attr( $p_name ); ?>">
-										</div>
-									<?php endif; ?>
-
-									<div class="participant-info">
-										<h3 class="participant-name">
-											<?php echo esc_html( $p_name ); ?>
-											<?php if ( ! empty( $p_link ) ) : ?>
-												<a href="<?php echo esc_url( $p_link ); ?>" target="_blank" class="participant-link-btn" title="تعرف عليه">
-													<span class="link-icon">↗</span>
-												</a>
-											<?php endif; ?>
-										</h3>
-
-										<?php if ( ! empty( $p_role ) ) : ?>
-											<p class="participant-role"><?php echo esc_html( $p_role ); ?></p>
-										<?php endif; ?>
-
-										<?php if ( ! empty( $p_bio ) ) : ?>
-											<p class="participant-bio"><?php echo esc_html( $p_bio ); ?></p>
-										<?php endif; ?>
-									</div>
-								</div>
-
-							<?php endforeach; ?>
-						</div>
-					</div>
-				<?php endif; ?>
 
 				<!-- التنقل بين المنشورات -->
 				<div class="howarat-navigation">

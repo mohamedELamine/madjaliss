@@ -69,13 +69,17 @@ wp_enqueue_style( 'howarat-style', get_template_directory_uri() . '/assets/css/h
 					// تنسيق التاريخ
 					$formatted_date = $dialogue_date ? date_i18n( 'j F، Y', strtotime( $dialogue_date ) ) : get_the_date();
 
-					// جلب المشاركين
-					$participants_json = get_post_meta( get_the_ID(), 'dialogue_participants', true );
+					// جلب المشاركين (يدعم Array و JSON)
+					$participants_data = get_post_meta( get_the_ID(), 'dialogue_participants', true );
 					$participants      = array();
-					if ( ! empty( $participants_json ) && is_string( $participants_json ) ) {
-						$decoded = json_decode( $participants_json, true );
-						if ( ! is_null( $decoded ) && is_array( $decoded ) ) {
-							$participants = $decoded;
+					if ( ! empty( $participants_data ) ) {
+						if ( is_array( $participants_data ) ) {
+							$participants = $participants_data;
+						} elseif ( is_string( $participants_data ) ) {
+							$decoded = json_decode( $participants_data, true );
+							if ( ! is_null( $decoded ) && is_array( $decoded ) ) {
+								$participants = $decoded;
+							}
 						}
 					}
 					?>
