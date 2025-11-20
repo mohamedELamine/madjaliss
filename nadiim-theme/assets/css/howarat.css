@@ -24,11 +24,14 @@
 	--howarat-primary-dark: #26704A;
 	--howarat-primary-light: #4CAF7E;
 	--howarat-accent: #F4A340;
+	--howarat-accent-dark: #DC6347;
 	--howarat-bg: #FFFFFF;
 	--howarat-bg-light: #F6FFF9;
 	--howarat-bg-section: #F9FAFB;
 	--howarat-text: #1C2D27;
+	--howarat-text-dark: #1C2D27;
 	--howarat-text-muted: #425F54;
+	--howarat-text-light: #6B7280;
 	--howarat-border: #E5E7EB;
 	--howarat-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 	--howarat-shadow-lg: 0 5px 20px rgba(0, 0, 0, 0.12);
@@ -1557,5 +1560,158 @@ body[dir="rtl"] .nav-next:hover {
 		animation-duration: 0.01ms !important;
 		animation-iteration-count: 1 !important;
 		transition-duration: 0.01ms !important;
+	}
+}
+
+/* ===================================================================
+   6. Pagination
+   =================================================================== */
+
+/* حاوية pagination */
+.howarat-pagination {
+	margin: 60px auto 40px;
+	max-width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+/* قائمة الصفحات */
+.howarat-pagination .page-numbers {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	flex-wrap: wrap;
+	justify-content: center;
+}
+
+/* عناصر pagination */
+.howarat-pagination .page-numbers li {
+	margin: 0;
+	padding: 0;
+}
+
+/* روابط الصفحات */
+.howarat-pagination a.page-numbers,
+.howarat-pagination span.page-numbers {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-width: 44px;
+	height: 44px;
+	padding: 0 16px;
+	font-size: 15px;
+	font-weight: 500;
+	color: var(--howarat-text-dark);
+	background: #fff;
+	border: 2px solid #e5e7eb;
+	border-radius: 8px;
+	text-decoration: none;
+	transition: all 0.3s ease;
+	gap: 8px;
+	white-space: nowrap;
+}
+
+/* hover للروابط */
+.howarat-pagination a.page-numbers:hover {
+	background: var(--howarat-primary);
+	color: #fff;
+	border-color: var(--howarat-primary);
+	transform: translateY(-2px);
+	box-shadow: 0 4px 12px rgba(51, 144, 99, 0.2);
+}
+
+/* الصفحة الحالية */
+.howarat-pagination span.current {
+	background: var(--howarat-primary);
+	color: #fff;
+	border-color: var(--howarat-primary);
+	cursor: default;
+	box-shadow: 0 2px 8px rgba(51, 144, 99, 0.2);
+}
+
+/* النقاط */
+.howarat-pagination .dots {
+	background: transparent;
+	border: none;
+	color: var(--howarat-text-light);
+	cursor: default;
+	min-width: auto;
+	padding: 0 8px;
+}
+
+.howarat-pagination .dots:hover {
+	background: transparent;
+	border: none;
+	transform: none;
+	box-shadow: none;
+}
+
+/* أزرار السابق والتالي */
+.howarat-pagination a.prev,
+.howarat-pagination a.next {
+	font-weight: 600;
+	padding: 0 20px;
+	background: var(--howarat-accent);
+	color: #fff;
+	border-color: var(--howarat-accent);
+}
+
+.howarat-pagination a.prev:hover,
+.howarat-pagination a.next:hover {
+	background: var(--howarat-accent-dark);
+	border-color: var(--howarat-accent-dark);
+	box-shadow: 0 4px 12px rgba(220, 99, 71, 0.3);
+}
+
+/* أيقونات SVG */
+.howarat-pagination svg {
+	width: 18px;
+	height: 18px;
+	flex-shrink: 0;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+	.howarat-pagination {
+		margin: 40px auto 30px;
+		padding: 0 20px;
+	}
+
+	.howarat-pagination a.page-numbers,
+	.howarat-pagination span.page-numbers {
+		min-width: 40px;
+		height: 40px;
+		padding: 0 12px;
+		font-size: 14px;
+	}
+
+	.howarat-pagination .page-numbers {
+		gap: 6px;
+	}
+
+	/* إخفاء بعض أرقام الصفحات على الموبايل */
+	.howarat-pagination .page-numbers li:not(.prev):not(.next):not(.current):nth-child(n+6) {
+		display: none;
+	}
+}
+
+@media (max-width: 480px) {
+	.howarat-pagination a.prev,
+	.howarat-pagination a.next {
+		padding: 0 12px;
+	}
+
+	/* إخفاء النص وعرض الأيقونة فقط */
+	.howarat-pagination a.prev svg + *,
+	.howarat-pagination a.next * + svg {
+		display: none;
+	}
+
+	.howarat-pagination svg {
+		margin: 0;
 	}
 }

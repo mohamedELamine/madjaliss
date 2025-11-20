@@ -64,7 +64,11 @@ $total_howarat = wp_count_posts( 'howarat' )->publish;
 		</div>
 
 		<!-- شبكة الحوارات -->
-		<?php if ( have_posts() ) : ?>
+		<?php
+		// تطبيق pagination
+		$paged = get_query_var('paged') ? get_query_var('paged') : 1;
+
+		if ( have_posts() ) : ?>
 
 			<div class="howarat-grid">
 				<?php
@@ -188,18 +192,24 @@ $total_howarat = wp_count_posts( 'howarat' )->publish;
 			</div><!-- .howarat-grid -->
 
 			<!-- Pagination -->
-			<div class="archive-pagination">
-				<?php
-				the_posts_pagination(
-					array(
-						'mid_size'           => 2,
-						'prev_text'          => __( '→ السابق', 'nadiim' ),
-						'next_text'          => __( 'التالي ←', 'nadiim' ),
-						'screen_reader_text' => __( 'التنقل بين الصفحات', 'nadiim' ),
-					)
-				);
-				?>
-			</div>
+			<?php
+			global $wp_query;
+			$pagination = paginate_links(array(
+				'total' => $wp_query->max_num_pages,
+				'current' => $paged,
+				'prev_text' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg> السابق',
+				'next_text' => 'التالي <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>',
+				'type' => 'list',
+				'mid_size' => 2,
+				'end_size' => 1,
+			));
+
+			if ($pagination) :
+			?>
+				<nav class="howarat-pagination" aria-label="<?php _e('التنقل بين الصفحات', 'nadiim'); ?>">
+					<?php echo $pagination; ?>
+				</nav>
+			<?php endif; ?>
 
 		<?php else : ?>
 
