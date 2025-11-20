@@ -1,0 +1,473 @@
+/**
+ * أنماط صفحة اتصل بنا
+ *
+ * تصميم RTL هادئ ومتوافق مع الهوية البصرية #339063
+ *
+ * @package Nadiim
+ * @since 1.0.0
+ */
+
+/* ==========================================
+   المتغيرات
+   ========================================== */
+:root {
+	--contact-primary-color: #339063;
+	--contact-form-bg: #ffffff;
+	--contact-page-bg: #f8f9fa;
+	--contact-border-color: #e1e4e8;
+	--contact-text-color: #2c3e50;
+	--contact-label-color: #495057;
+	--contact-radius-sm: 8px;
+	--contact-radius-md: 12px;
+	--contact-spacing-sm: 12px;
+	--contact-spacing-md: 24px;
+	--contact-spacing-lg: 48px;
+}
+
+/* ==========================================
+   الحاوية الرئيسية
+   ========================================== */
+.contact-page {
+	background-color: var(--contact-page-bg);
+	padding: var(--contact-spacing-lg) 0;
+}
+
+.contact-page .page-header {
+	margin-bottom: var(--contact-spacing-lg);
+	text-align: center;
+}
+
+.contact-page .page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	color: var(--contact-text-color);
+	margin-bottom: var(--contact-spacing-sm);
+}
+
+.contact-page .page-intro {
+	font-size: 1.125rem;
+	color: var(--contact-label-color);
+	max-width: 700px;
+	margin: 0 auto;
+	line-height: 1.8;
+}
+
+/* ==========================================
+   رسائل الحالة
+   ========================================== */
+.contact-messages {
+	margin-bottom: var(--contact-spacing-md);
+}
+
+.contact-message {
+	padding: 16px 20px;
+	border-radius: var(--contact-radius-sm);
+	margin-bottom: 16px;
+	font-size: 1rem;
+	line-height: 1.6;
+	display: none;
+}
+
+.contact-message.show {
+	display: block;
+	animation: slideDown 0.3s ease-out;
+}
+
+.contact-success {
+	background-color: #d4edda;
+	color: #155724;
+	border: 1px solid #c3e6cb;
+}
+
+.contact-error {
+	background-color: #f8d7da;
+	color: #721c24;
+	border: 1px solid #f5c6cb;
+}
+
+@keyframes slideDown {
+	from {
+		opacity: 0;
+		transform: translateY(-10px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+/* ==========================================
+   تخطيط الشبكة
+   ========================================== */
+.contact-grid {
+	display: grid;
+	gap: var(--contact-spacing-md);
+	margin-bottom: var(--contact-spacing-lg);
+}
+
+/* التخطيط: النموذج يسار - الخريطة يمين */
+.contact-form-section[data-layout="form-left"] .contact-grid {
+	grid-template-columns: 2fr 1fr;
+}
+
+/* التخطيط: النموذج أعلى - الخريطة أسفل */
+.contact-form-section[data-layout="form-top"] .contact-grid {
+	grid-template-columns: 1fr;
+}
+
+/* التخطيط: النموذج بعرض كامل */
+.contact-form-section[data-layout="full-width"] .contact-grid {
+	grid-template-columns: 1fr;
+}
+
+.contact-form-section[data-layout="full-width"] .contact-info-wrapper {
+	display: none;
+}
+
+/* ==========================================
+   النموذج
+   ========================================== */
+.contact-form-wrapper {
+	background-color: var(--contact-form-bg);
+	padding: 2.5rem;
+	border-radius: var(--contact-radius-md);
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.nadiim-contact-form {
+	display: flex;
+	flex-direction: column;
+	gap: 1.25rem;
+}
+
+/* حقول الإدخال */
+.form-field {
+	display: flex;
+	flex-direction: column;
+}
+
+.form-field label {
+	display: block;
+	margin-bottom: 8px;
+	font-weight: 600;
+	font-size: 0.95rem;
+	color: var(--contact-label-color);
+}
+
+.form-field .required {
+	color: #e74c3c;
+	margin-right: 4px;
+}
+
+.form-field .optional {
+	font-weight: 400;
+	color: #6c757d;
+	font-size: 0.875rem;
+}
+
+.form-field input[type="text"],
+.form-field input[type="email"],
+.form-field input[type="tel"],
+.form-field select,
+.form-field textarea {
+	width: 100%;
+	padding: 14px 16px;
+	border: 1px solid var(--contact-border-color);
+	border-radius: var(--contact-radius-sm);
+	font-size: 1rem;
+	font-family: inherit;
+	color: var(--contact-text-color);
+	background-color: #ffffff;
+	transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-field input:focus,
+.form-field select:focus,
+.form-field textarea:focus {
+	outline: none;
+	border-color: var(--contact-primary-color);
+	box-shadow: 0 0 0 3px rgba(51, 144, 99, 0.1);
+}
+
+.form-field textarea {
+	resize: vertical;
+	min-height: 160px;
+	line-height: 1.6;
+}
+
+/* Checkbox للموافقة */
+.form-field-checkbox {
+	flex-direction: row;
+	align-items: flex-start;
+}
+
+.form-field-checkbox label {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	margin-bottom: 0;
+	cursor: pointer;
+}
+
+.form-field-checkbox input[type="checkbox"] {
+	width: 20px;
+	height: 20px;
+	cursor: pointer;
+	accent-color: var(--contact-primary-color);
+}
+
+.form-field-checkbox span {
+	line-height: 1.6;
+}
+
+/* reCAPTCHA */
+.form-field-recaptcha {
+	display: flex;
+	justify-content: center;
+	margin: 8px 0;
+}
+
+/* زر الإرسال */
+.form-field-submit {
+	margin-top: 8px;
+}
+
+.btn-submit {
+	width: 100%;
+	height: 54px;
+	background-color: var(--contact-primary-color);
+	color: #ffffff;
+	border: none;
+	border-radius: 10px;
+	font-size: 1.125rem;
+	font-weight: 600;
+	cursor: pointer;
+	transition: background-color 0.2s ease, transform 0.1s ease;
+	position: relative;
+	overflow: hidden;
+}
+
+.btn-submit:hover {
+	background-color: #2a7a54;
+	transform: translateY(-2px);
+	box-shadow: 0 4px 12px rgba(51, 144, 99, 0.3);
+}
+
+.btn-submit:active {
+	transform: translateY(0);
+}
+
+.btn-submit:disabled {
+	background-color: #9ca3af;
+	cursor: not-allowed;
+	transform: none;
+}
+
+.btn-submit .btn-text,
+.btn-submit .btn-loading {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+}
+
+.btn-submit.loading .btn-text {
+	display: none;
+}
+
+.btn-submit.loading .btn-loading {
+	display: flex;
+}
+
+/* Spinner */
+.spinner {
+	width: 20px;
+	height: 20px;
+	animation: rotate 2s linear infinite;
+}
+
+.spinner .path {
+	stroke: #ffffff;
+	stroke-linecap: round;
+	animation: dash 1.5s ease-in-out infinite;
+}
+
+@keyframes rotate {
+	100% {
+		transform: rotate(360deg);
+	}
+}
+
+@keyframes dash {
+	0% {
+		stroke-dasharray: 1, 150;
+		stroke-dashoffset: 0;
+	}
+	50% {
+		stroke-dasharray: 90, 150;
+		stroke-dashoffset: -35;
+	}
+	100% {
+		stroke-dasharray: 90, 150;
+		stroke-dashoffset: -124;
+	}
+}
+
+/* ==========================================
+   معلومات الاتصال والخريطة
+   ========================================== */
+.contact-info-wrapper {
+	display: flex;
+	flex-direction: column;
+	gap: var(--contact-spacing-md);
+}
+
+.contact-info-box {
+	background-color: var(--contact-form-bg);
+	padding: 1.75rem;
+	border-radius: var(--contact-radius-md);
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.contact-info-box h3 {
+	font-size: 1.375rem;
+	font-weight: 700;
+	color: var(--contact-text-color);
+	margin-bottom: var(--contact-spacing-sm);
+}
+
+.contact-address {
+	color: var(--contact-label-color);
+	line-height: 1.8;
+	font-size: 1rem;
+}
+
+.contact-map-wrapper {
+	border-radius: var(--contact-radius-md);
+	overflow: hidden;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.contact-map-wrapper iframe,
+#contact-map {
+	width: 100%;
+	min-height: 400px;
+	border: none;
+	border-radius: var(--contact-radius-md);
+}
+
+/* ==========================================
+   Responsive Design
+   ========================================== */
+
+/* Tablet */
+@media (max-width: 992px) {
+	.contact-form-section[data-layout="form-left"] .contact-grid {
+		grid-template-columns: 1fr;
+	}
+
+	.contact-form-wrapper {
+		padding: 2rem;
+	}
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+	.contact-page {
+		padding: var(--contact-spacing-md) 0;
+	}
+
+	.contact-page .page-title {
+		font-size: 2rem;
+	}
+
+	.contact-page .page-intro {
+		font-size: 1rem;
+	}
+
+	.contact-form-wrapper {
+		padding: 1.5rem;
+	}
+
+	.form-field input[type="text"],
+	.form-field input[type="email"],
+	.form-field input[type="tel"],
+	.form-field select,
+	.form-field textarea {
+		padding: 12px 14px;
+	}
+
+	.btn-submit {
+		height: 50px;
+		font-size: 1rem;
+	}
+
+	.contact-info-box {
+		padding: 1.5rem;
+	}
+
+	.contact-map-wrapper iframe,
+	#contact-map {
+		min-height: 300px;
+	}
+}
+
+/* ==========================================
+   Leaflet Map Overrides
+   ========================================== */
+.leaflet-container {
+	font-family: inherit;
+}
+
+.leaflet-popup-content {
+	font-family: inherit;
+	text-align: center;
+}
+
+.leaflet-popup-content-wrapper {
+	border-radius: 8px;
+}
+
+/* ==========================================
+   تحسينات الوصولية (Accessibility)
+   ========================================== */
+.form-field input:invalid:focus,
+.form-field textarea:invalid:focus {
+	border-color: #e74c3c;
+	box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.1);
+}
+
+.visually-hidden {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	margin: -1px;
+	overflow: hidden;
+	clip: rect(0, 0, 0, 0);
+	white-space: nowrap;
+	border: 0;
+}
+
+/* ==========================================
+   حالة التحميل للنموذج
+   ========================================== */
+.nadiim-contact-form.submitting {
+	opacity: 0.6;
+	pointer-events: none;
+}
+
+/* ==========================================
+   Print Styles
+   ========================================== */
+@media print {
+	.contact-form-wrapper,
+	.contact-map-wrapper {
+		box-shadow: none;
+		border: 1px solid #ddd;
+	}
+
+	.btn-submit {
+		display: none;
+	}
+}

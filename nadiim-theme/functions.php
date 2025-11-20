@@ -668,3 +668,82 @@ function nadiim_author_page_enqueue_assets() {
     }
 }
 add_action( 'wp_enqueue_scripts', 'nadiim_author_page_enqueue_assets' );
+
+/**
+ * ==========================================
+ * نظام صفحة اتصل بنا (Contact Page System)
+ * ==========================================
+ */
+
+// تضمين ملفات صفحة الاتصال
+require_once NADIIM_THEME_DIR . '/inc/cpt-inquiries.php';
+require_once NADIIM_THEME_DIR . '/inc/customizer-contact.php';
+require_once NADIIM_THEME_DIR . '/inc/contact-handler.php';
+
+/**
+ * تحميل أصول صفحة الاتصال (CSS & JS)
+ */
+function nadiim_contact_page_enqueue_assets() {
+	// تحميل الأصول في صفحة الاتصال أو عند استخدام Shortcode
+	if ( is_page_template( 'page-contact.php' ) || has_shortcode( get_post_field( 'post_content', get_the_ID() ), 'nadiim_contact_form' ) ) {
+		// تحميل CSS
+		wp_enqueue_style(
+			'nadiim-contact',
+			NADIIM_THEME_URI . '/assets/css/contact.css',
+			array( 'nadiim-main' ),
+			NADIIM_VERSION
+		);
+
+		// تحميل JavaScript للواجهة الأمامية
+		wp_enqueue_script(
+			'nadiim-contact-frontend',
+			NADIIM_THEME_URI . '/assets/js/contact-frontend.js',
+			array(),
+			NADIIM_VERSION,
+			true
+		);
+	}
+}
+add_action( 'wp_enqueue_scripts', 'nadiim_contact_page_enqueue_assets' );
+
+/**
+ * تحميل JavaScript للوحة الإدارة (صفحة الاستفسارات)
+ */
+function nadiim_contact_admin_enqueue_assets( $hook ) {
+	global $post_type;
+
+	// تحميل فقط في صفحات الاستفسارات
+	if ( $post_type === 'inquiries' ) {
+		wp_enqueue_script(
+			'nadiim-contact-admin',
+			NADIIM_THEME_URI . '/assets/js/contact-admin.js',
+			array( 'jquery' ),
+			NADIIM_VERSION,
+			true
+		);
+	}
+}
+add_action( 'admin_enqueue_scripts', 'nadiim_contact_admin_enqueue_assets' );
+
+/**
+ * AJAX Handler لتحديث حالة الاستفسار
+ */
+function nadiim_update_inquiry_status_ajax() {
+	check_ajax_referer( 'nadiim-nonce', 'nonce' );
+
+	if ( ! current_user_can( 'edit_posts' ) ) {
+		wp_send_json_error( array( 'message' => 'Unauthorized' ) );
+	}
+
+	$post_id = isset( $_POST['post_id'] ) ? intval( $_POST['post_id'] ) : 0;
+	$status = isset( $_POST['status'] ) ? sanitize_text_field( $_POST['status'] ) : '';
+
+	if ( ! $post_id || ! in_array( $status, array( 'new', 'seen', 'responded' ) ) ) {
+		wp_send_json_error( array( 'message' => 'Invalid parameters' ) );
+	}
+
+	update_post_meta( $post_id, '_inquiry_status', $status );
+
+	wp_send_json_success( array( 'message' => 'Status updated', 'status' => $status ) );
+}
+add_action( 'wp_ajax_nadiim_update_inquiry_status', 'nadiim_update_inquiry_status_ajax' );

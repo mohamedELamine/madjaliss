@@ -1,0 +1,92 @@
+{
+  "contact_inquiries": [
+    {
+      "post_title": "أحمد محمد - استفسار عن عضوية نادي القراءة",
+      "post_content": "السلام عليكم،\n\nأود الاستفسار عن كيفية الانضمام إلى نادي القراءة وهل هناك شروط معينة للعضوية؟ كما أرغب في معرفة الأنشطة والفعاليات القادمة.\n\nشكراً لكم.",
+      "post_type": "inquiries",
+      "post_status": "publish",
+      "post_date": "2025-01-15 10:30:00",
+      "meta": {
+        "_inquiry_email": "ahmed.m@example.com",
+        "_inquiry_phone": "+966501234567",
+        "_inquiry_subject": "استفسار عن عضوية نادي القراءة",
+        "_inquiry_status": "new",
+        "_inquiry_ip": "192.168.1.100",
+        "_inquiry_user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+        "_inquiry_referer": "https://example.com/reading-clubs",
+        "_inquiry_preferred_time": "morning"
+      }
+    },
+    {
+      "post_title": "فاطمة العلي - طلب نسخة من إصدار جديد",
+      "post_content": "مرحباً،\n\nقرأت عن إصداركم الجديد 'رحلة في عالم الأدب العربي' وأرغب في الحصول على نسخة. هل يمكنكم إرشادي إلى كيفية الشراء أو التحميل؟\n\nوهل هناك نسخة إلكترونية متاحة؟\n\nتحياتي.",
+      "post_type": "inquiries",
+      "post_status": "publish",
+      "post_date": "2025-01-14 14:20:00",
+      "meta": {
+        "_inquiry_email": "fatima.ali@example.com",
+        "_inquiry_phone": "+966557654321",
+        "_inquiry_subject": "طلب نسخة من إصدار جديد",
+        "_inquiry_status": "seen",
+        "_inquiry_ip": "192.168.1.105",
+        "_inquiry_user_agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 15_0 like Mac OS X) AppleWebKit/605.1.15",
+        "_inquiry_referer": "https://example.com/esdar/rahla-fi-alam-aladab",
+        "_inquiry_preferred_time": "afternoon"
+      }
+    },
+    {
+      "post_title": "سعيد الغامدي - مقترح تعاون",
+      "post_content": "السلام عليكم ورحمة الله،\n\nأنا كاتب ومدوّن في مجال الأدب والثقافة، وأود التعاون معكم في نشر مقالات أو حوارات أدبية على منصتكم.\n\nلدي خبرة 5 سنوات في الكتابة الأدبية، وأرى أن المحتوى الذي أقدمه يتناسب مع توجه موقعكم.\n\nهل يمكننا مناقشة إمكانية التعاون؟\n\nشكراً جزيلاً.",
+      "post_type": "inquiries",
+      "post_status": "publish",
+      "post_date": "2025-01-13 09:45:00",
+      "meta": {
+        "_inquiry_email": "saeed.ghamdi@example.com",
+        "_inquiry_phone": "+966541234789",
+        "_inquiry_subject": "مقترح تعاون",
+        "_inquiry_status": "responded",
+        "_inquiry_ip": "192.168.1.110",
+        "_inquiry_user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36",
+        "_inquiry_referer": "https://example.com/",
+        "_inquiry_preferred_time": "anytime",
+        "_inquiry_notes": "تم الرد عليه عبر البريد في 14/01/2025. مهتم بالتعاون. جدولة اجتماع لاحق."
+      }
+    }
+  ],
+  "contact_page": {
+    "post_title": "اتصل بنا",
+    "post_content": "نسعد بتواصلكم معنا. يمكنكم إرسال استفساراتكم ومقترحاتكم عبر النموذج أدناه، وسنرد عليكم في أقرب وقت ممكن.",
+    "post_type": "page",
+    "post_status": "publish",
+    "page_template": "page-contact.php"
+  },
+  "customizer_defaults": {
+    "contact_enable_form": true,
+    "contact_receiver_emails": "admin@example.com",
+    "contact_save_to_inquiries": true,
+    "contact_auto_reply": true,
+    "contact_auto_reply_text": "شكراً لتواصلك معنا! تم استلام رسالتك وسنرد عليك في أقرب وقت ممكن.",
+    "contact_recaptcha_enable": false,
+    "contact_show_subject": true,
+    "contact_show_phone": true,
+    "contact_show_preferred_time": true,
+    "contact_consent_required": true,
+    "contact_consent_text": "أوافق على سياسة الخصوصية ومعالجة بياناتي",
+    "contact_success_message": "شكراً لتواصلك معنا! سنرد عليك في أقرب وقت.",
+    "contact_error_message": "حدث خطأ أثناء إرسال رسالتك. يُرجى المحاولة مرة أخرى.",
+    "contact_bg_color": "#f8f9fa",
+    "contact_form_bg": "#ffffff",
+    "contact_btn_text": "إرسال الرسالة",
+    "contact_btn_color": "#339063",
+    "contact_font": "Cairo",
+    "contact_layout": "form-left",
+    "contact_map_enable": true,
+    "contact_map_lat": "24.7136",
+    "contact_map_lng": "46.6753",
+    "contact_map_zoom": "13",
+    "contact_show_address": true,
+    "contact_address_text": "الرياض، المملكة العربية السعودية\nحي النخيل، شارع الملك فهد\nص.ب: 12345",
+    "contact_email_subject_template": "[{site}] رسالة جديدة من {name}",
+    "contact_email_body_template": "رسالة جديدة من موقع {site}\n\nالاسم: {name}\nالبريد: {email}\nالهاتف: {phone}\n\nالموضوع: {subject}\n\nالرسالة:\n{message}"
+  }
+}
