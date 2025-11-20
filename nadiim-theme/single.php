@@ -19,16 +19,7 @@ get_header();
         get_template_part( 'template-parts/post/single', 'article' );
 
         // التنقل بين المقالات
-        ?>
-        <div class="post-navigation-wrapper" style="max-width: 900px; margin: 2rem auto; padding: 0 1.5rem;">
-            <?php
-            the_post_navigation( array(
-                'prev_text' => '<span class="nav-subtitle">' . esc_html__( 'السابق:', 'nadiim' ) . '</span> <span class="nav-title">%title</span>',
-                'next_text' => '<span class="nav-subtitle">' . esc_html__( 'التالي:', 'nadiim' ) . '</span> <span class="nav-title">%title</span>',
-            ) );
-            ?>
-        </div>
-        <?php
+        get_template_part( 'template-parts/post/post', 'navigation' );
 
     endwhile;
     ?>

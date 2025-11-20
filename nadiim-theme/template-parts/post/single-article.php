@@ -10,44 +10,81 @@ $article_meta = get_post_meta( get_the_ID(), 'article_meta', true );
 $reading_time = nadiim_get_reading_time( get_the_ID() );
 $word_count = nadiim_get_post_word_count( get_the_ID() );
 $has_audio = nadiim_has_article_audio( get_the_ID() );
+$categories = get_the_category();
 ?>
 
-<article id="post-<?php the_ID(); ?>" <?php post_class( 'article-wrapper' ); ?>>
+<!-- شريط تقدم القراءة -->
+<div class="nadiim-reading-progress">
+    <div class="progress-fill"></div>
+</div>
 
-    <!-- شريط تقدم القراءة -->
-    <div class="nadiim-reading-progress">
-        <div class="progress-fill"></div>
-    </div>
-
-    <!-- رأس المقال -->
-    <header class="article-header">
-        <?php
-        // العنوان
-        the_title( '<h1 class="article-title">', '</h1>' );
-
-        // المقتطف
-        if ( has_excerpt() ) :
-            ?>
-            <div class="article-excerpt">
-                <?php the_excerpt(); ?>
-            </div>
-            <?php
-        endif;
-
-        // البيانات الوصفية
-        get_template_part( 'template-parts/post/article', 'meta' );
-        ?>
-    </header>
-
-    <?php
-    // الصورة المميزة
-    if ( has_post_thumbnail() ) :
-        ?>
-        <div class="article-featured-image">
-            <?php the_post_thumbnail( 'large' ); ?>
+<!-- Hero Section -->
+<div class="article-hero">
+    <?php if ( has_post_thumbnail() ) : ?>
+        <div class="article-hero-image">
+            <?php the_post_thumbnail( 'full' ); ?>
+            <div class="article-hero-overlay"></div>
         </div>
-        <?php
-    endif;
+    <?php endif; ?>
+
+    <div class="article-hero-content">
+        <div class="article-hero-container">
+            <?php if ( ! empty( $categories ) ) : ?>
+                <div class="article-hero-category">
+                    <a href="<?php echo esc_url( get_category_link( $categories[0]->term_id ) ); ?>">
+                        <?php echo esc_html( $categories[0]->name ); ?>
+                    </a>
+                </div>
+            <?php endif; ?>
+
+            <?php the_title( '<h1 class="article-hero-title">', '</h1>' ); ?>
+
+            <?php if ( has_excerpt() ) : ?>
+                <div class="article-hero-excerpt">
+                    <?php the_excerpt(); ?>
+                </div>
+            <?php endif; ?>
+
+            <div class="article-hero-meta">
+                <div class="hero-meta-item">
+                    <?php echo get_avatar( get_the_author_meta( 'ID' ), 40 ); ?>
+                    <div class="hero-meta-info">
+                        <span class="hero-author-name">
+                            <a href="<?php echo esc_url( get_author_posts_url( get_the_author_meta( 'ID' ) ) ); ?>">
+                                <?php the_author(); ?>
+                            </a>
+                        </span>
+                        <span class="hero-meta-date"><?php echo get_the_date(); ?></span>
+                    </div>
+                </div>
+
+                <?php if ( $reading_time > 0 ) : ?>
+                    <div class="hero-meta-item reading-time">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <polyline points="12 6 12 12 16 14"></polyline>
+                        </svg>
+                        <span><?php printf( esc_html__( '%d دقيقة قراءة', 'nadiim' ), $reading_time ); ?></span>
+                    </div>
+                <?php endif; ?>
+
+                <?php if ( $word_count > 0 ) : ?>
+                    <div class="hero-meta-item word-count">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                            <polyline points="14 2 14 8 20 8"></polyline>
+                            <line x1="16" y1="13" x2="8" y2="13"></line>
+                            <line x1="16" y1="17" x2="8" y2="17"></line>
+                        </svg>
+                        <span><?php printf( esc_html__( '%s كلمة', 'nadiim' ), number_format_i18n( $word_count ) ); ?></span>
+                    </div>
+                <?php endif; ?>
+            </div>
+        </div>
+    </div>
+</div>
+
+<article id="post-<?php the_ID(); ?>" <?php post_class( 'article-wrapper' ); ?>>
 
     // مشغل الصوت
     if ( $has_audio && ! empty( $article_meta['show_audio_player'] ) ) :

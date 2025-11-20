@@ -172,50 +172,9 @@ function nadiim_article_meta_box_callback( $post ) {
             }
         </style>
 
-        <!-- وقت القراءة -->
-        <div class="nadiim-meta-field">
-            <label>⏱️ وقت القراءة المقدر</label>
-
-            <div class="nadiim-reading-stats">
-                <div class="nadiim-stat-item">
-                    <div class="nadiim-stat-label">عدد الكلمات</div>
-                    <div class="nadiim-stat-value" id="nadiim-word-count"><?php echo esc_html( $word_count ); ?></div>
-                </div>
-                <div class="nadiim-stat-item">
-                    <div class="nadiim-stat-label">وقت القراءة التلقائي</div>
-                    <div class="nadiim-stat-value" id="nadiim-auto-time"><?php echo esc_html( $auto_reading_time ); ?> دقيقة</div>
-                </div>
-            </div>
-
-            <label for="nadiim_reading_time_manual">الوقت المخصص (دقائق)</label>
-            <input
-                type="number"
-                id="nadiim_reading_time_manual"
-                name="article_meta[reading_time_manual]"
-                value="<?php echo esc_attr( $article_meta['reading_time_manual'] ); ?>"
-                min="1"
-                placeholder="اتركه فارغاً لاستخدام الحساب التلقائي"
-            >
-
-            <div class="nadiim-meta-actions">
-                <button type="button" class="nadiim-meta-btn secondary" id="nadiim-calc-reading-time">
-                    🔄 احسب تلقائياً
-                </button>
-                <button type="button" class="nadiim-meta-btn" id="nadiim-use-auto-time">
-                    ✓ استخدم الوقت التلقائي
-                </button>
-            </div>
-
-            <div class="description">
-                سيتم حساب الوقت تلقائياً بناءً على 200 كلمة/دقيقة. يمكنك تخصيصه يدوياً.
-            </div>
-
-            <input type="hidden" name="article_meta[reading_time_auto]" value="<?php echo esc_attr( $auto_reading_time ); ?>">
-        </div>
-
         <!-- الملف الصوتي -->
         <div class="nadiim-meta-field">
-            <label>🎧 الملف الصوتي للمقال (اختياري)</label>
+            <label>الملف الصوتي للمقال (اختياري)</label>
 
             <input
                 type="hidden"
@@ -235,13 +194,13 @@ function nadiim_article_meta_box_callback( $post ) {
 
             <div class="nadiim-meta-actions">
                 <button type="button" class="nadiim-meta-btn secondary" id="nadiim-upload-audio">
-                    📁 رفع ملف صوتي
+                    رفع ملف صوتي
                 </button>
                 <button type="button" class="nadiim-meta-btn" id="nadiim-remove-audio" style="display: none;">
-                    ❌ إزالة الملف
+                    إزالة الملف
                 </button>
                 <button type="button" class="nadiim-meta-btn" id="nadiim-preview-audio" style="display: none;">
-                    ▶️ معاينة
+                    معاينة
                 </button>
             </div>
 
@@ -285,22 +244,9 @@ function nadiim_article_meta_box_callback( $post ) {
 
         <!-- خيارات العرض -->
         <div class="nadiim-meta-field">
-            <label>⚙️ خيارات العرض</label>
+            <label>خيارات العرض</label>
 
             <div class="nadiim-toggle-field">
-                <input
-                    type="checkbox"
-                    id="nadiim_show_reading_time"
-                    name="article_meta[show_reading_time]"
-                    value="1"
-                    <?php checked( $article_meta['show_reading_time'], true ); ?>
-                >
-                <label for="nadiim_show_reading_time" style="margin: 0; font-weight: normal;">
-                    عرض وقت القراءة في الواجهة
-                </label>
-            </div>
-
-            <div class="nadiim-toggle-field" style="margin-top: 10px;">
                 <input
                     type="checkbox"
                     id="nadiim_show_audio_player"
