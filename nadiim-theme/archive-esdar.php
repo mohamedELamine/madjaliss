@@ -60,10 +60,16 @@ get_header();
                             'report' => __('تقرير', 'nadiim'),
                             'issue' => __('عدد', 'nadiim'),
                         );
+
+                        // جلب إحصائيات الأنواع
+                        $type_counts = nadiim_get_esdar_type_counts();
+
                         $selected_type = isset($_GET['release_type']) ? sanitize_text_field($_GET['release_type']) : '';
                         foreach ($types as $key => $label) {
                             $selected = $selected_type === $key ? 'selected' : '';
-                            echo '<option value="' . esc_attr($key) . '" ' . $selected . '>' . esc_html($label) . '</option>';
+                            $count = isset($type_counts[$key]) ? $type_counts[$key] : 0;
+                            $label_with_count = $count > 0 ? sprintf('%s (%d)', $label, $count) : $label;
+                            echo '<option value="' . esc_attr($key) . '" ' . $selected . '>' . esc_html($label_with_count) . '</option>';
                         }
                         ?>
                     </select>
@@ -75,22 +81,19 @@ get_header();
                     <select name="release_year" id="filter-year" class="esdar-filter-select">
                         <option value=""><?php _e('الكل', 'nadiim'); ?></option>
                         <?php
-                        // الحصول على سنوات الإصدارات
-                        global $wpdb;
-                        $years = $wpdb->get_col("
-                            SELECT DISTINCT YEAR(STR_TO_DATE(JSON_UNQUOTE(JSON_EXTRACT(meta_value, '$.release_date')), '%Y-%m-%d')) as year
-                            FROM {$wpdb->postmeta}
-                            WHERE meta_key = 'esdar_meta'
-                            AND JSON_EXTRACT(meta_value, '$.release_date') IS NOT NULL
-                            ORDER BY year DESC
-                        ");
+                        // جلب إحصائيات السنوات
+                        $year_counts = nadiim_get_esdar_year_counts();
+
+                        // ترتيب السنوات تنازلياً
+                        krsort($year_counts);
 
                         $selected_year = isset($_GET['release_year']) ? sanitize_text_field($_GET['release_year']) : '';
 
-                        foreach ($years as $year) {
+                        foreach ($year_counts as $year => $count) {
                             if ($year) {
                                 $selected = $selected_year == $year ? 'selected' : '';
-                                echo '<option value="' . esc_attr($year) . '" ' . $selected . '>' . esc_html($year) . '</option>';
+                                $label = sprintf('%s (%d)', $year, $count);
+                                echo '<option value="' . esc_attr($year) . '" ' . $selected . '>' . esc_html($label) . '</option>';
                             }
                         }
                         ?>
@@ -110,7 +113,16 @@ get_header();
                         $selected_cat = isset($_GET['category']) ? intval($_GET['category']) : 0;
                         foreach ($categories as $cat) {
                             $selected = $selected_cat === $cat->term_id ? 'selected' : '';
-                            echo '<option value="' . esc_attr($cat->term_id) . '" ' . $selected . '>' . esc_html($cat->name) . '</option>';
+                            // حساب عدد الإصدارات في هذا التصنيف
+                            $cat_count = get_posts(array(
+                                'post_type' => 'esdar',
+                                'category' => $cat->term_id,
+                                'posts_per_page' => -1,
+                                'fields' => 'ids',
+                            ));
+                            $count = count($cat_count);
+                            $label = $count > 0 ? sprintf('%s (%d)', $cat->name, $count) : $cat->name;
+                            echo '<option value="' . esc_attr($cat->term_id) . '" ' . $selected . '>' . esc_html($label) . '</option>';
                         }
                         ?>
                     </select>

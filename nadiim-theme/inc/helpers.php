@@ -394,3 +394,99 @@ function nadiim_ajax_increment_download_count() {
 }
 add_action('wp_ajax_increment_download_count', 'nadiim_ajax_increment_download_count');
 add_action('wp_ajax_nopriv_increment_download_count', 'nadiim_ajax_increment_download_count');
+
+/**
+ * الحصول على إحصائيات الإصدارات حسب النوع
+ *
+ * @return array مصفوفة تحتوي على عدد الإصدارات لكل نوع
+ */
+function nadiim_get_esdar_type_counts() {
+    // محاولة جلب البيانات من cache
+    $cache_key = 'esdar_type_counts';
+    $counts = wp_cache_get($cache_key);
+
+    if (false !== $counts) {
+        return $counts;
+    }
+
+    // تهيئة المصفوفة بالأنواع المعروفة
+    $counts = array(
+        'book' => 0,
+        'magazine' => 0,
+        'brochure' => 0,
+        'report' => 0,
+        'issue' => 0,
+    );
+
+    // جلب جميع الإصدارات وحساب الأنواع
+    $query = new WP_Query(array(
+        'post_type' => 'esdar',
+        'posts_per_page' => -1,
+        'post_status' => 'publish',
+        'fields' => 'ids',
+        'no_found_rows' => true,
+    ));
+
+    if ($query->have_posts()) {
+        foreach ($query->posts as $post_id) {
+            $meta = nadiim_get_esdar_meta($post_id);
+            if ($meta && !empty($meta['release_type'])) {
+                $type = $meta['release_type'];
+                if (isset($counts[$type])) {
+                    $counts[$type]++;
+                }
+            }
+        }
+    }
+
+    // حفظ في cache لمدة ساعة
+    wp_cache_set($cache_key, $counts, '', HOUR_IN_SECONDS);
+
+    return $counts;
+}
+
+/**
+ * الحصول على إحصائيات الإصدارات حسب السنة
+ *
+ * @return array مصفوفة تحتوي على عدد الإصدارات لكل سنة
+ */
+function nadiim_get_esdar_year_counts() {
+    // محاولة جلب البيانات من cache
+    $cache_key = 'esdar_year_counts';
+    $counts = wp_cache_get($cache_key);
+
+    if (false !== $counts) {
+        return $counts;
+    }
+
+    $counts = array();
+
+    // جلب جميع الإصدارات وحساب السنوات
+    $query = new WP_Query(array(
+        'post_type' => 'esdar',
+        'posts_per_page' => -1,
+        'post_status' => 'publish',
+        'fields' => 'ids',
+        'no_found_rows' => true,
+    ));
+
+    if ($query->have_posts()) {
+        foreach ($query->posts as $post_id) {
+            $meta = nadiim_get_esdar_meta($post_id);
+            if ($meta && !empty($meta['release_date'])) {
+                $year = date('Y', strtotime($meta['release_date']));
+                if ($year) {
+                    if (!isset($counts[$year])) {
+                        $counts[$year] = 0;
+                    }
+                    $counts[$year]++;
+                }
+            }
+        }
+    }
+
+    // حفظ في cache لمدة ساعة
+    wp_cache_set($cache_key, $counts, '', HOUR_IN_SECONDS);
+
+    return $counts;
+}
