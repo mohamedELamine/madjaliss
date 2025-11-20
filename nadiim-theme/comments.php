@@ -1,94 +1,82 @@
 <?php
 /**
- * قالب المشاركين في الحوار
+ * قالب التعليقات
  *
- * نظام مخصص لعرض المشاركين في الحوار بدلاً من نظام التعليقات التقليدي
- * يسمح بإضافة مشاركين مع نصوص وصور - قد لا يكونون أعضاء مسجلين
+ * قالب لعرض التعليقات والردود
  *
  * @package Nadiim
- * @since 1.0.0
+ * @since 2.0.0
  */
 
 if ( post_password_required() ) {
-    return;
+	return;
 }
-
-// عرض المشاركين فقط في صفحات الحوارات (نوع المنشور: howarat)
-if ( get_post_type() !== 'howarat' ) {
-    return;
-}
-
-// جلب المشاركين المخصصين من post meta
-$participants = get_post_meta( get_the_ID(), 'dialogue_participants', true );
 ?>
 
-<div id="participants" class="participants-section" style="padding-top: var(--spacing-xl); border-top: 2px solid var(--color-border); margin-top: var(--spacing-xl);">
+<div id="comments" class="comments-area">
 
-    <?php if ( ! empty( $participants ) && is_array( $participants ) ) : ?>
+	<?php if ( have_comments() ) : ?>
+		<h2 class="comments-title">
+			<?php
+			$comments_number = get_comments_number();
+			if ( $comments_number === 1 ) {
+				echo 'تعليق واحد';
+			} else {
+				printf(
+					/* translators: %s: عدد التعليقات */
+					'%s تعليقات',
+					number_format_i18n( $comments_number )
+				);
+			}
+			?>
+		</h2>
 
-        <div class="participants-list" style="display: grid; gap: var(--spacing-xl);">
-            <?php foreach ( $participants as $index => $participant ) :
-                $name = isset( $participant['name'] ) ? $participant['name'] : '';
-                $role = isset( $participant['role'] ) ? $participant['role'] : '';
-                $bio = isset( $participant['bio'] ) ? $participant['bio'] : '';
-                $image = isset( $participant['image'] ) ? $participant['image'] : '';
-                $image_url = $image ? wp_get_attachment_image_url( $image, 'thumbnail' ) : '';
+		<ol class="comment-list">
+			<?php
+			wp_list_comments(
+				array(
+					'style'       => 'ol',
+					'short_ping'  => true,
+					'avatar_size' => 64,
+				)
+			);
+			?>
+		</ol>
 
-                if ( empty( $name ) ) continue;
+		<?php
+		the_comments_navigation(
+			array(
+				'prev_text' => '← تعليقات أقدم',
+				'next_text' => 'تعليقات أحدث →',
+			)
+		);
+		?>
 
-                $alternate_class = ( $index % 2 === 0 ) ? 'participant-even' : 'participant-odd';
-                $flex_direction = ( $index % 2 === 0 ) ? 'row' : 'row-reverse';
-            ?>
-                <div class="participant-card <?php echo esc_attr( $alternate_class ); ?>" style="display: grid; grid-template-columns: 150px 1fr; gap: var(--spacing-lg); padding: var(--spacing-lg); background: var(--color-bg-section); border-radius: var(--radius-lg); border-right: 4px solid var(--color-primary); <?php echo $index % 2 !== 0 ? 'direction: rtl;' : ''; ?>">
+	<?php endif; ?>
 
-                    <!-- صورة المشارك -->
-                    <div class="participant-image-wrapper" style="text-align: center;">
-                        <?php if ( $image_url ) : ?>
-                            <img src="<?php echo esc_url( $image_url ); ?>"
-                                 alt="<?php echo esc_attr( $name ); ?>"
-                                 class="participant-image"
-                                 style="width: 120px; height: 120px; border-radius: 50%; object-fit: cover; border: 4px solid var(--color-bg-lighter); box-shadow: var(--shadow-medium);" />
-                        <?php else : ?>
-                            <div class="participant-avatar-placeholder" style="width: 120px; height: 120px; border-radius: 50%; background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark)); display: flex; align-items: center; justify-content: center; margin: 0 auto; border: 4px solid var(--color-bg-lighter); box-shadow: var(--shadow-medium);">
-                                <span style="color: #fff; font-size: var(--font-size-2xl); font-weight: 700;">
-                                    <?php echo esc_html( mb_substr( $name, 0, 1 ) ); ?>
-                                </span>
-                            </div>
-                        <?php endif; ?>
-                    </div>
+	<?php if ( ! comments_open() && get_comments_number() && post_type_supports( get_post_type(), 'comments' ) ) : ?>
+		<p class="no-comments">التعليقات مغلقة.</p>
+	<?php endif; ?>
 
-                    <!-- معلومات المشارك -->
-                    <div class="participant-info" style="<?php echo $index % 2 !== 0 ? 'direction: rtl; text-align: right;' : ''; ?>">
-                        <h3 class="participant-name" style="font-size: var(--font-size-xl); margin-bottom: var(--spacing-xs); color: var(--color-primary);">
-                            <?php echo esc_html( $name ); ?>
-                        </h3>
+	<?php
+	comment_form(
+		array(
+			'title_reply'         => 'اترك تعليقاً',
+			'title_reply_to'      => 'الرد على %s',
+			'cancel_reply_link'   => 'إلغاء الرد',
+			'label_submit'        => 'إرسال التعليق',
+			'comment_field'       => '<p class="comment-form-comment"><label for="comment">التعليق *</label><textarea id="comment" name="comment" cols="45" rows="8" maxlength="65525" required="required"></textarea></p>',
+			'must_log_in'         => '<p class="must-log-in">' . sprintf( 'يجب أن تكون <a href="%s">مسجلاً للدخول</a> لإضافة تعليق.', wp_login_url( apply_filters( 'the_permalink', get_permalink() ) ) ) . '</p>',
+			'logged_in_as'        => '<p class="logged-in-as">' . sprintf( 'مسجل الدخول كـ <a href="%1$s">%2$s</a>. <a href="%3$s" title="تسجيل الخروج من هذا الحساب">تسجيل الخروج؟</a>', admin_url( 'profile.php' ), wp_get_current_user()->display_name, wp_logout_url( apply_filters( 'the_permalink', get_permalink() ) ) ) . '</p>',
+			'comment_notes_before' => '<p class="comment-notes">لن يتم نشر عنوان بريدك الإلكتروني. الحقول الإلزامية مشار إليها بـ *</p>',
+			'comment_notes_after' => '',
+			'fields'              => array(
+				'author' => '<p class="comment-form-author"><label for="author">الاسم *</label> <input id="author" name="author" type="text" value="' . esc_attr( $commenter['comment_author'] ) . '" size="30" maxlength="245" required="required" /></p>',
+				'email'  => '<p class="comment-form-email"><label for="email">البريد الإلكتروني *</label> <input id="email" name="email" type="email" value="' . esc_attr( $commenter['comment_author_email'] ) . '" size="30" maxlength="100" aria-describedby="email-notes" required="required" /></p>',
+				'url'    => '<p class="comment-form-url"><label for="url">الموقع الإلكتروني</label> <input id="url" name="url" type="url" value="' . esc_attr( $commenter['comment_author_url'] ) . '" size="30" maxlength="200" /></p>',
+			),
+		)
+	);
+	?>
 
-                        <?php if ( $role ) : ?>
-                            <p class="participant-role" style="color: var(--color-text-secondary); font-size: var(--font-size-base); margin-bottom: var(--spacing-sm); font-weight: 600;">
-                                <?php echo esc_html( $role ); ?>
-                            </p>
-                        <?php endif; ?>
-
-                        <?php if ( $bio ) : ?>
-                            <div class="participant-bio" style="color: var(--color-text); font-size: var(--font-size-base); line-height: 1.7; padding-top: var(--spacing-sm); border-top: 1px solid var(--color-border-light);">
-                                <?php echo wp_kses_post( wpautop( $bio ) ); ?>
-                            </div>
-                        <?php endif; ?>
-                    </div>
-
-                </div>
-            <?php endforeach; ?>
-        </div>
-
-    <?php else : ?>
-
-        <!-- رسالة في حالة عدم وجود مشاركين -->
-        <div class="no-participants" style="text-align: center; padding: var(--spacing-xl); background: var(--color-bg-section); border-radius: var(--radius-lg); margin: var(--spacing-xl) 0;">
-            <p style="color: var(--color-text-secondary); font-size: var(--font-size-lg);">
-                <?php esc_html_e( 'لم يتم إضافة مشاركين لهذا الحوار بعد.', 'nadiim' ); ?>
-            </p>
-        </div>
-
-    <?php endif; ?>
-
-</div><!-- #participants -->
+</div><!-- #comments -->

@@ -18,17 +18,40 @@ get_header();
 
 // تحميل ملف CSS الخاص بالحوارات
 wp_enqueue_style( 'howarat-style', get_template_directory_uri() . '/assets/css/howarat.css', array(), '1.0.0' );
+
+// حساب عدد الحوارات
+$total_howarat = wp_count_posts( 'howarat' )->publish;
 ?>
 
 <main id="primary" class="site-main">
 
-	<!-- عنوان الصفحة -->
-	<div class="archive-header">
-		<div class="archive-header-container">
-			<h1 class="archive-title">جميع الحوارات</h1>
-			<p class="archive-description">
-				مجموعة من الحوارات والمقابلات الفكرية الهادفة، حول مواضيع متنوعة في الأدب والفكر والثقافة.
-			</p>
+	<!-- هيرو جديد -->
+	<div class="howarat-archive-hero">
+		<div class="howarat-archive-hero-overlay"></div>
+		<div class="howarat-archive-hero-content">
+			<div class="howarat-archive-hero-container">
+				<span class="archive-hero-badge">📻 الحوارات</span>
+				<h1 class="archive-hero-title">اكتشف حوارات ملهمة</h1>
+				<p class="archive-hero-description">
+					استمع وشاهد مجموعة متنوعة من الحوارات الفكرية والثقافية مع نخبة من المفكرين والأدباء
+				</p>
+				<div class="archive-hero-stats">
+					<div class="archive-stat-item">
+						<span class="stat-number"><?php echo number_format_i18n( $total_howarat ); ?></span>
+						<span class="stat-label">حوار متاح</span>
+					</div>
+					<div class="archive-stat-divider"></div>
+					<div class="archive-stat-item">
+						<span class="stat-icon">🎙️</span>
+						<span class="stat-label">جودة عالية</span>
+					</div>
+					<div class="archive-stat-divider"></div>
+					<div class="archive-stat-item">
+						<span class="stat-icon">🌟</span>
+						<span class="stat-label">محتوى حصري</span>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 
