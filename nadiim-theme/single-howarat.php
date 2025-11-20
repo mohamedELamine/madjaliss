@@ -169,7 +169,6 @@ while ( have_posts() ) :
 
 									// جلب القيم بشكل آمن
 									$p_name = nadiim_get_participant_field( $participant, 'name' );
-									$p_role = nadiim_get_participant_field( $participant, 'role' );
 									?>
 
 									<div class="participant-card-item">
@@ -180,9 +179,6 @@ while ( have_posts() ) :
 										<?php endif; ?>
 										<div class="participant-card-info">
 											<h4 class="participant-card-name"><?php echo esc_html( $p_name ); ?></h4>
-											<?php if ( ! empty( $p_role ) ) : ?>
-												<p class="participant-card-role"><?php echo esc_html( $p_role ); ?></p>
-											<?php endif; ?>
 										</div>
 									</div>
 

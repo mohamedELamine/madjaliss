@@ -210,7 +210,6 @@ function nadiim_render_participant_row( $index, $participant = array(), $users =
 		'id'       => 0,
 		'name'     => '',
 		'photo_id' => 0,
-		'role'     => '',
 	);
 
 	$participant = wp_parse_args( $participant, $defaults );
@@ -262,12 +261,6 @@ function nadiim_render_participant_row( $index, $participant = array(), $users =
 			<div class="participant-field guest-fields <?php echo $participant['type'] === 'guest' ? 'active' : ''; ?>">
 				<label><?php _e( 'الاسم', 'nadiim' ); ?></label>
 				<input type="text" name="participants[<?php echo esc_attr( $index ); ?>][name]" value="<?php echo esc_attr( $participant['name'] ); ?>" placeholder="<?php esc_attr_e( 'أدخل اسم الضيف', 'nadiim' ); ?>">
-			</div>
-
-			<!-- الدور -->
-			<div class="participant-field">
-				<label><?php _e( 'الدور', 'nadiim' ); ?></label>
-				<input type="text" name="participants[<?php echo esc_attr( $index ); ?>][role]" value="<?php echo esc_attr( $participant['role'] ); ?>" placeholder="<?php esc_attr_e( 'مثال: ضيف، مقدم، منسّق', 'nadiim' ); ?>">
 			</div>
 
 			<!-- الصورة -->
@@ -367,7 +360,6 @@ function nadiim_save_howarat_participants( $post_id ) {
 
 		// باقي الحقول - التأكد من أنها strings وليست arrays
 		$participant['photo_id'] = isset( $participant_data['photo_id'] ) ? absint( $participant_data['photo_id'] ) : 0;
-		$participant['role']     = isset( $participant_data['role'] ) && is_string( $participant_data['role'] ) ? sanitize_text_field( $participant_data['role'] ) : '';
 
 		$participants[] = $participant;
 	}

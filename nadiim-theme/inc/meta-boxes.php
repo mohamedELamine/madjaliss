@@ -207,15 +207,6 @@ function nadiim_add_howarat_meta_boxes() {
         'normal',
         'high'
     );
-
-    add_meta_box(
-        'nadiim_howarat_transcript',
-        __( 'نص الترانسكريبت', 'nadiim' ),
-        'nadiim_render_howarat_transcript_meta_box',
-        'howarat',
-        'normal',
-        'default'
-    );
 }
 add_action( 'add_meta_boxes', 'nadiim_add_howarat_meta_boxes' );
 
@@ -230,35 +221,6 @@ function nadiim_render_howarat_details_meta_box( $post ) {
 
     // الموقع
     nadiim_render_input_field( $post->ID, 'dialogue_location', __( 'موقع الحوار', 'nadiim' ), 'text', __( 'مثال: الرياض، المملكة العربية السعودية', 'nadiim' ) );
-
-    // المشاركون (اختيار متعدد من المستخدمين)
-    $participants = get_post_meta( $post->ID, 'dialogue_participants', true );
-    if ( ! is_array( $participants ) ) {
-        $participants = array();
-    }
-
-    $all_users = get_users( array(
-        'orderby' => 'display_name',
-        'order'   => 'ASC',
-    ) );
-    ?>
-    <p>
-        <label for="dialogue_participants">
-            <strong><?php esc_html_e( 'المشاركون في الحوار', 'nadiim' ); ?></strong>
-        </label>
-        <br>
-        <select id="dialogue_participants" name="dialogue_participants[]" multiple style="width: 100%; height: 150px;">
-            <?php foreach ( $all_users as $user ) : ?>
-                <option value="<?php echo esc_attr( $user->ID ); ?>" <?php echo in_array( $user->ID, $participants, true ) ? 'selected' : ''; ?>>
-                    <?php echo esc_html( $user->display_name ); ?>
-                </option>
-            <?php endforeach; ?>
-        </select>
-        <small style="display: block; margin-top: 5px; color: #666;">
-            <?php esc_html_e( 'اضغط Ctrl/Cmd لاختيار أكثر من مشارك', 'nadiim' ); ?>
-        </small>
-    </p>
-    <?php
 }
 
 /**
@@ -282,36 +244,6 @@ function nadiim_render_howarat_media_meta_box( $post ) {
     );
 
     echo '<p><small style="color: #666;">' . esc_html__( 'يدعم روابط YouTube, Vimeo, SoundCloud وغيرها', 'nadiim' ) . '</small></p>';
-}
-
-/**
- * عرض Meta Box: الترانسكريبت
- */
-function nadiim_render_howarat_transcript_meta_box( $post ) {
-    // نص الترانسكريبت
-    $transcript = get_post_meta( $post->ID, 'dialogue_transcript', true );
-    ?>
-    <p>
-        <label for="dialogue_transcript">
-            <strong><?php esc_html_e( 'نص الترانسكريبت الكامل', 'nadiim' ); ?></strong>
-        </label>
-        <br>
-        <?php
-        wp_editor( $transcript, 'dialogue_transcript', array(
-            'textarea_name' => 'dialogue_transcript',
-            'textarea_rows' => 15,
-            'media_buttons' => false,
-            'teeny'         => false,
-            'tinymce'       => array(
-                'toolbar1' => 'formatselect,bold,italic,underline,bullist,numlist,blockquote,link,unlink',
-            ),
-        ) );
-        ?>
-    </p>
-    <p><small style="color: #666;">
-        <?php esc_html_e( 'يمكنك إدخال النص الكامل للحوار هنا. سيُعرض في صفحة الحوار المفرد.', 'nadiim' ); ?>
-    </small></p>
-    <?php
 }
 
 /**
@@ -348,14 +280,6 @@ function nadiim_save_howarat_meta( $post_id ) {
         update_post_meta( $post_id, 'dialogue_location', sanitize_text_field( $_POST['dialogue_location'] ) );
     }
 
-    // حفظ المشاركون
-    if ( isset( $_POST['dialogue_participants'] ) && is_array( $_POST['dialogue_participants'] ) ) {
-        $participants = array_map( 'absint', $_POST['dialogue_participants'] );
-        update_post_meta( $post_id, 'dialogue_participants', $participants );
-    } else {
-        delete_post_meta( $post_id, 'dialogue_participants' );
-    }
-
     // حفظ نوع الوسائط
     if ( isset( $_POST['dialogue_media_type'] ) ) {
         update_post_meta( $post_id, 'dialogue_media_type', sanitize_text_field( $_POST['dialogue_media_type'] ) );
@@ -364,11 +288,6 @@ function nadiim_save_howarat_meta( $post_id ) {
     // حفظ رابط الوسائط
     if ( isset( $_POST['dialogue_media_url'] ) ) {
         update_post_meta( $post_id, 'dialogue_media_url', esc_url_raw( $_POST['dialogue_media_url'] ) );
-    }
-
-    // حفظ الترانسكريبت
-    if ( isset( $_POST['dialogue_transcript'] ) ) {
-        update_post_meta( $post_id, 'dialogue_transcript', wp_kses_post( $_POST['dialogue_transcript'] ) );
     }
 }
 add_action( 'save_post', 'nadiim_save_howarat_meta' );
