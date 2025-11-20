@@ -149,6 +149,47 @@ while ( have_posts() ) :
 							<span class="cta-arrow">↓</span>
 						</a>
 					</div>
+
+					<!-- المشاركون في الحوار -->
+					<?php if ( ! empty( $participants ) && is_array( $participants ) ) : ?>
+						<div class="howarat-participants-card">
+							<h3 class="participants-card-title">المشاركون في الحوار</h3>
+							<div class="participants-card-list">
+								<?php foreach ( $participants as $participant ) : ?>
+									<?php
+									// جلب الصورة
+									$photo_url = '';
+									if ( isset( $participant['photo_id'] ) && $participant['photo_id'] > 0 ) {
+										$photo_url = wp_get_attachment_image_url( $participant['photo_id'], 'thumbnail' );
+									}
+									// إذا كان مستخدماً، جلب صورة الملف الشخصي
+									if ( ! $photo_url && isset( $participant['type'] ) && $participant['type'] === 'user' && isset( $participant['id'] ) ) {
+										$photo_url = get_avatar_url( $participant['id'], array( 'size' => 128 ) );
+									}
+
+									// جلب القيم بشكل آمن
+									$p_name = nadiim_get_participant_field( $participant, 'name' );
+									$p_role = nadiim_get_participant_field( $participant, 'role' );
+									?>
+
+									<div class="participant-card-item">
+										<?php if ( $photo_url ) : ?>
+											<div class="participant-card-avatar">
+												<img src="<?php echo esc_url( $photo_url ); ?>" alt="<?php echo esc_attr( $p_name ); ?>">
+											</div>
+										<?php endif; ?>
+										<div class="participant-card-info">
+											<h4 class="participant-card-name"><?php echo esc_html( $p_name ); ?></h4>
+											<?php if ( ! empty( $p_role ) ) : ?>
+												<p class="participant-card-role"><?php echo esc_html( $p_role ); ?></p>
+											<?php endif; ?>
+										</div>
+									</div>
+
+								<?php endforeach; ?>
+							</div>
+						</div>
+					<?php endif; ?>
 				</div>
 			</div>
 		</div>
@@ -213,62 +254,6 @@ while ( have_posts() ) :
 					</div>
 				</div>
 
-				<!-- المشاركون في الحوار -->
-				<?php if ( ! empty( $participants ) && is_array( $participants ) ) : ?>
-					<div id="participants" class="howarat-participants-section">
-						<h2 class="section-title">المشاركون في الحوار</h2>
-						<div class="participants-grid">
-							<?php foreach ( $participants as $participant ) : ?>
-								<?php
-								// جلب الصورة
-								$photo_url = '';
-								if ( isset( $participant['photo_id'] ) && $participant['photo_id'] > 0 ) {
-									$photo_url = wp_get_attachment_image_url( $participant['photo_id'], 'thumbnail' );
-								}
-								// إذا كان مستخدماً، جلب صورة الملف الشخصي
-								if ( ! $photo_url && isset( $participant['type'] ) && $participant['type'] === 'user' && isset( $participant['id'] ) ) {
-									$photo_url = get_avatar_url( $participant['id'], array( 'size' => 128 ) );
-								}
-
-								// جلب القيم بشكل آمن
-								$p_name = nadiim_get_participant_field( $participant, 'name' );
-								$p_role = nadiim_get_participant_field( $participant, 'role' );
-								$p_bio  = nadiim_get_participant_field( $participant, 'bio' );
-								$p_link = nadiim_get_participant_field( $participant, 'link' );
-								?>
-
-								<div class="participant-item">
-									<?php if ( $photo_url ) : ?>
-										<div class="participant-avatar">
-											<img src="<?php echo esc_url( $photo_url ); ?>" alt="<?php echo esc_attr( $p_name ); ?>">
-										</div>
-									<?php endif; ?>
-
-									<div class="participant-details">
-										<h3 class="participant-name">
-											<?php echo esc_html( $p_name ); ?>
-											<?php if ( ! empty( $p_link ) ) : ?>
-												<a href="<?php echo esc_url( $p_link ); ?>" target="_blank" class="participant-link-btn" rel="noopener">
-													تعرف عليه →
-												</a>
-											<?php endif; ?>
-										</h3>
-
-										<?php if ( ! empty( $p_role ) ) : ?>
-											<p class="participant-role"><?php echo esc_html( $p_role ); ?></p>
-										<?php endif; ?>
-
-										<?php if ( ! empty( $p_bio ) ) : ?>
-											<p class="participant-bio"><?php echo esc_html( $p_bio ); ?></p>
-										<?php endif; ?>
-									</div>
-								</div>
-
-							<?php endforeach; ?>
-						</div>
-					</div>
-				<?php endif; ?>
-
 				<!-- التنقل بين المنشورات -->
 				<div class="howarat-navigation">
 					<?php
@@ -297,42 +282,6 @@ while ( have_posts() ) :
 
 			<!-- Sidebar -->
 			<aside class="howarat-sidebar">
-
-				<!-- المشاركون (نسخة مصغرة) -->
-				<?php if ( ! empty( $participants ) && is_array( $participants ) ) : ?>
-					<div class="sidebar-widget">
-						<h3 class="widget-title">المشاركون</h3>
-						<div class="sidebar-participants">
-							<?php foreach ( $participants as $participant ) : ?>
-								<?php
-								// جلب الصورة
-								$photo_url = '';
-								if ( isset( $participant['photo_id'] ) && $participant['photo_id'] > 0 ) {
-									$photo_url = wp_get_attachment_image_url( $participant['photo_id'], 'thumbnail' );
-								}
-								if ( ! $photo_url && isset( $participant['type'] ) && $participant['type'] === 'user' && isset( $participant['id'] ) ) {
-									$photo_url = get_avatar_url( $participant['id'], array( 'size' => 64 ) );
-								}
-
-								// الحصول على القيم بشكل آمن باستخدام الدالة المساعدة
-								$sidebar_name = nadiim_get_participant_field( $participant, 'name' );
-								$sidebar_role = nadiim_get_participant_field( $participant, 'role' );
-								?>
-								<div class="sidebar-participant-item">
-									<?php if ( $photo_url ) : ?>
-										<img src="<?php echo esc_url( $photo_url ); ?>" alt="<?php echo esc_attr( $sidebar_name ); ?>" class="sidebar-participant-photo">
-									<?php endif; ?>
-									<div class="sidebar-participant-text">
-										<p class="sidebar-participant-name"><?php echo esc_html( $sidebar_name ); ?></p>
-										<?php if ( ! empty( $sidebar_role ) ) : ?>
-											<p class="sidebar-participant-role"><?php echo esc_html( $sidebar_role ); ?></p>
-										<?php endif; ?>
-									</div>
-								</div>
-							<?php endforeach; ?>
-						</div>
-					</div>
-				<?php endif; ?>
 
 				<!-- حوارات مشابهة -->
 				<?php

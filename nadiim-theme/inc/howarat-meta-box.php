@@ -211,8 +211,6 @@ function nadiim_render_participant_row( $index, $participant = array(), $users =
 		'name'     => '',
 		'photo_id' => 0,
 		'role'     => '',
-		'bio'      => '',
-		'link'     => '',
 	);
 
 	$participant = wp_parse_args( $participant, $defaults );
@@ -270,18 +268,6 @@ function nadiim_render_participant_row( $index, $participant = array(), $users =
 			<div class="participant-field">
 				<label><?php _e( 'الدور', 'nadiim' ); ?></label>
 				<input type="text" name="participants[<?php echo esc_attr( $index ); ?>][role]" value="<?php echo esc_attr( $participant['role'] ); ?>" placeholder="<?php esc_attr_e( 'مثال: ضيف، مقدم، منسّق', 'nadiim' ); ?>">
-			</div>
-
-			<!-- السيرة الذاتية -->
-			<div class="participant-field participant-field-full">
-				<label><?php _e( 'السيرة الذاتية', 'nadiim' ); ?></label>
-				<textarea name="participants[<?php echo esc_attr( $index ); ?>][bio]" placeholder="<?php esc_attr_e( 'نبذة مختصرة عن المشارك', 'nadiim' ); ?>"><?php echo esc_textarea( $participant['bio'] ); ?></textarea>
-			</div>
-
-			<!-- الرابط -->
-			<div class="participant-field">
-				<label><?php _e( 'الرابط', 'nadiim' ); ?></label>
-				<input type="url" name="participants[<?php echo esc_attr( $index ); ?>][link]" value="<?php echo esc_url( $participant['link'] ); ?>" placeholder="<?php esc_attr_e( 'رابط الموقع أو الملف الشخصي', 'nadiim' ); ?>">
 			</div>
 
 			<!-- الصورة -->
@@ -382,8 +368,6 @@ function nadiim_save_howarat_participants( $post_id ) {
 		// باقي الحقول - التأكد من أنها strings وليست arrays
 		$participant['photo_id'] = isset( $participant_data['photo_id'] ) ? absint( $participant_data['photo_id'] ) : 0;
 		$participant['role']     = isset( $participant_data['role'] ) && is_string( $participant_data['role'] ) ? sanitize_text_field( $participant_data['role'] ) : '';
-		$participant['bio']      = isset( $participant_data['bio'] ) && is_string( $participant_data['bio'] ) ? sanitize_textarea_field( $participant_data['bio'] ) : '';
-		$participant['link']     = isset( $participant_data['link'] ) && is_string( $participant_data['link'] ) ? esc_url_raw( $participant_data['link'] ) : '';
 
 		$participants[] = $participant;
 	}
