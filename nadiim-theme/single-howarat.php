@@ -29,11 +29,10 @@ while ( have_posts() ) :
 	the_post();
 
 	// جلب البيانات الوصفية
-	$dialogue_date     = get_post_meta( get_the_ID(), 'dialogue_date', true );
-	$dialogue_type     = get_post_meta( get_the_ID(), 'dialogue_type', true );
-	$dialogue_duration = get_post_meta( get_the_ID(), 'dialogue_duration', true );
-	$dialogue_media    = get_post_meta( get_the_ID(), 'dialogue_media', true );
-	$media_type        = get_post_meta( get_the_ID(), 'dialogue_media_type', true );
+	$dialogue_date  = get_post_meta( get_the_ID(), 'dialogue_date', true );
+	$dialogue_type  = get_post_meta( get_the_ID(), 'dialogue_type', true );
+	$dialogue_media = get_post_meta( get_the_ID(), 'dialogue_media', true );
+	$media_type     = get_post_meta( get_the_ID(), 'dialogue_media_type', true );
 
 	// جلب المشاركين مع معالجة آمنة (يدعم كل من Array و JSON string)
 	$participants_data = get_post_meta( get_the_ID(), 'dialogue_participants', true );
@@ -120,13 +119,6 @@ while ( have_posts() ) :
 							<span class="meta-icon">📅</span>
 							<?php echo esc_html( $formatted_date ); ?>
 						</span>
-
-						<?php if ( $dialogue_duration ) : ?>
-							<span class="howarat-meta-item">
-								<span class="meta-icon">⏱️</span>
-								<?php echo esc_html( $dialogue_duration ); ?>
-							</span>
-						<?php endif; ?>
 
 						<?php if ( $dialogue_type ) : ?>
 							<span class="howarat-meta-item">
@@ -273,6 +265,15 @@ while ( have_posts() ) :
 						</a>
 					<?php endif; ?>
 				</div>
+
+				<!-- قسم التعليقات -->
+				<?php
+				if ( comments_open() || get_comments_number() ) :
+					?>
+					<div id="comments" class="howarat-comments-section">
+						<?php comments_template(); ?>
+					</div>
+				<?php endif; ?>
 
 			</div><!-- .howarat-content-wrapper -->
 

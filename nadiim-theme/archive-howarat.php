@@ -49,11 +49,10 @@ wp_enqueue_style( 'howarat-style', get_template_directory_uri() . '/assets/css/h
 					the_post();
 
 					// جلب البيانات الوصفية
-					$dialogue_date     = get_post_meta( get_the_ID(), 'dialogue_date', true );
-					$dialogue_type     = get_post_meta( get_the_ID(), 'dialogue_type', true );
-					$dialogue_duration = get_post_meta( get_the_ID(), 'dialogue_duration', true );
-					$dialogue_media    = get_post_meta( get_the_ID(), 'dialogue_media', true );
-					$media_type        = get_post_meta( get_the_ID(), 'dialogue_media_type', true );
+					$dialogue_date  = get_post_meta( get_the_ID(), 'dialogue_date', true );
+					$dialogue_type  = get_post_meta( get_the_ID(), 'dialogue_type', true );
+					$dialogue_media = get_post_meta( get_the_ID(), 'dialogue_media', true );
+					$media_type     = get_post_meta( get_the_ID(), 'dialogue_media_type', true );
 
 					// تحديد نوع الميديا
 					if ( ! $media_type && $dialogue_media ) {
@@ -149,13 +148,6 @@ wp_enqueue_style( 'howarat-style', get_template_directory_uri() . '/assets/css/h
 									}
 									echo implode( '، ', $participant_names );
 									?>
-								</div>
-							<?php endif; ?>
-
-							<!-- البيانات الإضافية -->
-							<?php if ( $dialogue_duration ) : ?>
-								<div class="howarat-card-duration">
-									⏱️ <?php echo esc_html( $dialogue_duration ); ?>
 								</div>
 							<?php endif; ?>
 

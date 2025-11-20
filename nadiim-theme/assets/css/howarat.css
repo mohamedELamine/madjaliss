@@ -695,6 +695,104 @@
 	font-weight: 600;
 }
 
+/* قسم التعليقات */
+.howarat-comments-section {
+	margin-top: 48px;
+	padding: 32px;
+	background: var(--howarat-bg);
+	border-radius: var(--howarat-radius-lg);
+	border: 1px solid var(--howarat-border);
+}
+
+.howarat-comments-section .comments-title {
+	font-size: 24px;
+	font-weight: 700;
+	color: var(--howarat-primary);
+	margin-bottom: 24px;
+	padding-bottom: 16px;
+	border-bottom: 2px solid var(--howarat-border);
+}
+
+.howarat-comments-section .comment {
+	padding: 20px;
+	margin-bottom: 20px;
+	background: var(--howarat-bg-light);
+	border-radius: var(--howarat-radius);
+	border: 1px solid var(--howarat-border);
+}
+
+.howarat-comments-section .comment-author {
+	font-weight: 600;
+	color: var(--howarat-primary);
+	margin-bottom: 8px;
+}
+
+.howarat-comments-section .comment-meta {
+	font-size: 13px;
+	color: var(--howarat-text-muted);
+	margin-bottom: 12px;
+}
+
+.howarat-comments-section .comment-content {
+	line-height: 1.7;
+	color: var(--howarat-text);
+}
+
+.howarat-comments-section .comment-reply-link {
+	color: var(--howarat-primary);
+	text-decoration: none;
+	font-size: 14px;
+	font-weight: 600;
+}
+
+.howarat-comments-section .comment-reply-link:hover {
+	color: var(--howarat-primary-dark);
+}
+
+.howarat-comments-section .comment-form {
+	margin-top: 32px;
+	padding: 24px;
+	background: var(--howarat-bg-section);
+	border-radius: var(--howarat-radius);
+}
+
+.howarat-comments-section .comment-form input[type="text"],
+.howarat-comments-section .comment-form input[type="email"],
+.howarat-comments-section .comment-form input[type="url"],
+.howarat-comments-section .comment-form textarea {
+	width: 100%;
+	padding: 12px 16px;
+	border: 1px solid var(--howarat-border);
+	border-radius: var(--howarat-radius);
+	font-size: 15px;
+	transition: var(--howarat-transition);
+}
+
+.howarat-comments-section .comment-form input:focus,
+.howarat-comments-section .comment-form textarea:focus {
+	border-color: var(--howarat-primary);
+	outline: none;
+	box-shadow: 0 0 0 3px rgba(51, 144, 99, 0.1);
+}
+
+.howarat-comments-section .comment-form .submit {
+	background: var(--howarat-primary);
+	color: #FFFFFF;
+	padding: 12px 32px;
+	border: none;
+	border-radius: var(--howarat-radius);
+	font-size: 16px;
+	font-weight: 600;
+	cursor: pointer;
+	transition: var(--howarat-transition);
+}
+
+.howarat-comments-section .comment-form .submit:hover {
+	background: var(--howarat-primary-dark);
+	transform: translateY(-2px);
+	box-shadow: 0 4px 12px rgba(51, 144, 99, 0.3);
+}
+
 /* --- Sidebar --- */
 .howarat-sidebar {
 	position: sticky;
