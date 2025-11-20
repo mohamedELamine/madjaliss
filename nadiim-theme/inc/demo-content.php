@@ -442,52 +442,73 @@ function nadiim_create_demo_releases( $users ) {
 }
 
 /**
- * Create demo reading clubs (Front Page Version)
- * نوادي القراءة التجريبية للصفحة الرئيسية
+ * Create demo reading clubs (New System)
+ * نوادي القراءة التجريبية - النظام الجديد
  */
 function nadiim_create_demo_reading_clubs( $users ) {
-	// Get first release for linking.
-	$releases = get_posts(
-		array(
-			'post_type'      => 'esdar',
-			'posts_per_page' => 1,
-			'fields'         => 'ids',
-		)
-	);
-
 	$clubs = array(
 		array(
-			'title'         => 'نادي الرواية العصري',
-			'content'       => '<p>نادي شهري مخصص لقراءة ومناقشة الروايات العربية والمترجمة المعاصرة.</p><p>نادي الرواية العصري هو مجتمع من عشاق الرواية يجتمعون شهرياً لمناقشة رواية مختارة بعناية. نركز على الروايات المعاصرة التي تتناول قضايا راهنة وتستخدم تقنيات سردية مبتكرة.</p><h3>ما نقرأه:</h3><ul><li>روايات عربية معاصرة</li><li>روايات عالمية مترجمة</li><li>أحياناً روايات كلاسيكية مؤثرة</li></ul><h3>كيف نجتمع:</h3><p>نلتقي في الأسبوع الأول من كل شهر، نحدد التاريخ والمكان قبل أسبوعين. الجلسة تستمر ساعتين تقريباً.</p><h3>من يمكنه الانضمام:</h3><p>النادي مفتوح للجميع، المهم فقط أن تكون قد قرأت الرواية المحددة.</p><p>انضم إلينا في رحلة استكشاف عوالم سردية جديدة!</p>',
-			'supervisor'    => $users[0],
-			'members'       => array( $users[1], $users[2] ),
-			'current_book'  => ! empty( $releases ) ? $releases[0] : 0,
-			'schedule'      => '2026-03-05',
-			'meeting_url'   => '',
-			'join_url'      => '#',
-			'max_members'   => 20,
+			'title'   => 'نادي القراءة الأسبوعي',
+			'content' => '<p>نادي القراءة الأسبوعي هو مساحة ثقافية للقراء المتحمسين الذين يجتمعون أسبوعياً لمناقشة الكتب الحديثة والكلاسيكية. نرحب بجميع القراء بغض النظر عن مستوى خبرتهم القرائية.</p>',
+			'excerpt' => 'مساحة ثقافية للقراء المتحمسين لمناقشة الكتب الحديثة والكلاسيكية',
+			'meta'    => array(
+				'short_description'      => 'نادي يجتمع أسبوعياً لمناقشة الكتب الحديثة والكلاسيكية. نرحب بجميع القراء من مختلف الأعمار والخلفيات.',
+				'full_description'       => '<h2>عن النادي</h2><p>نادي القراءة الأسبوعي تأسس في عام 2020 بهدف جمع محبي القراءة والأدب في الجزائر. نلتقي كل أسبوع لمناقشة كتاب جديد ومشاركة الأفكار والآراء حول الأعمال الأدبية المختلفة.</p><h3>ما نقدمه</h3><ul><li>مناقشات أدبية متعمقة</li><li>اختيار دوري لكتب متنوعة</li><li>لقاءات مع كتّاب محليين وعالميين</li><li>ورش عمل للكتابة الإبداعية</li><li>مكتبة مشتركة للإعارة بين الأعضاء</li></ul><h3>كيف تنضم؟</h3><p>للانضمام إلى النادي، يكفي الحضور في أحد لقاءاتنا الأسبوعية. جميع اللقاءات مفتوحة للجميع ولا تتطلب تسجيلاً مسبقاً.</p>',
+				'meeting_location'       => array(
+					'address' => 'مكتبة المدينة – وسط الجزائر العاصمة',
+					'lat'     => 36.7538,
+					'lng'     => 3.0588,
+				),
+				'meeting_schedule_note'  => 'نلتقي كل يوم سبت على الساعة 18:00 مساءً. المدة: ساعتان تقريباً. يُنصح بقراءة الكتاب المختار قبل اللقاء.',
+				'facebook_page'          => 'https://facebook.com/weekly.reading.club',
+				'telegram_channel'       => 'https://t.me/weeklyreadingclub',
+				'website'                => 'https://weeklyreadingclub.dz',
+				'contact_email'          => 'contact@weeklyreadingclub.dz',
+				'map_embed'              => '',
+				'visibility'             => 'public',
+			),
 		),
 		array(
-			'title'         => 'نادي الشعر',
-			'content'       => '<p>نلتقي لقراءة ومناقشة الشعر العربي الكلاسيكي والمعاصر، ونستكشف جماليات اللغة الشعرية.</p><p>نادي الشعر هو ملتقى لمحبي الشعر العربي بجميع عصوره وأشكاله. نقرأ القصائد بصوت عالٍ، ونناقش معانيها وجمالياتها، ونتشارك تجاربنا مع الكلمة الشعرية.</p><h3>ما نقرأه:</h3><ul><li>الشعر العربي الكلاسيكي</li><li>شعر التفعيلة</li><li>قصيدة النثر</li><li>الشعر المترجم أحياناً</li></ul><h3>كيف نجتمع:</h3><p>جلساتنا أسبوعية، كل يوم خميس مساءً. نختار في كل جلسة شاعراً أو موضوعاً معيناً.</p><h3>الأنشطة:</h3><ul><li>قراءة جماعية</li><li>تحليل نقدي</li><li>ورش كتابة شعرية للمهتمين</li><li>استضافة شعراء أحياناً</li></ul><p>إذا كنت تحب الشعر، فهذا مكانك!</p>',
-			'supervisor'    => $users[1],
-			'members'       => array( $users[2], $users[3] ),
-			'current_book'  => ! empty( $releases ) ? $releases[0] : 0,
-			'schedule'      => '2026-03-07',
-			'meeting_url'   => '',
-			'join_url'      => '#',
-			'max_members'   => 15,
+			'title'   => 'نادي الأدب العربي الحديث',
+			'content' => '<p>نادي متخصص في الأدب العربي المعاصر، نركز على أعمال الكتّاب العرب من القرن العشرين إلى اليوم. نسعى لتعزيز الوعي بالأدب العربي الحديث وإبراز الأصوات الأدبية المتميزة.</p>',
+			'excerpt' => 'نادي متخصص في مناقشة الأدب العربي المعاصر والأصوات الأدبية الجديدة',
+			'meta'    => array(
+				'short_description'      => 'نادي متخصص في الأدب العربي المعاصر. نركز على أعمال الكتّاب العرب من القرن العشرين حتى اليوم.',
+				'full_description'       => '<h2>رؤيتنا</h2><p>نؤمن بأهمية الأدب العربي الحديث في تشكيل الوعي الثقافي والاجتماعي. نسعى من خلال لقاءاتنا إلى:</p><ul><li>استكشاف التيارات الأدبية الحديثة في الوطن العربي</li><li>تحليل نقدي للأعمال الأدبية المعاصرة</li><li>دعم الكتّاب الشباب والأصوات الناشئة</li><li>ربط الأدب بالواقع الاجتماعي والسياسي</li></ul><h3>برنامجنا الشهري</h3><p>كل شهر نختار رواية أو مجموعة قصصية من الأدب العربي الحديث. نقرأها معاً ثم نلتقي لمناقشتها بشكل معمّق. نستضيف أحياناً نقاداً وكتّاباً للمشاركة في نقاشاتنا.</p><h3>الكتّاب الذين ناقشناهم</h3><p>نجيب محفوظ، غسان كنفاني، حنان الشيخ، إبراهيم الكوني، سنان أنطون، رجاء عالم، والعديد من الأسماء المميزة.</p>',
+				'meeting_location'       => array(
+					'address' => 'المركز الثقافي الجزائري – حي بئر مراد رايس',
+					'lat'     => 36.7389,
+					'lng'     => 3.0642,
+				),
+				'meeting_schedule_note'  => 'نجتمع في الأحد الأول من كل شهر على الساعة 17:00. المناقشات تستغرق حوالي ساعتين ونصف مع استراحة قصيرة.',
+				'facebook_page'          => 'https://facebook.com/modern.arabic.lit',
+				'telegram_channel'       => 'https://t.me/modernarabiclitclub',
+				'website'                => '',
+				'contact_email'          => 'info@arabiclitclub.org',
+				'map_embed'              => '',
+				'visibility'             => 'public',
+			),
 		),
 		array(
-			'title'         => 'نادي دراسات نقدية',
-			'content'       => '<p>نادي متخصص في النقد الأدبي والدراسات الثقافية، موجه لمن يرغب في قراءة نقدية معمقة.</p><p>نادي دراسات نقدية مخصص لمن يرغب في تجاوز القراءة السطحية والدخول في عوالم النقد والتحليل الأدبي. نقرأ نصوصاً نقدية ونناقشها، ونطبق أدوات النقد على نصوص أدبية مختارة.</p><h3>ما نقرأه:</h3><ul><li>كتب في النقد الأدبي</li><li>دراسات ثقافية ونظرية</li><li>مقالات نقدية معاصرة</li><li>نصوص أدبية للتحليل</li></ul><h3>المستوى:</h3><p>النادي موجه لمن لديه خلفية أساسية في الأدب أو النقد. نرحب بالمبتدئين الجادين.</p><h3>كيف نجتمع:</h3><p>مرة كل أسبوعين، نحدد قراءة مسبقة ونناقشها في الجلسة.</p><h3>الهدف:</h3><p>تطوير أدوات قرائية نقدية وبناء مجتمع من القراء الواعين.</p><p>انضم إلينا لنقرأ بعمق أكبر!</p>',
-			'supervisor'    => $users[2],
-			'members'       => array( $users[0], $users[3] ),
-			'current_book'  => ! empty( $releases ) ? $releases[0] : 0,
-			'schedule'      => '2026-03-12',
-			'meeting_url'   => 'https://zoom.us/j/987654321',
-			'join_url'      => '#',
-			'max_members'   => 12,
+			'title'   => 'نادي القراءة الفلسفية',
+			'content' => '<p>نادي مخصص لعشاق الفلسفة والفكر. نقرأ ونناقش الأعمال الفلسفية الكلاسيكية والمعاصرة، من أفلاطون إلى سارتر ومن ابن رشد إلى محمد عابد الجابري.</p>',
+			'excerpt' => 'نادي لعشاق الفلسفة والفكر، نقرأ ونناقش الأعمال الفلسفية الكلاسيكية والمعاصرة',
+			'meta'    => array(
+				'short_description'      => 'نادي مخصص لعشاق الفلسفة والفكر. نقرأ ونناقش الأعمال الفلسفية الكلاسيكية والمعاصرة من مختلف الحضارات.',
+				'full_description'       => '<h2>منهجنا في القراءة</h2><p>الفلسفة ليست مجرد نصوص قديمة، بل هي طريقة تفكير وأسلوب حياة. في نادي القراءة الفلسفية، نتبنى منهجاً تفاعلياً لقراءة النصوص الفلسفية:</p><h3>ما نفعله</h3><ul><li><strong>قراءة نقدية:</strong> نقرأ النصوص الفلسفية بعمق ونحللها سياقياً وتاريخياً</li><li><strong>نقاشات مفتوحة:</strong> نشجع على التساؤل والجدل الفكري البنّاء</li><li><strong>ربط بالواقع:</strong> نربط الأفكار الفلسفية بقضايانا المعاصرة</li><li><strong>تنوع المدارس:</strong> نستكشف الفلسفة الغربية والشرقية والإسلامية</li></ul><h3>مواضيعنا الحالية</h3><p>حالياً نقرأ سلسلة حول فلسفة الأخلاق، بدءاً من أرسطو وصولاً إلى الفلاسفة المعاصرين مثل بيتر سينجر ومارثا نوسباوم.</p><h3>من يمكنه الانضمام؟</h3><p>النادي مفتوح للجميع. لا تحتاج إلى خلفية فلسفية مسبقة، فقط عقلاً فضولياً ورغبة في التعلم والتفكير.</p>',
+				'meeting_location'       => array(
+					'address' => 'مقهى المفكرين – حي ديدوش مراد',
+					'lat'     => 36.7694,
+					'lng'     => 3.0606,
+				),
+				'meeting_schedule_note'  => 'نلتقي كل يوم جمعة على الساعة 16:00. الجلسات تستمر ساعتين مع إمكانية التمديد حسب النقاش.',
+				'facebook_page'          => 'https://facebook.com/philosophy.reading.club',
+				'telegram_channel'       => 'https://t.me/philoreadingclub',
+				'website'                => 'https://philoclub-dz.com',
+				'contact_email'          => 'hello@philoclub-dz.com',
+				'map_embed'              => '',
+				'visibility'             => 'public',
+			),
 		),
 	);
 
@@ -496,27 +517,19 @@ function nadiim_create_demo_reading_clubs( $users ) {
 			array(
 				'post_title'   => $club['title'],
 				'post_content' => $club['content'],
+				'post_excerpt' => $club['excerpt'],
 				'post_type'    => 'reading_clubs',
 				'post_status'  => 'publish',
-				'post_author'  => $club['supervisor'],
+				'post_author'  => $users[0],
 			)
 		);
 
 		if ( $post_id ) {
-			// Set featured image (placeholder) - دائري 80px
-			nadiim_set_placeholder_image( $post_id, 240, 240 );
+			// Set featured image (placeholder)
+			nadiim_set_placeholder_image( $post_id, 800, 500 );
 
-			// Set meta fields (متوافقة مع Front Page)
-			update_post_meta( $post_id, 'club_leader', get_the_author_meta( 'display_name', $club['supervisor'] ) );
-			update_post_meta( $post_id, 'club_schedule', $club['schedule'] );
-			update_post_meta( $post_id, 'current_book', $club['current_book'] );
-			update_post_meta( $post_id, 'join_link', $club['join_url'] );
-			update_post_meta( $post_id, 'club_supervisor', $club['supervisor'] );
-			update_post_meta( $post_id, 'club_members', $club['members'] );
-			update_post_meta( $post_id, 'club_current_book', $club['current_book'] );
-			update_post_meta( $post_id, 'club_meeting_url', $club['meeting_url'] );
-			update_post_meta( $post_id, 'club_join_url', $club['join_url'] );
-			update_post_meta( $post_id, 'club_max_members', $club['max_members'] );
+			// Set club_meta with new system
+			update_post_meta( $post_id, 'club_meta', $club['meta'] );
 		}
 	}
 }

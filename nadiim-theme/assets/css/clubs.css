@@ -1,0 +1,639 @@
+/*
+ * Reading Clubs Styles
+ * RTL Support
+ * Primary Color: #339063
+ */
+
+/* ====================================
+   1. Single Club Page Styles
+   ==================================== */
+
+/* Wrapper */
+.reading-club-single-wrapper {
+    direction: rtl;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0;
+}
+
+/* Hero Section */
+.club-hero-section {
+    background: linear-gradient(135deg, #339063 0%, #2d7a56 100%);
+    color: #ffffff;
+    padding: 48px 24px;
+    margin-bottom: 0;
+}
+
+.club-hero-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Hero with Map Layout */
+.club-hero-content-with-map {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    align-items: center;
+}
+
+.club-hero-content-full {
+    max-width: 800px;
+}
+
+/* Hero Text */
+.club-hero-text {
+    padding-left: 20px;
+}
+
+.club-title {
+    font-size: 34px;
+    font-weight: 700;
+    margin: 0 0 16px 0;
+    line-height: 1.3;
+    color: #ffffff;
+}
+
+.club-short-description {
+    font-size: 18px;
+    line-height: 1.7;
+    margin-bottom: 24px;
+    opacity: 0.95;
+    color: #ffffff;
+}
+
+.club-location-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255, 255, 255, 0.15);
+    padding: 10px 18px;
+    border-radius: 25px;
+    margin-bottom: 28px;
+    backdrop-filter: blur(10px);
+    font-size: 15px;
+}
+
+.club-location-badge svg {
+    flex-shrink: 0;
+}
+
+/* Social Buttons */
+.club-social-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 28px;
+}
+
+.club-social-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 15px;
+    transition: all 0.3s ease;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+    height: 48px;
+}
+
+.club-social-btn:hover {
+    transform: translateY(-2px);
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.5);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.club-social-btn svg {
+    flex-shrink: 0;
+}
+
+/* Hero Map */
+.club-hero-map {
+    height: 320px;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+}
+
+.club-leaflet-map,
+.club-embed-map {
+    width: 100%;
+    height: 100%;
+}
+
+.club-embed-map iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+/* Schedule Box */
+.club-schedule-box {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    padding: 32px 24px;
+    margin: 0;
+}
+
+.club-schedule-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    gap: 24px;
+    align-items: flex-start;
+    background: #ffffff;
+    padding: 28px 32px;
+    border-radius: 12px;
+    border-right: 5px solid #339063;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.club-schedule-icon {
+    flex-shrink: 0;
+    color: #339063;
+}
+
+.club-schedule-content {
+    flex: 1;
+}
+
+.club-schedule-title {
+    font-size: 22px;
+    font-weight: 700;
+    margin: 0 0 12px 0;
+    color: #339063;
+}
+
+.club-schedule-text {
+    font-size: 16px;
+    line-height: 1.7;
+    margin: 0;
+    color: #495057;
+}
+
+/* Full Description Box */
+.club-full-description-box {
+    padding: 48px 24px;
+    background: #ffffff;
+}
+
+.club-full-description-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    background: #f8f9fa;
+    padding: 32px;
+    border-radius: 12px;
+    font-size: 16px;
+    line-height: 1.8;
+    color: #343a40;
+}
+
+.club-full-description-container h2,
+.club-full-description-container h3 {
+    color: #339063;
+    margin-top: 24px;
+    margin-bottom: 16px;
+}
+
+.club-full-description-container ul,
+.club-full-description-container ol {
+    margin: 16px 0;
+    padding-right: 24px;
+}
+
+.club-full-description-container li {
+    margin-bottom: 8px;
+}
+
+/* Interactive Map Section */
+.club-interactive-map-section {
+    padding: 48px 24px;
+    background: #f8f9fa;
+}
+
+.club-interactive-map-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.club-map-title {
+    font-size: 26px;
+    font-weight: 700;
+    color: #339063;
+    margin: 0 0 24px 0;
+    text-align: center;
+}
+
+.club-interactive-map {
+    height: 450px;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+/* ====================================
+   2. Archive Page Styles
+   ==================================== */
+
+.reading-clubs-archive-wrapper {
+    direction: rtl;
+    padding: 0;
+    background: #f8f9fa;
+    min-height: 60vh;
+}
+
+/* Archive Header */
+.clubs-archive-header {
+    background: linear-gradient(135deg, #339063 0%, #2d7a56 100%);
+    color: #ffffff;
+    padding: 48px 24px;
+    text-align: center;
+}
+
+.clubs-archive-header-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.clubs-archive-title {
+    font-size: 38px;
+    font-weight: 700;
+    margin: 0 0 16px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+}
+
+.clubs-archive-description {
+    font-size: 18px;
+    line-height: 1.6;
+    margin: 0;
+    opacity: 0.95;
+}
+
+/* Grid Container */
+.clubs-archive-grid-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 48px 24px;
+}
+
+/* Clubs Grid */
+.clubs-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+    margin-bottom: 48px;
+}
+
+/* Club Card */
+.club-card {
+    background: #ffffff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+    height: 100%;
+}
+
+.club-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(51, 144, 99, 0.15);
+}
+
+.club-card-inner {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+/* Card Thumbnail */
+.club-card-thumbnail {
+    position: relative;
+    overflow: hidden;
+    height: 220px;
+    background: linear-gradient(135deg, #339063 0%, #2d7a56 100%);
+}
+
+.club-card-thumbnail a {
+    display: block;
+    height: 100%;
+}
+
+.club-card-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.club-card:hover .club-card-image {
+    transform: scale(1.05);
+}
+
+.club-card-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+/* Card Content */
+.club-card-content {
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.club-card-title {
+    font-size: 20px;
+    font-weight: 700;
+    margin: 0 0 12px 0;
+    line-height: 1.4;
+}
+
+.club-card-title a {
+    color: #212529;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.club-card-title a:hover {
+    color: #339063;
+}
+
+.club-card-description {
+    font-size: 15px;
+    line-height: 1.6;
+    color: #6c757d;
+    margin-bottom: 16px;
+    flex: 1;
+}
+
+.club-card-location {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    color: #495057;
+    margin-bottom: 20px;
+    padding: 8px 12px;
+    background: #f8f9fa;
+    border-radius: 6px;
+}
+
+.club-card-location svg {
+    flex-shrink: 0;
+    color: #339063;
+}
+
+/* Card Footer */
+.club-card-footer {
+    margin-top: auto;
+}
+
+.club-card-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    background: #339063;
+    color: #ffffff;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 15px;
+    transition: all 0.3s ease;
+    width: 100%;
+    justify-content: center;
+}
+
+.club-card-button:hover {
+    background: #2d7a56;
+    transform: translateX(-2px);
+}
+
+/* No Results */
+.clubs-no-results {
+    text-align: center;
+    padding: 80px 24px;
+    color: #6c757d;
+}
+
+.clubs-no-results h2 {
+    font-size: 24px;
+    margin: 24px 0 12px 0;
+    color: #495057;
+}
+
+.clubs-no-results p {
+    font-size: 16px;
+    margin: 0;
+}
+
+/* Pagination */
+.clubs-pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 48px;
+}
+
+.clubs-pagination .nav-links {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.clubs-pagination a,
+.clubs-pagination .current {
+    padding: 10px 16px;
+    background: #ffffff;
+    border: 1px solid #dee2e6;
+    border-radius: 6px;
+    color: #339063;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.clubs-pagination a:hover {
+    background: #339063;
+    color: #ffffff;
+    border-color: #339063;
+}
+
+.clubs-pagination .current {
+    background: #339063;
+    color: #ffffff;
+    border-color: #339063;
+}
+
+/* ====================================
+   3. Leaflet Map Customization
+   ==================================== */
+
+.leaflet-popup-content-wrapper {
+    border-radius: 8px;
+    direction: rtl;
+}
+
+.leaflet-popup-content {
+    margin: 12px 16px;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.leaflet-control-zoom {
+    border: none !important;
+    border-radius: 8px !important;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15) !important;
+}
+
+.leaflet-control-zoom a {
+    border: none !important;
+    background: #339063 !important;
+    color: #ffffff !important;
+    width: 36px !important;
+    height: 36px !important;
+    line-height: 36px !important;
+}
+
+.leaflet-control-zoom a:hover {
+    background: #2d7a56 !important;
+}
+
+/* ====================================
+   4. Responsive Design
+   ==================================== */
+
+/* Tablet */
+@media (max-width: 1024px) {
+    .club-hero-content-with-map {
+        grid-template-columns: 1fr;
+        gap: 32px;
+    }
+
+    .club-hero-text {
+        padding-left: 0;
+    }
+
+    .club-title {
+        font-size: 28px;
+    }
+
+    .club-short-description {
+        font-size: 16px;
+    }
+
+    .clubs-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 24px;
+    }
+
+    .clubs-archive-title {
+        font-size: 32px;
+    }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+    .club-hero-section {
+        padding: 32px 20px;
+    }
+
+    .club-title {
+        font-size: 22px;
+    }
+
+    .club-short-description {
+        font-size: 15px;
+    }
+
+    .club-social-buttons {
+        flex-direction: column;
+    }
+
+    .club-social-btn {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .club-hero-map {
+        height: 240px;
+    }
+
+    .club-schedule-container {
+        flex-direction: column;
+        padding: 20px;
+    }
+
+    .club-schedule-box {
+        padding: 24px 20px;
+    }
+
+    .club-full-description-box {
+        padding: 32px 20px;
+    }
+
+    .club-full-description-container {
+        padding: 20px;
+    }
+
+    .club-interactive-map-section {
+        padding: 32px 20px;
+    }
+
+    .club-interactive-map {
+        height: 320px;
+    }
+
+    .clubs-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .clubs-archive-header {
+        padding: 32px 20px;
+    }
+
+    .clubs-archive-title {
+        font-size: 26px;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .clubs-archive-description {
+        font-size: 16px;
+    }
+
+    .clubs-archive-grid-container {
+        padding: 32px 20px;
+    }
+}
+
+/* ====================================
+   5. Print Styles
+   ==================================== */
+
+@media print {
+    .club-social-buttons,
+    .club-card-button,
+    .clubs-pagination {
+        display: none;
+    }
+
+    .club-hero-section {
+        background: #339063;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+}

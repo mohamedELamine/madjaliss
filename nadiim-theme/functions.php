@@ -491,3 +491,75 @@ function nadiim_esdar_archive_query( $query ) {
     }
 }
 add_action( 'pre_get_posts', 'nadiim_esdar_archive_query' );
+
+/**
+ * ==========================================
+ * نظام نوادي القراءة (Reading Clubs System)
+ * ==========================================
+ */
+
+// تضمين ملف CPT نوادي القراءة
+require_once NADIIM_THEME_DIR . '/inc/cpt-reading-clubs.php';
+
+// تضمين ميتا بوكس نوادي القراءة
+require_once NADIIM_THEME_DIR . '/inc/meta-reading-clubs.php';
+
+/**
+ * تحميل أصول نوادي القراءة (CSS & JS & Leaflet)
+ */
+function nadiim_reading_clubs_enqueue_assets() {
+    // تحميل Leaflet CSS فقط في صفحات النوادي
+    if ( is_singular('reading_clubs') ) {
+        wp_enqueue_style(
+            'leaflet-css',
+            'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css',
+            array(),
+            '1.9.4'
+        );
+    }
+
+    // تحميل CSS لنوادي القراءة
+    wp_enqueue_style(
+        'nadiim-reading-clubs',
+        NADIIM_THEME_URI . '/assets/css/clubs.css',
+        array( 'nadiim-main' ),
+        NADIIM_VERSION
+    );
+
+    // تحميل JS للواجهة الأمامية
+    if ( is_singular('reading_clubs') || is_post_type_archive('reading_clubs') ) {
+        // تحميل Leaflet JS
+        if ( is_singular('reading_clubs') ) {
+            wp_enqueue_script(
+                'leaflet-js',
+                'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js',
+                array(),
+                '1.9.4',
+                true
+            );
+        }
+
+        // تحميل JS المخصص
+        wp_enqueue_script(
+            'nadiim-clubs-frontend',
+            NADIIM_THEME_URI . '/assets/js/clubs-frontend.js',
+            array( 'jquery' ),
+            NADIIM_VERSION,
+            true
+        );
+    }
+}
+add_action( 'wp_enqueue_scripts', 'nadiim_reading_clubs_enqueue_assets' );
+
+/**
+ * تطبيق إعدادات query على أرشيف النوادي
+ */
+function nadiim_reading_clubs_archive_query( $query ) {
+    if ( ! is_admin() && $query->is_main_query() && is_post_type_archive( 'reading_clubs' ) ) {
+        // فلترة النوادي العامة فقط
+        $query->set( 'posts_per_page', 12 );
+        $query->set( 'orderby', 'date' );
+        $query->set( 'order', 'DESC' );
+    }
+}
+add_action( 'pre_get_posts', 'nadiim_reading_clubs_archive_query' );
