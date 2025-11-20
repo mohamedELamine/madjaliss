@@ -2,10 +2,8 @@
  * سكريبت الواجهة الأمامية لصفحة الكاتب (Author Frontend JavaScript)
  *
  * يوفر:
- * - إدارة Modal نموذج الاتصال
  * - Sticky behavior للـToolbar
  * - تبديل الفلاتر وإعادة تحميل الصفحة
- * - إرسال نموذج الاتصال عبر AJAX
  * - Lazy loading للصور
  *
  * @package Nadiim
@@ -19,146 +17,6 @@
     // الانتظار حتى يتم تحميل DOM
     // ==========================================
     document.addEventListener('DOMContentLoaded', function() {
-
-        // ==========================================
-        // Modal: نموذج مراسلة الكاتب
-        // ==========================================
-        const modal = document.getElementById('contact-author-modal');
-        if (modal) {
-            const openButtons = document.querySelectorAll('.btn-contact');
-            const closeButtons = modal.querySelectorAll('.modal-close');
-            const overlay = modal.querySelector('.modal-overlay');
-            const contactForm = document.getElementById('contact-author-form');
-
-            // فتح Modal
-            openButtons.forEach(function(button) {
-                button.addEventListener('click', function() {
-                    modal.style.display = 'flex';
-                    document.body.style.overflow = 'hidden';
-
-                    // تركيز على أول حقل
-                    setTimeout(function() {
-                        const firstInput = contactForm.querySelector('input[type="text"]');
-                        if (firstInput) {
-                            firstInput.focus();
-                        }
-                    }, 100);
-
-                    // إضافة الـ ARIA
-                    modal.setAttribute('aria-hidden', 'false');
-                });
-            });
-
-            // إغلاق Modal
-            function closeModal() {
-                modal.style.display = 'none';
-                document.body.style.overflow = '';
-                modal.setAttribute('aria-hidden', 'true');
-
-                // إعادة تعيين النموذج
-                if (contactForm) {
-                    contactForm.reset();
-                    const responseDiv = contactForm.querySelector('.form-response');
-                    if (responseDiv) {
-                        responseDiv.style.display = 'none';
-                        responseDiv.className = 'form-response';
-                        responseDiv.textContent = '';
-                    }
-                }
-            }
-
-            closeButtons.forEach(function(button) {
-                button.addEventListener('click', closeModal);
-            });
-
-            if (overlay) {
-                overlay.addEventListener('click', closeModal);
-            }
-
-            // إغلاق بالضغط على Escape
-            document.addEventListener('keydown', function(e) {
-                if (e.key === 'Escape' && modal.style.display === 'flex') {
-                    closeModal();
-                }
-            });
-
-            // إرسال النموذج عبر AJAX
-            if (contactForm) {
-                contactForm.addEventListener('submit', function(e) {
-                    e.preventDefault();
-
-                    const formData = new FormData(contactForm);
-                    const responseDiv = contactForm.querySelector('.form-response');
-                    const submitButton = contactForm.querySelector('button[type="submit"]');
-
-                    // تعطيل زر الإرسال
-                    if (submitButton) {
-                        submitButton.disabled = true;
-                        submitButton.textContent = 'جارٍ الإرسال...';
-                    }
-
-                    // إخفاء رسالة الاستجابة السابقة
-                    if (responseDiv) {
-                        responseDiv.style.display = 'none';
-                    }
-
-                    // إعداد البيانات للإرسال
-                    const data = {
-                        action: 'nadiim_contact_author',
-                        nonce: nadiimAuthorVars.contactNonce,
-                        author_id: formData.get('author_id'),
-                        sender_name: formData.get('sender_name'),
-                        sender_email: formData.get('sender_email'),
-                        message: formData.get('message')
-                    };
-
-                    // إرسال الطلب
-                    fetch(nadiimAuthorVars.ajaxUrl, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/x-www-form-urlencoded',
-                        },
-                        body: new URLSearchParams(data)
-                    })
-                    .then(function(response) {
-                        return response.json();
-                    })
-                    .then(function(result) {
-                        if (responseDiv) {
-                            responseDiv.style.display = 'block';
-
-                            if (result.success) {
-                                responseDiv.className = 'form-response success';
-                                responseDiv.textContent = result.data.message;
-
-                                // إعادة تعيين النموذج بعد النجاح
-                                setTimeout(function() {
-                                    closeModal();
-                                }, 2000);
-                            } else {
-                                responseDiv.className = 'form-response error';
-                                responseDiv.textContent = result.data.message || 'حدث خطأ، يرجى المحاولة مرة أخرى';
-                            }
-                        }
-                    })
-                    .catch(function(error) {
-                        console.error('Error:', error);
-                        if (responseDiv) {
-                            responseDiv.style.display = 'block';
-                            responseDiv.className = 'form-response error';
-                            responseDiv.textContent = 'حدث خطأ في الاتصال، يرجى المحاولة لاحقاً';
-                        }
-                    })
-                    .finally(function() {
-                        // إعادة تفعيل زر الإرسال
-                        if (submitButton) {
-                            submitButton.disabled = false;
-                            submitButton.textContent = 'إرسال الرسالة';
-                        }
-                    });
-                });
-            }
-        }
 
         // ==========================================
         // Sticky Toolbar
@@ -280,33 +138,6 @@
                 }
             });
         });
-
-        // ==========================================
-        // تحسين Accessibility - Focus Trap في Modal
-        // ==========================================
-        if (modal) {
-            const focusableElements = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
-
-            modal.addEventListener('keydown', function(e) {
-                if (e.key !== 'Tab') return;
-
-                const focusables = modal.querySelectorAll(focusableElements);
-                const firstFocusable = focusables[0];
-                const lastFocusable = focusables[focusables.length - 1];
-
-                if (e.shiftKey) {
-                    if (document.activeElement === firstFocusable) {
-                        e.preventDefault();
-                        lastFocusable.focus();
-                    }
-                } else {
-                    if (document.activeElement === lastFocusable) {
-                        e.preventDefault();
-                        firstFocusable.focus();
-                    }
-                }
-            });
-        }
 
         // ==========================================
         // عرض رسالة "تم النسخ" عند نسخ الرابط

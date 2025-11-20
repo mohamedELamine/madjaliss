@@ -25,7 +25,6 @@ function nadiim_add_author_profile_fields( $user ) {
     $user_excerpt = get_user_meta( $user->ID, 'user_excerpt', true );
     $profile_picture_id = get_user_meta( $user->ID, 'profile_picture_id', true );
     $author_website = get_user_meta( $user->ID, 'author_website', true );
-    $show_email_contact = get_user_meta( $user->ID, 'show_email_contact', true );
 
     // روابط التواصل الاجتماعي
     $social_facebook = get_user_meta( $user->ID, 'social_facebook', true );
@@ -169,18 +168,6 @@ function nadiim_add_author_profile_fields( $user ) {
                 <?php esc_html_e( 'رابط الموقع الشخصي أو المدونة الخاصة بالكاتب', 'nadiim' ); ?>
             </p>
         </div>
-
-        <!-- إعدادات الاتصال -->
-        <div class="nadiim-meta-row">
-            <label>
-                <input type="checkbox" name="show_email_contact" value="1"
-                       <?php checked( $show_email_contact, '1' ); ?> />
-                <?php esc_html_e( 'السماح للزوار بإرسال رسائل عبر نموذج الاتصال', 'nadiim' ); ?>
-            </label>
-            <p class="description">
-                <?php esc_html_e( 'عند التفعيل، سيظهر زر "راسل الكاتب" في صفحة الملف الشخصي', 'nadiim' ); ?>
-            </p>
-        </div>
     </div>
 
     <!-- روابط وسائل التواصل الاجتماعي -->
@@ -311,10 +298,6 @@ function nadiim_save_author_profile_fields( $user_id ) {
         update_user_meta( $user_id, 'author_website', esc_url_raw( $_POST['author_website'] ) );
     }
 
-    // حفظ إعدادات الاتصال
-    $show_email_contact = isset( $_POST['show_email_contact'] ) ? '1' : '0';
-    update_user_meta( $user_id, 'show_email_contact', $show_email_contact );
-
     // حفظ روابط التواصل الاجتماعي
     $social_fields = array( 'social_facebook', 'social_twitter', 'social_telegram', 'social_linkedin' );
     foreach ( $social_fields as $field ) {
@@ -432,16 +415,6 @@ function nadiim_get_author_social_links( $user_id ) {
 }
 
 /**
- * التحقق من السماح بإرسال رسائل للكاتب
- *
- * @param int $user_id معرف المستخدم
- * @return bool
- */
-function nadiim_author_allows_contact( $user_id ) {
-    return get_user_meta( $user_id, 'show_email_contact', true ) === '1';
-}
-
-/**
  * الحصول على عدد منشورات الكاتب حسب النوع
  *
  * @param int $user_id معرف المستخدم
@@ -475,76 +448,3 @@ function nadiim_get_author_website( $user_id ) {
 
     return ! empty( $website ) ? esc_url( $website ) : false;
 }
-
-/**
- * AJAX Handler لإرسال رسالة للكاتب
- */
-function nadiim_ajax_contact_author() {
-    // التحقق من الأمان
-    check_ajax_referer( 'nadiim-author-contact', 'nonce' );
-
-    // الحصول على البيانات
-    $author_id = isset( $_POST['author_id'] ) ? intval( $_POST['author_id'] ) : 0;
-    $sender_name = isset( $_POST['sender_name'] ) ? sanitize_text_field( $_POST['sender_name'] ) : '';
-    $sender_email = isset( $_POST['sender_email'] ) ? sanitize_email( $_POST['sender_email'] ) : '';
-    $message = isset( $_POST['message'] ) ? sanitize_textarea_field( $_POST['message'] ) : '';
-
-    // التحقق من البيانات
-    if ( ! $author_id || ! $sender_name || ! $sender_email || ! $message ) {
-        wp_send_json_error( array(
-            'message' => __( 'يرجى ملء جميع الحقول المطلوبة', 'nadiim' ),
-        ) );
-    }
-
-    if ( ! is_email( $sender_email ) ) {
-        wp_send_json_error( array(
-            'message' => __( 'البريد الإلكتروني غير صحيح', 'nadiim' ),
-        ) );
-    }
-
-    // التحقق من السماح بالاتصال
-    if ( ! nadiim_author_allows_contact( $author_id ) ) {
-        wp_send_json_error( array(
-            'message' => __( 'لا يمكن إرسال رسائل لهذا الكاتب', 'nadiim' ),
-        ) );
-    }
-
-    // الحصول على بيانات الكاتب
-    $author = get_userdata( $author_id );
-    if ( ! $author ) {
-        wp_send_json_error( array(
-            'message' => __( 'الكاتب غير موجود', 'nadiim' ),
-        ) );
-    }
-
-    // إرسال البريد الإلكتروني
-    $to = $author->user_email;
-    $subject = sprintf( __( 'رسالة جديدة من %s عبر موقعك', 'nadiim' ), $sender_name );
-    $body = sprintf(
-        __( "مرحباً %s،\n\nلقد وصلتك رسالة جديدة عبر صفحتك الشخصية:\n\nالمرسل: %s\nالبريد الإلكتروني: %s\n\nالرسالة:\n%s\n\n---\nيمكنك الرد مباشرة على البريد الإلكتروني: %s", 'nadiim' ),
-        $author->display_name,
-        $sender_name,
-        $sender_email,
-        $message,
-        $sender_email
-    );
-
-    $headers = array(
-        'Reply-To: ' . $sender_name . ' <' . $sender_email . '>',
-        'Content-Type: text/plain; charset=UTF-8'
-    );
-
-    $sent = wp_mail( $to, $subject, $body, $headers );
-
-    if ( $sent ) {
-        wp_send_json_success( array(
-            'message' => __( 'تم إرسال رسالتك بنجاح!', 'nadiim' ),
-        ) );
-    } else {
-        wp_send_json_error( array(
-            'message' => __( 'حدث خطأ أثناء إرسال الرسالة، يرجى المحاولة لاحقاً', 'nadiim' ),
-        ) );
-    }
-}
-add_action( 'wp_ajax_nadiim_contact_author', 'nadiim_ajax_contact_author' );
-add_action( 'wp_ajax_nopriv_nadiim_contact_author', 'nadiim_ajax_contact_author' );

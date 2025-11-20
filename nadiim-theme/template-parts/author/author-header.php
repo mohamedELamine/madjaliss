@@ -6,7 +6,7 @@
  * - صورة الملف الشخصي
  * - الاسم والدور
  * - المقتطف القصير
- * - أزرار المتابعة والمراسلة
+ * - رابط الموقع الشخصي
  * - روابط التواصل الاجتماعي
  *
  * @package Nadiim
@@ -22,7 +22,6 @@ $profile_picture = nadiim_get_author_profile_picture( $author_id, 'medium' );
 $user_excerpt = nadiim_get_author_excerpt( $author_id, 150 );
 $social_links = nadiim_get_author_social_links( $author_id );
 $author_website = nadiim_get_author_website( $author_id );
-$allows_contact = nadiim_author_allows_contact( $author_id );
 
 // الحصول على دور المستخدم
 $user_data = get_userdata( $author_id );
@@ -107,19 +106,6 @@ $esdar_count = nadiim_get_author_post_count( $author_id, 'esdar' );
 
     <!-- أزرار التفاعل -->
     <div class="author-actions">
-        <?php if ( $allows_contact ) : ?>
-        <button type="button"
-                class="btn btn-primary btn-contact"
-                data-author-id="<?php echo esc_attr( $author_id ); ?>"
-                aria-label="<?php esc_attr_e( 'راسل الكاتب', 'nadiim' ); ?>">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
-                <polyline points="22,6 12,13 2,6"></polyline>
-            </svg>
-            <?php esc_html_e( 'راسل الكاتب', 'nadiim' ); ?>
-        </button>
-        <?php endif; ?>
-
         <?php if ( $author_website ) : ?>
         <a href="<?php echo esc_url( $author_website ); ?>"
            class="btn btn-secondary btn-website"
