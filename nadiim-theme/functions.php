@@ -620,3 +620,51 @@ function nadiim_articles_enqueue_assets() {
 }
 add_action( 'wp_enqueue_scripts', 'nadiim_articles_enqueue_assets' );
 add_action( 'admin_enqueue_scripts', 'nadiim_articles_enqueue_assets' );
+
+/**
+ * ==========================================
+ * نظام صفحة الكاتب (Author Profile System)
+ * ==========================================
+ */
+
+// تضمين ملف إدارة بيانات الكاتب
+require_once NADIIM_THEME_DIR . '/inc/author-meta.php';
+
+/**
+ * تحميل أصول صفحة الكاتب (CSS & JS)
+ */
+function nadiim_author_page_enqueue_assets() {
+    // تحميل CSS و JS فقط في صفحة الكاتب
+    if ( is_author() ) {
+        // تحميل CSS لصفحة الكاتب
+        wp_enqueue_style(
+            'nadiim-author',
+            NADIIM_THEME_URI . '/assets/css/author.css',
+            array( 'nadiim-main' ),
+            NADIIM_VERSION
+        );
+
+        // تحميل JavaScript للواجهة الأمامية
+        wp_enqueue_script(
+            'nadiim-author-frontend',
+            NADIIM_THEME_URI . '/assets/js/author-frontend.js',
+            array(),
+            NADIIM_VERSION,
+            true
+        );
+
+        // تمرير متغيرات لـ JavaScript
+        wp_localize_script( 'nadiim-author-frontend', 'nadiimAuthorVars', array(
+            'ajaxUrl'      => admin_url( 'admin-ajax.php' ),
+            'contactNonce' => wp_create_nonce( 'nadiim-author-contact' ),
+            'debug'        => WP_DEBUG ? '1' : '0',
+            'strings'      => array(
+                'loading'      => __( 'جارٍ التحميل...', 'nadiim' ),
+                'sending'      => __( 'جارٍ الإرسال...', 'nadiim' ),
+                'success'      => __( 'تم الإرسال بنجاح!', 'nadiim' ),
+                'error'        => __( 'حدث خطأ، يُرجى المحاولة مرة أخرى', 'nadiim' ),
+            ),
+        ) );
+    }
+}
+add_action( 'wp_enqueue_scripts', 'nadiim_author_page_enqueue_assets' );

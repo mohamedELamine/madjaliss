@@ -1,0 +1,240 @@
+{
+  "description": "ملف بيانات تجريبية لصفحة الكاتب - يحتوي على 3 كتّاب مع بياناتهم و6 منشورات لكل كاتب",
+  "version": "1.0.0",
+  "authors": [
+    {
+      "id": 2,
+      "username": "ahmad_khaled",
+      "display_name": "أحمد خالد",
+      "email": "ahmad.khaled@example.com",
+      "role": "author",
+      "meta": {
+        "user_excerpt": "كاتب وباحث في الأدب العربي المعاصر، له العديد من المقالات والدراسات المنشورة في الصحف والمجلات الثقافية.",
+        "user_bio": "<p>أحمد خالد كاتب وباحث متخصص في الأدب العربي المعاصر والنقد الأدبي. حاصل على درجة الماجستير في الأدب المقارن من جامعة القاهرة.</p><p>نُشرت له العديد من المقالات النقدية في صحف ومجلات عربية بارزة، وشارك في عدة مؤتمرات أدبية دولية.</p><h3>الاهتمامات البحثية</h3><ul><li>الرواية العربية الحديثة</li><li>النقد الثقافي</li><li>الأدب المقارن</li></ul>",
+        "profile_picture_id": "",
+        "profile_picture_url": "https://i.pravatar.cc/400?img=12",
+        "author_website": "https://ahmadkhaled.example.com",
+        "show_email_contact": "1",
+        "social_facebook": "https://facebook.com/ahmadkhaled",
+        "social_twitter": "https://twitter.com/ahmadkhaled",
+        "social_telegram": "",
+        "social_linkedin": "https://linkedin.com/in/ahmadkhaled"
+      },
+      "stats": {
+        "total_posts": 42,
+        "total_howarat": 8,
+        "total_esdar": 3
+      },
+      "sample_posts": [
+        {
+          "title": "الرواية العربية وتحديات العصر الرقمي",
+          "excerpt": "كيف تتأثر الرواية العربية بالتحولات التكنولوجية الحديثة؟ نظرة على مستقبل الكتابة الروائية في عصر المنصات الرقمية.",
+          "post_type": "post",
+          "date": "2025-01-15",
+          "has_audio": true,
+          "reading_time": 8
+        },
+        {
+          "title": "نجيب محفوظ: رحلة في عوالم القاهرة",
+          "excerpt": "استكشاف لأعمال نجيب محفوظ الروائية وكيف صوّر المجتمع المصري عبر عقود من الزمن.",
+          "post_type": "post",
+          "date": "2025-01-10",
+          "has_audio": false,
+          "reading_time": 12
+        },
+        {
+          "title": "حوار مع الناقد الأدبي د. محمود الغيطاني",
+          "excerpt": "حوار معمق حول النقد الأدبي المعاصر وأزمة القراءة في العالم العربي.",
+          "post_type": "howarat",
+          "date": "2025-01-05",
+          "has_audio": true,
+          "reading_time": 25
+        },
+        {
+          "title": "الواقعية السحرية في الأدب العربي",
+          "excerpt": "دراسة تحليلية لتأثير الواقعية السحرية على الكتابة الروائية العربية الحديثة.",
+          "post_type": "post",
+          "date": "2024-12-28",
+          "has_audio": false,
+          "reading_time": 15
+        },
+        {
+          "title": "إشكالية الترجمة في النقد الأدبي",
+          "excerpt": "كيف تؤثر الترجمة على فهمنا للأعمال الأدبية العالمية؟ رؤية نقدية.",
+          "post_type": "post",
+          "date": "2024-12-20",
+          "has_audio": true,
+          "reading_time": 10
+        },
+        {
+          "title": "كتاب: قراءات في الرواية المعاصرة",
+          "excerpt": "مجموعة مقالات نقدية تتناول أبرز الأعمال الروائية العربية الصادرة في السنوات الأخيرة.",
+          "post_type": "esdar",
+          "date": "2024-12-15",
+          "has_audio": false,
+          "reading_time": 0
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "username": "fatima_said",
+      "display_name": "فاطمة سعيد",
+      "email": "fatima.said@example.com",
+      "role": "author",
+      "meta": {
+        "user_excerpt": "صحفية وكاتبة متخصصة في قضايا المرأة والمجتمع. حاصلة على جوائز في الصحافة الاستقصائية.",
+        "user_bio": "<p>فاطمة سعيد صحفية وكاتبة سعودية، تعمل في مجال الصحافة الاستقصائية منذ أكثر من 15 عاماً. حاصلة على بكالوريوس في الإعلام من جامعة الملك سعود.</p><p>حصلت على جائزة التميز الصحفي لعام 2022 عن تحقيق استقصائي حول العنف الأسري. تكتب بانتظام في عدة صحف ومجلات خليجية.</p><h3>المجالات التي أكتب فيها</h3><ul><li>قضايا المرأة والمجتمع</li><li>التنمية المستدامة</li><li>التعليم والثقافة</li><li>الصحافة الاستقصائية</li></ul>",
+        "profile_picture_id": "",
+        "profile_picture_url": "https://i.pravatar.cc/400?img=47",
+        "author_website": "",
+        "show_email_contact": "1",
+        "social_facebook": "",
+        "social_twitter": "https://twitter.com/fatimasaid",
+        "social_telegram": "https://t.me/fatimasaid",
+        "social_linkedin": "https://linkedin.com/in/fatimasaid"
+      },
+      "stats": {
+        "total_posts": 68,
+        "total_howarat": 15,
+        "total_esdar": 1
+      },
+      "sample_posts": [
+        {
+          "title": "المرأة السعودية في سوق العمل: إنجازات وتحديات",
+          "excerpt": "تقرير شامل عن واقع المرأة السعودية في سوق العمل، والتحديات التي تواجهها، والإنجازات التي حققتها.",
+          "post_type": "post",
+          "date": "2025-01-18",
+          "has_audio": true,
+          "reading_time": 20
+        },
+        {
+          "title": "التعليم عن بُعد: فرص وتحديات في الوطن العربي",
+          "excerpt": "دراسة ميدانية حول تجربة التعليم عن بُعد في ظل جائحة كورونا وما بعدها.",
+          "post_type": "post",
+          "date": "2025-01-12",
+          "has_audio": false,
+          "reading_time": 18
+        },
+        {
+          "title": "حوار مع د. نورة الفايز حول تمكين المرأة",
+          "excerpt": "حوار معمق مع الدكتورة نورة الفايز حول واقع تمكين المرأة في السعودية والخليج.",
+          "post_type": "howarat",
+          "date": "2025-01-08",
+          "has_audio": true,
+          "reading_time": 30
+        },
+        {
+          "title": "ريادة الأعمال النسائية في الخليج",
+          "excerpt": "قصص نجاح ملهمة لسيدات أعمال خليجيات استطعن تحقيق إنجازات رائدة في مجالاتهن.",
+          "post_type": "post",
+          "date": "2024-12-25",
+          "has_audio": true,
+          "reading_time": 14
+        },
+        {
+          "title": "التحديات النفسية للمرأة العاملة",
+          "excerpt": "تقرير استقصائي يستعرض التحديات النفسية والاجتماعية التي تواجه المرأة العاملة في المجتمعات الخليجية.",
+          "post_type": "post",
+          "date": "2024-12-18",
+          "has_audio": false,
+          "reading_time": 16
+        },
+        {
+          "title": "العنف الأسري: الوجه الخفي للمجتمع",
+          "excerpt": "تحقيق استقصائي حائز على جوائز حول ظاهرة العنف الأسري في المجتمعات العربية.",
+          "post_type": "post",
+          "date": "2024-12-10",
+          "has_audio": true,
+          "reading_time": 22
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "username": "youssef_ibrahim",
+      "display_name": "يوسف إبراهيم",
+      "email": "youssef.ibrahim@example.com",
+      "role": "editor",
+      "meta": {
+        "user_excerpt": "مدون تقني ومبرمج، متخصص في الذكاء الاصطناعي وتطوير الويب. مهتم بنشر المعرفة التقنية باللغة العربية.",
+        "user_bio": "<p>يوسف إبراهيم مبرمج ومدون تقني مصري. يعمل كمطور برمجيات في إحدى شركات التكنولوجيا الكبرى. حاصل على بكالوريوس علوم الحاسوب من جامعة القاهرة.</p><p>مهتم بالذكاء الاصطناعي، تعلم الآلة، وتطوير تطبيقات الويب الحديثة. يسعى لنشر المحتوى التقني العربي عالي الجودة.</p><h3>المجالات التقنية</h3><ul><li>الذكاء الاصطناعي وتعلم الآلة</li><li>تطوير الويب (React, Node.js)</li><li>Python وتطبيقاته</li><li>أمن المعلومات</li></ul><h3>المشاريع البرمجية</h3><p>ساهم في العديد من المشاريع مفتوحة المصدر على GitHub، ويدير مدونة تقنية باللغة العربية تستقطب آلاف الزوار شهرياً.</p>",
+        "profile_picture_id": "",
+        "profile_picture_url": "https://i.pravatar.cc/400?img=33",
+        "author_website": "https://youssefibrahim.dev",
+        "show_email_contact": "1",
+        "social_facebook": "",
+        "social_twitter": "https://twitter.com/youssefdev",
+        "social_telegram": "https://t.me/youssefibrahim",
+        "social_linkedin": "https://linkedin.com/in/youssefibrahim"
+      },
+      "stats": {
+        "total_posts": 95,
+        "total_howarat": 12,
+        "total_esdar": 5
+      },
+      "sample_posts": [
+        {
+          "title": "مقدمة إلى الذكاء الاصطناعي للمبتدئين",
+          "excerpt": "دليل شامل للمبتدئين يشرح أساسيات الذكاء الاصطناعي وتطبيقاته العملية بأسلوب مبسط.",
+          "post_type": "post",
+          "date": "2025-01-20",
+          "has_audio": false,
+          "reading_time": 15
+        },
+        {
+          "title": "بناء تطبيق ويب حديث باستخدام React",
+          "excerpt": "شرح عملي خطوة بخطوة لبناء تطبيق ويب تفاعلي باستخدام مكتبة React الشهيرة.",
+          "post_type": "post",
+          "date": "2025-01-14",
+          "has_audio": true,
+          "reading_time": 25
+        },
+        {
+          "title": "حوار مع مهندس الذكاء الاصطناعي د. أحمد زكي",
+          "excerpt": "حوار تقني معمق حول مستقبل الذكاء الاصطناعي وتأثيره على سوق العمل في العالم العربي.",
+          "post_type": "howarat",
+          "date": "2025-01-09",
+          "has_audio": true,
+          "reading_time": 35
+        },
+        {
+          "title": "أمن المعلومات: حماية بياناتك الشخصية",
+          "excerpt": "نصائح وإرشادات عملية لحماية بياناتك الشخصية على الإنترنت من الاختراق والتجسس.",
+          "post_type": "post",
+          "date": "2024-12-30",
+          "has_audio": false,
+          "reading_time": 12
+        },
+        {
+          "title": "Python: لغة البرمجة الأكثر طلباً",
+          "excerpt": "لماذا أصبحت Python اللغة الأكثر شعبية بين المبرمجين؟ نظرة على مميزاتها واستخداماتها.",
+          "post_type": "post",
+          "date": "2024-12-22",
+          "has_audio": true,
+          "reading_time": 10
+        },
+        {
+          "title": "كتاب: دليل المبرمج العربي للذكاء الاصطناعي",
+          "excerpt": "كتاب شامل باللغة العربية يشرح أساسيات وتطبيقات الذكاء الاصطناعي بأمثلة عملية.",
+          "post_type": "esdar",
+          "date": "2024-12-12",
+          "has_audio": false,
+          "reading_time": 0
+        }
+      ]
+    }
+  ],
+  "notes": [
+    "الصور المستخدمة في profile_picture_url هي من موقع pravatar.cc للأغراض التجريبية فقط",
+    "يمكن استيراد هذه البيانات يدوياً عبر phpMyAdmin أو باستخدام WP-CLI",
+    "تأكد من إنشاء المستخدمين أولاً ثم إضافة user_meta لكل مستخدم",
+    "يمكن إنشاء المنشورات التجريبية باستخدام Lorem Ipsum العربي"
+  ],
+  "import_instructions": {
+    "step_1": "إنشاء المستخدمين عبر لوحة تحكم WordPress",
+    "step_2": "تحديث user_meta لكل مستخدم من صفحة تحرير الملف الشخصي",
+    "step_3": "إنشاء منشورات تجريبية وربطها بالمستخدمين",
+    "step_4": "زيارة صفحة الكاتب: yoursite.com/author/username"
+  }
+}
