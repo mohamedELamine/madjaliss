@@ -287,46 +287,106 @@ function nadiim_create_demo_dialogues( $users ) {
 function nadiim_create_demo_releases( $users ) {
 	$releases = array(
 		array(
-			'title'          => 'كتاب: خطوات نحو القراءة',
-			'content'        => '<p>دليل عملي للقراء المبتدئين، يقدم نصائح واستراتيجيات لبناء عادة القراءة اليومية وتطوير مهارات الفهم والنقد.</p><p>يقدم هذا الكتاب منهجية شاملة لمن يرغب في بناء عادة قرائية صحية ومستدامة. يبدأ بأساسيات اختيار الكتب المناسبة، ثم ينتقل إلى تقنيات القراءة الفعّالة، وينتهي بكيفية الاحتفاظ بالمعلومات وتطبيقها في الحياة اليومية.</p><p>الكتاب مقسم إلى ثلاثة أقسام رئيسية: 1) الأساسيات: كيف تبدأ رحلة القراءة 2) التقنيات: استراتيجيات القراءة الفعّالة 3) الممارسة: كيف تحافظ على استمرارية القراءة</p>',
-			'author_name'    => 'د. أحمد الكاتب',
-			'publish_date'   => '2025-11-01',
-			'isbn'           => '978-1-234567-89-0',
-			'pages'          => 180,
-			'publisher'      => '',
-			'pdf_url'        => 'book1.pdf',
-			'purchase_url'   => '#',
-			'preview_url'    => '#',
-			'type'           => 'كتاب',
-			'topic'          => 'قراءة',
+			'title'   => 'خطوات نحو القراءة',
+			'content' => '<h2>نظرة عامة</h2><p>دليل عملي للقراء المبتدئين، يقدم نصائح واستراتيجيات لبناء عادة القراءة اليومية وتطوير مهارات الفهم والنقد.</p><p>يقدم هذا الكتاب منهجية شاملة لمن يرغب في بناء عادة قرائية صحية ومستدامة. يبدأ بأساسيات اختيار الكتب المناسبة، ثم ينتقل إلى تقنيات القراءة الفعّالة، وينتهي بكيفية الاحتفاظ بالمعلومات وتطبيقها في الحياة اليومية.</p><h3>فصول الكتاب</h3><ol><li><strong>الأساسيات</strong>: كيف تبدأ رحلة القراءة</li><li><strong>التقنيات</strong>: استراتيجيات القراءة الفعّالة</li><li><strong>الممارسة</strong>: كيف تحافظ على استمرارية القراءة</li></ol>',
+			'excerpt' => 'دليل موجز لبدء رحلة القراءة وبناء عادة يومية مستدامة.',
+			'meta'    => array(
+				'release_date'    => '2025-11-01',
+				'release_type'    => 'book',
+				'release_authors' => array(
+					array(
+						'type' => 'free',
+						'id'   => 0,
+						'name' => 'د. أحمد بن علي',
+						'link' => '',
+					),
+				),
+				'release_isbn'     => '978-1-234-56789-0',
+				'release_pages'    => 184,
+				'release_language' => 'ar',
+				'release_format'   => array( 'pdf', 'epub' ),
+				'release_excerpt'  => 'دليل شامل للمبتدئين في عالم القراءة، يقدم استراتيجيات عملية لبناء عادة القراءة اليومية.',
+			),
+			'category' => 'تطوير الذات',
+			'tags'     => array( 'قراءة', 'عادات', 'مهارات' ),
 		),
 		array(
-			'title'          => 'مجلة: أعداد الخريف 2025',
-			'content'        => '<p>العدد الخاص من مجلة نديم الفصلية، يحتوي على مقالات ومراجعات وحوارات حول أبرز الإصدارات الأدبية لموسم الخريف.</p><p>يتضمن هذا العدد: مراجعة معمقة لـ 10 كتب صدرت في خريف 2025، حوار مع الروائي الجزائري الشاب، ملف خاص: الشعر العربي المعاصر، دليل نوادي القراءة للموسم القادم، قراءات نقدية في الأدب المترجم.</p><p>كتب هذا العدد نخبة من النقاد والكتّاب العرب، وهو متاح للقراءة والتحميل مجاناً.</p>',
-			'author_name'    => 'هيئة التحرير - نديم',
-			'publish_date'   => '2025-09-15',
-			'isbn'           => '',
-			'pages'          => 96,
-			'publisher'      => '',
-			'pdf_url'        => 'mag1.pdf',
-			'purchase_url'   => '#',
-			'preview_url'    => '#',
-			'type'           => 'مجلة',
-			'topic'          => 'أدب',
+			'title'   => 'مجلة الخريف 2025',
+			'content' => '<h2>في هذا العدد</h2><p>العدد الخاص من مجلة نديم الفصلية، يحتوي على مقالات ومراجعات وحوارات حول أبرز الإصدارات الأدبية لموسم الخريف.</p><h3>المحتويات</h3><ul><li>مراجعة معمقة لـ 10 كتب صدرت في خريف 2025</li><li>حوار مع الروائي الجزائري الشاب</li><li>ملف خاص: الشعر العربي المعاصر</li><li>دليل نوادي القراءة للموسم القادم</li><li>قراءات نقدية في الأدب المترجم</li></ul><p>كتب هذا العدد نخبة من النقاد والكتّاب العرب، وهو متاح للقراءة والتحميل مجاناً.</p>',
+			'excerpt' => 'العدد الفصلي من مجلة نديم لخريف 2025.',
+			'meta'    => array(
+				'release_date'    => '2025-09-15',
+				'release_type'    => 'magazine',
+				'release_authors' => array(
+					array(
+						'type' => 'user',
+						'id'   => $users[0],
+						'name' => '',
+						'link' => '',
+					),
+				),
+				'release_pages'    => 64,
+				'release_language' => 'ar',
+				'release_format'   => array( 'pdf' ),
+				'release_excerpt'  => 'عدد خاص يحتوي على مقالات ومراجعات لأبرز الإصدارات الأدبية.',
+				'release_price'    => 'مجاني',
+			),
+			'category' => 'مجلات',
+			'tags'     => array( 'أدب', 'مراجعات', 'خريف' ),
 		),
 		array(
-			'title'          => 'كتيب: دليل نوادي القراءة',
-			'content'        => '<p>دليل شامل لإنشاء وإدارة نوادي القراءة، يتضمن نصائح عملية واستراتيجيات مجربة لبناء مجتمع قرائي نشط.</p><p>هذا الدليل العملي موجه لكل من يرغب في تأسيس نادي قراءة أو تطوير نادٍ قائم. يغطي الدليل: كيفية اختيار الكتب المناسبة للنقاش، طرق إدارة الجلسات بفعالية، استراتيجيات لجذب أعضاء جدد، أدوات رقمية لتنظيم النادي، أمثلة على نوادي ناجحة في العالم العربي.</p><p>يتضمن الدليل أيضاً قوائم جاهزة وأسئلة نقاشية يمكن استخدامها مباشرة.</p>',
-			'author_name'    => 'فريق نديم',
-			'publish_date'   => '2026-01-01',
-			'isbn'           => '',
-			'pages'          => 48,
-			'publisher'      => '',
-			'pdf_url'        => 'guide1.pdf',
-			'purchase_url'   => '#',
-			'preview_url'    => '#',
-			'type'           => 'كتيب',
-			'topic'          => 'نوادي القراءة',
+			'title'   => 'دليل نوادي القراءة',
+			'content' => '<h2>دليل شامل</h2><p>دليل شامل لإنشاء وإدارة نوادي القراءة، يتضمن نصائح عملية واستراتيجيات مجربة لبناء مجتمع قرائي نشط.</p><h3>ما ستجده في الدليل</h3><ul><li>كيفية اختيار الكتب المناسبة للنقاش</li><li>طرق إدارة الجلسات بفعالية</li><li>استراتيجيات لجذب أعضاء جدد</li><li>أدوات رقمية لتنظيم النادي</li><li>أمثلة على نوادي ناجحة في العالم العربي</li></ul><p>يتضمن الدليل أيضاً قوائم جاهزة وأسئلة نقاشية يمكن استخدامها مباشرة.</p>',
+			'excerpt' => 'دليل عملي لتأسيس وإدارة نوادي القراءة.',
+			'meta'    => array(
+				'release_date'    => '2026-01-01',
+				'release_type'    => 'brochure',
+				'release_authors' => array(
+					array(
+						'type' => 'free',
+						'id'   => 0,
+						'name' => 'فريق نديم',
+						'link' => '',
+					),
+				),
+				'release_pages'    => 48,
+				'release_language' => 'ar',
+				'release_format'   => array( 'pdf' ),
+				'release_excerpt'  => 'دليل يحتوي على نصائح عملية واستراتيجيات لإدارة نوادي القراءة.',
+				'release_price'    => 'مجاني',
+			),
+			'category' => 'أدلة',
+			'tags'     => array( 'نوادي القراءة', 'إدارة', 'تنظيم' ),
+		),
+		array(
+			'title'   => 'تاريخ الأدب العربي',
+			'content' => '<h2>رحلة عبر الزمن</h2><p>تقرير شامل يستعرض تطور الأدب العربي من العصر الجاهلي حتى العصر الحديث، مع تحليل للتيارات الأدبية الرئيسية.</p><h3>محتويات التقرير</h3><ol><li>العصر الجاهلي والشعر المعلق</li><li>العصر الإسلامي والأموي</li><li>العصر العباسي الذهبي</li><li>الأندلس والموشحات</li><li>عصر الانحطاط</li><li>النهضة الأدبية الحديثة</li><li>الأدب المعاصر</li></ol><p>يتضمن التقرير نماذج نصية ومقتطفات من أعمال أدبية رئيسية.</p>',
+			'excerpt' => 'تقرير يستعرض تطور الأدب العربي عبر العصور.',
+			'meta'    => array(
+				'release_date'    => '2025-12-10',
+				'release_type'    => 'report',
+				'release_authors' => array(
+					array(
+						'type' => 'free',
+						'id'   => 0,
+						'name' => 'د. محمد السعيد',
+						'link' => '',
+					),
+					array(
+						'type' => 'free',
+						'id'   => 0,
+						'name' => 'أ. فاطمة الزهراء',
+						'link' => '',
+					),
+				),
+				'release_isbn'     => '978-1-234-56790-6',
+				'release_pages'    => 120,
+				'release_language' => 'ar',
+				'release_format'   => array( 'pdf', 'epub' ),
+				'release_excerpt'  => 'دراسة شاملة لتطور الأدب العربي من الجاهلية حتى العصر الحديث.',
+			),
+			'category' => 'دراسات',
+			'tags'     => array( 'أدب', 'تاريخ', 'ثقافة' ),
 		),
 	);
 
@@ -335,6 +395,7 @@ function nadiim_create_demo_releases( $users ) {
 			array(
 				'post_title'   => $release['title'],
 				'post_content' => $release['content'],
+				'post_excerpt' => $release['excerpt'],
 				'post_type'    => 'esdar',
 				'post_status'  => 'publish',
 				'post_author'  => $users[0],
@@ -342,26 +403,40 @@ function nadiim_create_demo_releases( $users ) {
 		);
 
 		if ( $post_id ) {
-			// Set featured image (placeholder) - نسبة 1:1.4 (140×200)
-			nadiim_set_placeholder_image( $post_id, 420, 600 );
+			// Set featured image (placeholder) - نسبة 3:4 (600×800)
+			nadiim_set_placeholder_image( $post_id, 600, 800 );
 
-			// Set meta fields (متوافقة مع Front Page)
-			update_post_meta( $post_id, 'release_author', $release['author_name'] );
-			update_post_meta( $post_id, 'release_date', $release['publish_date'] );
-			update_post_meta( $post_id, 'release_isbn', $release['isbn'] );
-			update_post_meta( $post_id, 'release_file', $release['pdf_url'] );
-			update_post_meta( $post_id, 'esdar_author', $release['author_name'] );
-			update_post_meta( $post_id, 'esdar_publish_date', $release['publish_date'] );
-			update_post_meta( $post_id, 'esdar_isbn', $release['isbn'] );
-			update_post_meta( $post_id, 'esdar_pages', $release['pages'] );
-			update_post_meta( $post_id, 'esdar_publisher', $release['publisher'] );
-			update_post_meta( $post_id, 'esdar_pdf_url', $release['pdf_url'] );
-			update_post_meta( $post_id, 'esdar_purchase_url', $release['purchase_url'] );
-			update_post_meta( $post_id, 'esdar_preview_url', $release['preview_url'] );
+			// Save using new JSON structure
+			$esdar_meta = wp_parse_args(
+				$release['meta'],
+				array(
+					'release_file_id'          => '',
+					'release_file_url'         => '',
+					'release_preview_embed'    => '',
+					'release_preview_images'   => array(),
+					'release_download_count'   => 0,
+				)
+			);
 
-			// Set terms.
-			wp_set_object_terms( $post_id, $release['type'], 'release_type' );
-			wp_set_object_terms( $post_id, $release['topic'], 'release_topic' );
+			update_post_meta( $post_id, 'esdar_meta', wp_json_encode( $esdar_meta, JSON_UNESCAPED_UNICODE ) );
+
+			// Set category
+			if ( ! empty( $release['category'] ) ) {
+				$category = get_term_by( 'name', $release['category'], 'category' );
+				if ( ! $category ) {
+					$category_id = wp_insert_term( $release['category'], 'category' );
+					if ( ! is_wp_error( $category_id ) ) {
+						wp_set_object_terms( $post_id, $category_id['term_id'], 'category' );
+					}
+				} else {
+					wp_set_object_terms( $post_id, $category->term_id, 'category' );
+				}
+			}
+
+			// Set tags
+			if ( ! empty( $release['tags'] ) ) {
+				wp_set_object_terms( $post_id, $release['tags'], 'post_tag' );
+			}
 		}
 	}
 }

@@ -7,8 +7,25 @@
 
 get_header();
 
-// الحصول على بيانات الإصدار
+// الحصول على بيانات الإصدار مع قيم افتراضية
 $meta = nadiim_get_esdar_meta(get_the_ID());
+
+// إذا كانت البيانات فارغة، استخدم قيم افتراضية
+if (!$meta || !is_array($meta)) {
+    $meta = array(
+        'release_type' => 'book',
+        'release_date' => '',
+        'release_authors' => array(),
+        'release_isbn' => '',
+        'release_pages' => '',
+        'release_language' => 'ar',
+        'release_format' => array(),
+        'release_excerpt' => '',
+        'release_preview_images' => array(),
+        'release_preview_embed' => '',
+        'release_download_count' => 0,
+    );
+}
 ?>
 
 <main id="primary" class="site-main esdar-single">

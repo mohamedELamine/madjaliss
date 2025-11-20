@@ -8,6 +8,19 @@
  */
 
 $meta = nadiim_get_esdar_meta(get_the_ID());
+
+// إذا كانت البيانات فارغة، استخدم قيم افتراضية
+if (!$meta || !is_array($meta)) {
+    $meta = array(
+        'release_type' => 'book',
+        'release_date' => '',
+        'release_authors' => array(),
+        'release_pages' => '',
+        'release_format' => array(),
+        'release_excerpt' => '',
+        'release_download_count' => 0,
+    );
+}
 ?>
 
 <article <?php post_class('esdar-card'); ?> data-post-id="<?php echo get_the_ID(); ?>">
