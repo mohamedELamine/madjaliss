@@ -53,7 +53,7 @@ function nadiim_demo_content_page() {
 				<li><?php esc_html_e( '3 حوارات نموذجية (مرئية، صوتية، مكتوبة)', 'nadiim' ); ?></li>
 				<li><?php esc_html_e( '4 إصدارات نموذجية (كتب ودراسات)', 'nadiim' ); ?></li>
 				<li><?php esc_html_e( '2 نادي قراءة نشط', 'nadiim' ); ?></li>
-				<li><?php esc_html_e( '5 مقالات في المدونة', 'nadiim' ); ?></li>
+				<li><?php esc_html_e( 'صفحة المقالات مع نظام الفلاتر', 'nadiim' ); ?></li>
 				<li><?php esc_html_e( 'الصفحات الأساسية (من نحن، اتصل بنا)', 'nadiim' ); ?></li>
 				<li><?php esc_html_e( 'مستخدمين نموذجيين (كُتّاب ومشاركين)', 'nadiim' ); ?></li>
 				<li><?php esc_html_e( 'إعدادات المظهر والقوائم', 'nadiim' ); ?></li>
@@ -594,9 +594,9 @@ function nadiim_create_demo_pages() {
 			'template' => 'template-contact.php',
 		),
 		array(
-			'title'    => 'المدونة',
-			'content'  => '',
-			'template' => '',
+			'title'    => 'المقالات',
+			'content'  => 'استكشف مكتبتنا الغنية من المقالات المتنوعة. نقدم محتوى متميزًا في مجالات التقنية، الثقافة، التطوير الذاتي، والكثير. استخدم الفلاتر أدناه للعثور على ما يهمك.',
+			'template' => 'page-templates/template-articles.php',
 		),
 	);
 
@@ -615,8 +615,8 @@ function nadiim_create_demo_pages() {
 		}
 
 		// Save page IDs for later use.
-		if ( $page['title'] === 'المدونة' ) {
-			update_option( 'nadiim_demo_blog_page_id', $page_id );
+		if ( $page['title'] === 'المقالات' ) {
+			update_option( 'nadiim_demo_articles_page_id', $page_id );
 		} elseif ( $page['title'] === 'من نحن' ) {
 			update_option( 'nadiim_demo_about_page_id', $page_id );
 		} elseif ( $page['title'] === 'اتصل بنا' ) {
@@ -634,9 +634,9 @@ function nadiim_setup_demo_menus() {
 
 	if ( ! is_wp_error( $primary_menu_id ) ) {
 		// Get page IDs.
-		$about_page_id   = get_option( 'nadiim_demo_about_page_id', 0 );
-		$contact_page_id = get_option( 'nadiim_demo_contact_page_id', 0 );
-		$blog_page_id    = get_option( 'nadiim_demo_blog_page_id', 0 );
+		$about_page_id    = get_option( 'nadiim_demo_about_page_id', 0 );
+		$contact_page_id  = get_option( 'nadiim_demo_contact_page_id', 0 );
+		$articles_page_id = get_option( 'nadiim_demo_articles_page_id', 0 );
 
 		// Add menu items.
 		wp_update_nav_menu_item(
@@ -687,13 +687,13 @@ function nadiim_setup_demo_menus() {
 			)
 		);
 
-		if ( $blog_page_id ) {
+		if ( $articles_page_id ) {
 			wp_update_nav_menu_item(
 				$primary_menu_id,
 				0,
 				array(
-					'menu-item-title'      => 'المدونة',
-					'menu-item-object-id'  => $blog_page_id,
+					'menu-item-title'      => 'المقالات',
+					'menu-item-object-id'  => $articles_page_id,
 					'menu-item-object'     => 'page',
 					'menu-item-type'       => 'post_type',
 					'menu-item-status'     => 'publish',
@@ -894,7 +894,7 @@ function nadiim_delete_demo_content() {
 	}
 
 	// Delete demo pages by title.
-	$demo_pages = array( 'من نحن', 'اتصل بنا', 'المدونة' );
+	$demo_pages = array( 'من نحن', 'اتصل بنا', 'المقالات' );
 	foreach ( $demo_pages as $page_title ) {
 		$page = get_page_by_title( $page_title );
 		if ( $page ) {
