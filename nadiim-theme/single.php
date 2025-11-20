@@ -9,29 +9,30 @@
 get_header();
 ?>
 
-<main id="primary" class="site-main">
-    <div class="container container-narrow">
+<main id="primary" class="site-main single-post">
 
-        <?php
-        while ( have_posts() ) :
-            the_post();
-            get_template_part( 'template-parts/content', 'single' );
+    <?php
+    while ( have_posts() ) :
+        the_post();
 
-            // التنقل بين المقالات
+        // استخدام قالب المقال الجديد مع كل المميزات
+        get_template_part( 'template-parts/post/single', 'article' );
+
+        // التنقل بين المقالات
+        ?>
+        <div class="post-navigation-wrapper" style="max-width: 900px; margin: 2rem auto; padding: 0 1.5rem;">
+            <?php
             the_post_navigation( array(
                 'prev_text' => '<span class="nav-subtitle">' . esc_html__( 'السابق:', 'nadiim' ) . '</span> <span class="nav-title">%title</span>',
                 'next_text' => '<span class="nav-subtitle">' . esc_html__( 'التالي:', 'nadiim' ) . '</span> <span class="nav-title">%title</span>',
             ) );
+            ?>
+        </div>
+        <?php
 
-            // التعليقات
-            if ( comments_open() || get_comments_number() ) :
-                comments_template();
-            endif;
+    endwhile;
+    ?>
 
-        endwhile;
-        ?>
-
-    </div>
 </main>
 
 <?php

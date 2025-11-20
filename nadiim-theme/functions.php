@@ -563,3 +563,60 @@ function nadiim_reading_clubs_archive_query( $query ) {
     }
 }
 add_action( 'pre_get_posts', 'nadiim_reading_clubs_archive_query' );
+
+/**
+ * ==========================================
+ * نظام المقالات المحسّن (Enhanced Articles System)
+ * ==========================================
+ */
+
+// تضمين نظام Meta Box للمقالات
+require_once NADIIM_THEME_DIR . '/inc/article-meta.php';
+
+// تضمين نظام الفلترة للأرشيف
+require_once NADIIM_THEME_DIR . '/inc/articles-filters.php';
+
+// تضمين Schema.org للمقالات
+require_once NADIIM_THEME_DIR . '/inc/articles-schema.php';
+
+/**
+ * تحميل أصول المقالات (CSS & JS)
+ */
+function nadiim_articles_enqueue_assets() {
+    // تحميل CSS للمقالات
+    wp_enqueue_style(
+        'nadiim-articles',
+        NADIIM_THEME_URI . '/assets/css/articles.css',
+        array( 'nadiim-main' ),
+        NADIIM_VERSION
+    );
+
+    // تحميل JS للواجهة الأمامية
+    if ( is_singular( 'post' ) || is_home() || is_archive() ) {
+        wp_enqueue_script(
+            'nadiim-articles-frontend',
+            NADIIM_THEME_URI . '/assets/js/articles-frontend.js',
+            array( 'jquery' ),
+            NADIIM_VERSION,
+            true
+        );
+    }
+
+    // تحميل JS للـ Admin (في صفحة تحرير المقال)
+    if ( is_admin() ) {
+        global $post_type;
+        if ( $post_type === 'post' ) {
+            wp_enqueue_media(); // تفعيل Media Uploader
+
+            wp_enqueue_script(
+                'nadiim-articles-admin',
+                NADIIM_THEME_URI . '/assets/js/articles-admin.js',
+                array( 'jquery', 'wp-util' ),
+                NADIIM_VERSION,
+                true
+            );
+        }
+    }
+}
+add_action( 'wp_enqueue_scripts', 'nadiim_articles_enqueue_assets' );
+add_action( 'admin_enqueue_scripts', 'nadiim_articles_enqueue_assets' );
