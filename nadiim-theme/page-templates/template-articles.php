@@ -225,6 +225,14 @@ get_header();
     letter-spacing: 0.5px;
 }
 
+/* Articles Grid - 3 columns */
+.archive-articles-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
 /* No Articles Found */
 .no-articles-found {
     text-align: center;
@@ -272,6 +280,14 @@ get_header();
     transform: translateY(-2px);
 }
 
+/* Responsive */
+@media (max-width: 1024px) {
+    .archive-articles-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
+    }
+}
+
 @media (max-width: 768px) {
     .articles-page-hero {
         min-height: 350px;
@@ -283,6 +299,11 @@ get_header();
 
     .stat-number {
         font-size: 28px;
+    }
+
+    .archive-articles-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
     }
 }
 </style>
