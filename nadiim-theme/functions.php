@@ -423,3 +423,71 @@ function nadiim_subscribe_newsletter() {
 }
 add_action( 'wp_ajax_nadiim_subscribe_newsletter', 'nadiim_subscribe_newsletter' );
 add_action( 'wp_ajax_nopriv_nadiim_subscribe_newsletter', 'nadiim_subscribe_newsletter' );
+
+/**
+ * ==========================================
+ * نظام الإصدارات (Releases System)
+ * ==========================================
+ */
+
+// تضمين ملف CPT الإصدارات
+require_once NADIIM_THEME_DIR . '/inc/cpt-esdar.php';
+
+// تضمين ميتا بوكس الإصدارات
+require_once NADIIM_THEME_DIR . '/inc/meta-esdar.php';
+
+// تضمين دوال مساعدة للإصدارات
+require_once NADIIM_THEME_DIR . '/inc/helpers.php';
+
+// تضمين إعدادات Customizer للإصدارات
+require_once NADIIM_THEME_DIR . '/inc/customizer-esdar.php';
+
+/**
+ * تحميل أصول الإصدارات (CSS & JS)
+ */
+function nadiim_esdar_enqueue_assets() {
+    // تحميل CSS للإصدارات
+    wp_enqueue_style(
+        'nadiim-esdar',
+        NADIIM_THEME_URI . '/assets/css/esdar.css',
+        array( 'nadiim-main' ),
+        NADIIM_VERSION
+    );
+
+    // تحميل JS للواجهة الأمامية
+    if ( is_singular('esdar') || is_post_type_archive('esdar') ) {
+        wp_enqueue_script(
+            'nadiim-esdar-frontend',
+            NADIIM_THEME_URI . '/assets/js/esdar-frontend.js',
+            array(),
+            NADIIM_VERSION,
+            true
+        );
+
+        // تمرير nonce للتحميل
+        wp_localize_script( 'nadiim-esdar-frontend', 'esdarFrontend', array(
+            'downloadNonce' => wp_create_nonce( 'esdar_download_nonce' ),
+            'ajaxUrl' => admin_url( 'admin-ajax.php' ),
+        ) );
+    }
+}
+add_action( 'wp_enqueue_scripts', 'nadiim_esdar_enqueue_assets' );
+
+/**
+ * تطبيق إعدادات Customizer على query الإصدارات
+ */
+function nadiim_esdar_archive_query( $query ) {
+    if ( ! is_admin() && $query->is_main_query() && is_post_type_archive( 'esdar' ) ) {
+        // عدد الإصدارات في الصفحة
+        $per_page = get_theme_mod( 'esdar_archive_per_page', 12 );
+        $query->set( 'posts_per_page', $per_page );
+
+        // ترتيب الإصدارات
+        $orderby = get_theme_mod( 'esdar_archive_orderby', 'date' );
+        $order = get_theme_mod( 'esdar_archive_order', 'DESC' );
+
+        $query->set( 'orderby', $orderby );
+        $query->set( 'order', $order );
+    }
+}
+add_action( 'pre_get_posts', 'nadiim_esdar_archive_query' );

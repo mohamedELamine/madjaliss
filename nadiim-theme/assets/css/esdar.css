@@ -1,0 +1,884 @@
+/**
+ * أنماط الإصدارات (Releases Styles)
+ *
+ * @package Nadiim
+ */
+
+/* ============================================
+   المتغيرات (CSS Variables)
+   ============================================ */
+:root {
+    --esdar-primary: #339063;
+    --esdar-primary-dark: #2a7550;
+    --esdar-primary-light: #e8f5ef;
+    --esdar-surface: #ffffff;
+    --esdar-surface-alt: #f8f9fa;
+    --esdar-text-primary: #1C2D27;
+    --esdar-text-secondary: #5a6c66;
+    --esdar-text-muted: #8a9a94;
+    --esdar-border: #e0e5e3;
+    --esdar-shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.06);
+    --esdar-shadow-md: 0 4px 16px rgba(0, 0, 0, 0.08);
+    --esdar-shadow-lg: 0 12px 28px rgba(0, 0, 0, 0.12);
+    --esdar-radius-sm: 8px;
+    --esdar-radius-md: 12px;
+    --esdar-radius-lg: 16px;
+    --esdar-transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ============================================
+   Container
+   ============================================ */
+.esdar-single .container,
+.esdar-archive .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* ============================================
+   Single Release - Hero Section
+   ============================================ */
+.esdar-hero {
+    background: var(--esdar-surface);
+    padding: 48px 0;
+    border-bottom: 1px solid var(--esdar-border);
+}
+
+.esdar-hero-inner {
+    display: grid;
+    grid-template-columns: 360px 1fr;
+    gap: 48px;
+    align-items: start;
+}
+
+.esdar-hero-cover {
+    position: relative;
+    border-radius: var(--esdar-radius-lg);
+    overflow: hidden;
+    box-shadow: var(--esdar-shadow-lg);
+    aspect-ratio: 3 / 4;
+}
+
+.esdar-cover-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.esdar-cover-placeholder {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, var(--esdar-primary-light) 0%, var(--esdar-surface-alt) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.esdar-cover-placeholder svg {
+    width: 80px;
+    height: 80px;
+    color: var(--esdar-primary);
+    opacity: 0.5;
+}
+
+.esdar-hero-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.esdar-type-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    align-self: flex-start;
+}
+
+.esdar-type-book {
+    background: #e3f2fd;
+    color: #1976d2;
+}
+
+.esdar-type-magazine {
+    background: #f3e5f5;
+    color: #7b1fa2;
+}
+
+.esdar-type-brochure {
+    background: #e8f5e9;
+    color: #388e3c;
+}
+
+.esdar-type-report {
+    background: #fff3e0;
+    color: #f57c00;
+}
+
+.esdar-type-issue {
+    background: #fce4ec;
+    color: #c2185b;
+}
+
+.esdar-title {
+    font-size: clamp(24px, 4vw, 34px);
+    font-weight: 700;
+    color: var(--esdar-text-primary);
+    line-height: 1.3;
+    margin: 0;
+}
+
+.esdar-authors,
+.esdar-date {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 15px;
+    color: var(--esdar-text-secondary);
+}
+
+.esdar-label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 600;
+}
+
+.esdar-icon {
+    color: var(--esdar-primary);
+}
+
+.esdar-authors-list a {
+    color: var(--esdar-text-primary);
+    text-decoration: none;
+    transition: var(--esdar-transition);
+}
+
+.esdar-authors-list a:hover {
+    color: var(--esdar-primary);
+}
+
+.esdar-info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 12px;
+    margin: 8px 0;
+}
+
+.esdar-info-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 14px;
+    background: var(--esdar-surface-alt);
+    border-radius: var(--esdar-radius-sm);
+    font-size: 14px;
+    color: var(--esdar-text-secondary);
+}
+
+.esdar-formats {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.esdar-format-badges {
+    display: flex;
+    gap: 6px;
+}
+
+.esdar-format-badge {
+    display: inline-block;
+    padding: 4px 10px;
+    background: var(--esdar-primary-light);
+    color: var(--esdar-primary);
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.esdar-price {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    font-size: 16px;
+}
+
+.esdar-price-value {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--esdar-primary);
+}
+
+.esdar-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 12px;
+}
+
+.esdar-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 0 24px;
+    height: 48px;
+    border-radius: var(--esdar-radius-md);
+    font-size: 16px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: var(--esdar-transition);
+    cursor: pointer;
+    border: none;
+}
+
+.esdar-btn-primary {
+    background: var(--esdar-primary);
+    color: #ffffff;
+    box-shadow: var(--esdar-shadow-md);
+}
+
+.esdar-btn-primary:hover {
+    background: var(--esdar-primary-dark);
+    transform: translateY(-2px);
+    box-shadow: var(--esdar-shadow-lg);
+}
+
+.esdar-btn-secondary {
+    background: var(--esdar-surface);
+    color: var(--esdar-text-primary);
+    border: 2px solid var(--esdar-border);
+}
+
+.esdar-btn-secondary:hover {
+    background: var(--esdar-surface-alt);
+    border-color: var(--esdar-primary);
+    color: var(--esdar-primary);
+}
+
+.esdar-stats {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 16px;
+    background: var(--esdar-primary-light);
+    border-radius: var(--esdar-radius-sm);
+    font-size: 14px;
+    color: var(--esdar-text-secondary);
+}
+
+.esdar-stats strong {
+    color: var(--esdar-primary);
+}
+
+/* ============================================
+   Content Sections
+   ============================================ */
+.esdar-excerpt-section,
+.esdar-preview-section,
+.esdar-content-section,
+.esdar-related-section,
+.esdar-footer-section {
+    padding: 48px 0;
+}
+
+.esdar-excerpt-box {
+    background: var(--esdar-surface-alt);
+    padding: 24px;
+    border-radius: var(--esdar-radius-md);
+    border-right: 4px solid var(--esdar-primary);
+    font-size: 17px;
+    line-height: 1.7;
+    color: var(--esdar-text-secondary);
+}
+
+.esdar-section-title {
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--esdar-text-primary);
+    margin-bottom: 24px;
+    padding-bottom: 12px;
+    border-bottom: 3px solid var(--esdar-primary);
+    display: inline-block;
+}
+
+/* Preview Embed */
+.esdar-preview-embed {
+    position: relative;
+    padding-bottom: 62.5%; /* 16:10 aspect ratio */
+    max-height: 600px;
+    border-radius: var(--esdar-radius-md);
+    overflow: hidden;
+    box-shadow: var(--esdar-shadow-md);
+}
+
+.esdar-preview-embed iframe {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+/* Preview Gallery */
+.esdar-preview-gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.esdar-preview-link {
+    display: block;
+    border-radius: var(--esdar-radius-md);
+    overflow: hidden;
+    box-shadow: var(--esdar-shadow-sm);
+    transition: var(--esdar-transition);
+}
+
+.esdar-preview-link:hover {
+    box-shadow: var(--esdar-shadow-lg);
+    transform: translateY(-4px);
+}
+
+.esdar-preview-image {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* Entry Content */
+.entry-content {
+    font-size: 17px;
+    line-height: 1.8;
+    color: var(--esdar-text-secondary);
+}
+
+/* Related Section */
+.esdar-grid {
+    display: grid;
+    gap: 28px;
+}
+
+.esdar-grid-3 {
+    grid-template-columns: repeat(3, 1fr);
+}
+
+/* Footer Section */
+.esdar-footer-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 32px;
+    padding: 24px;
+    background: var(--esdar-surface-alt);
+    border-radius: var(--esdar-radius-md);
+}
+
+.esdar-taxonomy {
+    flex: 1;
+}
+
+.esdar-categories,
+.esdar-tags {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 12px;
+}
+
+.esdar-tax-label {
+    font-weight: 600;
+    color: var(--esdar-text-primary);
+}
+
+.esdar-tax-item {
+    display: inline-block;
+    padding: 4px 12px;
+    background: var(--esdar-surface);
+    border: 1px solid var(--esdar-border);
+    border-radius: 20px;
+    font-size: 13px;
+    color: var(--esdar-text-secondary);
+    text-decoration: none;
+    transition: var(--esdar-transition);
+}
+
+.esdar-tax-item:hover {
+    background: var(--esdar-primary-light);
+    border-color: var(--esdar-primary);
+    color: var(--esdar-primary);
+}
+
+.esdar-share {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.esdar-share-label {
+    font-weight: 600;
+    color: var(--esdar-text-primary);
+}
+
+.esdar-share-buttons {
+    display: flex;
+    gap: 8px;
+}
+
+.esdar-share-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--esdar-surface);
+    border: 1px solid var(--esdar-border);
+    color: var(--esdar-text-secondary);
+    transition: var(--esdar-transition);
+}
+
+.esdar-share-facebook:hover {
+    background: #1877f2;
+    border-color: #1877f2;
+    color: #ffffff;
+}
+
+.esdar-share-twitter:hover {
+    background: #1da1f2;
+    border-color: #1da1f2;
+    color: #ffffff;
+}
+
+.esdar-share-whatsapp:hover {
+    background: #25d366;
+    border-color: #25d366;
+    color: #ffffff;
+}
+
+/* ============================================
+   Archive Page
+   ============================================ */
+.esdar-archive-hero {
+    background: linear-gradient(135deg, var(--esdar-primary-light) 0%, var(--esdar-surface) 100%);
+    padding: 64px 0 48px;
+    text-align: center;
+    border-bottom: 1px solid var(--esdar-border);
+}
+
+.esdar-archive-title {
+    font-size: clamp(32px, 5vw, 48px);
+    font-weight: 800;
+    color: var(--esdar-text-primary);
+    margin-bottom: 16px;
+}
+
+.esdar-archive-description {
+    font-size: 18px;
+    color: var(--esdar-text-secondary);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* Filter Bar */
+.esdar-filter-section {
+    padding: 32px 0;
+    background: var(--esdar-surface);
+    border-bottom: 1px solid var(--esdar-border);
+}
+
+.esdar-filter-bar {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    align-items: end;
+}
+
+.esdar-filter-item {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.esdar-filter-item label {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--esdar-text-primary);
+}
+
+.esdar-filter-select {
+    width: 100%;
+    padding: 10px 14px;
+    border: 1px solid var(--esdar-border);
+    border-radius: var(--esdar-radius-sm);
+    font-size: 15px;
+    color: var(--esdar-text-primary);
+    background: var(--esdar-surface);
+    transition: var(--esdar-transition);
+}
+
+.esdar-filter-select:focus {
+    outline: none;
+    border-color: var(--esdar-primary);
+    box-shadow: 0 0 0 3px var(--esdar-primary-light);
+}
+
+.esdar-filter-submit {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.esdar-filter-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px 20px;
+    background: var(--esdar-primary);
+    color: #ffffff;
+    border: none;
+    border-radius: var(--esdar-radius-sm);
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--esdar-transition);
+}
+
+.esdar-filter-btn:hover {
+    background: var(--esdar-primary-dark);
+}
+
+.esdar-filter-reset {
+    padding: 10px 16px;
+    background: transparent;
+    color: var(--esdar-text-secondary);
+    border: 1px solid var(--esdar-border);
+    border-radius: var(--esdar-radius-sm);
+    font-size: 14px;
+    text-decoration: none;
+    transition: var(--esdar-transition);
+}
+
+.esdar-filter-reset:hover {
+    background: var(--esdar-surface-alt);
+    color: var(--esdar-text-primary);
+}
+
+/* Grid Section */
+.esdar-grid-section {
+    padding: 48px 0;
+}
+
+/* Card Component */
+.esdar-card {
+    position: relative;
+    background: var(--esdar-surface);
+    border-radius: var(--esdar-radius-md);
+    overflow: hidden;
+    box-shadow: var(--esdar-shadow-sm);
+    transition: var(--esdar-transition);
+    display: flex;
+    flex-direction: column;
+}
+
+.esdar-card:hover {
+    box-shadow: var(--esdar-shadow-lg);
+    transform: translateY(-6px);
+}
+
+.esdar-card-link {
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.esdar-card-cover {
+    position: relative;
+    aspect-ratio: 3 / 4;
+    overflow: hidden;
+}
+
+.esdar-card-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: var(--esdar-transition);
+}
+
+.esdar-card:hover .esdar-card-image {
+    transform: scale(1.05);
+}
+
+.esdar-card-placeholder {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, var(--esdar-primary-light) 0%, var(--esdar-surface-alt) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.esdar-card-placeholder svg {
+    width: 60px;
+    height: 60px;
+    color: var(--esdar-primary);
+    opacity: 0.4;
+}
+
+.esdar-card-type-badge {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.esdar-card-formats {
+    position: absolute;
+    bottom: 12px;
+    right: 12px;
+    display: flex;
+    gap: 4px;
+}
+
+.esdar-format-mini {
+    padding: 3px 6px;
+    background: rgba(255, 255, 255, 0.95);
+    color: var(--esdar-primary);
+    border-radius: 4px;
+    font-size: 10px;
+    font-weight: 700;
+}
+
+.esdar-card-content {
+    padding: 20px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.esdar-card-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--esdar-text-primary);
+    margin: 0;
+    line-height: 1.4;
+}
+
+.esdar-card-authors,
+.esdar-card-date {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    color: var(--esdar-text-muted);
+}
+
+.esdar-card-excerpt {
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--esdar-text-secondary);
+    flex: 1;
+}
+
+.esdar-card-meta {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding-top: 10px;
+    border-top: 1px solid var(--esdar-border);
+    font-size: 12px;
+    color: var(--esdar-text-muted);
+}
+
+.esdar-card-meta-item {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.esdar-card-actions {
+    padding: 0 20px 20px;
+}
+
+.esdar-card-download-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    width: 100%;
+    padding: 10px;
+    background: var(--esdar-primary);
+    color: #ffffff;
+    border-radius: var(--esdar-radius-sm);
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: var(--esdar-transition);
+}
+
+.esdar-card-download-btn:hover {
+    background: var(--esdar-primary-dark);
+}
+
+/* Pagination */
+.esdar-pagination {
+    margin-top: 48px;
+    display: flex;
+    justify-content: center;
+}
+
+.esdar-pagination .page-numbers {
+    display: flex;
+    gap: 8px;
+    list-style: none;
+    padding: 0;
+}
+
+.esdar-pagination .page-numbers li {
+    display: inline-block;
+}
+
+.esdar-pagination a,
+.esdar-pagination .current {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 40px;
+    height: 40px;
+    padding: 0 12px;
+    background: var(--esdar-surface);
+    border: 1px solid var(--esdar-border);
+    border-radius: var(--esdar-radius-sm);
+    color: var(--esdar-text-primary);
+    font-size: 15px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: var(--esdar-transition);
+}
+
+.esdar-pagination a:hover {
+    background: var(--esdar-primary-light);
+    border-color: var(--esdar-primary);
+    color: var(--esdar-primary);
+}
+
+.esdar-pagination .current {
+    background: var(--esdar-primary);
+    border-color: var(--esdar-primary);
+    color: #ffffff;
+}
+
+/* No Results */
+.esdar-no-results {
+    text-align: center;
+    padding: 80px 20px;
+}
+
+.esdar-no-results-icon {
+    margin-bottom: 24px;
+}
+
+.esdar-no-results-icon svg {
+    color: var(--esdar-text-muted);
+    opacity: 0.5;
+}
+
+.esdar-no-results-title {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--esdar-text-primary);
+    margin-bottom: 12px;
+}
+
+.esdar-no-results-text {
+    font-size: 16px;
+    color: var(--esdar-text-secondary);
+    margin-bottom: 24px;
+}
+
+/* ============================================
+   Responsive
+   ============================================ */
+@media (max-width: 1024px) {
+    .esdar-hero-inner {
+        grid-template-columns: 1fr;
+        gap: 32px;
+    }
+
+    .esdar-hero-cover {
+        max-width: 400px;
+        margin: 0 auto;
+    }
+
+    .esdar-grid-3 {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .esdar-grid-3 {
+        grid-template-columns: 1fr;
+    }
+
+    .esdar-filter-bar {
+        grid-template-columns: 1fr;
+    }
+
+    .esdar-hero-cover {
+        max-width: 300px;
+    }
+
+    .esdar-actions {
+        flex-direction: column;
+    }
+
+    .esdar-btn {
+        width: 100%;
+    }
+
+    .esdar-footer-inner {
+        flex-direction: column;
+    }
+
+    .esdar-info-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .esdar-archive-hero,
+    .esdar-hero,
+    .esdar-excerpt-section,
+    .esdar-preview-section,
+    .esdar-content-section,
+    .esdar-related-section,
+    .esdar-footer-section,
+    .esdar-grid-section {
+        padding: 32px 0;
+    }
+
+    .esdar-section-title {
+        font-size: 22px;
+    }
+
+    .esdar-card-content {
+        padding: 16px;
+    }
+}
