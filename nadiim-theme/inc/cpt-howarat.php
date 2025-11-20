@@ -56,7 +56,7 @@ function nadiim_register_howarat_cpt() {
 		'label'               => __( 'حوار', 'nadiim' ),
 		'description'         => __( 'الحوارات والمقابلات الفكرية', 'nadiim' ),
 		'labels'              => $labels,
-		'supports'            => array( 'title', 'editor', 'excerpt', 'thumbnail', 'author' ),
+		'supports'            => array( 'title', 'editor', 'excerpt', 'thumbnail', 'author', 'comments' ),
 		'taxonomies'          => array(), // سيتم إضافة التصنيفات لاحقاً إذا لزم الأمر
 		'hierarchical'        => false,
 		'public'              => true,

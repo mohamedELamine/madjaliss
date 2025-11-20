@@ -59,6 +59,8 @@ if ( post_password_required() ) {
 	<?php endif; ?>
 
 	<?php
+	$commenter = wp_get_current_commenter();
+
 	comment_form(
 		array(
 			'title_reply'         => 'اترك تعليقاً',
@@ -73,7 +75,6 @@ if ( post_password_required() ) {
 			'fields'              => array(
 				'author' => '<p class="comment-form-author"><label for="author">الاسم *</label> <input id="author" name="author" type="text" value="' . esc_attr( $commenter['comment_author'] ) . '" size="30" maxlength="245" required="required" /></p>',
 				'email'  => '<p class="comment-form-email"><label for="email">البريد الإلكتروني *</label> <input id="email" name="email" type="email" value="' . esc_attr( $commenter['comment_author_email'] ) . '" size="30" maxlength="100" aria-describedby="email-notes" required="required" /></p>',
-				'url'    => '<p class="comment-form-url"><label for="url">الموقع الإلكتروني</label> <input id="url" name="url" type="url" value="' . esc_attr( $commenter['comment_author_url'] ) . '" size="30" maxlength="200" /></p>',
 			),
 		)
 	);
