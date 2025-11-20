@@ -13,11 +13,7 @@
       "meta": {
         "reading_time_manual": 7,
         "reading_time_auto": 6,
-        "audio_url": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
-        "audio_duration": "5:42",
-        "audio_caption": "استمع لهذا المقال بصوت الكاتب",
-        "show_reading_time": true,
-        "show_audio_player": true
+        "show_reading_time": true
       }
     },
     {
@@ -31,8 +27,7 @@
       "meta": {
         "reading_time_manual": 5,
         "reading_time_auto": 5,
-        "show_reading_time": true,
-        "show_audio_player": false
+        "show_reading_time": true
       }
     },
     {
@@ -46,11 +41,7 @@
       "meta": {
         "reading_time_manual": 8,
         "reading_time_auto": 8,
-        "audio_url": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3",
-        "audio_duration": "7:15",
-        "audio_caption": "استمع لهذا المقال أثناء التنقل",
-        "show_reading_time": true,
-        "show_audio_player": true
+        "show_reading_time": true
       }
     },
     {
@@ -64,8 +55,7 @@
       "meta": {
         "reading_time_manual": 4,
         "reading_time_auto": 4,
-        "show_reading_time": true,
-        "show_audio_player": false
+        "show_reading_time": true
       }
     },
     {
@@ -79,11 +69,7 @@
       "meta": {
         "reading_time_manual": 6,
         "reading_time_auto": 6,
-        "audio_url": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3",
-        "audio_duration": "6:20",
-        "audio_caption": "استمع لهذا التحليل المفصل",
-        "show_reading_time": true,
-        "show_audio_player": true
+        "show_reading_time": true
       }
     },
     {
@@ -97,8 +83,7 @@
       "meta": {
         "reading_time_manual": 6,
         "reading_time_auto": 6,
-        "show_reading_time": true,
-        "show_audio_player": false
+        "show_reading_time": true
       }
     }
   ],

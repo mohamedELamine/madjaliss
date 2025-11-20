@@ -233,6 +233,27 @@ get_header();
     margin-bottom: 3rem;
 }
 
+/* Ensure article cards display properly in grid */
+.archive-articles-grid .article-card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.archive-articles-grid .article-card-image {
+    flex-shrink: 0;
+}
+
+.archive-articles-grid .article-card-content {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.archive-articles-grid .article-card-excerpt {
+    flex-grow: 1;
+}
+
 /* No Articles Found */
 .no-articles-found {
     text-align: center;
