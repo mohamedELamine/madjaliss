@@ -56,8 +56,8 @@ if ($cta_bg) {
                        style="display: inline-flex; align-items: center; gap: 12px; padding: 20px 48px; background: #fff; color: var(--color-primary, #339063); border-radius: 50px; text-decoration: none; font-weight: 700; font-size: 1.25rem; transition: all 0.3s ease; box-shadow: 0 8px 24px rgba(0,0,0,0.15);">
                         <?php echo esc_html($cta_button_text); ?>
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <line x1="5" y1="12" x2="19" y2="12"></line>
-                            <polyline points="12 5 19 12 12 19"></polyline>
+                            <line x1="19" y1="12" x2="5" y2="12"></line>
+                            <polyline points="12 5 5 12 12 19"></polyline>
                         </svg>
                     </a>
                 </div>

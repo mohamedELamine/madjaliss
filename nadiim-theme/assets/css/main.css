@@ -297,7 +297,6 @@
 .site-footer {
   background-color: var(--color-text-primary);
   color: #ffffff;
-  margin-top: var(--spacing-xxl);
 }
 
 .footer-widgets {
