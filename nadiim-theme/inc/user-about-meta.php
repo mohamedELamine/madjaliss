@@ -132,15 +132,24 @@ add_filter('manage_users_sortable_columns', 'nadiim_make_about_column_sortable')
  * ترتيب المستخدمين حسب الظهور في صفحة من نحن
  */
 function nadiim_sort_users_by_about_page($query) {
+    // التحقق من أننا في لوحة الإدارة
     if (!is_admin()) {
         return;
     }
 
+    // التحقق من وجود دالة get_current_screen (متاحة فقط في admin)
+    if (!function_exists('get_current_screen')) {
+        return;
+    }
+
     $screen = get_current_screen();
+
+    // التحقق من أننا في صفحة المستخدمين
     if (!$screen || 'users' !== $screen->id) {
         return;
     }
 
+    // تطبيق الترتيب المخصص
     if (isset($_GET['orderby']) && 'show_in_about' === $_GET['orderby']) {
         $query->query_vars['meta_key'] = 'show_in_about_page';
         $query->query_vars['orderby'] = 'meta_value';

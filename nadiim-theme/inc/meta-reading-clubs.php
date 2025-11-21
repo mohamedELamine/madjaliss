@@ -418,6 +418,11 @@ add_action('save_post', 'madjaliss_reading_clubs_save_meta_box');
  * إضافة أنماط مخصصة للإدارة
  */
 function madjaliss_reading_clubs_admin_styles() {
+    // التحقق من وجود دالة get_current_screen
+    if (!function_exists('get_current_screen')) {
+        return;
+    }
+
     $screen = get_current_screen();
 
     if ($screen && $screen->post_type === 'reading_clubs') {
