@@ -536,6 +536,9 @@ require_once NADIIM_THEME_DIR . '/inc/cpt-reading-clubs.php';
 // تضمين ميتا بوكس نوادي القراءة
 require_once NADIIM_THEME_DIR . '/inc/meta-reading-clubs.php';
 
+// تضمين إعدادات Customizer لقسم النوادي
+require_once NADIIM_THEME_DIR . '/inc/customizer-clubs.php';
+
 /**
  * تحميل أصول نوادي القراءة (CSS & JS & Leaflet)
  */

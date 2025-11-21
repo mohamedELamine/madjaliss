@@ -637,3 +637,604 @@
         print-color-adjust: exact;
     }
 }
+
+/* ═══════════════════════════════════════════════════════════════
+   Clubs Section Styles (Homepage)
+   قسم النوادي في الصفحة الرئيسية
+   ═══════════════════════════════════════════════════════════════ */
+
+/* القسم الأساسي */
+.clubs-section {
+	position: relative;
+	padding: 48px 0;
+	overflow: hidden;
+}
+
+/* الخلفية و Overlay */
+.clubs-section.section-with-bg {
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
+}
+
+.clubs-section .section-bg-overlay {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: #000000;
+	opacity: var(--clubs-overlay-opacity, 0.30);
+	z-index: 1;
+	pointer-events: none;
+}
+
+.clubs-section .section-bg-embed {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 0;
+	pointer-events: none;
+	overflow: hidden;
+}
+
+.clubs-section .section-bg-embed iframe {
+	width: 100vw;
+	height: 56.25vw;
+	min-height: 100vh;
+	min-width: 177.77vh;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+.clubs-section .container {
+	position: relative;
+	z-index: 2;
+	max-width: 1200px;
+	margin: 0 auto;
+	padding: 0 20px;
+}
+
+/* رأس القسم */
+.clubs-section .section-header {
+	text-align: center;
+	margin-bottom: 48px;
+	max-width: 800px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.clubs-section .section-title {
+	font-size: clamp(28px, 4vw, 42px);
+	font-weight: 800;
+	color: #1C2D27;
+	margin: 0 0 16px;
+	line-height: 1.2;
+	letter-spacing: -0.02em;
+}
+
+.clubs-section .section-subtitle {
+	font-size: clamp(16px, 2vw, 18px);
+	color: #6b7a72;
+	margin: 0;
+	line-height: 1.6;
+}
+
+/* التكيف مع الخلفية */
+.clubs-section.section-with-bg .section-title,
+.clubs-section.section-with-bg .section-subtitle {
+	color: rgba(255, 255, 255, 0.95);
+	text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Grid Layout */
+.clubs-section .clubs-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+	gap: 28px;
+	margin-bottom: 24px;
+}
+
+@media screen and (min-width: 1200px) {
+	.clubs-section .clubs-grid {
+		grid-template-columns: repeat(3, 1fr);
+	}
+}
+
+@media screen and (min-width: 900px) and (max-width: 1199px) {
+	.clubs-section .clubs-grid {
+		grid-template-columns: repeat(2, 1fr);
+	}
+}
+
+@media screen and (max-width: 899px) {
+	.clubs-section .clubs-grid {
+		grid-template-columns: 1fr;
+		gap: 20px;
+	}
+}
+
+/* بطاقة النادي */
+.clubs-section .club-card {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	background-color: #ffffff;
+	border-radius: 14px;
+	box-shadow: 0 8px 24px rgba(18, 30, 26, 0.08);
+	overflow: hidden;
+	transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+	height: 100%;
+}
+
+.clubs-section .club-card:hover {
+	transform: translateY(-6px);
+	box-shadow: 0 12px 36px rgba(18, 30, 26, 0.14);
+}
+
+/* البطاقة مع خلفية */
+.clubs-section .club-card.club-card-with-bg {
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
+}
+
+/* Overlay البطاقة */
+.clubs-section .club-card-overlay {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: #000000;
+	z-index: 1;
+	pointer-events: none;
+}
+
+/* محتوى البطاقة */
+.clubs-section .club-card-content {
+	position: relative;
+	z-index: 2;
+	display: flex;
+	flex-direction: column;
+	padding: 32px 24px;
+	flex-grow: 1;
+}
+
+/* للبطاقات التي لديها خلفية - نص فاتح */
+.clubs-section .club-card-with-bg .club-card-content {
+	color: rgba(255, 255, 255, 0.95);
+}
+
+.clubs-section .club-card-with-bg .club-title a {
+	color: rgba(255, 255, 255, 0.98);
+}
+
+.clubs-section .club-card-with-bg .club-description {
+	color: rgba(255, 255, 255, 0.85);
+}
+
+.clubs-section .club-card-with-bg .club-meta-info {
+	color: rgba(255, 255, 255, 0.80);
+	border-top-color: rgba(255, 255, 255, 0.20);
+}
+
+/* Avatar النادي */
+.clubs-section .club-avatar {
+	width: 80px;
+	height: 80px;
+	margin: 0 auto 20px;
+	border-radius: 50%;
+	overflow: hidden;
+	background-color: #f0f0f0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	box-shadow: 0 4px 12px rgba(18, 30, 26, 0.12);
+}
+
+.clubs-section .club-avatar-img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.clubs-section .club-avatar-placeholder {
+	width: 100%;
+	height: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: linear-gradient(135deg, #339063 0%, #2a7a52 100%);
+}
+
+.clubs-section .club-avatar-placeholder .club-icon {
+	font-size: 32px;
+}
+
+/* عنوان النادي */
+.clubs-section .club-card .club-title {
+	font-size: 20px;
+	font-weight: 700;
+	color: #1C2D27;
+	margin: 0 0 16px;
+	line-height: 1.3;
+	text-align: center;
+}
+
+.clubs-section .club-title a {
+	color: inherit;
+	text-decoration: none;
+	transition: color 0.2s ease;
+}
+
+.clubs-section .club-title a:hover {
+	color: #339063;
+}
+
+.clubs-section .club-title a:focus {
+	outline: 2px solid #339063;
+	outline-offset: 2px;
+	border-radius: 2px;
+}
+
+/* الوصف */
+.clubs-section .club-description {
+	font-size: 15px;
+	color: #6b7a72;
+	line-height: 1.6;
+	margin: 0 0 20px;
+	text-align: center;
+}
+
+/* معلومات إضافية (Meta) */
+.clubs-section .club-meta-info {
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+	margin: 0 0 20px;
+	padding-top: 16px;
+	border-top: 1px solid rgba(107, 122, 114, 0.15);
+}
+
+.clubs-section .club-meta-item {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	font-size: 14px;
+	color: #6b7a72;
+	font-weight: 500;
+}
+
+.clubs-section .club-card-with-bg .club-meta-item {
+	color: rgba(255, 255, 255, 0.85);
+}
+
+.clubs-section .club-meta-item svg {
+	width: 16px;
+	height: 16px;
+	opacity: 0.7;
+	flex-shrink: 0;
+}
+
+/* روابط التواصل الاجتماعي */
+.clubs-section .club-social-links {
+	display: flex;
+	gap: 12px;
+	justify-content: center;
+	margin: 0 0 20px;
+}
+
+.clubs-section .club-social-link {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 38px;
+	height: 38px;
+	background-color: rgba(51, 144, 99, 0.10);
+	color: #339063;
+	border-radius: 50%;
+	transition: all 0.3s ease;
+	text-decoration: none;
+}
+
+.clubs-section .club-social-link:hover {
+	background-color: #339063;
+	color: #ffffff;
+	transform: translateY(-2px);
+}
+
+.clubs-section .club-social-link:focus {
+	outline: 2px solid #339063;
+	outline-offset: 2px;
+}
+
+.clubs-section .club-card-with-bg .club-social-link {
+	background-color: rgba(255, 255, 255, 0.20);
+	color: rgba(255, 255, 255, 0.95);
+}
+
+.clubs-section .club-card-with-bg .club-social-link:hover {
+	background-color: rgba(255, 255, 255, 0.95);
+	color: #339063;
+}
+
+/* زر عرض النادي */
+.clubs-section .club-view-btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+	padding: 14px 28px;
+	background-color: #339063;
+	color: #ffffff;
+	font-size: 15px;
+	font-weight: 600;
+	text-decoration: none;
+	border-radius: 10px;
+	transition: all 0.3s ease;
+	margin-top: auto;
+	text-align: center;
+}
+
+.clubs-section .club-view-btn:hover {
+	background-color: #2a7a52;
+	transform: translateY(-2px);
+	box-shadow: 0 6px 16px rgba(51, 144, 99, 0.3);
+}
+
+.clubs-section .club-view-btn:focus {
+	outline: 3px solid #339063;
+	outline-offset: 3px;
+}
+
+.clubs-section .club-view-btn svg {
+	width: 16px;
+	height: 16px;
+	flex-shrink: 0;
+}
+
+.clubs-section .club-card-with-bg .club-view-btn {
+	background-color: rgba(255, 255, 255, 0.95);
+	color: #339063;
+}
+
+.clubs-section .club-card-with-bg .club-view-btn:hover {
+	background-color: #ffffff;
+	color: #2a7a52;
+}
+
+/* Carousel Layout */
+.clubs-section.layout-carousel .clubs-swiper {
+	position: relative;
+	padding: 0 50px 60px;
+	margin: 0 -20px;
+}
+
+.clubs-section .swiper-slide {
+	height: auto;
+}
+
+.clubs-section .swiper-slide .club-card {
+	height: 100%;
+}
+
+/* أزرار التنقل */
+.clubs-section .swiper-button-prev,
+.clubs-section .swiper-button-next {
+	width: 48px;
+	height: 48px;
+	background-color: #ffffff;
+	border-radius: 50%;
+	box-shadow: 0 4px 12px rgba(18, 30, 26, 0.15);
+	color: #339063;
+	transition: all 0.3s ease;
+	border: none;
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+	z-index: 10;
+}
+
+.clubs-section .swiper-button-prev {
+	left: 0;
+}
+
+.clubs-section .swiper-button-next {
+	right: 0;
+}
+
+.clubs-section .swiper-button-prev:hover,
+.clubs-section .swiper-button-next:hover {
+	background-color: #339063;
+	color: #ffffff;
+	transform: translateY(-50%) scale(1.1);
+	box-shadow: 0 6px 20px rgba(51, 144, 99, 0.3);
+}
+
+.clubs-section .swiper-button-prev:focus,
+.clubs-section .swiper-button-next:focus {
+	outline: 3px solid #339063;
+	outline-offset: 3px;
+}
+
+.clubs-section .swiper-button-prev.swiper-button-disabled,
+.clubs-section .swiper-button-next.swiper-button-disabled {
+	opacity: 0.3;
+	cursor: not-allowed;
+}
+
+/* Pagination */
+.clubs-section .swiper-pagination {
+	bottom: 20px;
+	display: flex;
+	justify-content: center;
+	gap: 8px;
+}
+
+.clubs-section .swiper-pagination-bullet {
+	width: 10px;
+	height: 10px;
+	background-color: rgba(51, 144, 99, 0.3);
+	border-radius: 50%;
+	opacity: 1;
+	transition: all 0.3s ease;
+	cursor: pointer;
+}
+
+.clubs-section .swiper-pagination-bullet-active {
+	background-color: #339063;
+	width: 28px;
+	border-radius: 5px;
+}
+
+/* زر "جميع النوادي" */
+.clubs-section .section-more-button {
+	margin-top: 48px;
+	text-align: center;
+}
+
+.clubs-section .more-button {
+	display: inline-flex;
+	align-items: center;
+	gap: 10px;
+	padding: 16px 36px;
+	background-color: #339063;
+	color: #ffffff;
+	font-size: 17px;
+	font-weight: 600;
+	text-decoration: none;
+	border-radius: 50px;
+	transition: all 0.3s ease;
+	border: 2px solid #339063;
+	box-shadow: 0 4px 12px rgba(51, 144, 99, 0.2);
+}
+
+.clubs-section .more-button:hover {
+	background-color: #2a7a52;
+	border-color: #2a7a52;
+	transform: translateY(-2px);
+	box-shadow: 0 6px 20px rgba(51, 144, 99, 0.3);
+}
+
+.clubs-section .more-button:focus {
+	outline: 3px solid #339063;
+	outline-offset: 3px;
+}
+
+.clubs-section .more-button svg {
+	width: 20px;
+	height: 20px;
+	transition: transform 0.25s ease;
+}
+
+.clubs-section .more-button:hover svg {
+	transform: translateX(4px);
+}
+
+[dir="rtl"] .clubs-section .more-button:hover svg {
+	transform: translateX(-4px);
+}
+
+/* Responsive */
+@media screen and (min-width: 1200px) {
+	.clubs-section {
+		padding: 64px 0;
+	}
+
+	.clubs-section .section-header {
+		margin-bottom: 56px;
+	}
+}
+
+@media screen and (max-width: 899px) {
+	.clubs-section {
+		padding: 40px 0;
+	}
+
+	.clubs-section .section-header {
+		margin-bottom: 32px;
+	}
+
+	.clubs-section .club-card-content {
+		padding: 24px 20px;
+	}
+
+	.clubs-section.layout-carousel .clubs-swiper {
+		padding: 0 10px 50px;
+		margin: 0;
+	}
+
+	.clubs-section .swiper-button-prev,
+	.clubs-section .swiper-button-next {
+		width: 40px;
+		height: 40px;
+	}
+
+	.clubs-section .more-button {
+		padding: 14px 28px;
+		font-size: 15px;
+	}
+}
+
+@media screen and (max-width: 600px) {
+	.clubs-section {
+		padding: 32px 0;
+	}
+
+	.clubs-section .club-avatar {
+		width: 70px;
+		height: 70px;
+	}
+
+	.clubs-section .club-card-content {
+		padding: 20px 16px;
+	}
+
+	.clubs-section .club-view-btn {
+		padding: 12px 24px;
+		font-size: 14px;
+	}
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+	.clubs-section .club-card,
+	.clubs-section .club-view-btn,
+	.clubs-section .more-button,
+	.clubs-section .swiper-button-prev,
+	.clubs-section .swiper-button-next,
+	.clubs-section .club-social-link {
+		transition: none;
+	}
+
+	.clubs-section .club-card:hover,
+	.clubs-section .club-view-btn:hover,
+	.clubs-section .more-button:hover {
+		transform: none;
+	}
+}
+
+/* Dark Mode */
+@media (prefers-color-scheme: dark) {
+	.clubs-section .club-card:not(.club-card-with-bg) {
+		background-color: #1a2420;
+		box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+	}
+
+	.clubs-section .club-card:hover {
+		box-shadow: 0 15px 45px rgba(0, 0, 0, 0.5);
+	}
+
+	.clubs-section .club-meta-info {
+		border-top-color: rgba(255, 255, 255, 0.1);
+	}
+}

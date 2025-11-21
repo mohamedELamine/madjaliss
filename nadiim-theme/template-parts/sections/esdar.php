@@ -287,21 +287,3 @@ function nadiim_get_esdar_demo() {
 
 	return $items;
 }
-
-/**
- * دالة مساعدة للحصول على label نوع الإصدار
- */
-function nadiim_get_esdar_type_label( $type ) {
-	$labels = array(
-		'book'      => __( 'كتاب', 'nadiim' ),
-		'novel'     => __( 'رواية', 'nadiim' ),
-		'report'    => __( 'تقرير', 'nadiim' ),
-		'magazine'  => __( 'مجلة', 'nadiim' ),
-		'research'  => __( 'بحث', 'nadiim' ),
-		'guide'     => __( 'دليل', 'nadiim' ),
-		'anthology' => __( 'مجموعة', 'nadiim' ),
-		'other'     => __( 'أخرى', 'nadiim' ),
-	);
-
-	return isset( $labels[ $type ] ) ? $labels[ $type ] : __( 'إصدار', 'nadiim' );
-}

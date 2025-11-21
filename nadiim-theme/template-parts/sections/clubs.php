@@ -1,16 +1,28 @@
 <?php
 /**
- * قسم Clubs - نوادي القراءة
+ * Template part لقسم النوادي
  *
- * عرض بطاقات النوادي مع Avatar دائري (80px)، عنوان، وصف قصير
- * يعمل مع النظام الجديد club_meta
+ * عرض نوادي القراءة بتصميم Grid أو Carousel
  *
  * @package Nadiim
- * @since 3.0.0
+ * @since 1.0.0
  */
 
-// إعدادات النوادي من Customizer
-$clubs_count = get_theme_mod( 'home_clubs_count', 3 );
+// التحقق من تفعيل القسم
+if ( ! get_theme_mod( 'clubs_section_enable', true ) ) {
+	return;
+}
+
+// الحصول على الإعدادات من Customizer
+$section_title   = get_theme_mod( 'clubs_section_title', __( 'نوادي القراءة', 'nadiim' ) );
+$section_subtitle = get_theme_mod( 'clubs_section_subtitle', __( 'مجتمعاتٌ هادئة للقراءة والنقاش، نجتمع فيها على حب الكتب وتبادل الأفكار', 'nadiim' ) );
+$clubs_count     = get_theme_mod( 'clubs_section_count', 6 );
+$layout          = get_theme_mod( 'clubs_section_layout', 'grid' ); // grid or carousel
+$bg_enable       = get_theme_mod( 'clubs_section_bg_enable', false );
+$bg_image        = get_theme_mod( 'clubs_section_bg_image', '' );
+$bg_embed        = get_theme_mod( 'clubs_section_bg_embed', '' );
+$show_more_button = get_theme_mod( 'clubs_section_show_more_button', true );
+$more_button_text = get_theme_mod( 'clubs_section_more_button_text', __( 'جميع النوادي', 'nadiim' ) );
 
 // Query النوادي
 $clubs_args = array(
@@ -18,6 +30,7 @@ $clubs_args = array(
 	'posts_per_page' => $clubs_count,
 	'orderby'        => 'date',
 	'order'          => 'DESC',
+	'post_status'    => 'publish',
 	'meta_query'     => array(
 		array(
 			'key'     => 'club_meta',
@@ -29,107 +42,130 @@ $clubs_args = array(
 
 $clubs_query = new WP_Query( $clubs_args );
 
+// إذا لم توجد نوادي، لا تعرض القسم
 if ( ! $clubs_query->have_posts() ) {
 	return;
 }
+
+// تحديد classes للقسم
+$section_classes = array( 'clubs-section' );
+if ( $bg_enable ) {
+	$section_classes[] = 'section-with-bg';
+}
+if ( $layout === 'carousel' ) {
+	$section_classes[] = 'layout-carousel';
+} else {
+	$section_classes[] = 'layout-grid';
+}
+
+// inline style للخلفية
+$section_style = '';
+if ( $bg_enable && ! empty( $bg_image ) ) {
+	$section_style = sprintf( 'background-image: url(%s);', esc_url( $bg_image ) );
+}
 ?>
 
-<section class="clubs-section section-padding section-alt-bg">
-	<div class="section-container">
+<section class="<?php echo esc_attr( implode( ' ', $section_classes ) ); ?>"
+         <?php if ( ! empty( $section_style ) ) : ?>style="<?php echo esc_attr( $section_style ); ?>"<?php endif; ?>
+         aria-labelledby="clubs-section-title">
+
+	<?php if ( $bg_enable ) : ?>
+		<!-- طبقة التعتيم فوق الخلفية -->
+		<div class="section-bg-overlay" aria-hidden="true"></div>
+
+		<?php if ( ! empty( $bg_embed ) ) : ?>
+			<!-- Embed الخلفية (فيديو مثلاً) -->
+			<div class="section-bg-embed" aria-hidden="true">
+				<?php echo wp_kses_post( $bg_embed ); ?>
+			</div>
+		<?php endif; ?>
+	<?php endif; ?>
+
+	<div class="container">
+
+		<!-- رأس القسم -->
 		<div class="section-header">
-			<h2 class="section-title">نوادي القراءة</h2>
-			<p class="section-description">
-				مجتمعاتٌ هادئة للقراءة والنقاش، نجتمع فيها على حب الكتب وتبادل الأفكار
-			</p>
-		</div>
+			<?php if ( ! empty( $section_title ) ) : ?>
+				<h2 id="clubs-section-title" class="section-title">
+					<?php echo esc_html( $section_title ); ?>
+				</h2>
+			<?php endif; ?>
 
-		<div class="clubs-grid">
-			<?php while ( $clubs_query->have_posts() ) : $clubs_query->the_post(); ?>
+			<?php if ( ! empty( $section_subtitle ) ) : ?>
+				<p class="section-subtitle">
+					<?php echo esc_html( $section_subtitle ); ?>
+				</p>
+			<?php endif; ?>
+		</div><!-- .section-header -->
+
+		<?php if ( $layout === 'carousel' ) : ?>
+
+			<!-- Carousel Layout -->
+			<div class="swiper clubs-swiper">
+				<div class="swiper-wrapper">
+
+					<?php
+					// عرض كل بطاقة
+					while ( $clubs_query->have_posts() ) :
+						$clubs_query->the_post();
+						set_query_var( 'club_id', get_the_ID() );
+						echo '<div class="swiper-slide">';
+						get_template_part( 'template-parts/components/club-card' );
+						echo '</div>';
+					endwhile;
+					?>
+
+				</div><!-- .swiper-wrapper -->
+
+				<!-- أزرار التنقل -->
+				<button class="swiper-button-prev" aria-label="<?php esc_attr_e( 'السابق', 'nadiim' ); ?>">
+					<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+						<path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
+					</svg>
+				</button>
+				<button class="swiper-button-next" aria-label="<?php esc_attr_e( 'التالي', 'nadiim' ); ?>">
+					<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+						<path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/>
+					</svg>
+				</button>
+
+				<!-- Pagination -->
+				<div class="swiper-pagination"></div>
+
+			</div><!-- .swiper -->
+
+		<?php else : ?>
+
+			<!-- Grid Layout -->
+			<div class="clubs-grid">
+
 				<?php
-				// الحصول على بيانات النادي الجديدة
-				$club_meta = get_post_meta( get_the_ID(), 'club_meta', true );
-
-				if ( ! is_array( $club_meta ) ) {
-					$club_meta = array();
-				}
-
-				$short_description = isset( $club_meta['short_description'] ) ? $club_meta['short_description'] : '';
-				$meeting_location  = isset( $club_meta['meeting_location']['address'] ) ? $club_meta['meeting_location']['address'] : '';
-				$meeting_schedule  = isset( $club_meta['meeting_schedule_note'] ) ? $club_meta['meeting_schedule_note'] : '';
-				$facebook_page     = isset( $club_meta['facebook_page'] ) ? $club_meta['facebook_page'] : '';
-				$telegram_channel  = isset( $club_meta['telegram_channel'] ) ? $club_meta['telegram_channel'] : '';
+				// عرض كل بطاقة
+				while ( $clubs_query->have_posts() ) :
+					$clubs_query->the_post();
+					set_query_var( 'club_id', get_the_ID() );
+					get_template_part( 'template-parts/components/club-card' );
+				endwhile;
 				?>
 
-				<article class="club-card">
-					<div class="club-avatar">
-						<?php if ( has_post_thumbnail() ) : ?>
-							<?php the_post_thumbnail( 'thumbnail', array( 'class' => 'club-avatar-img' ) ); ?>
-						<?php else : ?>
-							<div class="club-avatar-placeholder">
-								<span class="club-icon">📚</span>
-							</div>
-						<?php endif; ?>
-					</div>
+			</div><!-- .clubs-grid -->
 
-					<div class="club-content">
-						<h3 class="club-title">
-							<a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
-						</h3>
+		<?php endif; ?>
 
-						<div class="club-description">
-							<?php
-							if ( $short_description ) {
-								echo wp_trim_words( esc_html( $short_description ), 15, '...' );
-							} else {
-								echo wp_trim_words( get_the_excerpt(), 15, '...' );
-							}
-							?>
-						</div>
+		<?php wp_reset_postdata(); ?>
 
-						<?php if ( $meeting_location ) : ?>
-							<div class="club-meta">
-								<span class="club-location">
-									📍 <?php echo esc_html( $meeting_location ); ?>
-								</span>
-							</div>
-						<?php endif; ?>
+		<!-- زر "جميع النوادي" -->
+		<?php if ( $show_more_button ) : ?>
+			<div class="section-more-button">
+				<a href="<?php echo esc_url( get_post_type_archive_link( 'reading_clubs' ) ); ?>" class="more-button">
+					<?php echo esc_html( $more_button_text ); ?>
+					<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+						<path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/>
+					</svg>
+				</a>
+			</div><!-- .section-more-button -->
+		<?php endif; ?>
 
-						<?php if ( $meeting_schedule ) : ?>
-							<div class="club-schedule-note">
-								<span class="schedule-label">مواعيد اللقاءات:</span>
-								<span class="schedule-text"><?php echo esc_html( wp_trim_words( $meeting_schedule, 10, '...' ) ); ?></span>
-							</div>
-						<?php endif; ?>
+	</div><!-- .container -->
 
-						<?php if ( $facebook_page || $telegram_channel ) : ?>
-							<div class="club-social-links">
-								<?php if ( $facebook_page ) : ?>
-									<a href="<?php echo esc_url( $facebook_page ); ?>" target="_blank" rel="noopener" class="club-social-link" title="فيسبوك">
-										<svg width="16" height="16" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
-									</a>
-								<?php endif; ?>
-								<?php if ( $telegram_channel ) : ?>
-									<a href="<?php echo esc_url( $telegram_channel ); ?>" target="_blank" rel="noopener" class="club-social-link" title="تيليجرام">
-										<svg width="16" height="16" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.446 1.394c-.14.18-.357.295-.6.295-.002 0-.003 0-.005 0l.213-3.054 5.56-5.022c.24-.213-.054-.334-.373-.121l-6.869 4.326-2.96-.924c-.64-.203-.658-.64.135-.954l11.566-4.458c.538-.196 1.006.128.832.941z"/></svg>
-									</a>
-								<?php endif; ?>
-							</div>
-						<?php endif; ?>
-
-						<a href="<?php the_permalink(); ?>" class="club-join-btn">
-							عرض النادي
-						</a>
-					</div>
-				</article>
-
-			<?php endwhile; wp_reset_postdata(); ?>
-		</div>
-
-		<div class="section-footer">
-			<a href="<?php echo esc_url( get_post_type_archive_link( 'reading_clubs' ) ); ?>" class="btn btn-outline">
-				جميع النوادي
-				<span class="btn-arrow">←</span>
-			</a>
-		</div>
-	</div>
-</section>
+</section><!-- .clubs-section -->
