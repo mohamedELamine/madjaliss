@@ -53,7 +53,7 @@ function nadiim_header_customizer_register( $wp_customize ) {
 
     // ✔ نص ثابت (في حالة المحتوى الثابت)
     $wp_customize->add_setting( 'topbar_text', array(
-        'default'           => __( '📢 مرحباً بكم في منصة نديم - فضاء للحوارات الرصينة', 'nadiim' ),
+        'default'           => __( 'مرحباً بكم في منصة نديم - فضاء للحوارات الرصينة', 'nadiim' ),
         'sanitize_callback' => 'wp_kses_post',
     ) );
 

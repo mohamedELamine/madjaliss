@@ -54,25 +54,24 @@
 }
 
 .topbar-inner {
-    display: flex;
-    align-items: center;
-    justify-content: var(--topbar-align);
-    gap: 12px;
+    display: block;
+    text-align: var(--topbar-align);
     width: 100%;
 }
 
 .topbar-icon {
     font-size: 18px;
     line-height: 1;
-    flex-shrink: 0;
+    display: inline-block;
+    margin-left: 8px;
 }
 
 .topbar-content {
     font-size: var(--topbar-font-size);
     line-height: 1.5;
-    text-align: var(--topbar-align);
-    flex: 1;
+    display: inline-block;
     overflow: hidden;
+    vertical-align: middle;
 }
 
 .topbar-text {
@@ -98,12 +97,13 @@
 }
 
 /* حركة التمرير (Marquee) */
+/* الحركة من اليمين إلى اليسار (RTL) */
 .topbar-marquee {
     white-space: nowrap;
-    animation: marquee 20s linear infinite;
+    animation: marquee-rtl 20s linear infinite;
 }
 
-@keyframes marquee {
+@keyframes marquee-rtl {
     0% {
         transform: translateX(100%);
     }
@@ -112,12 +112,12 @@
     }
 }
 
-/* RTL Support للتمرير */
-[dir="rtl"] .topbar-marquee {
-    animation: marquee-rtl 20s linear infinite;
+/* LTR Support للتمرير (إذا احتجناه) */
+[dir="ltr"] .topbar-marquee {
+    animation: marquee-ltr 20s linear infinite;
 }
 
-@keyframes marquee-rtl {
+@keyframes marquee-ltr {
     0% {
         transform: translateX(-100%);
     }

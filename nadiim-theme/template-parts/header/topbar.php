@@ -12,7 +12,7 @@ if ( ! get_theme_mod( 'topbar_enable', true ) ) {
 }
 
 $is_dynamic      = get_theme_mod( 'topbar_dynamic_enable', false );
-$static_text     = get_theme_mod( 'topbar_text', __( '📢 مرحباً بكم في منصة نديم - فضاء للحوارات الرصينة', 'nadiim' ) );
+$static_text     = get_theme_mod( 'topbar_text', __( 'مرحباً بكم في منصة نديم - فضاء للحوارات الرصينة', 'nadiim' ) );
 $icon            = nadiim_get_topbar_icon();
 $marquee_enabled = get_theme_mod( 'topbar_marquee_enable', false );
 $marquee_speed   = get_theme_mod( 'topbar_marquee_speed', 50 );
