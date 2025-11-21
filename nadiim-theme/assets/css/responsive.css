@@ -1,0 +1,478 @@
+/**
+ * Responsive Design - التصميم المتجاوب
+ *
+ * Media queries شاملة لجميع أحجام الشاشات
+ *
+ * @package Nadiim
+ * @since 1.0.0
+ */
+
+/* ========================================
+   الحاويات العامة (Containers)
+   ======================================== */
+
+.container {
+  width: 100%;
+  max-width: var(--container-max-width);
+  margin-right: auto;
+  margin-left: auto;
+  padding-right: var(--container-padding);
+  padding-left: var(--container-padding);
+}
+
+/* ========================================
+   الشبكة المرنة (Flexible Grid)
+   ======================================== */
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  margin-right: calc(var(--spacing-md) * -1);
+  margin-left: calc(var(--spacing-md) * -1);
+}
+
+.col {
+  flex: 1;
+  padding-right: var(--spacing-md);
+  padding-left: var(--spacing-md);
+}
+
+/* ========================================
+   الأجهزة الصغيرة جداً (Extra Small Devices)
+   < 576px (الهواتف الذكية الصغيرة)
+   ======================================== */
+
+@media (max-width: 575px) {
+  /* الحاويات */
+  .container {
+    padding-right: var(--spacing-sm);
+    padding-left: var(--spacing-sm);
+  }
+
+  /* الهيدر */
+  .site-header {
+    padding: var(--spacing-sm) 0;
+  }
+
+  .header-inner {
+    flex-direction: column;
+    gap: var(--spacing-sm);
+  }
+
+  .site-logo img {
+    max-width: 120px;
+  }
+
+  .main-navigation {
+    width: 100%;
+  }
+
+  .main-navigation ul {
+    flex-direction: column;
+    gap: var(--spacing-sm);
+  }
+
+  /* البطاقات */
+  .card,
+  .card-article,
+  .card-release,
+  .esdar-card,
+  .club-card,
+  .howarat-card {
+    margin-bottom: var(--spacing-md);
+  }
+
+  .card-grid,
+  .articles-grid,
+  .releases-grid,
+  .clubs-grid {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-md);
+  }
+
+  /* Hero Slider */
+  .hero-slide-card {
+    min-height: 400px;
+    padding: var(--spacing-lg);
+  }
+
+  .slide-title {
+    font-size: var(--font-size-xl);
+  }
+
+  .slide-excerpt {
+    font-size: var(--font-size-sm);
+    line-height: var(--line-height-normal);
+  }
+
+  /* الأقسام */
+  .section {
+    padding: var(--spacing-2xl) 0;
+  }
+
+  .section-title {
+    font-size: var(--font-size-2xl);
+    margin-bottom: var(--spacing-md);
+  }
+
+  /* التوب بار */
+  .topbar {
+    padding: var(--spacing-xs) 0;
+  }
+
+  .topbar-content {
+    flex-direction: column;
+    gap: var(--spacing-xs);
+    text-align: center;
+  }
+
+  /* الفوتر */
+  .footer-widgets {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-xl);
+  }
+
+  /* الجداول */
+  table {
+    font-size: var(--font-size-sm);
+  }
+
+  /* الأزرار */
+  .btn {
+    padding: var(--spacing-sm) var(--spacing-md);
+    font-size: var(--font-size-sm);
+    width: 100%;
+    display: block;
+  }
+
+  /* القوائم */
+  .menu-toggle {
+    display: block;
+  }
+
+  .primary-menu {
+    display: none;
+  }
+
+  .primary-menu.active {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+}
+
+/* ========================================
+   الأجهزة الصغيرة (Small Devices)
+   576px - 767px (الهواتف الذكية الكبيرة)
+   ======================================== */
+
+@media (min-width: 576px) and (max-width: 767px) {
+  /* الشبكة */
+  .col-sm-6 {
+    flex: 0 0 50%;
+    max-width: 50%;
+  }
+
+  .col-sm-12 {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+
+  /* البطاقات */
+  .card-grid,
+  .articles-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-lg);
+  }
+
+  .releases-grid,
+  .clubs-grid {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-lg);
+  }
+
+  /* Hero */
+  .hero-slide-card {
+    min-height: 450px;
+  }
+
+  /* الهيدر */
+  .site-logo img {
+    max-width: 150px;
+  }
+
+  /* الأقسام */
+  .section {
+    padding: var(--spacing-3xl) 0;
+  }
+}
+
+/* ========================================
+   الأجهزة المتوسطة (Medium Devices)
+   768px - 991px (الأجهزة اللوحية)
+   ======================================== */
+
+@media (min-width: 768px) and (max-width: 991px) {
+  /* الشبكة */
+  .col-md-4 {
+    flex: 0 0 33.333333%;
+    max-width: 33.333333%;
+  }
+
+  .col-md-6 {
+    flex: 0 0 50%;
+    max-width: 50%;
+  }
+
+  .col-md-8 {
+    flex: 0 0 66.666667%;
+    max-width: 66.666667%;
+  }
+
+  .col-md-12 {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+
+  /* البطاقات */
+  .card-grid,
+  .articles-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-xl);
+  }
+
+  .releases-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-lg);
+  }
+
+  .clubs-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-xl);
+  }
+
+  /* Hero */
+  .hero-slide-card {
+    min-height: 500px;
+  }
+
+  /* الهيدر */
+  .header-inner {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .menu-toggle {
+    display: none;
+  }
+
+  .primary-menu {
+    display: flex;
+  }
+}
+
+/* ========================================
+   الأجهزة الكبيرة (Large Devices)
+   992px - 1199px (الأجهزة اللوحية الكبيرة والشاشات الصغيرة)
+   ======================================== */
+
+@media (min-width: 992px) and (max-width: 1199px) {
+  /* الشبكة */
+  .col-lg-3 {
+    flex: 0 0 25%;
+    max-width: 25%;
+  }
+
+  .col-lg-4 {
+    flex: 0 0 33.333333%;
+    max-width: 33.333333%;
+  }
+
+  .col-lg-6 {
+    flex: 0 0 50%;
+    max-width: 50%;
+  }
+
+  .col-lg-8 {
+    flex: 0 0 66.666667%;
+    max-width: 66.666667%;
+  }
+
+  .col-lg-9 {
+    flex: 0 0 75%;
+    max-width: 75%;
+  }
+
+  /* البطاقات */
+  .card-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .articles-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .releases-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .clubs-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* ========================================
+   الأجهزة الكبيرة جداً (Extra Large Devices)
+   >= 1200px (الشاشات الكبيرة)
+   ======================================== */
+
+@media (min-width: 1200px) {
+  /* الشبكة */
+  .col-xl-3 {
+    flex: 0 0 25%;
+    max-width: 25%;
+  }
+
+  .col-xl-4 {
+    flex: 0 0 33.333333%;
+    max-width: 33.333333%;
+  }
+
+  .col-xl-6 {
+    flex: 0 0 50%;
+    max-width: 50%;
+  }
+
+  .col-xl-8 {
+    flex: 0 0 66.666667%;
+    max-width: 66.666667%;
+  }
+
+  /* البطاقات */
+  .card-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .articles-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .releases-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .clubs-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  /* Hero */
+  .hero-slide-card {
+    min-height: 600px;
+  }
+}
+
+/* ========================================
+   الإظهار/الإخفاء حسب حجم الشاشة
+   ======================================== */
+
+/* إخفاء على الموبايل */
+.hide-mobile {
+  display: none !important;
+}
+
+@media (min-width: 768px) {
+  .hide-mobile {
+    display: block !important;
+  }
+}
+
+/* إخفاء على الديسكتوب */
+.hide-desktop {
+  display: block !important;
+}
+
+@media (min-width: 768px) {
+  .hide-desktop {
+    display: none !important;
+  }
+}
+
+/* إظهار فقط على التابلت */
+.show-tablet-only {
+  display: none !important;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  .show-tablet-only {
+    display: block !important;
+  }
+}
+
+/* ========================================
+   تحسينات عامة للموبايل
+   ======================================== */
+
+@media (max-width: 767px) {
+  /* تحسين اللمس */
+  a, button, .btn {
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  /* تحسين النصوص */
+  body {
+    font-size: var(--font-size-base);
+    line-height: var(--line-height-relaxed);
+  }
+
+  /* تحسين الصور */
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  /* تحسين الجداول */
+  .table-responsive {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* تحسين النماذج */
+  input[type="text"],
+  input[type="email"],
+  input[type="password"],
+  input[type="search"],
+  textarea,
+  select {
+    font-size: 16px; /* منع zoom في iOS */
+  }
+}
+
+/* ========================================
+   تحسينات للطباعة
+   ======================================== */
+
+@media print {
+  /* إخفاء العناصر غير الضرورية */
+  .site-header,
+  .site-footer,
+  .topbar,
+  .navigation,
+  .sidebar,
+  .btn,
+  button {
+    display: none !important;
+  }
+
+  /* تحسين الطباعة */
+  body {
+    font-size: 12pt;
+    line-height: 1.5;
+    color: #000;
+    background: #fff;
+  }
+
+  a {
+    text-decoration: underline;
+  }
+}
