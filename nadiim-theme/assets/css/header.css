@@ -26,7 +26,7 @@
     --header-sticky-height: 60px;
     --header-logo-width: 180px;
     --header-logo-margin: 15px;
-    --header-menu-spacing: 30px;
+    --header-menu-spacing: 20px;
     --header-menu-align: center;
 }
 
@@ -149,7 +149,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 40px;
+    gap: 25px;
     height: var(--header-height);
     transition: height 0.3s ease;
 }
@@ -226,7 +226,7 @@
     color: var(--header-link-color);
     text-decoration: none;
     font-weight: 500;
-    font-size: 16px;
+    font-size: 18px;
     transition: color 0.2s ease;
     position: relative;
 }
@@ -603,11 +603,11 @@
     }
 
     .primary-menu {
-        gap: 20px;
+        gap: 15px;
     }
 
     .primary-menu > li > a {
-        font-size: 15px;
+        font-size: 17px;
     }
 }
 

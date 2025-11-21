@@ -442,7 +442,7 @@ function nadiim_header_customizer_register( $wp_customize ) {
     ) );
 
     $wp_customize->add_setting( 'header_menu_item_spacing', array(
-        'default'           => 30,
+        'default'           => 20,
         'sanitize_callback' => 'absint',
         'transport'         => 'postMessage',
     ) );
@@ -452,7 +452,7 @@ function nadiim_header_customizer_register( $wp_customize ) {
         'section'     => 'nadiim_header_section',
         'type'        => 'range',
         'input_attrs' => array(
-            'min'  => 15,
+            'min'  => 10,
             'max'  => 50,
             'step' => 5,
         ),
@@ -479,7 +479,7 @@ function nadiim_header_customizer_css() {
             --header-border: <?php echo esc_attr( get_theme_mod( 'header_border_bottom_color', 'rgba(0,0,0,0.06)' ) ); ?>;
             --header-logo-width: <?php echo absint( get_theme_mod( 'header_logo_width', 180 ) ); ?>px;
             --header-logo-margin: <?php echo absint( get_theme_mod( 'header_logo_margin', 15 ) ); ?>px;
-            --header-menu-spacing: <?php echo absint( get_theme_mod( 'header_menu_item_spacing', 30 ) ); ?>px;
+            --header-menu-spacing: <?php echo absint( get_theme_mod( 'header_menu_item_spacing', 20 ) ); ?>px;
             --header-menu-align: <?php echo esc_attr( get_theme_mod( 'header_menu_alignment', 'center' ) ); ?>;
         }
 
