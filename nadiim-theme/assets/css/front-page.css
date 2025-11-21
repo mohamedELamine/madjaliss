@@ -1278,7 +1278,350 @@
 }
 
 /* ===================================================================
-   12. Accessibility & Print
+   12. قسم المقالات (Articles Section)
+   =================================================================== */
+
+.articles-section {
+  background-color: var(--color-bg);
+  direction: rtl;
+}
+
+/* قائمة المقالات - List View (افتراضي) */
+.articles-list.articles-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+  max-width: 100%;
+}
+
+/* بطاقة المقال */
+.article-card {
+  display: flex;
+  gap: var(--space-lg);
+  background: #fff;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  padding: 0;
+}
+
+.article-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+/* صورة المقال */
+.article-card-image {
+  position: relative;
+  flex-shrink: 0;
+  width: 280px;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+}
+
+.article-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  aspect-ratio: 16 / 9;
+  transition: transform 0.4s ease;
+}
+
+.article-card:hover .article-card-image img {
+  transform: scale(1.05);
+}
+
+/* شارة الصوت */
+.article-audio-badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: rgba(51, 144, 99, 0.95);
+  color: #fff;
+  padding: 6px 12px;
+  border-radius: var(--radius-sm);
+  font-size: 12px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  backdrop-filter: blur(10px);
+}
+
+.article-audio-badge svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* محتوى البطاقة */
+.article-card-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  padding: var(--space-lg);
+  min-width: 0;
+}
+
+/* Meta معلومات */
+.article-meta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  flex-wrap: wrap;
+  font-size: var(--font-size-sm);
+  color: var(--text-muted);
+}
+
+.article-category a {
+  color: var(--color-primary);
+  font-weight: 600;
+  text-decoration: none;
+  transition: opacity 0.3s ease;
+}
+
+.article-category a:hover {
+  opacity: 0.7;
+}
+
+.meta-separator {
+  color: rgba(0, 0, 0, 0.2);
+}
+
+.article-reading-time,
+.article-has-audio {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.article-reading-time svg,
+.article-has-audio svg {
+  width: 14px;
+  height: 14px;
+}
+
+/* عنوان المقال */
+.article-title {
+  font-size: var(--font-size-xl);
+  font-weight: 700;
+  line-height: 1.4;
+  margin: 0;
+  color: var(--text-main);
+}
+
+.article-title a {
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.article-title a:hover {
+  color: var(--color-primary);
+}
+
+/* المقتطف */
+.article-excerpt {
+  color: var(--text-muted);
+  font-size: var(--font-size-base);
+  line-height: 1.6;
+  margin: 0;
+  /* تحديد سطرين max */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.article-excerpt p {
+  margin: 0;
+}
+
+/* Footer البطاقة */
+.article-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md);
+  margin-top: auto;
+  padding-top: var(--space-sm);
+}
+
+/* معلومات الكاتب */
+.article-author {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+.author-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.author-name {
+  font-size: var(--font-size-sm);
+  color: var(--text-muted);
+}
+
+.author-name a {
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.author-name a:hover {
+  color: var(--color-primary);
+}
+
+/* زر CTA */
+.article-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  background: var(--color-primary);
+  color: #fff;
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.article-cta:hover {
+  background: var(--color-primary-700);
+  transform: translateX(-2px);
+}
+
+.article-cta svg {
+  width: 14px;
+  height: 14px;
+  transition: transform 0.3s ease;
+}
+
+.article-cta:hover svg {
+  transform: translateX(-4px);
+}
+
+/* ===================================================================
+   Grid View (اختياري من Customizer)
+   =================================================================== */
+
+.articles-list.articles-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: var(--space-lg);
+}
+
+.articles-grid .article-card {
+  flex-direction: column;
+}
+
+.articles-grid .article-card-image {
+  width: 100%;
+  height: 200px;
+}
+
+.articles-grid .article-excerpt {
+  -webkit-line-clamp: 3;
+}
+
+/* ===================================================================
+   Responsive Design
+   =================================================================== */
+
+/* Tablets */
+@media (max-width: 768px) {
+  /* List view يتحول لـ column على الموبايل */
+  .articles-list.articles-list .article-card {
+    flex-direction: column;
+  }
+
+  .article-card-image {
+    width: 100% !important;
+    height: 200px;
+  }
+
+  .article-title {
+    font-size: var(--font-size-lg);
+  }
+
+  .article-footer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-sm);
+  }
+
+  .article-cta {
+    align-self: stretch;
+    justify-content: center;
+  }
+
+  /* Grid view */
+  .articles-list.articles-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+  .section-padding {
+    padding: var(--space-xl) 0;
+  }
+
+  .section-container {
+    padding: 0 var(--space-sm);
+  }
+
+  .article-card {
+    gap: var(--space-md);
+  }
+
+  .article-card-content {
+    padding: var(--space-md);
+  }
+
+  .article-meta {
+    font-size: 12px;
+  }
+
+  .article-title {
+    font-size: var(--font-size-base);
+  }
+}
+
+/* ===================================================================
+   RTL Support
+   =================================================================== */
+
+[dir="rtl"] .article-cta svg {
+  transform: scaleX(-1);
+}
+
+[dir="rtl"] .article-cta:hover svg {
+  transform: scaleX(-1) translateX(4px);
+}
+
+/* Screen reader only */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* ===================================================================
+   13. Accessibility & Print
    =================================================================== */
 
 @media (prefers-reduced-motion: reduce) {

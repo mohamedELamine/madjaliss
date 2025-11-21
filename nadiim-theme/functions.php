@@ -314,6 +314,9 @@ require_once NADIIM_THEME_DIR . '/inc/customizer-hero.php';
 // تضمين ملف Customizer للحوارات المميزة
 require_once NADIIM_THEME_DIR . '/inc/customizer-featured-howarat.php';
 
+// تضمين ملف Customizer لقسم المقالات
+require_once NADIIM_THEME_DIR . '/inc/customizer-articles.php';
+
 // تضمين ملف Customizer للصفحة الرئيسية
 require_once NADIIM_THEME_DIR . '/inc/front-page-customizer.php';
 

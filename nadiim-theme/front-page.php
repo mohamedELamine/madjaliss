@@ -35,6 +35,7 @@ wp_localize_script( 'nadiim-front-page', 'nadiimFrontPage', array(
 		'featured-howarat', // الحوارات المميزة
 		'dialogues',
 		'releases',
+		'articles', // قسم المقالات الجديد
 		'posts',
 		'clubs',
 		'newsletter',
