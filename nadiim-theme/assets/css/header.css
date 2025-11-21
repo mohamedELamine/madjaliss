@@ -101,6 +101,7 @@
 .topbar-marquee {
     white-space: nowrap;
     animation: marquee-rtl 20s linear infinite;
+    will-change: transform;
 }
 
 @keyframes marquee-rtl {
@@ -123,6 +124,24 @@
     }
     100% {
         transform: translateX(100%);
+    }
+}
+
+/* Pause marquee on hover للـ accessibility */
+.topbar-marquee:hover {
+    animation-play-state: paused;
+}
+
+/* تقليل سرعة marquee على الشاشات الصغيرة */
+@media screen and (max-width: 768px) {
+    .topbar-marquee {
+        animation-duration: 25s;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .topbar-marquee {
+        animation-duration: 30s;
     }
 }
 
@@ -149,6 +168,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    flex-wrap: wrap;
     gap: 40px;
     height: var(--header-height);
     transition: height 0.3s ease;
@@ -610,32 +630,103 @@
    Responsive Design
    ========================================== */
 
-/* Tablet */
-@media screen and (max-width: 1024px) {
+/* Large Desktop (> 1440px) */
+@media screen and (min-width: 1441px) {
+    .site-header .container {
+        max-width: 1600px;
+    }
+
     .header-inner {
-        gap: 20px;
+        gap: 50px;
+        padding: 0 60px;
     }
 
     .primary-menu {
-        gap: 15px;
+        gap: 25px;
+    }
+
+    .primary-menu > li > a {
+        font-size: 19px;
+        padding: 12px 18px;
+    }
+
+    .site-topbar .container {
+        max-width: 1600px;
+    }
+}
+
+/* Desktop (1025px - 1440px) - Default */
+@media screen and (min-width: 1025px) and (max-width: 1440px) {
+    .header-inner {
+        gap: 40px;
+        padding: 0 40px;
+    }
+
+    .primary-menu {
+        gap: 18px;
+    }
+}
+
+/* Tablet (769px - 1024px) */
+@media screen and (max-width: 1024px) {
+    .site-topbar {
+        font-size: 13px;
+    }
+
+    .topbar-icon {
+        font-size: 16px;
+    }
+
+    .header-inner {
+        gap: 25px;
+        padding: 0 30px;
+    }
+
+    .primary-menu {
+        gap: 12px;
     }
 
     .primary-menu > li > a {
         font-size: 17px;
+        padding: 10px 12px;
+    }
+
+    .custom-logo {
+        max-width: calc(var(--header-logo-width) * 0.9);
+    }
+
+    .search-toggle {
+        width: 42px;
+        height: 42px;
     }
 }
 
-/* Mobile */
+/* Small Tablet & Large Mobile (481px - 768px) */
 @media screen and (max-width: 768px) {
     .site-topbar {
         height: auto;
-        min-height: var(--topbar-height);
+        min-height: 38px;
         padding: 8px 0;
+        font-size: 13px;
+    }
+
+    .site-topbar .container {
+        padding: 0 20px;
     }
 
     .topbar-inner {
-        flex-wrap: wrap;
-        justify-content: center;
+        display: block;
+        text-align: center;
+    }
+
+    .topbar-icon {
+        display: inline-block;
+        font-size: 15px;
+        margin-left: 6px;
+    }
+
+    .topbar-content {
+        display: inline-block;
     }
 
     .header-inner {
@@ -648,8 +739,25 @@
         height: 60px;
     }
 
+    .custom-logo {
+        max-width: 140px;
+    }
+
+    .site-title {
+        font-size: 20px;
+    }
+
     .menu-toggle {
         display: flex;
+        order: 3;
+    }
+
+    .site-branding {
+        order: 1;
+    }
+
+    .header-tools {
+        order: 2;
     }
 
     .main-navigation {
@@ -659,13 +767,17 @@
         left: 0;
         background-color: var(--header-bg);
         border-bottom: 1px solid var(--header-border);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
         max-height: 0;
         overflow: hidden;
         transition: max-height 0.3s ease;
+        z-index: 999;
+        order: 4;
+        width: 100%;
     }
 
     .main-navigation.is-active {
-        max-height: 500px;
+        max-height: 70vh;
         overflow-y: auto;
     }
 
@@ -681,12 +793,25 @@
         border-bottom: 1px solid rgba(0, 0, 0, 0.05);
     }
 
+    .primary-menu > li:last-child {
+        border-bottom: none;
+    }
+
     .primary-menu > li > a {
-        padding: 15px 24px;
+        padding: 16px 24px;
+        font-size: 16px;
+        border-radius: 0;
     }
 
     .primary-menu > li > a::after {
         display: none;
+    }
+
+    .primary-menu > li > a:hover,
+    .primary-menu > li.current-menu-item > a,
+    .primary-menu > li.current_page_item > a {
+        background-color: rgba(51, 144, 99, 0.1);
+        color: var(--header-link-hover);
     }
 
     .primary-menu .sub-menu {
@@ -697,37 +822,213 @@
         border: none;
         border-radius: 0;
         box-shadow: none;
-        background-color: rgba(0, 0, 0, 0.02);
+        background-color: rgba(0, 0, 0, 0.03);
         max-height: 0;
         overflow: hidden;
         transition: max-height 0.3s ease;
+        padding: 0;
     }
 
     .primary-menu li.menu-item-has-children.is-open > .sub-menu {
         max-height: 500px;
+        padding: 8px 0;
+    }
+
+    .primary-menu .sub-menu li a {
+        padding: 12px 24px 12px 40px;
+        font-size: 15px;
     }
 
     .primary-menu .sub-menu li a:hover {
-        padding-right: 30px;
+        padding-right: 24px;
+        padding-left: 45px;
+        background-color: rgba(51, 144, 99, 0.08);
+    }
+
+    .search-toggle {
+        width: 40px;
+        height: 40px;
+    }
+
+    .search-toggle svg {
+        width: 20px;
+        height: 20px;
     }
 
     .search-inline .search-field {
-        width: 150px;
+        width: 180px;
+        font-size: 14px;
     }
 
     .search-modal-content {
         margin: 0 20px;
         padding: 30px 20px;
+        border-radius: 12px;
     }
 
     .search-modal .search-form-inner {
         flex-direction: column;
         padding: 20px;
+        gap: 15px;
+    }
+
+    .search-modal .search-field {
+        font-size: 16px;
     }
 
     .search-modal .search-submit {
         width: 100%;
         justify-content: center;
+        padding: 14px;
+        font-size: 16px;
+    }
+}
+
+/* Small Mobile (320px - 480px) */
+@media screen and (max-width: 480px) {
+    .site-topbar {
+        min-height: 36px;
+        padding: 6px 0;
+        font-size: 12px;
+    }
+
+    .site-topbar .container {
+        padding: 0 16px;
+    }
+
+    .topbar-icon {
+        font-size: 14px;
+        margin-left: 4px;
+    }
+
+    .header-inner {
+        height: 65px;
+        padding: 0 16px;
+        gap: 12px;
+    }
+
+    .header-sticky.is-stuck .header-inner {
+        height: 55px;
+    }
+
+    .custom-logo {
+        max-width: 120px;
+    }
+
+    .site-title {
+        font-size: 18px;
+    }
+
+    .site-description {
+        font-size: 12px;
+    }
+
+    .menu-toggle {
+        width: 42px;
+        height: 42px;
+        padding: 8px;
+    }
+
+    .menu-toggle-icon span {
+        height: 2px;
+        width: 20px;
+    }
+
+    .menu-toggle-text {
+        font-size: 11px;
+    }
+
+    .search-toggle {
+        width: 38px;
+        height: 38px;
+    }
+
+    .search-toggle svg {
+        width: 18px;
+        height: 18px;
+    }
+
+    .primary-menu > li > a {
+        padding: 14px 20px;
+        font-size: 15px;
+    }
+
+    .primary-menu .sub-menu li a {
+        padding: 10px 20px 10px 36px;
+        font-size: 14px;
+    }
+
+    .search-modal-content {
+        margin: 0 16px;
+        padding: 24px 16px;
+        border-radius: 10px;
+    }
+
+    .search-modal .search-form-inner {
+        padding: 16px;
+    }
+
+    .search-modal .search-field {
+        font-size: 15px;
+        padding: 12px 16px;
+    }
+
+    .search-modal .search-submit {
+        padding: 12px;
+        font-size: 15px;
+    }
+
+    .search-close {
+        top: 16px;
+        right: 16px;
+        width: 36px;
+        height: 36px;
+        font-size: 28px;
+    }
+}
+
+/* Extra Small Mobile (< 360px) */
+@media screen and (max-width: 359px) {
+    .site-topbar {
+        font-size: 11px;
+        min-height: 34px;
+    }
+
+    .topbar-icon {
+        font-size: 13px;
+    }
+
+    .header-inner {
+        height: 60px;
+        padding: 0 12px;
+        gap: 10px;
+    }
+
+    .custom-logo {
+        max-width: 100px;
+    }
+
+    .site-title {
+        font-size: 16px;
+    }
+
+    .menu-toggle,
+    .search-toggle {
+        width: 36px;
+        height: 36px;
+    }
+
+    .menu-toggle-icon span {
+        width: 18px;
+    }
+
+    .menu-toggle-text {
+        display: none;
+    }
+
+    .primary-menu > li > a {
+        padding: 12px 16px;
+        font-size: 14px;
     }
 }
 

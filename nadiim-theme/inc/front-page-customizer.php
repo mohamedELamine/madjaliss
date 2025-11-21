@@ -588,8 +588,10 @@ function nadiim_sanitize_select( $input, $setting ) {
 /**
  * التحقق من صحة float
  */
-function nadiim_sanitize_float( $input ) {
-	return floatval( $input );
+if ( ! function_exists( 'nadiim_sanitize_float' ) ) {
+	function nadiim_sanitize_float( $input ) {
+		return floatval( $input );
+	}
 }
 
 /**

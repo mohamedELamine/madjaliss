@@ -229,8 +229,10 @@ add_action( 'customize_register', 'nadiim_hero_customizer_register' );
 /**
  * Sanitize float value
  */
-function nadiim_sanitize_float( $value ) {
-    return floatval( $value );
+if ( ! function_exists( 'nadiim_sanitize_float' ) ) {
+    function nadiim_sanitize_float( $value ) {
+        return floatval( $value );
+    }
 }
 
 /**
