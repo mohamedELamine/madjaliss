@@ -684,8 +684,8 @@ require_once NADIIM_THEME_DIR . '/inc/contact-handler.php';
  * تحميل أصول صفحة الاتصال (CSS & JS)
  */
 function nadiim_contact_page_enqueue_assets() {
-	// تحميل الأصول في صفحة الاتصال أو عند استخدام Shortcode
-	if ( is_page_template( 'page-contact.php' ) || has_shortcode( get_post_field( 'post_content', get_the_ID() ), 'nadiim_contact_form' ) ) {
+	// تحميل الأصول في صفحة الاتصال أو عند استخدام Shortcode أو في Customizer
+	if ( is_page_template( 'page-contact.php' ) || has_shortcode( get_post_field( 'post_content', get_the_ID() ), 'nadiim_contact_form' ) || is_customize_preview() ) {
 		// تحميل CSS
 		wp_enqueue_style(
 			'nadiim-contact',
