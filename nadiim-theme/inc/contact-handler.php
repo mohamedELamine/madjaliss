@@ -270,7 +270,7 @@ function nadiim_send_contact_notification( $data ) {
 	$headers = array(
 		'Content-Type: text/plain; charset=UTF-8',
 		'From: ' . $from_name . ' <' . $from_email . '>',
-		'Reply-To: ' . $data['name'] . ' <' . $data['email'] ) . '>',
+		'Reply-To: ' . $data['name'] . ' <' . $data['email'] . '>',
 	);
 
 	// إرسال البريد
