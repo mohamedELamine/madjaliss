@@ -1,60 +1,29 @@
 <?php
 /**
- * قالب الصفحة الرئيسية - Front Page
+ * Front Page Template
  *
- * صفحة رئيسية قابلة للتخصيص بالكامل مع أقسام متعددة
- * يمكن التحكم في ظهور وترتيب الأقسام من Customizer
+ * الصفحة الرئيسية للموقع - تحتوي على Hero Slider
  *
- * @package Nadiim
- * @since 2.0.0
+ * @package Madjaliss
+ * @version 2.0 - Stage 1B
  */
 
 get_header();
-
-// تحميل CSS و JS الخاصة بالصفحة الرئيسية
-wp_enqueue_style( 'nadiim-front-page', get_template_directory_uri() . '/assets/css/front-page.css', array(), '2.0.0' );
-wp_enqueue_script( 'nadiim-front-page', get_template_directory_uri() . '/assets/js/front-page.js', array( 'jquery' ), '2.0.0', true );
-
-// تمرير متغيرات AJAX إلى JavaScript
-wp_localize_script( 'nadiim-front-page', 'nadiimFrontPage', array(
-	'ajax_url' => admin_url( 'admin-ajax.php' ),
-	'nonce'    => wp_create_nonce( 'nadiim-front-page-nonce' ),
-) );
 ?>
 
-<main id="primary" class="site-main front-page-main">
+<main id="primary" class="site-main home-page">
 
-	<?php
-	/**
-	 * ترتيب الأقسام المخصص
-	 * يمكن تغيير الترتيب من Customizer
-	 */
-	$sections_order = get_theme_mod( 'home_sections_order', array(
-		'topbar',
-		'hero',
-		'dialogues',
-		'releases',
-		'posts',
-		'clubs',
-		'newsletter',
-	) );
+    <?php
+    /**
+     * Hero Slider Section
+     * السلايدر الرئيسي في أعلى الصفحة
+     */
+    get_template_part('template-parts/home/hero-slider');
+    ?>
 
-	// عرض الأقسام حسب الترتيب المحدد
-	foreach ( $sections_order as $section ) {
-		$section_enabled = get_theme_mod( "home_{$section}_enable", true );
+    <!-- المزيد من الأقسام سيتم إضافتها في المراحل القادمة -->
 
-		if ( $section_enabled ) {
-			$template_file = "template-parts/sections/{$section}.php";
-
-			// التحقق من وجود الملف قبل تحميله
-			if ( locate_template( $template_file ) ) {
-				get_template_part( 'template-parts/sections/' . $section );
-			}
-		}
-	}
-	?>
-
-</main><!-- #primary -->
+</main>
 
 <?php
 get_footer();
