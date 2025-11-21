@@ -390,8 +390,10 @@ add_action( 'customize_register', 'nadiim_esdar_customizer_register' );
 /**
  * دالة sanitize للأرقام العشرية
  */
-function nadiim_sanitize_float( $value ) {
-	return floatval( $value );
+if ( ! function_exists( 'nadiim_sanitize_float' ) ) {
+	function nadiim_sanitize_float( $value ) {
+		return floatval( $value );
+	}
 }
 
 /**
