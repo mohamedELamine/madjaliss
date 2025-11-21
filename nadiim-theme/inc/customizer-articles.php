@@ -272,23 +272,3 @@ function nadiim_register_articles_section_customizer( $wp_customize ) {
 	) );
 }
 add_action( 'customize_register', 'nadiim_register_articles_section_customizer' );
-
-/**
- * دالة للتحقق من صحة checkbox
- */
-if ( ! function_exists( 'nadiim_sanitize_checkbox' ) ) {
-	function nadiim_sanitize_checkbox( $checked ) {
-		return ( ( isset( $checked ) && true === $checked ) ? true : false );
-	}
-}
-
-/**
- * دالة للتحقق من صحة select
- */
-if ( ! function_exists( 'nadiim_sanitize_select' ) ) {
-	function nadiim_sanitize_select( $input, $setting ) {
-		$input = sanitize_key( $input );
-		$choices = $setting->manager->get_control( $setting->id )->choices;
-		return ( array_key_exists( $input, $choices ) ? $input : $setting->default );
-	}
-}
