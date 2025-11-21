@@ -1,0 +1,72 @@
+[
+  {
+    "title": "الذكاء الاصطناعي وتأثيره على المستقبل",
+    "excerpt": "نظرة عميقة في كيفية تحول الذكاء الاصطناعي من مفهوم خيالي إلى واقع يغير ملامح حياتنا اليومية والمستقبل المنتظر",
+    "image": "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=1200&h=675&fit=crop",
+    "bg_enable": true,
+    "overlay_opacity": 0.4,
+    "cta_text": "اقرأ المزيد",
+    "cta_link": "#",
+    "cta_target": "_self",
+    "has_audio": true,
+    "read_time": "8 دقائق",
+    "author_name": "د. أحمد السيد",
+    "type": "post"
+  },
+  {
+    "title": "حوار حول الفلسفة المعاصرة",
+    "excerpt": "جلسة حوارية مثمرة مع أحد أبرز فلاسفة العصر حول قضايا الوجود والمعنى في عالم سريع التغير",
+    "image": "https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=1200&h=675&fit=crop",
+    "bg_enable": true,
+    "overlay_opacity": 0.35,
+    "cta_text": "استمع للحوار",
+    "cta_link": "#",
+    "cta_target": "_self",
+    "has_audio": true,
+    "read_time": "45 دقيقة",
+    "author_name": "منصة نديم",
+    "type": "howarat"
+  },
+  {
+    "title": "رحلة في عالم الأدب العربي الحديث",
+    "excerpt": "استكشاف لأهم الأعمال الأدبية العربية في القرن الحادي والعشرين وتأثيرها على الثقافة المعاصرة",
+    "image": "https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=1200&h=675&fit=crop",
+    "bg_enable": true,
+    "overlay_opacity": 0.45,
+    "cta_text": "اكتشف المزيد",
+    "cta_link": "#",
+    "cta_target": "_self",
+    "has_audio": false,
+    "read_time": "12 دقيقة",
+    "author_name": "سارة عبدالله",
+    "type": "post"
+  },
+  {
+    "title": "التنمية المستدامة: طريق نحو غد أفضل",
+    "excerpt": "كيف يمكن للمجتمعات أن تحقق التوازن بين التطور الاقتصادي والحفاظ على البيئة للأجيال القادمة",
+    "image": "https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?w=1200&h=675&fit=crop",
+    "bg_enable": true,
+    "overlay_opacity": 0.3,
+    "cta_text": "تعرف على المزيد",
+    "cta_link": "#",
+    "cta_target": "_self",
+    "has_audio": false,
+    "read_time": "10 دقائق",
+    "author_name": "محمد الخطيب",
+    "type": "post"
+  },
+  {
+    "title": "الموسيقى العربية الأصيلة",
+    "excerpt": "رحلة عبر تاريخ الموسيقى العربية من الطرب الأصيل إلى التجارب المعاصرة التي تحافظ على الهوية",
+    "image": "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=1200&h=675&fit=crop",
+    "bg_enable": true,
+    "overlay_opacity": 0.38,
+    "cta_text": "استمع الآن",
+    "cta_link": "#",
+    "cta_target": "_self",
+    "has_audio": true,
+    "read_time": "6 دقائق",
+    "author_name": "ليلى حسن",
+    "type": "post"
+  }
+]

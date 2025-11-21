@@ -1,0 +1,214 @@
+<?php
+/**
+ * Template part لقسم Hero Slider
+ *
+ * @package Nadiim
+ * @since 1.0.0
+ */
+
+// التحقق من تفعيل Hero Slider
+if ( ! get_theme_mod( 'hero_enable', true ) ) {
+    return;
+}
+
+// الحصول على الإعدادات
+$hero_source = get_theme_mod( 'hero_source', 'latest_posts' );
+$hero_count  = get_theme_mod( 'hero_count', 5 );
+
+// مصفوفة الشرائح
+$slides = array();
+
+// جلب البيانات حسب المصدر
+switch ( $hero_source ) {
+    case 'latest_posts':
+        $slides = nadiim_get_hero_slides_from_posts( 'post', $hero_count );
+        break;
+
+    case 'featured_tag':
+        $featured_tag = get_theme_mod( 'hero_featured_tag', 'featured' );
+        $slides = nadiim_get_hero_slides_from_posts( 'post', $hero_count, $featured_tag );
+        break;
+
+    case 'howarat':
+        $slides = nadiim_get_hero_slides_from_posts( 'howarat', $hero_count );
+        break;
+
+    case 'manual':
+        $slides = nadiim_get_hero_slides_manual();
+        break;
+
+    default:
+        $slides = nadiim_get_hero_slides_from_posts( 'post', $hero_count );
+}
+
+// Fallback إلى demo data إذا لم توجد شرائح
+if ( empty( $slides ) ) {
+    $slides = nadiim_get_hero_slides_demo();
+}
+
+// إذا ما زالت فارغة، لا تعرض شيئاً
+if ( empty( $slides ) ) {
+    return;
+}
+
+// تحديد عدد الشرائح
+$slides_count = count( $slides );
+?>
+
+<section class="hero-slider-section" aria-label="<?php esc_attr_e( 'المحتوى المميز', 'nadiim' ); ?>">
+    <div class="container">
+
+        <!-- Swiper Container -->
+        <div class="swiper hero-swiper">
+            <div class="swiper-wrapper">
+
+                <?php
+                // عرض كل شريحة
+                foreach ( $slides as $index => $slide ) :
+                    // تمرير البيانات إلى القالب
+                    set_query_var( 'slide', $slide );
+                    get_template_part( 'template-parts/components/hero-slide-card' );
+                endforeach;
+                ?>
+
+            </div><!-- .swiper-wrapper -->
+
+            <!-- عناصر التحكم -->
+            <div class="hero-slider-controls">
+
+                <!-- Pagination (Bullets) -->
+                <div class="swiper-pagination"></div>
+
+                <!-- Navigation -->
+                <div class="hero-slider-navigation">
+                    <button class="swiper-button-prev" aria-label="<?php esc_attr_e( 'الشريحة السابقة', 'nadiim' ); ?>">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                            <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
+                        </svg>
+                    </button>
+                    <button class="swiper-button-next" aria-label="<?php esc_attr_e( 'الشريحة التالية', 'nadiim' ); ?>">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                            <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/>
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- Play/Pause -->
+                <button class="hero-slider-play-pause" aria-label="<?php esc_attr_e( 'إيقاف/تشغيل', 'nadiim' ); ?>" data-playing="true">
+                    <svg class="play-icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                        <path d="M8 5v14l11-7z"/>
+                    </svg>
+                    <svg class="pause-icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                        <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
+                    </svg>
+                </button>
+
+            </div><!-- .hero-slider-controls -->
+
+        </div><!-- .swiper -->
+
+    </div><!-- .container -->
+</section><!-- .hero-slider-section -->
+
+<?php
+/**
+ * دالة للحصول على شرائح من المنشورات
+ */
+function nadiim_get_hero_slides_from_posts( $post_type = 'post', $count = 5, $tag = '' ) {
+    $args = array(
+        'post_type'      => $post_type,
+        'posts_per_page' => $count,
+        'post_status'    => 'publish',
+        'orderby'        => 'date',
+        'order'          => 'DESC',
+    );
+
+    // إذا كان هناك تاج
+    if ( ! empty( $tag ) ) {
+        $args['tag'] = $tag;
+    }
+
+    $query = new WP_Query( $args );
+    $slides = array();
+
+    if ( $query->have_posts() ) {
+        while ( $query->have_posts() ) {
+            $query->the_post();
+
+            // الحصول على الصورة المميزة
+            $image_url = get_the_post_thumbnail_url( get_the_ID(), 'full' );
+            if ( ! $image_url ) {
+                $image_url = get_template_directory_uri() . '/assets/images/placeholder.jpg';
+            }
+
+            // معلومات إضافية
+            $has_audio = get_post_meta( get_the_ID(), 'has_audio', true ) ? true : false;
+            $read_time = get_post_meta( get_the_ID(), 'reading_time_manual', true );
+            if ( empty( $read_time ) ) {
+                // حساب وقت القراءة التقريبي
+                $content    = get_the_content();
+                $word_count = str_word_count( strip_tags( $content ) );
+                $minutes    = ceil( $word_count / 200 ); // 200 كلمة في الدقيقة
+                $read_time  = sprintf( _n( '%s دقيقة', '%s دقائق', $minutes, 'nadiim' ), number_format_i18n( $minutes ) );
+            }
+
+            // بناء مصفوفة الشريحة
+            $slides[] = array(
+                'title'           => get_the_title(),
+                'excerpt'         => wp_trim_words( get_the_excerpt(), 25, '...' ),
+                'image'           => $image_url,
+                'bg_enable'       => false, // يمكن تخصيصه لاحقاً
+                'overlay_opacity' => get_theme_mod( 'hero_overlay_default_opacity', 0.35 ),
+                'cta_text'        => __( 'اقرأ المزيد', 'nadiim' ),
+                'cta_link'        => get_permalink(),
+                'cta_target'      => '_self',
+                'has_audio'       => $has_audio,
+                'read_time'       => $read_time,
+                'author_name'     => get_the_author(),
+                'type'            => $post_type,
+            );
+        }
+        wp_reset_postdata();
+    }
+
+    return $slides;
+}
+
+/**
+ * دالة للحصول على شرائح يدوية من JSON
+ */
+function nadiim_get_hero_slides_manual() {
+    $json_string = get_theme_mod( 'hero_slides_json', '' );
+
+    if ( empty( $json_string ) ) {
+        return array();
+    }
+
+    $slides = json_decode( $json_string, true );
+
+    if ( json_last_error() !== JSON_ERROR_NONE || ! is_array( $slides ) ) {
+        return array();
+    }
+
+    return $slides;
+}
+
+/**
+ * دالة للحصول على شرائح demo
+ */
+function nadiim_get_hero_slides_demo() {
+    $demo_file = get_template_directory() . '/demo/hero-demo.json';
+
+    if ( ! file_exists( $demo_file ) ) {
+        return array();
+    }
+
+    $json_string = file_get_contents( $demo_file );
+    $slides = json_decode( $json_string, true );
+
+    if ( json_last_error() !== JSON_ERROR_NONE || ! is_array( $slides ) ) {
+        return array();
+    }
+
+    return $slides;
+}

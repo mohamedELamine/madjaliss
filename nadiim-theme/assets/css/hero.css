@@ -1,0 +1,575 @@
+/**
+ * Hero Slider Styles
+ *
+ * @package Nadiim
+ * @since 1.0.0
+ */
+
+/* ==========================================
+   CSS Variables
+   ========================================== */
+
+:root {
+    --color-primary: #339063;
+    --hero-card-radius: 20px;
+    --hero-overlay-opacity: 0.35;
+    --hero-height-desktop: 420px;
+    --hero-height-mobile: auto;
+    --container-max: 1200px;
+    --transition-default: 0.3s ease;
+}
+
+/* ==========================================
+   Hero Slider Section
+   ========================================== */
+
+.hero-slider-section {
+    padding: 48px 0;
+    background: #f8f9fa;
+    position: relative;
+}
+
+.hero-slider-section .container {
+    max-width: var(--container-max);
+    margin: 0 auto;
+    padding: 0 24px;
+}
+
+/* ==========================================
+   Swiper Container
+   ========================================== */
+
+.hero-swiper {
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-swiper .swiper-wrapper {
+    display: flex;
+    transition-timing-function: ease-in-out;
+}
+
+.hero-swiper .swiper-slide {
+    height: auto;
+}
+
+/* ==========================================
+   Hero Slide Card
+   ========================================== */
+
+.hero-slide-card {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    background: #ffffff;
+    border-radius: var(--hero-card-radius);
+    overflow: hidden;
+    box-shadow: 0 14px 40px rgba(18, 30, 26, 0.06);
+    min-height: var(--hero-height-desktop);
+    position: relative;
+    transition: transform var(--transition-default), box-shadow var(--transition-default);
+}
+
+.hero-slide-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 50px rgba(18, 30, 26, 0.12);
+}
+
+/* RTL: صورة على اليمين، نص على اليسار */
+.hero-slide-card .slide-content-wrapper {
+    display: contents;
+}
+
+.hero-slide-card .slide-image {
+    order: 2; /* على اليمين في RTL */
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-slide-card .slide-content {
+    order: 1; /* على اليسار في RTL */
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 20px;
+    position: relative;
+    z-index: 2;
+}
+
+.hero-slide-card .slide-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.6s ease;
+}
+
+.hero-slide-card:hover .slide-image img {
+    transform: scale(1.05);
+}
+
+/* ─────────────────────────────────────
+   بطاقة مع خلفية
+   ───────────────────────────────────── */
+
+.hero-slide-card.has-background {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    grid-template-columns: 1fr;
+}
+
+.hero-slide-card.has-background .slide-bg-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, var(--hero-overlay-opacity));
+    z-index: 1;
+}
+
+.hero-slide-card.has-background .slide-content {
+    max-width: 720px;
+    color: #ffffff;
+}
+
+/* ─────────────────────────────────────
+   العنوان
+   ───────────────────────────────────── */
+
+.slide-title {
+    font-size: 32px;
+    font-weight: 700;
+    line-height: 1.3;
+    margin: 0;
+    color: #1c2d27;
+}
+
+.slide-title a {
+    color: inherit;
+    text-decoration: none;
+    transition: color var(--transition-default);
+}
+
+.slide-title a:hover {
+    color: var(--color-primary);
+}
+
+/* ─────────────────────────────────────
+   المقتطف
+   ───────────────────────────────────── */
+
+.slide-excerpt {
+    font-size: 18px;
+    line-height: 1.7;
+    color: rgba(28, 45, 39, 0.8);
+    margin: 0;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* ─────────────────────────────────────
+   Meta Information
+   ───────────────────────────────────── */
+
+.slide-meta {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    font-size: 14px;
+    color: rgba(28, 45, 39, 0.7);
+}
+
+.slide-meta > span {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.slide-meta svg {
+    flex-shrink: 0;
+    opacity: 0.8;
+}
+
+/* ─────────────────────────────────────
+   CTA Button
+   ───────────────────────────────────── */
+
+.slide-cta {
+    margin-top: auto;
+}
+
+.cta-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 28px;
+    background-color: var(--color-primary);
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 600;
+    text-decoration: none;
+    border-radius: 10px;
+    transition: all var(--transition-default);
+    border: 2px solid var(--color-primary);
+}
+
+.cta-button:hover {
+    background-color: transparent;
+    color: var(--color-primary);
+    transform: translateX(-4px);
+}
+
+.cta-button svg {
+    transition: transform var(--transition-default);
+}
+
+.cta-button:hover svg {
+    transform: translateX(-4px);
+}
+
+/* ─────────────────────────────────────
+   Light/Dark Text Schemes
+   ───────────────────────────────────── */
+
+.hero-slide-card.light-text .slide-title,
+.hero-slide-card.light-text .slide-title a {
+    color: #ffffff;
+}
+
+.hero-slide-card.light-text .slide-excerpt,
+.hero-slide-card.light-text .slide-meta {
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.hero-slide-card.dark-text .slide-title,
+.hero-slide-card.dark-text .slide-title a {
+    color: #1c2d27;
+}
+
+.hero-slide-card.dark-text .slide-excerpt,
+.hero-slide-card.dark-text .slide-meta {
+    color: rgba(28, 45, 39, 0.8);
+}
+
+/* ==========================================
+   Slider Controls
+   ========================================== */
+
+.hero-slider-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+    margin-top: 32px;
+    position: relative;
+}
+
+/* ─────────────────────────────────────
+   Pagination (Bullets)
+   ───────────────────────────────────── */
+
+.swiper-pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    position: static !important;
+}
+
+.swiper-pagination-bullet {
+    width: 12px;
+    height: 12px;
+    background-color: rgba(51, 144, 99, 0.3);
+    border-radius: 50%;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    transition: all var(--transition-default);
+    opacity: 1;
+}
+
+.swiper-pagination-bullet:hover {
+    background-color: rgba(51, 144, 99, 0.6);
+    transform: scale(1.2);
+}
+
+.swiper-pagination-bullet-active {
+    background-color: var(--color-primary);
+    width: 32px;
+    border-radius: 6px;
+}
+
+/* ─────────────────────────────────────
+   Navigation Arrows
+   ───────────────────────────────────── */
+
+.hero-slider-navigation {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.swiper-button-prev,
+.swiper-button-next {
+    position: static;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background-color: rgba(51, 144, 99, 0.1);
+    color: var(--color-primary);
+    border: 2px solid transparent;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all var(--transition-default);
+    margin: 0;
+}
+
+.swiper-button-prev::after,
+.swiper-button-next::after {
+    display: none;
+}
+
+.swiper-button-prev:hover,
+.swiper-button-next:hover {
+    background-color: var(--color-primary);
+    color: #ffffff;
+    transform: scale(1.1);
+}
+
+.swiper-button-prev:focus,
+.swiper-button-next:focus {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+}
+
+.swiper-button-disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+/* ─────────────────────────────────────
+   Play/Pause Button
+   ───────────────────────────────────── */
+
+.hero-slider-play-pause {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background-color: rgba(51, 144, 99, 0.1);
+    color: var(--color-primary);
+    border: 2px solid transparent;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all var(--transition-default);
+    position: relative;
+}
+
+.hero-slider-play-pause:hover {
+    background-color: var(--color-primary);
+    color: #ffffff;
+    transform: scale(1.1);
+}
+
+.hero-slider-play-pause:focus {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+}
+
+.hero-slider-play-pause .play-icon {
+    display: none;
+}
+
+.hero-slider-play-pause .pause-icon {
+    display: block;
+}
+
+.hero-slider-play-pause[data-playing="false"] .play-icon {
+    display: block;
+}
+
+.hero-slider-play-pause[data-playing="false"] .pause-icon {
+    display: none;
+}
+
+/* ==========================================
+   Accessibility
+   ========================================== */
+
+/* Reduce motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+    .hero-swiper,
+    .hero-swiper .swiper-wrapper,
+    .hero-slide-card,
+    .hero-slide-card img,
+    .cta-button,
+    .swiper-pagination-bullet,
+    .swiper-button-prev,
+    .swiper-button-next,
+    .hero-slider-play-pause {
+        transition: none !important;
+        animation: none !important;
+    }
+
+    .hero-swiper {
+        scroll-behavior: auto;
+    }
+}
+
+/* Focus visible styles */
+.hero-slide-card:focus-visible {
+    outline: 3px solid var(--color-primary);
+    outline-offset: 4px;
+}
+
+/* ==========================================
+   Responsive Design
+   ========================================== */
+
+/* Tablet */
+@media screen and (max-width: 1024px) {
+    .hero-slider-section {
+        padding: 36px 0;
+    }
+
+    .hero-slide-card {
+        min-height: 380px;
+    }
+
+    .hero-slide-card .slide-content {
+        padding: 32px;
+        gap: 16px;
+    }
+
+    .slide-title {
+        font-size: 28px;
+    }
+
+    .slide-excerpt {
+        font-size: 16px;
+    }
+
+    .slide-meta {
+        font-size: 13px;
+        gap: 16px;
+    }
+
+    .cta-button {
+        padding: 12px 24px;
+        font-size: 15px;
+    }
+}
+
+/* Mobile */
+@media screen and (max-width: 768px) {
+    .hero-slider-section {
+        padding: 24px 0;
+    }
+
+    .hero-slider-section .container {
+        padding: 0 16px;
+    }
+
+    /* Stack layout */
+    .hero-slide-card {
+        grid-template-columns: 1fr;
+        min-height: auto;
+    }
+
+    .hero-slide-card .slide-image {
+        order: 1; /* الصورة أعلى */
+        height: 240px;
+    }
+
+    .hero-slide-card .slide-content {
+        order: 2; /* النص أسفل */
+        padding: 24px;
+        gap: 14px;
+    }
+
+    .slide-title {
+        font-size: 24px;
+    }
+
+    .slide-excerpt {
+        font-size: 15px;
+    }
+
+    .slide-meta {
+        font-size: 12px;
+        gap: 12px;
+    }
+
+    .cta-button {
+        padding: 11px 20px;
+        font-size: 14px;
+        width: 100%;
+        justify-content: center;
+    }
+
+    /* Controls */
+    .hero-slider-controls {
+        margin-top: 24px;
+        gap: 16px;
+        flex-wrap: wrap;
+    }
+
+    .swiper-button-prev,
+    .swiper-button-next,
+    .hero-slider-play-pause {
+        width: 40px;
+        height: 40px;
+    }
+
+    .swiper-button-prev svg,
+    .swiper-button-next svg,
+    .hero-slider-play-pause svg {
+        width: 20px;
+        height: 20px;
+    }
+
+    .swiper-pagination-bullet {
+        width: 10px;
+        height: 10px;
+    }
+
+    .swiper-pagination-bullet-active {
+        width: 28px;
+    }
+}
+
+/* ==========================================
+   RTL Support
+   ========================================== */
+
+[dir="rtl"] .cta-button svg {
+    transform: scaleX(-1);
+}
+
+[dir="rtl"] .cta-button:hover {
+    transform: translateX(4px);
+}
+
+[dir="rtl"] .cta-button:hover svg {
+    transform: translateX(4px) scaleX(-1);
+}
+
+/* LTR override (if needed) */
+[dir="ltr"] .hero-slide-card .slide-image {
+    order: 1;
+}
+
+[dir="ltr"] .hero-slide-card .slide-content {
+    order: 2;
+}

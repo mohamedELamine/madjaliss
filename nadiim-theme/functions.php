@@ -308,6 +308,9 @@ require_once NADIIM_THEME_DIR . '/inc/customizer.php';
 // تضمين ملف Customizer للهيدر والشريط العلوي
 require_once NADIIM_THEME_DIR . '/inc/customizer-header.php';
 
+// تضمين ملف Customizer للـ Hero Slider
+require_once NADIIM_THEME_DIR . '/inc/customizer-hero.php';
+
 // تضمين ملف Customizer للصفحة الرئيسية
 require_once NADIIM_THEME_DIR . '/inc/front-page-customizer.php';
 
@@ -316,6 +319,9 @@ require_once NADIIM_THEME_DIR . '/inc/template-functions.php';
 
 // تضمين ملف Template Tags
 require_once NADIIM_THEME_DIR . '/inc/template-tags.php';
+
+// تضمين ملف Home Enqueue (Hero Slider assets)
+require_once NADIIM_THEME_DIR . '/inc/home-enqueue.php';
 
 // تضمين ملف Demo Content
 require_once NADIIM_THEME_DIR . '/inc/demo-content.php';
