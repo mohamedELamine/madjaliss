@@ -357,42 +357,45 @@ add_action('customize_register', 'nadiim_about_customize_register');
 /**
  * Sanitize Timeline JSON
  */
-function nadiim_sanitize_timeline_json($input) {
-    if (empty($input)) {
-        return '';
-    }
-
-    $data = json_decode($input, true);
-    if (!is_array($data)) {
-        return '';
-    }
-
-    // Sanitize each timeline event
-    $sanitized = array();
-    foreach ($data as $event) {
-        if (!is_array($event)) {
-            continue;
+if ( ! function_exists( 'nadiim_sanitize_timeline_json' ) ) {
+    function nadiim_sanitize_timeline_json($input) {
+        if (empty($input)) {
+            return '';
         }
 
-        $sanitized_event = array(
-            'date'              => isset($event['date']) ? sanitize_text_field($event['date']) : '',
-            'title'             => isset($event['title']) ? sanitize_text_field($event['title']) : '',
-            'short_description' => isset($event['short_description']) ? sanitize_text_field($event['short_description']) : '',
-            'full_description'  => isset($event['full_description']) ? wp_kses_post($event['full_description']) : '',
-            'image'             => isset($event['image']) ? esc_url_raw($event['image']) : '',
-            'link'              => isset($event['link']) ? esc_url_raw($event['link']) : '',
-        );
+        $data = json_decode($input, true);
+        if (!is_array($data)) {
+            return '';
+        }
 
-        $sanitized[] = $sanitized_event;
+        // Sanitize each timeline event
+        $sanitized = array();
+        foreach ($data as $event) {
+            if (!is_array($event)) {
+                continue;
+            }
+
+            $sanitized_event = array(
+                'date'              => isset($event['date']) ? sanitize_text_field($event['date']) : '',
+                'title'             => isset($event['title']) ? sanitize_text_field($event['title']) : '',
+                'short_description' => isset($event['short_description']) ? sanitize_text_field($event['short_description']) : '',
+                'full_description'  => isset($event['full_description']) ? wp_kses_post($event['full_description']) : '',
+                'image'             => isset($event['image']) ? esc_url_raw($event['image']) : '',
+                'link'              => isset($event['link']) ? esc_url_raw($event['link']) : '',
+            );
+
+            $sanitized[] = $sanitized_event;
+        }
+
+        return wp_json_encode($sanitized, JSON_UNESCAPED_UNICODE);
     }
-
-    return wp_json_encode($sanitized, JSON_UNESCAPED_UNICODE);
 }
 
 /**
  * Enqueue Customizer scripts
  */
-function nadiim_about_customizer_scripts() {
+if ( ! function_exists( 'nadiim_about_customizer_scripts' ) ) {
+    function nadiim_about_customizer_scripts() {
     wp_enqueue_script(
         'nadiim-about-customizer',
         get_template_directory_uri() . '/assets/js/about-customizer.js',
@@ -413,5 +416,6 @@ function nadiim_about_customizer_scripts() {
             'eventLink'      => __('رابط', 'nadiim'),
         ),
     ));
+    }
 }
 add_action('customize_controls_enqueue_scripts', 'nadiim_about_customizer_scripts');
