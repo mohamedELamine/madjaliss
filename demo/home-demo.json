@@ -1,0 +1,64 @@
+{
+  "slides": [
+    {
+      "id": 1,
+      "title": "الذكاء الاصطناعي وتأثيره على المستقبل",
+      "excerpt": "نستكشف في هذا المقال كيف يشكل الذكاء الاصطناعي مستقبلنا ويغير طريقة عملنا وحياتنا اليومية بشكل جذري ومستمر.",
+      "permalink": "#",
+      "thumbnail": "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&h=450&fit=crop",
+      "author": "د. أحمد محمود",
+      "date": "2025-01-15",
+      "reading_time": 8,
+      "has_audio": true
+    },
+    {
+      "id": 2,
+      "title": "التعليم في العصر الرقمي: فرص وتحديات",
+      "excerpt": "مع التحول الرقمي، يواجه التعليم تحديات جديدة وفرصاً غير مسبوقة. نناقش كيف يمكننا الاستفادة من التكنولوجيا لتطوير التعليم.",
+      "permalink": "#",
+      "thumbnail": "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=800&h=450&fit=crop",
+      "author": "أ. فاطمة الزهراء",
+      "date": "2025-01-14",
+      "reading_time": 6,
+      "has_audio": false
+    },
+    {
+      "id": 3,
+      "title": "الأمن السيبراني: حماية بياناتنا في عالم متصل",
+      "excerpt": "في عصر الاتصال الدائم، أصبح الأمن السيبراني ضرورة ملحة. نتعرف على أفضل الممارسات لحماية معلوماتنا الشخصية والمهنية.",
+      "permalink": "#",
+      "thumbnail": "https://images.unsplash.com/photo-1563986768609-322da13575f3?w=800&h=450&fit=crop",
+      "author": "م. خالد العمري",
+      "date": "2025-01-13",
+      "reading_time": 7,
+      "has_audio": true
+    },
+    {
+      "id": 4,
+      "title": "الاستدامة البيئية: دور التكنولوجيا في حماية الكوكب",
+      "excerpt": "كيف يمكن للتكنولوجيا أن تساعدنا في مواجهة التحديات البيئية؟ نستعرض أحدث الابتكارات في مجال الطاقة النظيفة والاستدامة.",
+      "permalink": "#",
+      "thumbnail": "https://images.unsplash.com/photo-1497436072909-60f360e1d4b1?w=800&h=450&fit=crop",
+      "author": "د. سارة الحسن",
+      "date": "2025-01-12",
+      "reading_time": 9,
+      "has_audio": false
+    },
+    {
+      "id": 5,
+      "title": "ريادة الأعمال في الوطن العربي: قصص نجاح ملهمة",
+      "excerpt": "نسلط الضوء على رواد أعمال عرب استطاعوا تحقيق نجاحات باهرة في مجالات مختلفة، ونتعلم من تجاربهم وخبراتهم القيمة.",
+      "permalink": "#",
+      "thumbnail": "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&h=450&fit=crop",
+      "author": "أ. محمد السعيد",
+      "date": "2025-01-11",
+      "reading_time": 5,
+      "has_audio": true
+    }
+  ],
+  "meta": {
+    "version": "2.0",
+    "generated_at": "2025-01-15",
+    "description": "Demo data for Madjaliss home hero slider - Stage 1B"
+  }
+}

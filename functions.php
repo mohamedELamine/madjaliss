@@ -116,6 +116,13 @@ require_once get_template_directory() . '/inc/customizer-header.php';
 
 /**
  * ========================================
+ * تضمين ملف الصفحة الرئيسية (Home Page)
+ * ========================================
+ */
+require_once get_template_directory() . '/inc/home-enqueue.php';
+
+/**
+ * ========================================
  * تسجيل Sidebars
  * ========================================
  */
