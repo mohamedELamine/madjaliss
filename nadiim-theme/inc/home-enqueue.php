@@ -84,5 +84,46 @@ function nadiim_home_enqueue_assets() {
             true
         );
     }
+
+    // ─────────────────────────────────────
+    // Featured Howarat Section Assets
+    // ─────────────────────────────────────
+
+    // Featured Howarat CSS
+    wp_enqueue_style(
+        'nadiim-featured-howarat',
+        get_template_directory_uri() . '/assets/css/featured-howarat.css',
+        array( 'swiper' ),
+        NADIIM_VERSION
+    );
+
+    // Featured Howarat JS
+    wp_enqueue_script(
+        'nadiim-featured-howarat',
+        get_template_directory_uri() . '/assets/js/featured-howarat.js',
+        array( 'swiper' ),
+        NADIIM_VERSION,
+        true
+    );
+
+    // تمرير إعدادات Featured Howarat إلى JavaScript
+    wp_localize_script(
+        'nadiim-featured-howarat',
+        'NADIIM_FEATURED_HOWARAT',
+        array(
+            'layout' => get_theme_mod( 'featured_howarat_layout', 'grid' ),
+        )
+    );
+
+    // Featured Howarat Customizer Live Preview
+    if ( is_customize_preview() ) {
+        wp_enqueue_script(
+            'nadiim-featured-howarat-customizer-live',
+            get_template_directory_uri() . '/assets/js/featured-howarat-customizer-live.js',
+            array( 'jquery', 'customize-preview' ),
+            NADIIM_VERSION,
+            true
+        );
+    }
 }
 add_action( 'wp_enqueue_scripts', 'nadiim_home_enqueue_assets' );

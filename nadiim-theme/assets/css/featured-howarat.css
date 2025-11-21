@@ -1,0 +1,651 @@
+/**
+ * Featured Dialogues Section - الحوارات المميزة
+ *
+ * @package Nadiim
+ * @since 1.0.0
+ */
+
+/* ============================================
+   متغيرات CSS
+   ============================================ */
+
+:root {
+	--color-primary: #339063;
+	--color-primary-hover: #2a7651;
+	--card-radius: 14px;
+	--section-padding: 60px;
+	--container-max-width: 1200px;
+	--card-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+	--card-shadow-hover: 0 8px 24px rgba(0, 0, 0, 0.12);
+	--transition-default: all 0.3s ease;
+	--featured-howarat-overlay-opacity: 0.30;
+}
+
+/* ============================================
+   القسم الرئيسي
+   ============================================ */
+
+.featured-howarat-section {
+	padding: var(--section-padding) 0;
+	background: #f8f9fa;
+	position: relative;
+	overflow: hidden;
+}
+
+/* خلفية القسم مع صورة/فيديو */
+.featured-howarat-section.section-with-bg {
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+}
+
+/* طبقة التعتيم فوق الخلفية */
+.featured-howarat-section .section-bg-overlay {
+	position: absolute;
+	inset: 0;
+	z-index: 1;
+	pointer-events: none;
+	transition: opacity 0.25s ease;
+	background-color: #000000;
+	opacity: var(--featured-howarat-overlay-opacity);
+}
+
+/* Embed الخلفية (فيديو مثلاً) */
+.featured-howarat-section .section-bg-embed {
+	position: absolute;
+	inset: 0;
+	z-index: 0;
+	pointer-events: none;
+}
+
+.featured-howarat-section .section-bg-embed iframe {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	border: none;
+}
+
+/* Container */
+.featured-howarat-section .container {
+	position: relative;
+	z-index: 2;
+	max-width: var(--container-max-width);
+	margin: 0 auto;
+	padding: 0 20px;
+}
+
+/* ============================================
+   رأس القسم
+   ============================================ */
+
+.featured-howarat-section .section-header {
+	text-align: center;
+	margin-bottom: 48px;
+}
+
+.featured-howarat-section .section-title {
+	font-size: 36px;
+	font-weight: 700;
+	color: #1c2d27;
+	margin: 0 0 16px;
+	line-height: 1.3;
+}
+
+.featured-howarat-section.section-with-bg .section-title {
+	color: #ffffff;
+}
+
+.featured-howarat-section .section-description {
+	font-size: 18px;
+	color: #5a6c64;
+	margin: 0;
+	line-height: 1.6;
+	max-width: 700px;
+	margin: 0 auto;
+}
+
+.featured-howarat-section.section-with-bg .section-description {
+	color: rgba(255, 255, 255, 0.9);
+}
+
+/* ============================================
+   Grid Layout
+   ============================================ */
+
+.featured-howarat-section .howarat-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+	gap: 32px;
+	margin-bottom: 24px;
+}
+
+/* ============================================
+   بطاقة الحوار
+   ============================================ */
+
+.howarat-card {
+	background: #ffffff;
+	border-radius: var(--card-radius);
+	overflow: hidden;
+	box-shadow: var(--card-shadow);
+	transition: var(--transition-default);
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	cursor: pointer;
+}
+
+.howarat-card:hover {
+	transform: translateY(-6px);
+	box-shadow: var(--card-shadow-hover);
+}
+
+.howarat-card:focus {
+	outline: 3px solid var(--color-primary);
+	outline-offset: 2px;
+}
+
+/* صورة البطاقة */
+.howarat-card .card-image {
+	position: relative;
+	width: 100%;
+	height: 220px;
+	overflow: hidden;
+	background: #e9ecef;
+}
+
+.howarat-card .card-image img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	transition: transform 0.4s ease;
+}
+
+.howarat-card:hover .card-image img {
+	transform: scale(1.05);
+}
+
+.howarat-card .card-image a {
+	display: block;
+	width: 100%;
+	height: 100%;
+}
+
+/* أيقونة نوع الوسائط */
+.howarat-card .media-icon {
+	position: absolute;
+	top: 16px;
+	left: 16px;
+	width: 48px;
+	height: 48px;
+	border-radius: 50%;
+	background: rgba(255, 255, 255, 0.95);
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+	z-index: 2;
+	transition: var(--transition-default);
+}
+
+/* RTL: أيقونة على اليمين */
+[dir="rtl"] .howarat-card .media-icon {
+	left: auto;
+	right: 16px;
+}
+
+.howarat-card .media-icon svg {
+	width: 24px;
+	height: 24px;
+	color: var(--color-primary);
+}
+
+.howarat-card:hover .media-icon {
+	transform: scale(1.1);
+}
+
+/* ألوان مختلفة لكل نوع وسائط */
+.howarat-card .media-icon-audio svg {
+	color: #e74c3c;
+}
+
+.howarat-card .media-icon-video svg {
+	color: #3498db;
+}
+
+.howarat-card .media-icon-text svg {
+	color: #9b59b6;
+}
+
+/* محتوى البطاقة */
+.howarat-card .card-content {
+	padding: 24px;
+	display: flex;
+	flex-direction: column;
+	flex-grow: 1;
+}
+
+/* Meta البطاقة */
+.howarat-card .card-meta {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	margin-bottom: 12px;
+}
+
+.howarat-card .card-date {
+	font-size: 14px;
+	color: #6c757d;
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+}
+
+.howarat-card .card-date svg {
+	width: 16px;
+	height: 16px;
+	flex-shrink: 0;
+}
+
+/* عنوان البطاقة */
+.howarat-card .card-title {
+	font-size: 22px;
+	font-weight: 700;
+	color: #1c2d27;
+	margin: 0 0 12px;
+	line-height: 1.4;
+}
+
+.howarat-card .card-title a {
+	color: inherit;
+	text-decoration: none;
+	transition: color 0.25s ease;
+}
+
+.howarat-card .card-title a:hover {
+	color: var(--color-primary);
+}
+
+/* مقتطف البطاقة */
+.howarat-card .card-excerpt {
+	font-size: 16px;
+	color: #5a6c64;
+	line-height: 1.7;
+	margin: 0 0 20px;
+	flex-grow: 1;
+
+	/* Clamp to 2 lines */
+	display: -webkit-box;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+}
+
+/* زر الإجراء */
+.howarat-card .card-cta {
+	margin-top: auto;
+}
+
+.howarat-card .cta-button {
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	padding: 12px 24px;
+	background-color: var(--color-primary);
+	color: #ffffff;
+	font-size: 16px;
+	font-weight: 600;
+	text-decoration: none;
+	border-radius: 8px;
+	transition: var(--transition-default);
+	border: 2px solid var(--color-primary);
+}
+
+.howarat-card .cta-button:hover {
+	background-color: var(--color-primary-hover);
+	border-color: var(--color-primary-hover);
+	transform: translateX(-4px);
+}
+
+/* RTL: حركة الزر لليمين */
+[dir="rtl"] .howarat-card .cta-button:hover {
+	transform: translateX(4px);
+}
+
+.howarat-card .cta-button svg {
+	width: 20px;
+	height: 20px;
+	transition: transform 0.25s ease;
+}
+
+.howarat-card .cta-button:hover svg {
+	transform: translateX(4px);
+}
+
+/* RTL: حركة السهم لليسار */
+[dir="rtl"] .howarat-card .cta-button:hover svg {
+	transform: translateX(-4px);
+}
+
+.howarat-card .cta-button:focus {
+	outline: 3px solid var(--color-primary);
+	outline-offset: 3px;
+}
+
+/* ============================================
+   Carousel Layout (Swiper)
+   ============================================ */
+
+.featured-howarat-section.layout-carousel .featured-howarat-swiper {
+	position: relative;
+	padding: 0 0 56px;
+}
+
+.featured-howarat-section.layout-carousel .swiper-slide {
+	height: auto;
+}
+
+/* أزرار التنقل */
+.featured-howarat-swiper .swiper-button-prev,
+.featured-howarat-swiper .swiper-button-next {
+	width: 48px;
+	height: 48px;
+	border-radius: 50%;
+	background: #ffffff;
+	color: var(--color-primary);
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+	transition: var(--transition-default);
+	border: 2px solid transparent;
+}
+
+.featured-howarat-swiper .swiper-button-prev::after,
+.featured-howarat-swiper .swiper-button-next::after {
+	display: none;
+}
+
+.featured-howarat-swiper .swiper-button-prev svg,
+.featured-howarat-swiper .swiper-button-next svg {
+	width: 24px;
+	height: 24px;
+}
+
+.featured-howarat-swiper .swiper-button-prev:hover,
+.featured-howarat-swiper .swiper-button-next:hover {
+	background: var(--color-primary);
+	color: #ffffff;
+	transform: scale(1.1);
+}
+
+.featured-howarat-swiper .swiper-button-disabled {
+	opacity: 0.3;
+	cursor: not-allowed;
+}
+
+/* Pagination */
+.featured-howarat-swiper .swiper-pagination {
+	bottom: 0;
+}
+
+.featured-howarat-swiper .swiper-pagination-bullet {
+	width: 12px;
+	height: 12px;
+	background: #d1d5db;
+	opacity: 1;
+	transition: var(--transition-default);
+}
+
+.featured-howarat-swiper .swiper-pagination-bullet-active {
+	background: var(--color-primary);
+	width: 32px;
+	border-radius: 6px;
+}
+
+/* ============================================
+   Responsive Design
+   ============================================ */
+
+/* Large Desktop (> 1440px) */
+@media screen and (min-width: 1441px) {
+	.featured-howarat-section {
+		--section-padding: 80px;
+	}
+
+	.featured-howarat-section .section-title {
+		font-size: 42px;
+	}
+
+	.featured-howarat-section .howarat-grid {
+		grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+		gap: 40px;
+	}
+
+	.howarat-card .card-image {
+		height: 260px;
+	}
+}
+
+/* Desktop (1025px - 1440px) */
+@media screen and (min-width: 1025px) and (max-width: 1440px) {
+	.featured-howarat-section {
+		--section-padding: 60px;
+	}
+
+	.featured-howarat-section .howarat-grid {
+		grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+	}
+}
+
+/* Tablet (769px - 1024px) */
+@media screen and (max-width: 1024px) {
+	.featured-howarat-section {
+		--section-padding: 50px;
+	}
+
+	.featured-howarat-section .section-title {
+		font-size: 32px;
+	}
+
+	.featured-howarat-section .section-description {
+		font-size: 17px;
+	}
+
+	.featured-howarat-section .howarat-grid {
+		grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+		gap: 28px;
+	}
+
+	.howarat-card .card-image {
+		height: 200px;
+	}
+
+	.howarat-card .card-title {
+		font-size: 20px;
+	}
+}
+
+/* Small Tablet (481px - 768px) */
+@media screen and (max-width: 768px) {
+	.featured-howarat-section {
+		--section-padding: 40px;
+	}
+
+	.featured-howarat-section .section-header {
+		margin-bottom: 36px;
+	}
+
+	.featured-howarat-section .section-title {
+		font-size: 28px;
+	}
+
+	.featured-howarat-section .section-description {
+		font-size: 16px;
+	}
+
+	.featured-howarat-section .howarat-grid {
+		grid-template-columns: 1fr;
+		gap: 24px;
+	}
+
+	.howarat-card .card-content {
+		padding: 20px;
+	}
+
+	/* أزرار السلايدر أصغر */
+	.featured-howarat-swiper .swiper-button-prev,
+	.featured-howarat-swiper .swiper-button-next {
+		width: 40px;
+		height: 40px;
+	}
+
+	.featured-howarat-swiper .swiper-button-prev svg,
+	.featured-howarat-swiper .swiper-button-next svg {
+		width: 20px;
+		height: 20px;
+	}
+}
+
+/* Mobile (320px - 480px) */
+@media screen and (max-width: 480px) {
+	.featured-howarat-section {
+		--section-padding: 32px;
+	}
+
+	.featured-howarat-section .container {
+		padding: 0 16px;
+	}
+
+	.featured-howarat-section .section-header {
+		margin-bottom: 28px;
+	}
+
+	.featured-howarat-section .section-title {
+		font-size: 24px;
+		margin-bottom: 12px;
+	}
+
+	.featured-howarat-section .section-description {
+		font-size: 15px;
+	}
+
+	.howarat-card .card-image {
+		height: 180px;
+	}
+
+	.howarat-card .card-content {
+		padding: 18px;
+	}
+
+	.howarat-card .card-title {
+		font-size: 18px;
+	}
+
+	.howarat-card .card-excerpt {
+		font-size: 15px;
+	}
+
+	.howarat-card .cta-button {
+		width: 100%;
+		justify-content: center;
+		padding: 11px 20px;
+		font-size: 15px;
+	}
+
+	/* إخفاء أزرار التنقل في الموبايل */
+	.featured-howarat-swiper .swiper-button-prev,
+	.featured-howarat-swiper .swiper-button-next {
+		display: none;
+	}
+}
+
+/* Extra Small (< 360px) */
+@media screen and (max-width: 359px) {
+	.featured-howarat-section {
+		--section-padding: 28px;
+	}
+
+	.featured-howarat-section .section-title {
+		font-size: 22px;
+	}
+
+	.howarat-card .card-image {
+		height: 160px;
+	}
+
+	.howarat-card .card-content {
+		padding: 16px;
+	}
+
+	.howarat-card .card-title {
+		font-size: 17px;
+	}
+
+	.howarat-card .card-excerpt {
+		font-size: 14px;
+		margin-bottom: 16px;
+	}
+}
+
+/* ============================================
+   Accessibility & Motion
+   ============================================ */
+
+/* احترام تفضيلات الحركة المنخفضة */
+@media (prefers-reduced-motion: reduce) {
+	.howarat-card,
+	.howarat-card .card-image img,
+	.howarat-card .media-icon,
+	.howarat-card .cta-button,
+	.featured-howarat-swiper .swiper-button-prev,
+	.featured-howarat-swiper .swiper-button-next {
+		transition: none;
+	}
+
+	.howarat-card:hover {
+		transform: none;
+	}
+
+	.howarat-card:hover .card-image img {
+		transform: none;
+	}
+
+	.featured-howarat-section.section-with-bg {
+		background-attachment: scroll;
+	}
+}
+
+/* Focus visible للوحة المفاتيح */
+.howarat-card:focus-visible {
+	outline: 3px solid var(--color-primary);
+	outline-offset: 4px;
+}
+
+.howarat-card .cta-button:focus-visible {
+	outline: 3px solid var(--color-primary);
+	outline-offset: 3px;
+}
+
+/* ============================================
+   Print Styles
+   ============================================ */
+
+@media print {
+	.featured-howarat-section {
+		background: none !important;
+		padding: 20px 0;
+	}
+
+	.featured-howarat-section .section-bg-overlay,
+	.featured-howarat-section .section-bg-embed,
+	.featured-howarat-swiper .swiper-button-prev,
+	.featured-howarat-swiper .swiper-button-next,
+	.featured-howarat-swiper .swiper-pagination {
+		display: none !important;
+	}
+
+	.howarat-card {
+		break-inside: avoid;
+		box-shadow: none;
+		border: 1px solid #dee2e6;
+	}
+}

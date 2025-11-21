@@ -32,6 +32,7 @@ wp_localize_script( 'nadiim-front-page', 'nadiimFrontPage', array(
 	$sections_order = get_theme_mod( 'home_sections_order', array(
 		'topbar',
 		'hero-slider', // Hero Slider الجديد
+		'featured-howarat', // الحوارات المميزة
 		'dialogues',
 		'releases',
 		'posts',
