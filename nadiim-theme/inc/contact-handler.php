@@ -239,6 +239,10 @@ function nadiim_send_contact_notification( $data ) {
 	$receivers = nadiim_parse_email_list( $receivers );
 
 	if ( empty( $receivers ) ) {
+		// Log error
+		if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
+			error_log( 'Contact Form: No receiver emails configured' );
+		}
 		return false;
 	}
 
@@ -251,8 +255,8 @@ function nadiim_send_contact_notification( $data ) {
 		'{site}'    => get_bloginfo( 'name' ),
 		'{name}'    => $data['name'],
 		'{email}'   => $data['email'],
-		'{phone}'   => $data['phone'],
-		'{subject}' => $data['subject'],
+		'{phone}'   => ! empty( $data['phone'] ) ? $data['phone'] : 'غير محدد',
+		'{subject}' => ! empty( $data['subject'] ) ? $data['subject'] : 'بدون موضوع',
 		'{message}' => $data['message'],
 	);
 
@@ -260,14 +264,28 @@ function nadiim_send_contact_notification( $data ) {
 	$body = str_replace( array_keys( $replacements ), array_values( $replacements ), $body_template );
 
 	// إعداد رؤوس البريد
+	$from_email = get_option( 'admin_email' );
+	$from_name = get_bloginfo( 'name' );
+
 	$headers = array(
 		'Content-Type: text/plain; charset=UTF-8',
-		'From: ' . get_bloginfo( 'name' ) . ' <' . get_option( 'admin_email' ) . '>',
-		'Reply-To: ' . $data['name'] . ' <' . $data['email'] . '>',
+		'From: ' . $from_name . ' <' . $from_email . '>',
+		'Reply-To: ' . $data['name'] . ' <' . $data['email'] ) . '>',
 	);
 
 	// إرسال البريد
 	$sent = wp_mail( $receivers, $subject, $body, $headers );
+
+	// Log result
+	if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
+		if ( $sent ) {
+			error_log( 'Contact Form: Email sent successfully to ' . implode( ', ', $receivers ) );
+		} else {
+			error_log( 'Contact Form: Failed to send email. Check wp_mail configuration.' );
+			error_log( 'Contact Form: Receivers: ' . implode( ', ', $receivers ) );
+			error_log( 'Contact Form: Subject: ' . $subject );
+		}
+	}
 
 	return $sent;
 }

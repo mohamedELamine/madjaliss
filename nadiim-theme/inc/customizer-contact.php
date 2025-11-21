@@ -415,6 +415,105 @@ function nadiim_contact_customizer_register( $wp_customize ) {
 		'type'     => 'textarea',
 	) );
 
+	// رقم الهاتف
+	$wp_customize->add_setting( 'contact_phone_number', array(
+		'default'           => '',
+		'sanitize_callback' => 'sanitize_text_field',
+		'transport'         => 'postMessage',
+	) );
+	$wp_customize->add_control( 'contact_phone_number', array(
+		'label'       => __( 'رقم الهاتف', 'nadiim' ),
+		'description' => __( 'سيظهر في معلومات الاتصال (اختياري)', 'nadiim' ),
+		'section'     => 'nadiim_contact_map',
+		'type'        => 'text',
+	) );
+
+	// البريد الإلكتروني
+	$wp_customize->add_setting( 'contact_email_display', array(
+		'default'           => get_option( 'admin_email' ),
+		'sanitize_callback' => 'sanitize_email',
+		'transport'         => 'postMessage',
+	) );
+	$wp_customize->add_control( 'contact_email_display', array(
+		'label'       => __( 'البريد الإلكتروني للعرض', 'nadiim' ),
+		'description' => __( 'سيظهر في معلومات الاتصال', 'nadiim' ),
+		'section'     => 'nadiim_contact_map',
+		'type'        => 'email',
+	) );
+
+	// فيسبوك
+	$wp_customize->add_setting( 'contact_facebook', array(
+		'default'           => '',
+		'sanitize_callback' => 'esc_url_raw',
+		'transport'         => 'postMessage',
+	) );
+	$wp_customize->add_control( 'contact_facebook', array(
+		'label'    => __( 'رابط فيسبوك', 'nadiim' ),
+		'section'  => 'nadiim_contact_map',
+		'type'     => 'url',
+	) );
+
+	// تويتر/X
+	$wp_customize->add_setting( 'contact_twitter', array(
+		'default'           => '',
+		'sanitize_callback' => 'esc_url_raw',
+		'transport'         => 'postMessage',
+	) );
+	$wp_customize->add_control( 'contact_twitter', array(
+		'label'    => __( 'رابط تويتر/X', 'nadiim' ),
+		'section'  => 'nadiim_contact_map',
+		'type'     => 'url',
+	) );
+
+	// إنستغرام
+	$wp_customize->add_setting( 'contact_instagram', array(
+		'default'           => '',
+		'sanitize_callback' => 'esc_url_raw',
+		'transport'         => 'postMessage',
+	) );
+	$wp_customize->add_control( 'contact_instagram', array(
+		'label'    => __( 'رابط إنستغرام', 'nadiim' ),
+		'section'  => 'nadiim_contact_map',
+		'type'     => 'url',
+	) );
+
+	// لينكد إن
+	$wp_customize->add_setting( 'contact_linkedin', array(
+		'default'           => '',
+		'sanitize_callback' => 'esc_url_raw',
+		'transport'         => 'postMessage',
+	) );
+	$wp_customize->add_control( 'contact_linkedin', array(
+		'label'    => __( 'رابط لينكد إن', 'nadiim' ),
+		'section'  => 'nadiim_contact_map',
+		'type'     => 'url',
+	) );
+
+	// يوتيوب
+	$wp_customize->add_setting( 'contact_youtube', array(
+		'default'           => '',
+		'sanitize_callback' => 'esc_url_raw',
+		'transport'         => 'postMessage',
+	) );
+	$wp_customize->add_control( 'contact_youtube', array(
+		'label'    => __( 'رابط يوتيوب', 'nadiim' ),
+		'section'  => 'nadiim_contact_map',
+		'type'     => 'url',
+	) );
+
+	// واتساب
+	$wp_customize->add_setting( 'contact_whatsapp', array(
+		'default'           => '',
+		'sanitize_callback' => 'sanitize_text_field',
+		'transport'         => 'postMessage',
+	) );
+	$wp_customize->add_control( 'contact_whatsapp', array(
+		'label'       => __( 'رقم واتساب', 'nadiim' ),
+		'description' => __( 'مثال: 966501234567 (بدون + أو 00)', 'nadiim' ),
+		'section'     => 'nadiim_contact_map',
+		'type'        => 'text',
+	) );
+
 	// ==========================================
 	// Section 5: البريد التلقائي
 	// ==========================================

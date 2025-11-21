@@ -202,13 +202,98 @@ if ( ! $form_enabled ) {
 			<?php if ( $map_enabled || $show_address ) : ?>
 			<div class="contact-info-wrapper">
 
-				<!-- معلومات الاتصال -->
+					<!-- معلومات الاتصال -->
 				<?php if ( $show_address ) : ?>
 				<div class="contact-info-box">
 					<h3><?php _e( 'معلومات الاتصال', 'nadiim' ); ?></h3>
-					<div class="contact-address">
-						<?php echo wp_kses_post( nl2br( $address_text ) ); ?>
+
+					<!-- العنوان -->
+					<?php if ( ! empty( $address_text ) ) : ?>
+					<div class="contact-info-item">
+						<svg class="contact-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+							<path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+							<circle cx="12" cy="10" r="3"></circle>
+						</svg>
+						<div class="contact-info-text">
+							<?php echo wp_kses_post( nl2br( $address_text ) ); ?>
+						</div>
 					</div>
+					<?php endif; ?>
+
+					<!-- رقم الهاتف -->
+					<?php
+					$phone_number = get_theme_mod( 'contact_phone_number', '' );
+					if ( ! empty( $phone_number ) ) :
+					?>
+					<div class="contact-info-item">
+						<svg class="contact-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+							<path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+						</svg>
+						<div class="contact-info-text">
+							<a href="tel:<?php echo esc_attr( $phone_number ); ?>"><?php echo esc_html( $phone_number ); ?></a>
+						</div>
+					</div>
+					<?php endif; ?>
+
+					<!-- البريد الإلكتروني -->
+					<?php
+					$email_display = get_theme_mod( 'contact_email_display', get_option( 'admin_email' ) );
+					if ( ! empty( $email_display ) ) :
+					?>
+					<div class="contact-info-item">
+						<svg class="contact-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+							<path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+							<polyline points="22,6 12,13 2,6"></polyline>
+						</svg>
+						<div class="contact-info-text">
+							<a href="mailto:<?php echo esc_attr( $email_display ); ?>"><?php echo esc_html( $email_display ); ?></a>
+						</div>
+					</div>
+					<?php endif; ?>
+
+					<!-- مواقع التواصل الاجتماعي -->
+					<?php
+					$social_links = array(
+						'facebook'  => array( 'url' => get_theme_mod( 'contact_facebook', '' ), 'icon' => 'facebook', 'label' => 'فيسبوك' ),
+						'twitter'   => array( 'url' => get_theme_mod( 'contact_twitter', '' ), 'icon' => 'twitter', 'label' => 'تويتر' ),
+						'instagram' => array( 'url' => get_theme_mod( 'contact_instagram', '' ), 'icon' => 'instagram', 'label' => 'إنستغرام' ),
+						'linkedin'  => array( 'url' => get_theme_mod( 'contact_linkedin', '' ), 'icon' => 'linkedin', 'label' => 'لينكد إن' ),
+						'youtube'   => array( 'url' => get_theme_mod( 'contact_youtube', '' ), 'icon' => 'youtube', 'label' => 'يوتيوب' ),
+					);
+
+					$has_social = false;
+					foreach ( $social_links as $social ) {
+						if ( ! empty( $social['url'] ) ) {
+							$has_social = true;
+							break;
+						}
+					}
+
+					if ( $has_social ) :
+					?>
+					<div class="contact-social-links">
+						<h4><?php _e( 'تابعنا على', 'nadiim' ); ?></h4>
+						<div class="social-icons">
+							<?php foreach ( $social_links as $key => $social ) : ?>
+								<?php if ( ! empty( $social['url'] ) ) : ?>
+								<a href="<?php echo esc_url( $social['url'] ); ?>" target="_blank" rel="noopener" class="social-icon social-<?php echo esc_attr( $key ); ?>" title="<?php echo esc_attr( $social['label'] ); ?>">
+									<?php echo nadiim_get_social_icon( $key ); ?>
+								</a>
+								<?php endif; ?>
+							<?php endforeach; ?>
+
+							<?php
+							// واتساب
+							$whatsapp = get_theme_mod( 'contact_whatsapp', '' );
+							if ( ! empty( $whatsapp ) ) :
+							?>
+							<a href="https://wa.me/<?php echo esc_attr( $whatsapp ); ?>" target="_blank" rel="noopener" class="social-icon social-whatsapp" title="واتساب">
+								<?php echo nadiim_get_social_icon( 'whatsapp' ); ?>
+							</a>
+							<?php endif; ?>
+						</div>
+					</div>
+					<?php endif; ?>
 				</div>
 				<?php endif; ?>
 
