@@ -196,11 +196,28 @@ function nadiim_enqueue_scripts() {
         NADIIM_VERSION
     );
 
+    // تحميل ملف CSS للهيدر
+    wp_enqueue_style(
+        'nadiim-header',
+        NADIIM_THEME_URI . '/assets/css/header.css',
+        array( 'nadiim-main' ),
+        NADIIM_VERSION
+    );
+
     // تحميل JavaScript الرئيسي
     wp_enqueue_script(
         'nadiim-main',
         NADIIM_THEME_URI . '/assets/js/main.js',
         array( 'jquery' ),
+        NADIIM_VERSION,
+        true
+    );
+
+    // تحميل JavaScript للهيدر
+    wp_enqueue_script(
+        'nadiim-header',
+        NADIIM_THEME_URI . '/assets/js/header.js',
+        array(),
         NADIIM_VERSION,
         true
     );
@@ -287,6 +304,9 @@ function nadiim_get_participant_field( $participant, $key, $default = '' ) {
 
 // تضمين ملف Customizer
 require_once NADIIM_THEME_DIR . '/inc/customizer.php';
+
+// تضمين ملف Customizer للهيدر والشريط العلوي
+require_once NADIIM_THEME_DIR . '/inc/customizer-header.php';
 
 // تضمين ملف Customizer للصفحة الرئيسية
 require_once NADIIM_THEME_DIR . '/inc/front-page-customizer.php';
