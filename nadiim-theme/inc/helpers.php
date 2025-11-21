@@ -490,3 +490,120 @@ function nadiim_get_esdar_year_counts() {
 
     return $counts;
 }
+
+// ==================================================================
+// دوال مساعدة لصفحة من نحن (About Page Helper Functions)
+// ==================================================================
+
+/**
+ * الحصول على Schema JSON-LD لصفحة من نحن
+ *
+ * @return array|false Schema data or false
+ */
+function nadiim_get_about_schema() {
+    // Check if we're on the about page
+    if (!is_page_template('page-templates/about.php')) {
+        return false;
+    }
+
+    // Get site information
+    $site_name = get_bloginfo('name');
+    $site_url = home_url('/');
+    $site_description = get_bloginfo('description');
+    $site_logo = get_theme_mod('custom_logo') ? wp_get_attachment_image_url(get_theme_mod('custom_logo'), 'full') : '';
+
+    // Build base schema
+    $schema = array(
+        '@context' => 'https://schema.org',
+        '@type' => 'Organization',
+        'name' => $site_name,
+        'url' => $site_url,
+        'description' => $site_description,
+    );
+
+    // Add logo if available
+    if ($site_logo) {
+        $schema['logo'] = $site_logo;
+    }
+
+    // Get timeline events
+    $timeline_json = get_theme_mod('about_timeline_json', '');
+    $timeline_events = array();
+
+    if (!empty($timeline_json)) {
+        $decoded = json_decode($timeline_json, true);
+        if (is_array($decoded)) {
+            $timeline_events = $decoded;
+        }
+    }
+
+    // Add founding date from first timeline event
+    if (!empty($timeline_events)) {
+        usort($timeline_events, function($a, $b) {
+            return strcmp($a['date'], $b['date']);
+        });
+
+        $first_event = $timeline_events[0];
+        if (!empty($first_event['date'])) {
+            $schema['foundingDate'] = $first_event['date'];
+        }
+    }
+
+    // Get members
+    $members_json = get_theme_mod('about_members_json', '');
+    $members = array();
+
+    if (!empty($members_json)) {
+        $decoded = json_decode($members_json, true);
+        if (is_array($decoded)) {
+            $members = array_filter($decoded, function($member) {
+                return !isset($member['display']) || $member['display'] === true;
+            });
+        }
+    }
+
+    // Add members as employees
+    if (!empty($members)) {
+        $schema['employee'] = array();
+
+        foreach ($members as $member) {
+            if (empty($member['name'])) {
+                continue;
+            }
+
+            $person = array(
+                '@type' => 'Person',
+                'name' => $member['name'],
+            );
+
+            if (!empty($member['role'])) {
+                $person['jobTitle'] = $member['role'];
+            }
+
+            if (!empty($member['short_bio'])) {
+                $person['description'] = $member['short_bio'];
+            }
+
+            if (!empty($member['profile_link'])) {
+                $person['url'] = $member['profile_link'];
+            }
+
+            if (!empty($member['photo_id'])) {
+                $photo_url = wp_get_attachment_image_url($member['photo_id'], 'medium');
+                if ($photo_url) {
+                    $person['image'] = $photo_url;
+                }
+            }
+
+            $schema['employee'][] = $person;
+        }
+    }
+
+    // Add mission text
+    $mission_text = get_theme_mod('about_mission_text', '');
+    if (!empty($mission_text)) {
+        $schema['description'] = wp_strip_all_tags($mission_text);
+    }
+
+    return $schema;
+}

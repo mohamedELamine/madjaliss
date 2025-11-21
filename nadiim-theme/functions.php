@@ -680,6 +680,9 @@ require_once NADIIM_THEME_DIR . '/inc/cpt-inquiries.php';
 require_once NADIIM_THEME_DIR . '/inc/customizer-contact.php';
 require_once NADIIM_THEME_DIR . '/inc/contact-handler.php';
 
+// تضمين ملفات صفحة من نحن
+require_once NADIIM_THEME_DIR . '/inc/customizer-about.php';
+
 /**
  * تحميل أصول صفحة الاتصال (CSS & JS)
  */
@@ -739,6 +742,22 @@ function nadiim_contact_page_enqueue_assets() {
 	}
 }
 add_action( 'wp_enqueue_scripts', 'nadiim_contact_page_enqueue_assets' );
+
+/**
+ * تحميل أصول صفحة من نحن (CSS)
+ */
+function nadiim_about_page_enqueue_assets() {
+	// تحميل فقط في صفحة من نحن أو في Customizer
+	if ( is_page_template( 'page-templates/about.php' ) || is_customize_preview() ) {
+		wp_enqueue_style(
+			'nadiim-about',
+			NADIIM_THEME_URI . '/assets/css/about.css',
+			array( 'nadiim-main' ),
+			NADIIM_VERSION
+		);
+	}
+}
+add_action( 'wp_enqueue_scripts', 'nadiim_about_page_enqueue_assets' );
 
 /**
  * تحميل JavaScript للوحة الإدارة (صفحة الاستفسارات)

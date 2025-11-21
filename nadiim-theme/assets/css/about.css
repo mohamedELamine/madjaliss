@@ -1,0 +1,482 @@
+/**
+ * About Page Styles
+ *
+ * @package Nadiim
+ * @since 1.0.0
+ */
+
+/* ========================================
+   CSS Variables
+   ======================================== */
+:root {
+    --color-primary: #339063;
+    --color-primary-dark: #2a7351;
+    --color-surface: #f9fffe;
+    --color-text: #1a1a1a;
+    --color-text-secondary: #555;
+    --color-text-muted: #999;
+    --color-border-light: #e8e8e8;
+    --color-bg-section: #f0faf6;
+    --color-bg-lighter: #fafafa;
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+    --radius-xl: 20px;
+    --spacing-xs: 8px;
+    --spacing-sm: 12px;
+    --spacing-md: 16px;
+    --spacing-lg: 24px;
+    --spacing-xl: 32px;
+    --spacing-xxl: 48px;
+}
+
+/* ========================================
+   Page Container
+   ======================================== */
+.page-about {
+    direction: rtl;
+    font-family: 'Cairo', 'Tajawal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+.page-about .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 var(--spacing-lg);
+}
+
+/* ========================================
+   Hero Section
+   ======================================== */
+.about-hero {
+    min-height: 500px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.about-hero__content {
+    animation: fadeInUp 0.8s ease-out;
+}
+
+.about-hero__title {
+    animation: fadeInUp 0.8s ease-out 0.2s both;
+}
+
+.about-hero__lead {
+    animation: fadeInUp 0.8s ease-out 0.4s both;
+}
+
+.about-hero__cta {
+    animation: fadeInUp 0.8s ease-out 0.6s both;
+}
+
+.about-hero .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(51, 144, 99, 0.4) !important;
+}
+
+/* ========================================
+   Mission Section
+   ======================================== */
+.about-mission {
+    scroll-margin-top: 100px;
+}
+
+.mission-content {
+    animation: fadeIn 1s ease-out;
+}
+
+.mission-content p {
+    margin-bottom: 1.5em;
+}
+
+.values-grid {
+    animation: fadeInUp 1s ease-out 0.3s both;
+}
+
+.value-card {
+    animation: fadeInUp 1s ease-out both;
+}
+
+.value-card:nth-child(1) {
+    animation-delay: 0.4s;
+}
+
+.value-card:nth-child(2) {
+    animation-delay: 0.5s;
+}
+
+.value-card:nth-child(3) {
+    animation-delay: 0.6s;
+}
+
+/* ========================================
+   Timeline Section
+   ======================================== */
+.about-timeline {
+    scroll-margin-top: 100px;
+}
+
+.timeline-wrapper {
+    padding: var(--spacing-lg) 0;
+}
+
+.timeline-item {
+    opacity: 0;
+    animation: fadeInUp 0.8s ease-out forwards;
+}
+
+.timeline-item:nth-child(1) { animation-delay: 0.1s; }
+.timeline-item:nth-child(2) { animation-delay: 0.2s; }
+.timeline-item:nth-child(3) { animation-delay: 0.3s; }
+.timeline-item:nth-child(4) { animation-delay: 0.4s; }
+.timeline-item:nth-child(5) { animation-delay: 0.5s; }
+.timeline-item:nth-child(6) { animation-delay: 0.6s; }
+
+.timeline-dot {
+    transition: all 0.3s ease;
+}
+
+.timeline-item:hover .timeline-dot {
+    transform: translateX(50%) scale(1.2);
+    box-shadow: 0 4px 16px rgba(51, 144, 99, 0.5) !important;
+}
+
+.timeline-card {
+    position: relative;
+    overflow: hidden;
+}
+
+.timeline-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 4px;
+    height: 0;
+    background: var(--color-primary);
+    transition: height 0.4s ease;
+}
+
+.timeline-card:hover::before {
+    height: 100%;
+}
+
+/* Timeline Modal */
+.timeline-modal {
+    backdrop-filter: blur(4px);
+    animation: fadeIn 0.3s ease-out;
+}
+
+.timeline-modal .modal-content {
+    animation: slideUp 0.4s ease-out;
+}
+
+/* ========================================
+   Members Section
+   ======================================== */
+.about-members {
+    scroll-margin-top: 100px;
+}
+
+.member-card {
+    opacity: 0;
+    animation: fadeInUp 0.8s ease-out forwards;
+}
+
+.member-card:nth-child(1) { animation-delay: 0.1s; }
+.member-card:nth-child(2) { animation-delay: 0.2s; }
+.member-card:nth-child(3) { animation-delay: 0.3s; }
+.member-card:nth-child(4) { animation-delay: 0.4s; }
+
+.member-avatar {
+    transition: all 0.3s ease;
+}
+
+.member-card:hover .member-avatar {
+    transform: scale(1.05);
+    box-shadow: 0 8px 24px rgba(51, 144, 99, 0.3) !important;
+}
+
+/* ========================================
+   CTA Section
+   ======================================== */
+.about-cta {
+    scroll-margin-top: 100px;
+}
+
+.cta-content {
+    animation: fadeInUp 1s ease-out;
+}
+
+/* ========================================
+   Animations
+   ======================================== */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* ========================================
+   Responsive Design
+   ======================================== */
+
+/* Tablets */
+@media (max-width: 1024px) {
+    .about-hero {
+        min-height: 400px;
+        padding: 80px 0 60px !important;
+    }
+
+    .about-hero__title {
+        font-size: clamp(2rem, 4vw, 3rem) !important;
+    }
+
+    .about-mission,
+    .about-timeline,
+    .about-members,
+    .about-cta {
+        padding: 60px 0 !important;
+    }
+
+    .section-title {
+        font-size: clamp(1.75rem, 3vw, 2.5rem) !important;
+        margin-bottom: 40px !important;
+    }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+    :root {
+        --spacing-lg: 16px;
+        --spacing-xl: 24px;
+        --spacing-xxl: 32px;
+    }
+
+    .about-hero {
+        min-height: 350px;
+        padding: 60px 0 40px !important;
+    }
+
+    .about-hero__title {
+        font-size: clamp(1.75rem, 5vw, 2.5rem) !important;
+        margin-bottom: 16px !important;
+    }
+
+    .about-hero__lead {
+        font-size: 1rem !important;
+        margin-bottom: 32px !important;
+    }
+
+    .about-hero .btn-primary {
+        padding: 14px 28px !important;
+        font-size: 1rem !important;
+    }
+
+    .about-mission,
+    .about-timeline,
+    .about-members,
+    .about-cta {
+        padding: 48px 0 !important;
+    }
+
+    .section-title {
+        font-size: clamp(1.5rem, 4vw, 2rem) !important;
+        margin-bottom: 32px !important;
+    }
+
+    .mission-content {
+        font-size: 1rem !important;
+        margin-bottom: 48px !important;
+    }
+
+    .values-grid {
+        gap: 24px !important;
+    }
+
+    .value-card {
+        padding: 32px 20px !important;
+    }
+
+    /* Timeline Mobile Styles */
+    .timeline-wrapper {
+        padding-right: 48px;
+    }
+
+    .timeline-line {
+        right: 24px !important;
+    }
+
+    .timeline-item {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        padding: 0 !important;
+    }
+
+    .timeline-dot {
+        right: 15px !important;
+    }
+
+    .timeline-content {
+        width: 100% !important;
+        padding: 0 !important;
+        text-align: right !important;
+    }
+
+    .timeline-card {
+        margin-bottom: 24px;
+    }
+
+    /* Members Mobile Styles */
+    .members-grid {
+        gap: 24px !important;
+    }
+
+    .member-card {
+        padding: 28px 20px !important;
+    }
+
+    .member-avatar {
+        width: 120px !important;
+        height: 120px !important;
+        margin-bottom: 16px !important;
+    }
+
+    .member-name {
+        font-size: 1.125rem !important;
+    }
+
+    .member-role {
+        font-size: 0.8125rem !important;
+    }
+
+    .member-bio {
+        font-size: 0.875rem !important;
+    }
+
+    /* CTA Mobile Styles */
+    .cta-title {
+        font-size: clamp(1.5rem, 4vw, 2rem) !important;
+        margin-bottom: 24px !important;
+    }
+
+    .cta-button .btn-light {
+        padding: 16px 36px !important;
+        font-size: 1.125rem !important;
+    }
+
+    /* Modal Mobile Styles */
+    .timeline-modal .modal-content {
+        padding: 32px 20px !important;
+        margin: 16px;
+        max-height: 85vh !important;
+    }
+}
+
+/* Small Mobile */
+@media (max-width: 480px) {
+    .about-hero {
+        padding: 48px 0 32px !important;
+    }
+
+    .about-mission,
+    .about-timeline,
+    .about-members,
+    .about-cta {
+        padding: 40px 0 !important;
+    }
+
+    .values-grid,
+    .members-grid {
+        grid-template-columns: 1fr !important;
+    }
+
+    .timeline-wrapper {
+        padding-right: 40px;
+    }
+}
+
+/* ========================================
+   Print Styles
+   ======================================== */
+@media print {
+    .about-hero {
+        background: #fff !important;
+        padding: 20px 0 !important;
+    }
+
+    .about-hero__overlay,
+    .timeline-line,
+    .timeline-dot,
+    .about-cta,
+    .cta-button {
+        display: none !important;
+    }
+
+    .timeline-card,
+    .member-card,
+    .value-card {
+        box-shadow: none !important;
+        border: 1px solid #ddd !important;
+        page-break-inside: avoid;
+    }
+}
+
+/* ========================================
+   Accessibility
+   ======================================== */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* Focus Styles */
+.about-hero .btn-primary:focus,
+.about-cta .btn-light:focus,
+.timeline-card:focus,
+.member-link a:focus {
+    outline: 3px solid var(--color-primary);
+    outline-offset: 2px;
+}
+
+/* High Contrast Mode */
+@media (prefers-contrast: high) {
+    .timeline-line,
+    .timeline-dot,
+    .value-card,
+    .timeline-card,
+    .member-card {
+        border: 2px solid currentColor !important;
+    }
+}
