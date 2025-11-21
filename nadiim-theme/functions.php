@@ -311,6 +311,9 @@ require_once NADIIM_THEME_DIR . '/inc/customizer-header.php';
 // تضمين ملف Customizer للـ Hero Slider
 require_once NADIIM_THEME_DIR . '/inc/customizer-hero.php';
 
+// تضمين ملف Customizer لقسم من نحن المصغر
+require_once NADIIM_THEME_DIR . '/inc/customizer-about-mini.php';
+
 // تضمين ملف Customizer للحوارات المميزة
 require_once NADIIM_THEME_DIR . '/inc/customizer-featured-howarat.php';
 

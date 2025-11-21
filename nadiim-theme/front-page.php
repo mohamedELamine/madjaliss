@@ -13,6 +13,7 @@ get_header();
 
 // تحميل CSS و JS الخاصة بالصفحة الرئيسية
 wp_enqueue_style( 'nadiim-front-page', get_template_directory_uri() . '/assets/css/front-page.css', array(), '2.0.0' );
+wp_enqueue_style( 'nadiim-about-mini', get_template_directory_uri() . '/assets/css/about-mini.css', array(), '1.0.0' );
 wp_enqueue_script( 'nadiim-front-page', get_template_directory_uri() . '/assets/js/front-page.js', array( 'jquery' ), '2.0.0', true );
 
 // تمرير متغيرات AJAX إلى JavaScript
@@ -32,6 +33,7 @@ wp_localize_script( 'nadiim-front-page', 'nadiimFrontPage', array(
 	$sections_order = get_theme_mod( 'home_sections_order', array(
 		'topbar',
 		'hero-slider', // Hero Slider الجديد
+		'about-mini', // قسم من نحن المصغر
 		'featured-howarat', // الحوارات المميزة
 		'dialogues',
 		'esdar', // قسم الإصدارات

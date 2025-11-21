@@ -1,0 +1,470 @@
+/**
+ * About Mini Section Styles
+ * قسم من نحن المصغر - تنسيقات كاملة
+ *
+ * @package Nadiim
+ * @since 1.0.0
+ */
+
+/* ═══════════════════════════════════════════════════════════════
+   متغيرات CSS
+   ═══════════════════════════════════════════════════════════════ */
+
+:root {
+	/* الألوان */
+	--color-primary: #339063;
+	--color-primary-hover: #2a7a52;
+	--about-mini-bg: #F6FFF9;
+	--text-main: #1C2D27;
+	--text-muted: #6b7a72;
+
+	/* القياسات */
+	--container-max: 1200px;
+	--section-vertical-padding: 48px;
+	--value-card-gap: 32px;
+
+	/* الانتقالات */
+	--transition-default: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   قسم About Mini - الأساسيات
+   ═══════════════════════════════════════════════════════════════ */
+
+.about-mini-section {
+	position: relative;
+	padding: var(--section-vertical-padding) 0;
+	overflow: hidden;
+	background-color: var(--about-mini-bg);
+}
+
+/* الخلفية و Overlay */
+.about-mini-section.section-with-bg {
+	background-size: cover;
+	background-position: var(--about-mini-bg-position, center);
+	background-repeat: no-repeat;
+}
+
+.about-mini-section .section-overlay {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: #000000;
+	opacity: var(--about-mini-overlay-opacity, 0.35);
+	z-index: 1;
+	pointer-events: none;
+}
+
+.about-mini-section .container {
+	position: relative;
+	z-index: 2;
+	max-width: var(--container-max);
+	margin: 0 auto;
+	padding: 0 20px;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   رأس القسم (Section Header)
+   ═══════════════════════════════════════════════════════════════ */
+
+.about-mini-section .section-header {
+	text-align: center;
+	margin-bottom: 48px;
+	max-width: 750px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.about-mini-section .section-title {
+	font-size: clamp(28px, 4vw, 38px);
+	font-weight: 800;
+	color: var(--text-main);
+	margin: 0 0 20px;
+	line-height: 1.2;
+	letter-spacing: -0.02em;
+}
+
+.about-mini-section .section-lead {
+	font-size: clamp(16px, 2vw, 18px);
+	color: var(--text-muted);
+	margin: 0;
+	line-height: 1.7;
+	max-width: 650px;
+	margin: 0 auto;
+}
+
+/* التكيف مع الخلفية */
+.about-mini-section.section-with-bg .section-title {
+	color: rgba(255, 255, 255, 0.98);
+	text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.about-mini-section.section-with-bg .section-lead {
+	color: rgba(255, 255, 255, 0.92);
+	text-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   بطاقات المبادئ (Values Grid)
+   ═══════════════════════════════════════════════════════════════ */
+
+.about-mini-section .values-grid {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: var(--value-card-gap);
+	margin-bottom: 48px;
+}
+
+/* ─────────────────────────────────────
+   بطاقة المبدأ
+   ───────────────────────────────────── */
+
+.about-mini-section .value-card {
+	background-color: #ffffff;
+	padding: 36px 28px;
+	border-radius: 16px;
+	box-shadow: 0 4px 16px rgba(18, 30, 26, 0.08);
+	transition: var(--transition-default);
+	text-align: center;
+	border: 1px solid rgba(51, 144, 99, 0.08);
+	position: relative;
+	overflow: hidden;
+}
+
+.about-mini-section .value-card::before {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	height: 3px;
+	background: linear-gradient(90deg, var(--color-primary) 0%, #10B981 100%);
+	opacity: 0;
+	transition: opacity 0.3s ease;
+}
+
+.about-mini-section .value-card:hover::before {
+	opacity: 1;
+}
+
+.about-mini-section .value-card:hover {
+	transform: translateY(-6px);
+	box-shadow: 0 12px 32px rgba(18, 30, 26, 0.12);
+	border-color: rgba(51, 144, 99, 0.15);
+}
+
+.about-mini-section.section-with-bg .value-card {
+	background-color: rgba(255, 255, 255, 0.95);
+	backdrop-filter: blur(10px);
+	-webkit-backdrop-filter: blur(10px);
+}
+
+.about-mini-section.section-with-bg .value-card:hover {
+	background-color: rgba(255, 255, 255, 0.98);
+}
+
+/* ─────────────────────────────────────
+   أيقونة المبدأ
+   ───────────────────────────────────── */
+
+.about-mini-section .value-icon {
+	font-size: 48px;
+	line-height: 1;
+	margin-bottom: 20px;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 90px;
+	height: 90px;
+	background: linear-gradient(135deg, rgba(51, 144, 99, 0.08) 0%, rgba(16, 185, 129, 0.08) 100%);
+	border-radius: 50%;
+	transition: transform 0.3s ease;
+}
+
+.about-mini-section .value-card:hover .value-icon {
+	transform: scale(1.1) rotate(5deg);
+}
+
+/* ─────────────────────────────────────
+   عنوان المبدأ
+   ───────────────────────────────────── */
+
+.about-mini-section .value-title {
+	font-size: 20px;
+	font-weight: 700;
+	color: var(--text-main);
+	margin: 0 0 12px;
+	line-height: 1.3;
+	letter-spacing: -0.01em;
+}
+
+/* ─────────────────────────────────────
+   نص المبدأ
+   ───────────────────────────────────── */
+
+.about-mini-section .value-text {
+	font-size: 15px;
+	color: var(--text-muted);
+	line-height: 1.6;
+	margin: 0;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   زر CTA
+   ═══════════════════════════════════════════════════════════════ */
+
+.about-mini-section .section-cta {
+	text-align: center;
+	margin-top: 48px;
+}
+
+.about-mini-section .cta-button {
+	display: inline-flex;
+	align-items: center;
+	gap: 10px;
+	padding: 16px 40px;
+	background: linear-gradient(135deg, var(--color-primary) 0%, #2a7a52 100%);
+	color: #ffffff;
+	font-size: 17px;
+	font-weight: 600;
+	text-decoration: none;
+	border-radius: 50px;
+	transition: var(--transition-default);
+	border: 2px solid var(--color-primary);
+	box-shadow: 0 4px 16px rgba(51, 144, 99, 0.25);
+	position: relative;
+	overflow: hidden;
+}
+
+.about-mini-section .cta-button::before {
+	content: '';
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 0;
+	height: 0;
+	border-radius: 50%;
+	background: rgba(255, 255, 255, 0.2);
+	transform: translate(-50%, -50%);
+	transition: width 0.6s, height 0.6s;
+}
+
+.about-mini-section .cta-button:hover::before {
+	width: 300px;
+	height: 300px;
+}
+
+.about-mini-section .cta-button:hover {
+	transform: translateY(-3px);
+	box-shadow: 0 8px 24px rgba(51, 144, 99, 0.35);
+}
+
+.about-mini-section .cta-button:focus {
+	outline: 3px solid var(--color-primary);
+	outline-offset: 3px;
+}
+
+.about-mini-section .cta-button svg {
+	width: 20px;
+	height: 20px;
+	transition: transform 0.3s ease;
+	position: relative;
+	z-index: 1;
+}
+
+.about-mini-section .cta-button:hover svg {
+	transform: translateX(4px);
+}
+
+[dir="rtl"] .about-mini-section .cta-button:hover svg {
+	transform: translateX(-4px);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   Responsive Breakpoints
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ≥ 1200px (Desktop Large) */
+@media screen and (min-width: 1200px) {
+	.about-mini-section {
+		padding: 64px 0;
+	}
+
+	.about-mini-section .section-header {
+		margin-bottom: 56px;
+	}
+}
+
+/* 768px - 1199px (Tablet/Desktop) */
+@media screen and (min-width: 768px) and (max-width: 1199px) {
+	.about-mini-section {
+		padding: 56px 0;
+	}
+
+	.about-mini-section .values-grid {
+		gap: 24px;
+	}
+
+	.about-mini-section .value-card {
+		padding: 32px 24px;
+	}
+}
+
+/* ≤ 767px (Mobile) */
+@media screen and (max-width: 767px) {
+	.about-mini-section {
+		padding: 40px 0;
+	}
+
+	.about-mini-section .section-header {
+		margin-bottom: 36px;
+	}
+
+	.about-mini-section .section-title {
+		font-size: 26px;
+		margin-bottom: 16px;
+	}
+
+	.about-mini-section .section-lead {
+		font-size: 16px;
+	}
+
+	.about-mini-section .values-grid {
+		grid-template-columns: 1fr;
+		gap: 20px;
+		margin-bottom: 36px;
+	}
+
+	.about-mini-section .value-card {
+		padding: 28px 24px;
+	}
+
+	.about-mini-section .value-icon {
+		font-size: 40px;
+		width: 80px;
+		height: 80px;
+		margin-bottom: 16px;
+	}
+
+	.about-mini-section .value-title {
+		font-size: 18px;
+	}
+
+	.about-mini-section .value-text {
+		font-size: 14px;
+	}
+
+	.about-mini-section .section-cta {
+		margin-top: 36px;
+	}
+
+	.about-mini-section .cta-button {
+		padding: 14px 32px;
+		font-size: 16px;
+		width: 100%;
+		justify-content: center;
+	}
+}
+
+/* ≤ 480px (Mobile Small) */
+@media screen and (max-width: 480px) {
+	.about-mini-section {
+		padding: 32px 0;
+	}
+
+	.about-mini-section .value-icon {
+		font-size: 36px;
+		width: 72px;
+		height: 72px;
+	}
+
+	.about-mini-section .value-title {
+		font-size: 17px;
+	}
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   Accessibility & Motion Preferences
+   ═══════════════════════════════════════════════════════════════ */
+
+/* تقليل الحركة للمستخدمين الذين يفضلون ذلك */
+@media (prefers-reduced-motion: reduce) {
+	.about-mini-section .value-card,
+	.about-mini-section .value-icon,
+	.about-mini-section .cta-button {
+		transition: none;
+	}
+
+	.about-mini-section .value-card:hover,
+	.about-mini-section .cta-button:hover {
+		transform: none;
+	}
+
+	.about-mini-section .value-card:hover .value-icon {
+		transform: none;
+	}
+}
+
+/* Focus visible للوصول عبر الكيبورد */
+.about-mini-section .cta-button:focus-visible {
+	outline: 3px solid var(--color-primary);
+	outline-offset: 3px;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   Print Styles
+   ═══════════════════════════════════════════════════════════════ */
+
+@media print {
+	.about-mini-section {
+		background: none !important;
+		padding: 20px 0;
+	}
+
+	.about-mini-section .section-overlay {
+		display: none !important;
+	}
+
+	.about-mini-section .value-card {
+		box-shadow: none;
+		border: 1px solid #ddd;
+		break-inside: avoid;
+		page-break-inside: avoid;
+	}
+
+	.about-mini-section .value-card:hover {
+		transform: none;
+	}
+
+	.about-mini-section .cta-button {
+		display: none;
+	}
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   Dark Mode Support
+   ═══════════════════════════════════════════════════════════════ */
+
+@media (prefers-color-scheme: dark) {
+	:root {
+		--text-main: #e8f0ed;
+		--text-muted: #a8b5b0;
+		--about-mini-bg: #1a2420;
+	}
+
+	.about-mini-section:not(.section-with-bg) .value-card {
+		background-color: #243028;
+		box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+		border-color: rgba(51, 144, 99, 0.2);
+	}
+
+	.about-mini-section .value-card:hover {
+		box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5);
+	}
+
+	.about-mini-section .value-icon {
+		background: linear-gradient(135deg, rgba(51, 144, 99, 0.15) 0%, rgba(16, 185, 129, 0.15) 100%);
+	}
+}

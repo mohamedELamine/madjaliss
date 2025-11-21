@@ -191,7 +191,7 @@
 .esdar-card-image {
 	position: relative;
 	width: 100%;
-	aspect-ratio: 3 / 4; /* نسبة العرض للارتفاع */
+	aspect-ratio: 2 / 3; /* نسبة العرض للارتفاع */
 	overflow: hidden;
 	background: linear-gradient(135deg, #f0f4f2 0%, #e8ede8 100%);
 }
@@ -296,7 +296,7 @@
 	display: flex;
 	flex-direction: column;
 	flex-grow: 1;
-	padding: 24px;
+	padding: 28px;
 }
 
 /* ─────────────────────────────────────
@@ -304,13 +304,13 @@
    ───────────────────────────────────── */
 
 .esdar-card-title {
-	font-size: 19px;
+	font-size: 20px;
 	font-weight: 700;
 	color: var(--text-main);
-	margin: 0 0 14px;
+	margin: 0 0 16px;
 	line-height: 1.35;
 	letter-spacing: -0.02em;
-	min-height: 52px;
+	min-height: 54px;
 	display: -webkit-box;
 	-webkit-line-clamp: 2;
 	-webkit-box-orient: vertical;

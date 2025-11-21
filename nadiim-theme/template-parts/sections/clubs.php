@@ -31,13 +31,6 @@ $clubs_args = array(
 	'orderby'        => 'date',
 	'order'          => 'DESC',
 	'post_status'    => 'publish',
-	'meta_query'     => array(
-		array(
-			'key'     => 'club_meta',
-			'value'   => '"visibility":"public"',
-			'compare' => 'LIKE',
-		),
-	),
 );
 
 $clubs_query = new WP_Query( $clubs_args );
