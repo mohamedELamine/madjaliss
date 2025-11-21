@@ -1509,12 +1509,12 @@
 }
 
 /* ===================================================================
-   Grid View (اختياري من Customizer)
+   Grid View (عمودين)
    =================================================================== */
 
 .articles-list.articles-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  grid-template-columns: repeat(2, 1fr);
   gap: var(--space-lg);
 }
 
@@ -1524,18 +1524,37 @@
 
 .articles-grid .article-card-image {
   width: 100%;
-  height: 200px;
+  height: 220px;
+}
+
+.articles-grid .article-card-content {
+  padding: var(--space-lg);
 }
 
 .articles-grid .article-excerpt {
   -webkit-line-clamp: 3;
 }
 
+.articles-grid .article-title {
+  font-size: var(--font-size-lg);
+}
+
 /* ===================================================================
    Responsive Design
    =================================================================== */
 
-/* Tablets */
+/* Large Tablets - عمودين على الشاشات المتوسطة */
+@media (max-width: 1024px) and (min-width: 769px) {
+  .articles-grid .article-card-image {
+    height: 180px;
+  }
+
+  .articles-grid .article-title {
+    font-size: var(--font-size-base);
+  }
+}
+
+/* Tablets - عمود واحد */
 @media (max-width: 768px) {
   /* List view يتحول لـ column على الموبايل */
   .articles-list.articles-list .article-card {
@@ -1562,7 +1581,7 @@
     justify-content: center;
   }
 
-  /* Grid view */
+  /* Grid view - عمود واحد على التابلت والموبايل */
   .articles-list.articles-grid {
     grid-template-columns: 1fr;
   }

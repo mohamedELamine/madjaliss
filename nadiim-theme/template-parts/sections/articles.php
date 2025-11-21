@@ -17,7 +17,7 @@ if ( ! get_theme_mod( 'articles_section_enable', true ) ) {
 $section_title       = get_theme_mod( 'articles_section_title', __( 'المقالات', 'nadiim' ) );
 $section_description = get_theme_mod( 'articles_section_description', __( 'استكشف مقالاتنا حول القراءة والكتب والثقافة', 'nadiim' ) );
 $posts_count         = get_theme_mod( 'articles_section_count', 6 );
-$layout_type         = get_theme_mod( 'articles_section_layout', 'list' ); // list or grid
+$layout_type         = get_theme_mod( 'articles_section_layout', 'grid' ); // list or grid (افتراضي: grid = عمودين)
 $filter_type         = get_theme_mod( 'articles_section_filter', 'latest' ); // latest, category, tag, author
 $category_id         = get_theme_mod( 'articles_section_category', '' );
 $tag_slug            = get_theme_mod( 'articles_section_tag', '' );

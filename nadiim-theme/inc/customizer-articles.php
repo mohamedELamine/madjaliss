@@ -110,7 +110,7 @@ function nadiim_register_articles_section_customizer( $wp_customize ) {
 	// Setting: نوع التخطيط (List/Grid)
 	// ========================================
 	$wp_customize->add_setting( 'articles_section_layout', array(
-		'default'           => 'list',
+		'default'           => 'grid',
 		'sanitize_callback' => 'nadiim_sanitize_select',
 		'transport'         => 'refresh',
 	) );
@@ -120,8 +120,8 @@ function nadiim_register_articles_section_customizer( $wp_customize ) {
 		'section'  => 'nadiim_articles_section',
 		'type'     => 'select',
 		'choices'  => array(
-			'list' => __( 'قائمة (List)', 'nadiim' ),
-			'grid' => __( 'شبكة (Grid)', 'nadiim' ),
+			'grid' => __( 'شبكة - عمودين (Grid)', 'nadiim' ),
+			'list' => __( 'قائمة عمودية (List)', 'nadiim' ),
 		),
 		'priority' => 50,
 	) );
