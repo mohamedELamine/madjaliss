@@ -26,7 +26,7 @@
     --header-sticky-height: 60px;
     --header-logo-width: 180px;
     --header-logo-margin: 15px;
-    --header-menu-spacing: 20px;
+    --header-menu-spacing: 15px;
     --header-menu-align: center;
 }
 
@@ -142,16 +142,17 @@
 .site-header .container {
     max-width: 1400px;
     margin: 0 auto;
-    padding: 0 24px;
+    padding: 0;
 }
 
 .header-inner {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 25px;
+    gap: 40px;
     height: var(--header-height);
     transition: height 0.3s ease;
+    padding: 0 40px;
 }
 
 /* ─────────────────────────────────────
@@ -222,45 +223,49 @@
 
 .primary-menu > li > a {
     display: block;
-    padding: 10px 0;
+    padding: 10px 15px;
     color: var(--header-link-color);
     text-decoration: none;
     font-weight: 600;
     font-size: 18px;
-    transition: color 0.2s ease;
+    transition: all 0.3s ease;
     position: relative;
+    border-radius: 8px;
 }
 
 .primary-menu > li > a::after {
     content: '';
     position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 0;
-    height: 3px;
+    bottom: 8px;
+    left: 15px;
+    right: 15px;
+    width: calc(100% - 30px);
+    height: 2px;
     background-color: var(--header-link-hover);
-    transition: width 0.3s ease;
+    transform: scaleX(0);
+    transform-origin: center;
+    transition: transform 0.3s ease;
 }
 
-.primary-menu > li > a:hover,
+.primary-menu > li > a:hover {
+    color: var(--header-link-hover);
+    transform: translateY(-2px);
+}
+
+.primary-menu > li > a:hover::after {
+    transform: scaleX(1);
+}
+
+/* العنصر النشط */
 .primary-menu > li.current-menu-item > a,
 .primary-menu > li.current_page_item > a {
     color: var(--header-link-hover);
+    background-color: rgba(51, 144, 99, 0.08);
 }
 
-.primary-menu > li > a:hover::after,
 .primary-menu > li.current-menu-item > a::after,
 .primary-menu > li.current_page_item > a::after {
-    width: 100%;
-}
-
-/* العنصر النشط يكون بخلفية خفيفة */
-.primary-menu > li.current-menu-item > a,
-.primary-menu > li.current_page_item > a {
-    background-color: rgba(51, 144, 99, 0.08);
-    border-radius: 6px;
-    padding: 10px 15px;
-    margin: 0 -15px;
+    transform: scaleX(1);
 }
 
 /* القائمة الفرعية (Dropdown) */
@@ -634,6 +639,8 @@
 
     .header-inner {
         height: 70px;
+        padding: 0 20px;
+        gap: 15px;
     }
 
     .header-sticky.is-stuck .header-inner {
@@ -727,10 +734,7 @@
    RTL Support
    ========================================== */
 
-[dir="rtl"] .primary-menu > li > a::after {
-    left: auto;
-    right: 0;
-}
+/* RTL يعمل تلقائياً مع transform: scaleX */
 
 [dir="rtl"] .primary-menu .sub-menu {
     right: auto;

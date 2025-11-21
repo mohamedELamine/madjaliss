@@ -249,6 +249,19 @@ function nadiim_header_customizer_register( $wp_customize ) {
     // إعدادات الشعار
     // ─────────────────────────────────────
 
+    // رفع الشعار
+    $wp_customize->add_setting( 'header_logo', array(
+        'default'           => '',
+        'sanitize_callback' => 'absint',
+    ) );
+
+    $wp_customize->add_control( new WP_Customize_Media_Control( $wp_customize, 'header_logo', array(
+        'label'       => __( 'رفع الشعار', 'nadiim' ),
+        'description' => __( 'اختر صورة الشعار من مكتبة الوسائط', 'nadiim' ),
+        'section'     => 'nadiim_header_section',
+        'mime_type'   => 'image',
+    ) ) );
+
     $wp_customize->add_setting( 'header_logo_width', array(
         'default'           => 180,
         'sanitize_callback' => 'absint',
@@ -442,7 +455,7 @@ function nadiim_header_customizer_register( $wp_customize ) {
     ) );
 
     $wp_customize->add_setting( 'header_menu_item_spacing', array(
-        'default'           => 20,
+        'default'           => 15,
         'sanitize_callback' => 'absint',
         'transport'         => 'postMessage',
     ) );
@@ -452,7 +465,7 @@ function nadiim_header_customizer_register( $wp_customize ) {
         'section'     => 'nadiim_header_section',
         'type'        => 'range',
         'input_attrs' => array(
-            'min'  => 10,
+            'min'  => 5,
             'max'  => 50,
             'step' => 5,
         ),
@@ -479,7 +492,7 @@ function nadiim_header_customizer_css() {
             --header-border: <?php echo esc_attr( get_theme_mod( 'header_border_bottom_color', 'rgba(0,0,0,0.06)' ) ); ?>;
             --header-logo-width: <?php echo absint( get_theme_mod( 'header_logo_width', 180 ) ); ?>px;
             --header-logo-margin: <?php echo absint( get_theme_mod( 'header_logo_margin', 15 ) ); ?>px;
-            --header-menu-spacing: <?php echo absint( get_theme_mod( 'header_menu_item_spacing', 20 ) ); ?>px;
+            --header-menu-spacing: <?php echo absint( get_theme_mod( 'header_menu_item_spacing', 15 ) ); ?>px;
             --header-menu-align: <?php echo esc_attr( get_theme_mod( 'header_menu_alignment', 'center' ) ); ?>;
         }
 

@@ -28,9 +28,23 @@ if ( $sticky_shadow_enabled ) {
             <!-- الشعار -->
             <div class="site-branding">
                 <?php
-                if ( has_custom_logo() ) {
+                $header_logo = get_theme_mod( 'header_logo' );
+
+                if ( $header_logo ) {
+                    // الشعار من Customizer
+                    $logo_url = wp_get_attachment_image_url( $header_logo, 'full' );
+                    if ( $logo_url ) {
+                        ?>
+                        <a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="custom-logo-link" rel="home">
+                            <img src="<?php echo esc_url( $logo_url ); ?>" class="custom-logo" alt="<?php bloginfo( 'name' ); ?>" />
+                        </a>
+                        <?php
+                    }
+                } elseif ( has_custom_logo() ) {
+                    // الشعار من WordPress الافتراضي
                     the_custom_logo();
                 } else {
+                    // عنوان الموقع
                     ?>
                     <a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="site-title-link" rel="home">
                         <h1 class="site-title"><?php bloginfo( 'name' ); ?></h1>
