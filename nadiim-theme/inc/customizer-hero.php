@@ -20,9 +20,10 @@ function nadiim_hero_customizer_register( $wp_customize ) {
     // ============================================
 
     $wp_customize->add_section( 'nadiim_hero_slider', array(
-        'title'       => __( 'Hero Slider - الصفحة الرئيسية', 'nadiim' ),
+        'title'       => __( 'Hero Slider - السلايدر الرئيسي', 'nadiim' ),
         'description' => __( 'إعدادات السلايدر الرئيسي في الصفحة الرئيسية', 'nadiim' ),
-        'priority'    => 40,
+        'panel'       => 'nadiim_front_page_panel',
+        'priority'    => 32,
     ) );
 
     // ─────────────────────────────────────

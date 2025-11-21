@@ -20,9 +20,10 @@ function nadiim_featured_howarat_customizer_register( $wp_customize ) {
 	// ============================================
 
 	$wp_customize->add_section( 'nadiim_featured_howarat', array(
-		'title'       => __( 'الحوارات المميزة - الصفحة الرئيسية', 'nadiim' ),
+		'title'       => __( 'الحوارات المميزة', 'nadiim' ),
 		'description' => __( 'إعدادات قسم الحوارات المميزة في الصفحة الرئيسية', 'nadiim' ),
-		'priority'    => 45,
+		'panel'       => 'nadiim_front_page_panel',
+		'priority'    => 42,
 	) );
 
 	// ─────────────────────────────────────

@@ -22,7 +22,8 @@ function nadiim_header_customizer_register( $wp_customize ) {
     $wp_customize->add_section( 'nadiim_topbar_section', array(
         'title'       => __( 'الشريط العلوي (Top Bar)', 'nadiim' ),
         'description' => __( 'إعدادات الشريط العلوي الذي يظهر في أعلى الصفحة', 'nadiim' ),
-        'priority'    => 35,
+        'panel'       => 'nadiim_front_page_panel',
+        'priority'    => 22,
     ) );
 
     // ✔ تفعيل/إلغاء الشريط العلوي
@@ -242,7 +243,8 @@ function nadiim_header_customizer_register( $wp_customize ) {
     $wp_customize->add_section( 'nadiim_header_section', array(
         'title'       => __( 'الهيدر الرئيسي (Header)', 'nadiim' ),
         'description' => __( 'إعدادات الهيدر والقائمة الرئيسية', 'nadiim' ),
-        'priority'    => 36,
+        'panel'       => 'nadiim_front_page_panel',
+        'priority'    => 24,
     ) );
 
     // ─────────────────────────────────────
