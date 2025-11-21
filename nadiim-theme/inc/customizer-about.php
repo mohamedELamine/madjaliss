@@ -357,29 +357,6 @@ function nadiim_about_customize_register($wp_customize) {
 add_action('customize_register', 'nadiim_about_customize_register');
 
 /**
- * Sanitize checkbox
- */
-function nadiim_sanitize_checkbox($checked) {
-    return ((isset($checked) && true === $checked) ? true : false);
-}
-
-/**
- * Sanitize select
- */
-function nadiim_sanitize_select($input, $setting) {
-    $input = sanitize_key($input);
-    $choices = $setting->manager->get_control($setting->id)->choices;
-    return (array_key_exists($input, $choices) ? $input : $setting->default);
-}
-
-/**
- * Sanitize float
- */
-function nadiim_sanitize_float($input) {
-    return floatval($input);
-}
-
-/**
  * Sanitize Timeline JSON
  */
 function nadiim_sanitize_timeline_json($input) {
