@@ -34,7 +34,7 @@ wp_localize_script( 'nadiim-front-page', 'nadiimFrontPage', array(
 		'hero-slider', // Hero Slider الجديد
 		'featured-howarat', // الحوارات المميزة
 		'dialogues',
-		'releases',
+		'esdar', // قسم الإصدارات
 		'articles', // قسم المقالات الجديد
 		'clubs',
 		'newsletter',
