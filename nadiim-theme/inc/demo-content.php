@@ -770,11 +770,6 @@ function nadiim_setup_demo_customizer() {
 	set_theme_mod( 'home_releases_count', 8 );
 	set_theme_mod( 'home_releases_layout', 'carousel' );
 
-	// Posts section.
-	set_theme_mod( 'home_posts_enable', true );
-	set_theme_mod( 'home_posts_count', 3 );
-	set_theme_mod( 'home_posts_category', '' );
-
 	// Clubs section.
 	set_theme_mod( 'home_clubs_enable', true );
 	set_theme_mod( 'home_clubs_count', 3 );

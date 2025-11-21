@@ -36,7 +36,6 @@ wp_localize_script( 'nadiim-front-page', 'nadiimFrontPage', array(
 		'dialogues',
 		'releases',
 		'articles', // قسم المقالات الجديد
-		'posts',
 		'clubs',
 		'newsletter',
 	) );

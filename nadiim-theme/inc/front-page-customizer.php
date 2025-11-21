@@ -398,62 +398,7 @@ function nadiim_front_page_customizer_register( $wp_customize ) {
 	) );
 
 	/* ================================================================
-	   Section 6: Posts (المقالات)
-	   ================================================================ */
-
-	$wp_customize->add_section( 'nadiim_front_page_posts', array(
-		'title'    => __( 'Posts - المقالات', 'nadiim' ),
-		'panel'    => 'nadiim_front_page_panel',
-		'priority' => 60,
-	) );
-
-	// تفعيل
-	$wp_customize->add_setting( 'home_posts_enable', array(
-		'default'           => true,
-		'sanitize_callback' => 'nadiim_sanitize_checkbox',
-		'transport'         => 'refresh',
-	) );
-
-	$wp_customize->add_control( 'home_posts_enable', array(
-		'label'    => __( 'تفعيل قسم المقالات', 'nadiim' ),
-		'section'  => 'nadiim_front_page_posts',
-		'type'     => 'checkbox',
-	) );
-
-	// عدد المقالات
-	$wp_customize->add_setting( 'home_posts_count', array(
-		'default'           => 3,
-		'sanitize_callback' => 'absint',
-		'transport'         => 'refresh',
-	) );
-
-	$wp_customize->add_control( 'home_posts_count', array(
-		'label'       => __( 'عدد المقالات', 'nadiim' ),
-		'section'     => 'nadiim_front_page_posts',
-		'type'        => 'number',
-		'input_attrs' => array(
-			'min'  => 2,
-			'max'  => 6,
-			'step' => 1,
-		),
-	) );
-
-	// التصنيف
-	$wp_customize->add_setting( 'home_posts_category', array(
-		'default'           => '',
-		'sanitize_callback' => 'absint',
-		'transport'         => 'refresh',
-	) );
-
-	$wp_customize->add_control( 'home_posts_category', array(
-		'label'   => __( 'التصنيف', 'nadiim' ),
-		'section' => 'nadiim_front_page_posts',
-		'type'    => 'select',
-		'choices' => nadiim_get_categories_choices(),
-	) );
-
-	/* ================================================================
-	   Section 7: Clubs (نوادي القراءة)
+	   Section 6: Clubs (نوادي القراءة)
 	   ================================================================ */
 
 	$wp_customize->add_section( 'nadiim_front_page_clubs', array(
