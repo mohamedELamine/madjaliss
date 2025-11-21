@@ -1,884 +1,769 @@
 /**
- * أنماط الإصدارات (Releases Styles)
+ * Esdar Section Styles
+ * قسم الإصدارات - تنسيقات كاملة
  *
  * @package Nadiim
+ * @since 1.0.0
  */
 
-/* ============================================
-   المتغيرات (CSS Variables)
-   ============================================ */
+/* ═══════════════════════════════════════════════════════════════
+   متغيرات CSS
+   ═══════════════════════════════════════════════════════════════ */
+
 :root {
-    --esdar-primary: #339063;
-    --esdar-primary-dark: #2a7550;
-    --esdar-primary-light: #e8f5ef;
-    --esdar-surface: #ffffff;
-    --esdar-surface-alt: #f8f9fa;
-    --esdar-text-primary: #1C2D27;
-    --esdar-text-secondary: #5a6c66;
-    --esdar-text-muted: #8a9a94;
-    --esdar-border: #e0e5e3;
-    --esdar-shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.06);
-    --esdar-shadow-md: 0 4px 16px rgba(0, 0, 0, 0.08);
-    --esdar-shadow-lg: 0 12px 28px rgba(0, 0, 0, 0.12);
-    --esdar-radius-sm: 8px;
-    --esdar-radius-md: 12px;
-    --esdar-radius-lg: 16px;
-    --esdar-transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-/* ============================================
-   Container
-   ============================================ */
-.esdar-single .container,
-.esdar-archive .container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
-}
-
-/* ============================================
-   Single Release - Hero Section
-   ============================================ */
-.esdar-hero {
-    background: var(--esdar-surface);
-    padding: 48px 0;
-    border-bottom: 1px solid var(--esdar-border);
-}
-
-.esdar-hero-inner {
-    display: grid;
-    grid-template-columns: 360px 1fr;
-    gap: 48px;
-    align-items: start;
-}
-
-.esdar-hero-cover {
-    position: relative;
-    border-radius: var(--esdar-radius-lg);
-    overflow: hidden;
-    box-shadow: var(--esdar-shadow-lg);
-    aspect-ratio: 3 / 4;
-}
-
-.esdar-cover-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.esdar-cover-placeholder {
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(135deg, var(--esdar-primary-light) 0%, var(--esdar-surface-alt) 100%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.esdar-cover-placeholder svg {
-    width: 80px;
-    height: 80px;
-    color: var(--esdar-primary);
-    opacity: 0.5;
-}
-
-.esdar-hero-meta {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
-
-.esdar-type-badge {
-    display: inline-flex;
-    align-items: center;
-    padding: 6px 14px;
-    border-radius: 20px;
-    font-size: 13px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    align-self: flex-start;
-}
-
-.esdar-type-book {
-    background: #e3f2fd;
-    color: #1976d2;
-}
-
-.esdar-type-magazine {
-    background: #f3e5f5;
-    color: #7b1fa2;
-}
-
-.esdar-type-brochure {
-    background: #e8f5e9;
-    color: #388e3c;
-}
-
-.esdar-type-report {
-    background: #fff3e0;
-    color: #f57c00;
-}
-
-.esdar-type-issue {
-    background: #fce4ec;
-    color: #c2185b;
-}
-
-.esdar-title {
-    font-size: clamp(24px, 4vw, 34px);
-    font-weight: 700;
-    color: var(--esdar-text-primary);
-    line-height: 1.3;
-    margin: 0;
-}
-
-.esdar-authors,
-.esdar-date {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 15px;
-    color: var(--esdar-text-secondary);
-}
-
-.esdar-label {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    font-weight: 600;
-}
-
-.esdar-icon {
-    color: var(--esdar-primary);
-}
-
-.esdar-authors-list a {
-    color: var(--esdar-text-primary);
-    text-decoration: none;
-    transition: var(--esdar-transition);
-}
-
-.esdar-authors-list a:hover {
-    color: var(--esdar-primary);
-}
-
-.esdar-info-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: 12px;
-    margin: 8px 0;
-}
-
-.esdar-info-item {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 10px 14px;
-    background: var(--esdar-surface-alt);
-    border-radius: var(--esdar-radius-sm);
-    font-size: 14px;
-    color: var(--esdar-text-secondary);
-}
-
-.esdar-formats {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    flex-wrap: wrap;
-}
-
-.esdar-format-badges {
-    display: flex;
-    gap: 6px;
-}
-
-.esdar-format-badge {
-    display: inline-block;
-    padding: 4px 10px;
-    background: var(--esdar-primary-light);
-    color: var(--esdar-primary);
-    border-radius: 6px;
-    font-size: 12px;
-    font-weight: 700;
-    text-transform: uppercase;
-}
-
-.esdar-price {
-    display: flex;
-    align-items: baseline;
-    gap: 8px;
-    font-size: 16px;
-}
-
-.esdar-price-value {
-    font-size: 22px;
-    font-weight: 700;
-    color: var(--esdar-primary);
-}
-
-.esdar-actions {
-    display: flex;
-    gap: 12px;
-    margin-top: 12px;
-}
-
-.esdar-btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    padding: 0 24px;
-    height: 48px;
-    border-radius: var(--esdar-radius-md);
-    font-size: 16px;
-    font-weight: 600;
-    text-decoration: none;
-    transition: var(--esdar-transition);
-    cursor: pointer;
-    border: none;
-}
-
-.esdar-btn-primary {
-    background: var(--esdar-primary);
-    color: #ffffff;
-    box-shadow: var(--esdar-shadow-md);
-}
+	/* الألوان */
+	--color-primary: #339063;
+	--color-primary-hover: #2a7a52;
+	--esdar-bg-surface: #F8FFF6;
+	--text-main: #1C2D27;
+	--text-muted: #6b7a72;
+
+	/* القياسات */
+	--card-radius: 14px;
+	--container-max: 1200px;
+	--section-vertical-padding: 48px;
+	--card-gap: 28px;
 
-.esdar-btn-primary:hover {
-    background: var(--esdar-primary-dark);
-    transform: translateY(-2px);
-    box-shadow: var(--esdar-shadow-lg);
+	/* الانتقالات */
+	--transition-default: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+
+	/* الظلال */
+	--card-shadow: 0 10px 30px rgba(18, 30, 26, 0.06);
+	--card-shadow-hover: 0 15px 45px rgba(18, 30, 26, 0.12);
 }
 
-.esdar-btn-secondary {
-    background: var(--esdar-surface);
-    color: var(--esdar-text-primary);
-    border: 2px solid var(--esdar-border);
-}
-
-.esdar-btn-secondary:hover {
-    background: var(--esdar-surface-alt);
-    border-color: var(--esdar-primary);
-    color: var(--esdar-primary);
-}
-
-.esdar-stats {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 12px 16px;
-    background: var(--esdar-primary-light);
-    border-radius: var(--esdar-radius-sm);
-    font-size: 14px;
-    color: var(--esdar-text-secondary);
-}
-
-.esdar-stats strong {
-    color: var(--esdar-primary);
-}
-
-/* ============================================
-   Content Sections
-   ============================================ */
-.esdar-excerpt-section,
-.esdar-preview-section,
-.esdar-content-section,
-.esdar-related-section,
-.esdar-footer-section {
-    padding: 48px 0;
-}
-
-.esdar-excerpt-box {
-    background: var(--esdar-surface-alt);
-    padding: 24px;
-    border-radius: var(--esdar-radius-md);
-    border-right: 4px solid var(--esdar-primary);
-    font-size: 17px;
-    line-height: 1.7;
-    color: var(--esdar-text-secondary);
-}
-
-.esdar-section-title {
-    font-size: 26px;
-    font-weight: 700;
-    color: var(--esdar-text-primary);
-    margin-bottom: 24px;
-    padding-bottom: 12px;
-    border-bottom: 3px solid var(--esdar-primary);
-    display: inline-block;
-}
-
-/* Preview Embed */
-.esdar-preview-embed {
-    position: relative;
-    padding-bottom: 62.5%; /* 16:10 aspect ratio */
-    max-height: 600px;
-    border-radius: var(--esdar-radius-md);
-    overflow: hidden;
-    box-shadow: var(--esdar-shadow-md);
-}
-
-.esdar-preview-embed iframe {
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 100%;
-    height: 100%;
-    border: none;
-}
-
-/* Preview Gallery */
-.esdar-preview-gallery {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 20px;
-}
-
-.esdar-preview-link {
-    display: block;
-    border-radius: var(--esdar-radius-md);
-    overflow: hidden;
-    box-shadow: var(--esdar-shadow-sm);
-    transition: var(--esdar-transition);
-}
-
-.esdar-preview-link:hover {
-    box-shadow: var(--esdar-shadow-lg);
-    transform: translateY(-4px);
-}
-
-.esdar-preview-image {
-    width: 100%;
-    height: auto;
-    display: block;
-}
-
-/* Entry Content */
-.entry-content {
-    font-size: 17px;
-    line-height: 1.8;
-    color: var(--esdar-text-secondary);
-}
-
-/* Related Section */
-.esdar-grid {
-    display: grid;
-    gap: 28px;
-}
-
-.esdar-grid-3 {
-    grid-template-columns: repeat(3, 1fr);
-}
+/* ═══════════════════════════════════════════════════════════════
+   قسم الإصدارات - الأساسيات
+   ═══════════════════════════════════════════════════════════════ */
+
+.esdar-section {
+	position: relative;
+	padding: var(--section-vertical-padding) 0;
+	overflow: hidden;
+	background-color: transparent;
+}
 
-/* Footer Section */
-.esdar-footer-inner {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 32px;
-    padding: 24px;
-    background: var(--esdar-surface-alt);
-    border-radius: var(--esdar-radius-md);
+/* الخلفية و Overlay */
+.esdar-section.section-with-bg {
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
 }
 
-.esdar-taxonomy {
-    flex: 1;
+.esdar-section .section-bg-overlay {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: #000000;
+	opacity: var(--esdar-overlay-opacity, 0.30);
+	z-index: 1;
+	pointer-events: none;
 }
 
-.esdar-categories,
-.esdar-tags {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    flex-wrap: wrap;
-    margin-bottom: 12px;
+.esdar-section .container {
+	position: relative;
+	z-index: 2;
+	max-width: var(--container-max);
+	margin: 0 auto;
+	padding: 0 20px;
 }
 
-.esdar-tax-label {
-    font-weight: 600;
-    color: var(--esdar-text-primary);
-}
-
-.esdar-tax-item {
-    display: inline-block;
-    padding: 4px 12px;
-    background: var(--esdar-surface);
-    border: 1px solid var(--esdar-border);
-    border-radius: 20px;
-    font-size: 13px;
-    color: var(--esdar-text-secondary);
-    text-decoration: none;
-    transition: var(--esdar-transition);
-}
-
-.esdar-tax-item:hover {
-    background: var(--esdar-primary-light);
-    border-color: var(--esdar-primary);
-    color: var(--esdar-primary);
-}
-
-.esdar-share {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
-
-.esdar-share-label {
-    font-weight: 600;
-    color: var(--esdar-text-primary);
-}
-
-.esdar-share-buttons {
-    display: flex;
-    gap: 8px;
-}
-
-.esdar-share-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background: var(--esdar-surface);
-    border: 1px solid var(--esdar-border);
-    color: var(--esdar-text-secondary);
-    transition: var(--esdar-transition);
-}
-
-.esdar-share-facebook:hover {
-    background: #1877f2;
-    border-color: #1877f2;
-    color: #ffffff;
-}
+/* ═══════════════════════════════════════════════════════════════
+   رأس القسم (Section Header)
+   ═══════════════════════════════════════════════════════════════ */
 
-.esdar-share-twitter:hover {
-    background: #1da1f2;
-    border-color: #1da1f2;
-    color: #ffffff;
+.esdar-section .section-header {
+	text-align: center;
+	margin-bottom: 48px;
+	max-width: 800px;
+	margin-left: auto;
+	margin-right: auto;
 }
 
-.esdar-share-whatsapp:hover {
-    background: #25d366;
-    border-color: #25d366;
-    color: #ffffff;
+.esdar-section .section-title {
+	font-size: clamp(28px, 4vw, 42px);
+	font-weight: 800;
+	color: var(--text-main);
+	margin: 0 0 16px;
+	line-height: 1.2;
+	letter-spacing: -0.02em;
 }
 
-/* ============================================
-   Archive Page
-   ============================================ */
-.esdar-archive-hero {
-    background: linear-gradient(135deg, var(--esdar-primary-light) 0%, var(--esdar-surface) 100%);
-    padding: 64px 0 48px;
-    text-align: center;
-    border-bottom: 1px solid var(--esdar-border);
+.esdar-section .section-subtitle {
+	font-size: clamp(16px, 2vw, 18px);
+	color: var(--text-muted);
+	margin: 0;
+	line-height: 1.6;
 }
 
-.esdar-archive-title {
-    font-size: clamp(32px, 5vw, 48px);
-    font-weight: 800;
-    color: var(--esdar-text-primary);
-    margin-bottom: 16px;
+/* التكيف مع الخلفية */
+.esdar-section.section-with-bg .section-title,
+.esdar-section.section-with-bg .section-subtitle {
+	color: rgba(255, 255, 255, 0.95);
+	text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
-.esdar-archive-description {
-    font-size: 18px;
-    color: var(--esdar-text-secondary);
-    max-width: 600px;
-    margin: 0 auto;
-}
-
-/* Filter Bar */
-.esdar-filter-section {
-    padding: 32px 0;
-    background: var(--esdar-surface);
-    border-bottom: 1px solid var(--esdar-border);
-}
-
-.esdar-filter-bar {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 16px;
-    align-items: end;
-}
-
-.esdar-filter-item {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-}
-
-.esdar-filter-item label {
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--esdar-text-primary);
-}
-
-.esdar-filter-select {
-    width: 100%;
-    padding: 10px 14px;
-    border: 1px solid var(--esdar-border);
-    border-radius: var(--esdar-radius-sm);
-    font-size: 15px;
-    color: var(--esdar-text-primary);
-    background: var(--esdar-surface);
-    transition: var(--esdar-transition);
-}
-
-.esdar-filter-select:focus {
-    outline: none;
-    border-color: var(--esdar-primary);
-    box-shadow: 0 0 0 3px var(--esdar-primary-light);
-}
-
-.esdar-filter-submit {
-    display: flex;
-    gap: 8px;
-    align-items: center;
-}
+/* ═══════════════════════════════════════════════════════════════
+   Grid Layout
+   ═══════════════════════════════════════════════════════════════ */
 
-.esdar-filter-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    padding: 10px 20px;
-    background: var(--esdar-primary);
-    color: #ffffff;
-    border: none;
-    border-radius: var(--esdar-radius-sm);
-    font-size: 15px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: var(--esdar-transition);
+.esdar-section .esdar-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+	gap: var(--card-gap);
+	margin-bottom: 24px;
 }
 
-.esdar-filter-btn:hover {
-    background: var(--esdar-primary-dark);
+/* 3 أعمدة في الشاشات الكبيرة */
+@media screen and (min-width: 1200px) {
+	.esdar-section .esdar-grid {
+		grid-template-columns: repeat(3, 1fr);
+	}
 }
 
-.esdar-filter-reset {
-    padding: 10px 16px;
-    background: transparent;
-    color: var(--esdar-text-secondary);
-    border: 1px solid var(--esdar-border);
-    border-radius: var(--esdar-radius-sm);
-    font-size: 14px;
-    text-decoration: none;
-    transition: var(--esdar-transition);
+/* عمودين في الشاشات المتوسطة */
+@media screen and (min-width: 900px) and (max-width: 1199px) {
+	.esdar-section .esdar-grid {
+		grid-template-columns: repeat(2, 1fr);
+	}
 }
 
-.esdar-filter-reset:hover {
-    background: var(--esdar-surface-alt);
-    color: var(--esdar-text-primary);
+/* عمود واحد في الشاشات الصغيرة */
+@media screen and (max-width: 899px) {
+	.esdar-section .esdar-grid {
+		grid-template-columns: 1fr;
+		gap: 20px;
+	}
 }
 
-/* Grid Section */
-.esdar-grid-section {
-    padding: 48px 0;
-}
+/* ═══════════════════════════════════════════════════════════════
+   بطاقة الإصدار (Esdar Card)
+   ═══════════════════════════════════════════════════════════════ */
 
-/* Card Component */
 .esdar-card {
-    position: relative;
-    background: var(--esdar-surface);
-    border-radius: var(--esdar-radius-md);
-    overflow: hidden;
-    box-shadow: var(--esdar-shadow-sm);
-    transition: var(--esdar-transition);
-    display: flex;
-    flex-direction: column;
+	display: flex;
+	flex-direction: column;
+	background-color: #ffffff;
+	border-radius: var(--card-radius);
+	box-shadow: var(--card-shadow);
+	overflow: hidden;
+	transition: var(--transition-default);
+	cursor: pointer;
+	height: 100%;
 }
 
 .esdar-card:hover {
-    box-shadow: var(--esdar-shadow-lg);
-    transform: translateY(-6px);
+	transform: translateY(-6px);
+	box-shadow: var(--card-shadow-hover);
 }
 
-.esdar-card-link {
-    text-decoration: none;
-    color: inherit;
-    display: flex;
-    flex-direction: column;
-    flex: 1;
+.esdar-card:focus {
+	outline: 3px solid var(--color-primary);
+	outline-offset: 3px;
 }
 
-.esdar-card-cover {
-    position: relative;
-    aspect-ratio: 3 / 4;
-    overflow: hidden;
-}
+/* ─────────────────────────────────────
+   صورة الغلاف
+   ───────────────────────────────────── */
 
 .esdar-card-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: var(--esdar-transition);
+	position: relative;
+	width: 100%;
+	aspect-ratio: 3 / 4; /* نسبة العرض للارتفاع */
+	overflow: hidden;
+	background-color: #f0f0f0;
 }
 
-.esdar-card:hover .esdar-card-image {
-    transform: scale(1.05);
+.esdar-card-image .cover-image {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	object-position: center;
+	transition: transform 0.4s ease;
 }
 
-.esdar-card-placeholder {
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(135deg, var(--esdar-primary-light) 0%, var(--esdar-surface-alt) 100%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.esdar-card:hover .cover-image {
+	transform: scale(1.05);
 }
 
-.esdar-card-placeholder svg {
-    width: 60px;
-    height: 60px;
-    color: var(--esdar-primary);
-    opacity: 0.4;
+/* ─────────────────────────────────────
+   شارة نوع الإصدار (Badge)
+   ───────────────────────────────────── */
+
+.esdar-card-image .esdar-type-badge {
+	position: absolute;
+	top: 12px;
+	right: 12px;
+	padding: 6px 14px;
+	background-color: var(--color-primary);
+	color: #ffffff;
+	font-size: 13px;
+	font-weight: 700;
+	border-radius: 20px;
+	letter-spacing: 0.02em;
+	text-transform: uppercase;
+	box-shadow: 0 4px 12px rgba(51, 144, 99, 0.35);
+	z-index: 2;
 }
 
-.esdar-card-type-badge {
-    position: absolute;
-    top: 12px;
-    right: 12px;
-    padding: 4px 10px;
-    border-radius: 6px;
-    font-size: 11px;
-    font-weight: 700;
-    text-transform: uppercase;
+/* ألوان حسب النوع */
+.esdar-type-badge.type-novel {
+	background-color: #8B5CF6;
 }
 
-.esdar-card-formats {
-    position: absolute;
-    bottom: 12px;
-    right: 12px;
-    display: flex;
-    gap: 4px;
+.esdar-type-badge.type-report {
+	background-color: #F59E0B;
 }
 
-.esdar-format-mini {
-    padding: 3px 6px;
-    background: rgba(255, 255, 255, 0.95);
-    color: var(--esdar-primary);
-    border-radius: 4px;
-    font-size: 10px;
-    font-weight: 700;
+.esdar-type-badge.type-magazine {
+	background-color: #EF4444;
 }
+
+.esdar-type-badge.type-research {
+	background-color: #3B82F6;
+}
+
+.esdar-type-badge.type-guide {
+	background-color: #10B981;
+}
+
+.esdar-type-badge.type-anthology {
+	background-color: #EC4899;
+}
+
+/* ─────────────────────────────────────
+   محتوى البطاقة
+   ───────────────────────────────────── */
 
 .esdar-card-content {
-    padding: 20px;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+	display: flex;
+	flex-direction: column;
+	flex-grow: 1;
+	padding: 24px;
 }
+
+/* ─────────────────────────────────────
+   عنوان الإصدار
+   ───────────────────────────────────── */
 
 .esdar-card-title {
-    font-size: 18px;
-    font-weight: 700;
-    color: var(--esdar-text-primary);
-    margin: 0;
-    line-height: 1.4;
+	font-size: 18px;
+	font-weight: 700;
+	color: var(--text-main);
+	margin: 0 0 12px;
+	line-height: 1.4;
+	letter-spacing: -0.01em;
 }
 
-.esdar-card-authors,
-.esdar-card-date {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 13px;
-    color: var(--esdar-text-muted);
+.esdar-card-title .card-title-link {
+	color: inherit;
+	text-decoration: none;
+	transition: color 0.2s ease;
 }
+
+.esdar-card-title .card-title-link:hover {
+	color: var(--color-primary);
+}
+
+.esdar-card-title .card-title-link:focus {
+	outline: 2px solid var(--color-primary);
+	outline-offset: 2px;
+	border-radius: 2px;
+}
+
+/* ─────────────────────────────────────
+   الوصف
+   ───────────────────────────────────── */
 
 .esdar-card-excerpt {
-    font-size: 14px;
-    line-height: 1.6;
-    color: var(--esdar-text-secondary);
-    flex: 1;
+	font-size: 15px;
+	color: var(--text-muted);
+	line-height: 1.6;
+	margin: 0 0 16px;
+	display: -webkit-box;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
+
+/* ─────────────────────────────────────
+   معلومات إضافية (Meta)
+   ───────────────────────────────────── */
 
 .esdar-card-meta {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding-top: 10px;
-    border-top: 1px solid var(--esdar-border);
-    font-size: 12px;
-    color: var(--esdar-text-muted);
+	display: flex;
+	flex-wrap: wrap;
+	gap: 16px;
+	margin: 0 0 20px;
+	padding-top: 12px;
+	border-top: 1px solid rgba(107, 122, 114, 0.15);
 }
 
-.esdar-card-meta-item {
-    display: flex;
-    align-items: center;
-    gap: 4px;
+.esdar-card-meta .meta-item {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	font-size: 13px;
+	color: var(--text-muted);
+	font-weight: 500;
 }
+
+.esdar-card-meta .meta-item svg {
+	width: 16px;
+	height: 16px;
+	opacity: 0.7;
+	flex-shrink: 0;
+}
+
+/* ─────────────────────────────────────
+   أزرار الإجراء
+   ───────────────────────────────────── */
 
 .esdar-card-actions {
-    padding: 0 20px 20px;
+	display: flex;
+	gap: 10px;
+	margin-top: auto;
 }
 
-.esdar-card-download-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
-    width: 100%;
-    padding: 10px;
-    background: var(--esdar-primary);
-    color: #ffffff;
-    border-radius: var(--esdar-radius-sm);
-    font-size: 14px;
-    font-weight: 600;
-    text-decoration: none;
-    transition: var(--esdar-transition);
+.esdar-card-actions .action-button {
+	flex: 1;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+	padding: 12px 16px;
+	font-size: 14px;
+	font-weight: 600;
+	text-decoration: none;
+	border-radius: 10px;
+	transition: var(--transition-default);
+	cursor: pointer;
+	border: 2px solid transparent;
 }
 
-.esdar-card-download-btn:hover {
-    background: var(--esdar-primary-dark);
+.esdar-card-actions .action-button svg {
+	width: 18px;
+	height: 18px;
+	flex-shrink: 0;
+}
+
+/* زر العرض */
+.action-button.button-view {
+	background-color: var(--color-primary);
+	color: #ffffff;
+	border-color: var(--color-primary);
+}
+
+.action-button.button-view:hover {
+	background-color: var(--color-primary-hover);
+	border-color: var(--color-primary-hover);
+	transform: translateY(-2px);
+	box-shadow: 0 6px 16px rgba(51, 144, 99, 0.3);
+}
+
+.action-button.button-view:focus {
+	outline: 3px solid var(--color-primary);
+	outline-offset: 3px;
+}
+
+/* زر التحميل */
+.action-button.button-download {
+	background-color: transparent;
+	color: var(--color-primary);
+	border-color: var(--color-primary);
+}
+
+.action-button.button-download:hover {
+	background-color: var(--color-primary);
+	color: #ffffff;
+	transform: translateY(-2px);
+	box-shadow: 0 6px 16px rgba(51, 144, 99, 0.2);
+}
+
+.action-button.button-download:focus {
+	outline: 3px solid var(--color-primary);
+	outline-offset: 3px;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   Carousel Layout (Swiper)
+   ═══════════════════════════════════════════════════════════════ */
+
+.esdar-section.layout-carousel .esdar-swiper {
+	position: relative;
+	padding: 0 50px 60px;
+	margin: 0 -20px;
+}
+
+.esdar-section .swiper-slide {
+	height: auto;
+}
+
+.esdar-section .swiper-slide .esdar-card {
+	height: 100%;
+}
+
+/* أزرار التنقل */
+.esdar-section .swiper-button-prev,
+.esdar-section .swiper-button-next {
+	width: 48px;
+	height: 48px;
+	background-color: #ffffff;
+	border-radius: 50%;
+	box-shadow: 0 4px 12px rgba(18, 30, 26, 0.15);
+	color: var(--color-primary);
+	transition: var(--transition-default);
+	border: none;
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+	z-index: 10;
+}
+
+.esdar-section .swiper-button-prev {
+	left: 0;
+}
+
+.esdar-section .swiper-button-next {
+	right: 0;
+}
+
+.esdar-section .swiper-button-prev:hover,
+.esdar-section .swiper-button-next:hover {
+	background-color: var(--color-primary);
+	color: #ffffff;
+	transform: translateY(-50%) scale(1.1);
+	box-shadow: 0 6px 20px rgba(51, 144, 99, 0.3);
+}
+
+.esdar-section .swiper-button-prev:focus,
+.esdar-section .swiper-button-next:focus {
+	outline: 3px solid var(--color-primary);
+	outline-offset: 3px;
+}
+
+.esdar-section .swiper-button-prev.swiper-button-disabled,
+.esdar-section .swiper-button-next.swiper-button-disabled {
+	opacity: 0.3;
+	cursor: not-allowed;
 }
 
 /* Pagination */
-.esdar-pagination {
-    margin-top: 48px;
-    display: flex;
-    justify-content: center;
+.esdar-section .swiper-pagination {
+	bottom: 20px;
+	display: flex;
+	justify-content: center;
+	gap: 8px;
 }
 
-.esdar-pagination .page-numbers {
-    display: flex;
-    gap: 8px;
-    list-style: none;
-    padding: 0;
+.esdar-section .swiper-pagination-bullet {
+	width: 10px;
+	height: 10px;
+	background-color: rgba(51, 144, 99, 0.3);
+	border-radius: 50%;
+	opacity: 1;
+	transition: var(--transition-default);
+	cursor: pointer;
 }
 
-.esdar-pagination .page-numbers li {
-    display: inline-block;
+.esdar-section .swiper-pagination-bullet-active {
+	background-color: var(--color-primary);
+	width: 28px;
+	border-radius: 5px;
 }
 
-.esdar-pagination a,
-.esdar-pagination .current {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-width: 40px;
-    height: 40px;
-    padding: 0 12px;
-    background: var(--esdar-surface);
-    border: 1px solid var(--esdar-border);
-    border-radius: var(--esdar-radius-sm);
-    color: var(--esdar-text-primary);
-    font-size: 15px;
-    font-weight: 600;
-    text-decoration: none;
-    transition: var(--esdar-transition);
+/* ═══════════════════════════════════════════════════════════════
+   زر "اطلع على المزيد"
+   ═══════════════════════════════════════════════════════════════ */
+
+.esdar-section .section-more-button {
+	margin-top: 48px;
+	text-align: center;
 }
 
-.esdar-pagination a:hover {
-    background: var(--esdar-primary-light);
-    border-color: var(--esdar-primary);
-    color: var(--esdar-primary);
+.esdar-section .more-button {
+	display: inline-flex;
+	align-items: center;
+	gap: 10px;
+	padding: 16px 36px;
+	background-color: var(--color-primary);
+	color: #ffffff;
+	font-size: 17px;
+	font-weight: 600;
+	text-decoration: none;
+	border-radius: 50px;
+	transition: var(--transition-default);
+	border: 2px solid var(--color-primary);
+	box-shadow: 0 4px 12px rgba(51, 144, 99, 0.2);
 }
 
-.esdar-pagination .current {
-    background: var(--esdar-primary);
-    border-color: var(--esdar-primary);
-    color: #ffffff;
+.esdar-section .more-button:hover {
+	background-color: var(--color-primary-hover);
+	border-color: var(--color-primary-hover);
+	transform: translateY(-2px);
+	box-shadow: 0 6px 20px rgba(51, 144, 99, 0.3);
 }
 
-/* No Results */
-.esdar-no-results {
-    text-align: center;
-    padding: 80px 20px;
+.esdar-section .more-button:focus {
+	outline: 3px solid var(--color-primary);
+	outline-offset: 3px;
 }
 
-.esdar-no-results-icon {
-    margin-bottom: 24px;
+.esdar-section .more-button svg {
+	width: 20px;
+	height: 20px;
+	transition: transform 0.25s ease;
 }
 
-.esdar-no-results-icon svg {
-    color: var(--esdar-text-muted);
-    opacity: 0.5;
+.esdar-section .more-button:hover svg {
+	transform: translateX(4px);
 }
 
-.esdar-no-results-title {
-    font-size: 28px;
-    font-weight: 700;
-    color: var(--esdar-text-primary);
-    margin-bottom: 12px;
+/* RTL: حركة السهم لليسار */
+[dir="rtl"] .esdar-section .more-button:hover svg {
+	transform: translateX(-4px);
 }
 
-.esdar-no-results-text {
-    font-size: 16px;
-    color: var(--esdar-text-secondary);
-    margin-bottom: 24px;
+/* ═══════════════════════════════════════════════════════════════
+   Responsive Breakpoints
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ≥ 1200px (Desktop Large) */
+@media screen and (min-width: 1200px) {
+	.esdar-section {
+		padding: 64px 0;
+	}
+
+	.esdar-section .section-header {
+		margin-bottom: 56px;
+	}
 }
 
-/* ============================================
-   Responsive
-   ============================================ */
-@media (max-width: 1024px) {
-    .esdar-hero-inner {
-        grid-template-columns: 1fr;
-        gap: 32px;
-    }
+/* 900px - 1199px (Desktop/Tablet) */
+@media screen and (min-width: 900px) and (max-width: 1199px) {
+	.esdar-section {
+		padding: 56px 0;
+	}
 
-    .esdar-hero-cover {
-        max-width: 400px;
-        margin: 0 auto;
-    }
+	.esdar-card-title {
+		font-size: 17px;
+	}
 
-    .esdar-grid-3 {
-        grid-template-columns: repeat(2, 1fr);
-    }
+	.esdar-card-excerpt {
+		font-size: 14px;
+	}
+
+	.esdar-card-content {
+		padding: 20px;
+	}
 }
 
-@media (max-width: 768px) {
-    .esdar-grid-3 {
-        grid-template-columns: 1fr;
-    }
+/* ≤ 899px (Mobile) */
+@media screen and (max-width: 899px) {
+	.esdar-section {
+		padding: 40px 0;
+	}
 
-    .esdar-filter-bar {
-        grid-template-columns: 1fr;
-    }
+	.esdar-section .container {
+		padding: 0 20px;
+	}
 
-    .esdar-hero-cover {
-        max-width: 300px;
-    }
+	.esdar-section .section-header {
+		margin-bottom: 32px;
+	}
 
-    .esdar-actions {
-        flex-direction: column;
-    }
+	.esdar-section .section-title {
+		font-size: 28px;
+		margin-bottom: 12px;
+	}
 
-    .esdar-btn {
-        width: 100%;
-    }
+	.esdar-section .section-subtitle {
+		font-size: 16px;
+	}
 
-    .esdar-footer-inner {
-        flex-direction: column;
-    }
+	.esdar-card-title {
+		font-size: 16px;
+	}
 
-    .esdar-info-grid {
-        grid-template-columns: 1fr;
-    }
+	.esdar-card-excerpt {
+		font-size: 14px;
+	}
+
+	.esdar-card-content {
+		padding: 18px;
+	}
+
+	.esdar-card-meta {
+		gap: 12px;
+	}
+
+	.esdar-card-actions {
+		flex-direction: column;
+	}
+
+	.esdar-card-actions .action-button {
+		width: 100%;
+	}
+
+	/* Carousel adjustments */
+	.esdar-section.layout-carousel .esdar-swiper {
+		padding: 0 10px 50px;
+		margin: 0;
+	}
+
+	.esdar-section .swiper-button-prev,
+	.esdar-section .swiper-button-next {
+		width: 40px;
+		height: 40px;
+	}
+
+	.esdar-section .more-button {
+		padding: 14px 28px;
+		font-size: 15px;
+	}
 }
 
-@media (max-width: 480px) {
-    .esdar-archive-hero,
-    .esdar-hero,
-    .esdar-excerpt-section,
-    .esdar-preview-section,
-    .esdar-content-section,
-    .esdar-related-section,
-    .esdar-footer-section,
-    .esdar-grid-section {
-        padding: 32px 0;
-    }
+/* ≤ 600px (Mobile Small) */
+@media screen and (max-width: 600px) {
+	.esdar-section {
+		padding: 32px 0;
+	}
 
-    .esdar-section-title {
-        font-size: 22px;
-    }
+	.esdar-card-image {
+		aspect-ratio: 2 / 3;
+	}
 
-    .esdar-card-content {
-        padding: 16px;
-    }
+	.esdar-card-content {
+		padding: 16px;
+	}
+
+	.esdar-card-title {
+		font-size: 15px;
+	}
+
+	.esdar-card-actions .action-button {
+		padding: 10px 14px;
+		font-size: 13px;
+	}
+
+	.esdar-type-badge {
+		font-size: 11px;
+		padding: 5px 12px;
+	}
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   Accessibility & Motion Preferences
+   ═══════════════════════════════════════════════════════════════ */
+
+/* تقليل الحركة للمستخدمين الذين يفضلون ذلك */
+@media (prefers-reduced-motion: reduce) {
+	.esdar-card,
+	.esdar-card-image .cover-image,
+	.action-button,
+	.more-button,
+	.swiper-button-prev,
+	.swiper-button-next {
+		transition: none;
+	}
+
+	.esdar-card:hover,
+	.action-button:hover,
+	.more-button:hover {
+		transform: none;
+	}
+}
+
+/* Focus visible للوصول عبر الكيبورد */
+.esdar-card:focus-visible,
+.action-button:focus-visible,
+.more-button:focus-visible,
+.swiper-button-prev:focus-visible,
+.swiper-button-next:focus-visible {
+	outline: 3px solid var(--color-primary);
+	outline-offset: 3px;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   Print Styles
+   ═══════════════════════════════════════════════════════════════ */
+
+@media print {
+	.esdar-section {
+		background: none !important;
+		padding: 20px 0;
+	}
+
+	.esdar-section .section-bg-overlay,
+	.esdar-section .swiper-button-prev,
+	.esdar-section .swiper-button-next,
+	.esdar-section .swiper-pagination,
+	.esdar-section .more-button {
+		display: none !important;
+	}
+
+	.esdar-card {
+		box-shadow: none;
+		border: 1px solid #ddd;
+		break-inside: avoid;
+		page-break-inside: avoid;
+	}
+
+	.esdar-card:hover {
+		transform: none;
+	}
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   Dark Mode Support (Optional)
+   ═══════════════════════════════════════════════════════════════ */
+
+@media (prefers-color-scheme: dark) {
+	:root {
+		--text-main: #e8f0ed;
+		--text-muted: #a8b5b0;
+	}
+
+	.esdar-card {
+		background-color: #1a2420;
+		box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+	}
+
+	.esdar-card:hover {
+		box-shadow: 0 15px 45px rgba(0, 0, 0, 0.5);
+	}
+
+	.action-button.button-download {
+		background-color: transparent;
+		border-color: var(--color-primary);
+		color: var(--color-primary);
+	}
+
+	.action-button.button-download:hover {
+		background-color: var(--color-primary);
+		color: #ffffff;
+	}
+
+	.esdar-card-meta {
+		border-top-color: rgba(255, 255, 255, 0.1);
+	}
+
+	.swiper-button-prev,
+	.swiper-button-next {
+		background-color: #2a3930;
+		color: var(--color-primary);
+	}
+
+	.swiper-button-prev:hover,
+	.swiper-button-next:hover {
+		background-color: var(--color-primary);
+		color: #ffffff;
+	}
 }

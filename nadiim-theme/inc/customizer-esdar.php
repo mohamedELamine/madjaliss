@@ -1,312 +1,461 @@
 <?php
 /**
- * إعدادات Customizer للإصدارات
+ * Customizer للإصدارات (Esdar Section)
  *
  * @package Nadiim
+ * @since 1.0.0
  */
 
 // منع الوصول المباشر
-if (!defined('ABSPATH')) {
-    exit;
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
 }
 
 /**
- * تسجيل إعدادات الإصدارات في Customizer
- *
- * @param WP_Customize_Manager $wp_customize مدير التخصيص
+ * تسجيل إعدادات Customizer لقسم الإصدارات
  */
-function nadiim_esdar_customize_register($wp_customize) {
+function nadiim_esdar_customizer_register( $wp_customize ) {
 
-    // إضافة Panel للإصدارات
-    $wp_customize->add_panel('esdar_panel', array(
-        'title' => __('إعدادات الإصدارات', 'nadiim'),
-        'description' => __('تخصيص عرض وسلوك الإصدارات', 'nadiim'),
-        'priority' => 160,
-    ));
+	// ═══════════════════════════════════════════════════════════════
+	// إضافة قسم الإصدارات في Customizer
+	// ═══════════════════════════════════════════════════════════════
 
-    // ===================================
-    // Section: إعدادات الأرشيف
-    // ===================================
-    $wp_customize->add_section('esdar_archive_section', array(
-        'title' => __('إعدادات الأرشيف', 'nadiim'),
-        'panel' => 'esdar_panel',
-        'priority' => 10,
-    ));
+	$wp_customize->add_section( 'nadiim_esdar_section', array(
+		'title'       => __( 'الإصدارات', 'nadiim' ),
+		'description' => __( 'إعدادات قسم الإصدارات في الصفحة الرئيسية', 'nadiim' ),
+		'priority'    => 42,
+		'panel'       => 'nadiim_home_panel',
+	) );
 
-    // عدد الإصدارات في الأرشيف
-    $wp_customize->add_setting('esdar_archive_per_page', array(
-        'default' => 12,
-        'type' => 'theme_mod',
-        'capability' => 'edit_theme_options',
-        'sanitize_callback' => 'absint',
-        'transport' => 'refresh',
-    ));
+	// ═══════════════════════════════════════════════════════════════
+	// الإعدادات العامة
+	// ═══════════════════════════════════════════════════════════════
 
-    $wp_customize->add_control('esdar_archive_per_page', array(
-        'label' => __('عدد الإصدارات في الصفحة', 'nadiim'),
-        'description' => __('عدد الإصدارات المعروضة في صفحة الأرشيف', 'nadiim'),
-        'section' => 'esdar_archive_section',
-        'type' => 'number',
-        'input_attrs' => array(
-            'min' => 1,
-            'max' => 100,
-            'step' => 1,
-        ),
-    ));
+	// تفعيل/إلغاء تفعيل القسم
+	$wp_customize->add_setting( 'esdar_section_enable', array(
+		'default'           => true,
+		'sanitize_callback' => 'rest_sanitize_boolean',
+		'transport'         => 'postMessage',
+	) );
 
-    // ترتيب الإصدارات
-    $wp_customize->add_setting('esdar_archive_orderby', array(
-        'default' => 'date',
-        'type' => 'theme_mod',
-        'capability' => 'edit_theme_options',
-        'sanitize_callback' => 'sanitize_text_field',
-    ));
+	$wp_customize->add_control( 'esdar_section_enable', array(
+		'label'       => __( 'تفعيل قسم الإصدارات', 'nadiim' ),
+		'description' => __( 'إظهار أو إخفاء قسم الإصدارات في الصفحة الرئيسية', 'nadiim' ),
+		'section'     => 'nadiim_esdar_section',
+		'type'        => 'checkbox',
+	) );
 
-    $wp_customize->add_control('esdar_archive_orderby', array(
-        'label' => __('ترتيب الإصدارات حسب', 'nadiim'),
-        'section' => 'esdar_archive_section',
-        'type' => 'select',
-        'choices' => array(
-            'date' => __('التاريخ', 'nadiim'),
-            'title' => __('العنوان', 'nadiim'),
-            'modified' => __('آخر تحديث', 'nadiim'),
-            'rand' => __('عشوائي', 'nadiim'),
-        ),
-    ));
+	// عنوان القسم
+	$wp_customize->add_setting( 'esdar_section_title', array(
+		'default'           => __( 'إصدارات نديم', 'nadiim' ),
+		'sanitize_callback' => 'sanitize_text_field',
+		'transport'         => 'postMessage',
+	) );
 
-    // اتجاه الترتيب
-    $wp_customize->add_setting('esdar_archive_order', array(
-        'default' => 'DESC',
-        'type' => 'theme_mod',
-        'capability' => 'edit_theme_options',
-        'sanitize_callback' => 'sanitize_text_field',
-    ));
+	$wp_customize->add_control( 'esdar_section_title', array(
+		'label'       => __( 'عنوان القسم', 'nadiim' ),
+		'description' => __( 'العنوان الرئيسي لقسم الإصدارات', 'nadiim' ),
+		'section'     => 'nadiim_esdar_section',
+		'type'        => 'text',
+	) );
 
-    $wp_customize->add_control('esdar_archive_order', array(
-        'label' => __('اتجاه الترتيب', 'nadiim'),
-        'section' => 'esdar_archive_section',
-        'type' => 'select',
-        'choices' => array(
-            'DESC' => __('تنازلي (الأحدث أولاً)', 'nadiim'),
-            'ASC' => __('تصاعدي (الأقدم أولاً)', 'nadiim'),
-        ),
-    ));
+	// وصف القسم
+	$wp_customize->add_setting( 'esdar_section_subtitle', array(
+		'default'           => __( 'اكتشف أحدث إصداراتنا من الكتب والتقارير والمجلات', 'nadiim' ),
+		'sanitize_callback' => 'sanitize_textarea_field',
+		'transport'         => 'postMessage',
+	) );
 
-    // ===================================
-    // Section: قسم الإصدارات في الصفحة الرئيسية
-    // ===================================
-    $wp_customize->add_section('esdar_home_section', array(
-        'title' => __('قسم الإصدارات في الصفحة الرئيسية', 'nadiim'),
-        'panel' => 'esdar_panel',
-        'priority' => 20,
-    ));
+	$wp_customize->add_control( 'esdar_section_subtitle', array(
+		'label'       => __( 'وصف القسم', 'nadiim' ),
+		'description' => __( 'نص توضيحي قصير أسفل العنوان', 'nadiim' ),
+		'section'     => 'nadiim_esdar_section',
+		'type'        => 'textarea',
+	) );
 
-    // إظهار قسم الإصدارات في الصفحة الرئيسية
-    $wp_customize->add_setting('esdar_show_on_home', array(
-        'default' => false,
-        'type' => 'theme_mod',
-        'capability' => 'edit_theme_options',
-        'sanitize_callback' => 'wp_validate_boolean',
-    ));
+	// ─────────────────────────────────────
+	// إعدادات المحتوى
+	// ─────────────────────────────────────
 
-    $wp_customize->add_control('esdar_show_on_home', array(
-        'label' => __('إظهار قسم الإصدارات', 'nadiim'),
-        'description' => __('عرض قسم للإصدارات المختارة في الصفحة الرئيسية', 'nadiim'),
-        'section' => 'esdar_home_section',
-        'type' => 'checkbox',
-    ));
+	// مصدر المحتوى
+	$wp_customize->add_setting( 'esdar_section_source', array(
+		'default'           => 'latest',
+		'sanitize_callback' => 'sanitize_text_field',
+		'transport'         => 'refresh',
+	) );
 
-    // عنوان القسم
-    $wp_customize->add_setting('esdar_section_title', array(
-        'default' => __('أحدث الإصدارات', 'nadiim'),
-        'type' => 'theme_mod',
-        'capability' => 'edit_theme_options',
-        'sanitize_callback' => 'sanitize_text_field',
-    ));
+	$wp_customize->add_control( 'esdar_section_source', array(
+		'label'       => __( 'مصدر المحتوى', 'nadiim' ),
+		'description' => __( 'اختر كيفية جلب الإصدارات', 'nadiim' ),
+		'section'     => 'nadiim_esdar_section',
+		'type'        => 'select',
+		'choices'     => array(
+			'latest' => __( 'أحدث الإصدارات', 'nadiim' ),
+			'tag'    => __( 'حسب وسم معين', 'nadiim' ),
+			'manual' => __( 'يدوي (JSON)', 'nadiim' ),
+		),
+	) );
 
-    $wp_customize->add_control('esdar_section_title', array(
-        'label' => __('عنوان القسم', 'nadiim'),
-        'section' => 'esdar_home_section',
-        'type' => 'text',
-        'active_callback' => function() {
-            return get_theme_mod('esdar_show_on_home', false);
-        },
-    ));
+	// عدد الإصدارات
+	$wp_customize->add_setting( 'esdar_section_count', array(
+		'default'           => 6,
+		'sanitize_callback' => 'absint',
+		'transport'         => 'refresh',
+	) );
 
-    // وصف القسم
-    $wp_customize->add_setting('esdar_section_description', array(
-        'default' => __('استعرض أحدث الكتب والمجلات والإصدارات', 'nadiim'),
-        'type' => 'theme_mod',
-        'capability' => 'edit_theme_options',
-        'sanitize_callback' => 'sanitize_textarea_field',
-    ));
+	$wp_customize->add_control( 'esdar_section_count', array(
+		'label'           => __( 'عدد الإصدارات', 'nadiim' ),
+		'description'     => __( 'عدد الإصدارات التي سيتم عرضها', 'nadiim' ),
+		'section'         => 'nadiim_esdar_section',
+		'type'            => 'number',
+		'input_attrs'     => array(
+			'min'  => 1,
+			'max'  => 12,
+			'step' => 1,
+		),
+		'active_callback' => function() {
+			return get_theme_mod( 'esdar_section_source', 'latest' ) !== 'manual';
+		},
+	) );
 
-    $wp_customize->add_control('esdar_section_description', array(
-        'label' => __('وصف القسم', 'nadiim'),
-        'section' => 'esdar_home_section',
-        'type' => 'textarea',
-        'active_callback' => function() {
-            return get_theme_mod('esdar_show_on_home', false);
-        },
-    ));
+	// الوسم للفلترة
+	$wp_customize->add_setting( 'esdar_section_tag', array(
+		'default'           => 'featured',
+		'sanitize_callback' => 'sanitize_text_field',
+		'transport'         => 'refresh',
+	) );
 
-    // عدد الإصدارات في الصفحة الرئيسية
-    $wp_customize->add_setting('esdar_section_count', array(
-        'default' => 6,
-        'type' => 'theme_mod',
-        'capability' => 'edit_theme_options',
-        'sanitize_callback' => 'absint',
-    ));
+	$wp_customize->add_control( 'esdar_section_tag', array(
+		'label'           => __( 'اسم الوسم', 'nadiim' ),
+		'description'     => __( 'slug الوسم (مثال: featured)', 'nadiim' ),
+		'section'         => 'nadiim_esdar_section',
+		'type'            => 'text',
+		'active_callback' => function() {
+			return get_theme_mod( 'esdar_section_source', 'latest' ) === 'tag';
+		},
+	) );
 
-    $wp_customize->add_control('esdar_section_count', array(
-        'label' => __('عدد الإصدارات المعروضة', 'nadiim'),
-        'section' => 'esdar_home_section',
-        'type' => 'number',
-        'input_attrs' => array(
-            'min' => 1,
-            'max' => 12,
-            'step' => 1,
-        ),
-        'active_callback' => function() {
-            return get_theme_mod('esdar_show_on_home', false);
-        },
-    ));
+	// JSON البيانات اليدوية
+	$wp_customize->add_setting( 'esdar_section_manual_json', array(
+		'default'           => '',
+		'sanitize_callback' => 'wp_kses_post',
+		'transport'         => 'refresh',
+	) );
 
-    // تخطيط القسم
-    $wp_customize->add_setting('esdar_section_layout', array(
-        'default' => 'grid',
-        'type' => 'theme_mod',
-        'capability' => 'edit_theme_options',
-        'sanitize_callback' => 'sanitize_text_field',
-    ));
+	$wp_customize->add_control( 'esdar_section_manual_json', array(
+		'label'           => __( 'بيانات JSON', 'nadiim' ),
+		'description'     => __( 'أدخل مصفوفة JSON للإصدارات اليدوية', 'nadiim' ),
+		'section'         => 'nadiim_esdar_section',
+		'type'            => 'textarea',
+		'input_attrs'     => array(
+			'placeholder' => '[{"title":"...","image":"..."}]',
+			'rows'        => 8,
+		),
+		'active_callback' => function() {
+			return get_theme_mod( 'esdar_section_source', 'latest' ) === 'manual';
+		},
+	) );
 
-    $wp_customize->add_control('esdar_section_layout', array(
-        'label' => __('تخطيط العرض', 'nadiim'),
-        'section' => 'esdar_home_section',
-        'type' => 'select',
-        'choices' => array(
-            'grid' => __('شبكة (Grid)', 'nadiim'),
-            'carousel' => __('شريط منزلق (Carousel)', 'nadiim'),
-        ),
-        'active_callback' => function() {
-            return get_theme_mod('esdar_show_on_home', false);
-        },
-    ));
+	// ─────────────────────────────────────
+	// إعدادات التخطيط
+	// ─────────────────────────────────────
 
-    // ===================================
-    // Section: إعدادات العرض
-    // ===================================
-    $wp_customize->add_section('esdar_display_section', array(
-        'title' => __('إعدادات العرض', 'nadiim'),
-        'panel' => 'esdar_panel',
-        'priority' => 30,
-    ));
+	// نوع التخطيط
+	$wp_customize->add_setting( 'esdar_section_layout', array(
+		'default'           => 'grid',
+		'sanitize_callback' => 'sanitize_text_field',
+		'transport'         => 'postMessage',
+	) );
 
-    // عرض صور المعاينة
-    $wp_customize->add_setting('esdar_show_preview_images', array(
-        'default' => true,
-        'type' => 'theme_mod',
-        'capability' => 'edit_theme_options',
-        'sanitize_callback' => 'wp_validate_boolean',
-    ));
+	$wp_customize->add_control( 'esdar_section_layout', array(
+		'label'       => __( 'نوع التخطيط', 'nadiim' ),
+		'description' => __( 'اختر طريقة عرض الإصدارات', 'nadiim' ),
+		'section'     => 'nadiim_esdar_section',
+		'type'        => 'select',
+		'choices'     => array(
+			'grid'     => __( 'شبكة (Grid)', 'nadiim' ),
+			'carousel' => __( 'شريط متحرك (Carousel)', 'nadiim' ),
+		),
+	) );
 
-    $wp_customize->add_control('esdar_show_preview_images', array(
-        'label' => __('عرض صور المعاينة', 'nadiim'),
-        'description' => __('عرض معرض صور المعاينة في صفحة الإصدار', 'nadiim'),
-        'section' => 'esdar_display_section',
-        'type' => 'checkbox',
-    ));
+	// ─────────────────────────────────────
+	// إعدادات الألوان
+	// ─────────────────────────────────────
 
-    // عرض الإصدارات ذات الصلة
-    $wp_customize->add_setting('esdar_show_related', array(
-        'default' => true,
-        'type' => 'theme_mod',
-        'capability' => 'edit_theme_options',
-        'sanitize_callback' => 'wp_validate_boolean',
-    ));
+	// لون عنوان القسم
+	$wp_customize->add_setting( 'esdar_section_title_color', array(
+		'default'           => '#1c2d27',
+		'sanitize_callback' => 'sanitize_hex_color',
+		'transport'         => 'postMessage',
+	) );
 
-    $wp_customize->add_control('esdar_show_related', array(
-        'label' => __('عرض الإصدارات ذات الصلة', 'nadiim'),
-        'description' => __('عرض قسم الإصدارات المشابهة أسفل الإصدار', 'nadiim'),
-        'section' => 'esdar_display_section',
-        'type' => 'checkbox',
-    ));
+	$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'esdar_section_title_color', array(
+		'label'       => __( 'لون عنوان القسم', 'nadiim' ),
+		'description' => __( 'لون نص عنوان القسم', 'nadiim' ),
+		'section'     => 'nadiim_esdar_section',
+	) ) );
 
-    // عدد الإصدارات ذات الصلة
-    $wp_customize->add_setting('esdar_related_count', array(
-        'default' => 6,
-        'type' => 'theme_mod',
-        'capability' => 'edit_theme_options',
-        'sanitize_callback' => 'absint',
-    ));
+	// لون وصف القسم
+	$wp_customize->add_setting( 'esdar_section_subtitle_color', array(
+		'default'           => '#5a6c64',
+		'sanitize_callback' => 'sanitize_hex_color',
+		'transport'         => 'postMessage',
+	) );
 
-    $wp_customize->add_control('esdar_related_count', array(
-        'label' => __('عدد الإصدارات ذات الصلة', 'nadiim'),
-        'section' => 'esdar_display_section',
-        'type' => 'number',
-        'input_attrs' => array(
-            'min' => 1,
-            'max' => 12,
-            'step' => 1,
-        ),
-        'active_callback' => function() {
-            return get_theme_mod('esdar_show_related', true);
-        },
-    ));
+	$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'esdar_section_subtitle_color', array(
+		'label'       => __( 'لون وصف القسم', 'nadiim' ),
+		'description' => __( 'لون نص الوصف', 'nadiim' ),
+		'section'     => 'nadiim_esdar_section',
+	) ) );
 
-    // عرض أزرار المشاركة
-    $wp_customize->add_setting('esdar_show_share_buttons', array(
-        'default' => true,
-        'type' => 'theme_mod',
-        'capability' => 'edit_theme_options',
-        'sanitize_callback' => 'wp_validate_boolean',
-    ));
+	// ─────────────────────────────────────
+	// إعدادات البطاقة
+	// ─────────────────────────────────────
 
-    $wp_customize->add_control('esdar_show_share_buttons', array(
-        'label' => __('عرض أزرار المشاركة', 'nadiim'),
-        'description' => __('عرض أزرار المشاركة على وسائل التواصل الاجتماعي', 'nadiim'),
-        'section' => 'esdar_display_section',
-        'type' => 'checkbox',
-    ));
+	// إظهار زر التحميل
+	$wp_customize->add_setting( 'esdar_card_show_download', array(
+		'default'           => true,
+		'sanitize_callback' => 'rest_sanitize_boolean',
+		'transport'         => 'postMessage',
+	) );
 
-    // ===================================
-    // Section: إعدادات التحميل
-    // ===================================
-    $wp_customize->add_section('esdar_download_section', array(
-        'title' => __('إعدادات التحميل', 'nadiim'),
-        'panel' => 'esdar_panel',
-        'priority' => 40,
-    ));
+	$wp_customize->add_control( 'esdar_card_show_download', array(
+		'label'       => __( 'إظهار زر التحميل', 'nadiim' ),
+		'description' => __( 'عرض زر التحميل في البطاقة', 'nadiim' ),
+		'section'     => 'nadiim_esdar_section',
+		'type'        => 'checkbox',
+	) );
 
-    // تتبع التحميلات
-    $wp_customize->add_setting('esdar_track_downloads', array(
-        'default' => true,
-        'type' => 'theme_mod',
-        'capability' => 'edit_theme_options',
-        'sanitize_callback' => 'wp_validate_boolean',
-    ));
+	// إظهار Badge النوع
+	$wp_customize->add_setting( 'esdar_card_show_badge', array(
+		'default'           => true,
+		'sanitize_callback' => 'rest_sanitize_boolean',
+		'transport'         => 'postMessage',
+	) );
 
-    $wp_customize->add_control('esdar_track_downloads', array(
-        'label' => __('تتبع عدد التحميلات', 'nadiim'),
-        'description' => __('تسجيل عدد مرات تحميل كل إصدار', 'nadiim'),
-        'section' => 'esdar_download_section',
-        'type' => 'checkbox',
-    ));
+	$wp_customize->add_control( 'esdar_card_show_badge', array(
+		'label'       => __( 'إظهار شارة النوع', 'nadiim' ),
+		'description' => __( 'عرض شارة نوع الإصدار (رواية، تقرير، إلخ)', 'nadiim' ),
+		'section'     => 'nadiim_esdar_section',
+		'type'        => 'checkbox',
+	) );
 
-    // عرض عداد التحميلات
-    $wp_customize->add_setting('esdar_show_download_count', array(
-        'default' => true,
-        'type' => 'theme_mod',
-        'capability' => 'edit_theme_options',
-        'sanitize_callback' => 'wp_validate_boolean',
-    ));
+	// ─────────────────────────────────────
+	// إعدادات الخلفية
+	// ─────────────────────────────────────
 
-    $wp_customize->add_control('esdar_show_download_count', array(
-        'label' => __('عرض عداد التحميلات', 'nadiim'),
-        'description' => __('إظهار عدد التحميلات للزوار', 'nadiim'),
-        'section' => 'esdar_download_section',
-        'type' => 'checkbox',
-    ));
+	// تفعيل خلفية القسم
+	$wp_customize->add_setting( 'esdar_section_bg_enable', array(
+		'default'           => false,
+		'sanitize_callback' => 'rest_sanitize_boolean',
+		'transport'         => 'postMessage',
+	) );
 
+	$wp_customize->add_control( 'esdar_section_bg_enable', array(
+		'label'       => __( 'تفعيل خلفية القسم', 'nadiim' ),
+		'description' => __( 'إضافة صورة خلفية للقسم', 'nadiim' ),
+		'section'     => 'nadiim_esdar_section',
+		'type'        => 'checkbox',
+	) );
+
+	// صورة الخلفية
+	$wp_customize->add_setting( 'esdar_section_bg_image', array(
+		'default'           => '',
+		'sanitize_callback' => 'esc_url_raw',
+		'transport'         => 'postMessage',
+	) );
+
+	$wp_customize->add_control( new WP_Customize_Image_Control( $wp_customize, 'esdar_section_bg_image', array(
+		'label'           => __( 'صورة الخلفية', 'nadiim' ),
+		'description'     => __( 'اختر صورة خلفية للقسم', 'nadiim' ),
+		'section'         => 'nadiim_esdar_section',
+		'active_callback' => function() {
+			return get_theme_mod( 'esdar_section_bg_enable', false );
+		},
+	) ) );
+
+	// شفافية طبقة التعتيم
+	$wp_customize->add_setting( 'esdar_section_overlay_opacity', array(
+		'default'           => 0.30,
+		'sanitize_callback' => 'nadiim_sanitize_float',
+		'transport'         => 'postMessage',
+	) );
+
+	$wp_customize->add_control( 'esdar_section_overlay_opacity', array(
+		'label'           => __( 'شفافية طبقة التعتيم', 'nadiim' ),
+		'description'     => __( 'قيمة من 0.0 (شفاف) إلى 1.0 (معتم)', 'nadiim' ),
+		'section'         => 'nadiim_esdar_section',
+		'type'            => 'number',
+		'input_attrs'     => array(
+			'min'  => 0,
+			'max'  => 1,
+			'step' => 0.05,
+		),
+		'active_callback' => function() {
+			return get_theme_mod( 'esdar_section_bg_enable', false );
+		},
+	) );
+
+	// لون طبقة التعتيم
+	$wp_customize->add_setting( 'esdar_section_overlay_color', array(
+		'default'           => '#000000',
+		'sanitize_callback' => 'sanitize_hex_color',
+		'transport'         => 'postMessage',
+	) );
+
+	$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'esdar_section_overlay_color', array(
+		'label'           => __( 'لون طبقة التعتيم', 'nadiim' ),
+		'description'     => __( 'لون الطبقة الشفافة فوق الخلفية', 'nadiim' ),
+		'section'         => 'nadiim_esdar_section',
+		'active_callback' => function() {
+			return get_theme_mod( 'esdar_section_bg_enable', false );
+		},
+	) ) );
+
+	// نظام الألوان للنص
+	$wp_customize->add_setting( 'esdar_section_text_color_scheme', array(
+		'default'           => 'auto',
+		'sanitize_callback' => 'sanitize_text_field',
+		'transport'         => 'postMessage',
+	) );
+
+	$wp_customize->add_control( 'esdar_section_text_color_scheme', array(
+		'label'           => __( 'نظام ألوان النص', 'nadiim' ),
+		'description'     => __( 'اختر نظام الألوان المناسب للخلفية', 'nadiim' ),
+		'section'         => 'nadiim_esdar_section',
+		'type'            => 'select',
+		'choices'         => array(
+			'auto'  => __( 'تلقائي', 'nadiim' ),
+			'light' => __( 'فاتح (للخلفيات الداكنة)', 'nadiim' ),
+			'dark'  => __( 'داكن (للخلفيات الفاتحة)', 'nadiim' ),
+		),
+		'active_callback' => function() {
+			return get_theme_mod( 'esdar_section_bg_enable', false );
+		},
+	) );
+
+	// ─────────────────────────────────────
+	// إعدادات زر "اطلع على المزيد"
+	// ─────────────────────────────────────
+
+	// إظهار زر المزيد
+	$wp_customize->add_setting( 'esdar_section_show_more_button', array(
+		'default'           => true,
+		'sanitize_callback' => 'rest_sanitize_boolean',
+		'transport'         => 'postMessage',
+	) );
+
+	$wp_customize->add_control( 'esdar_section_show_more_button', array(
+		'label'       => __( 'إظهار زر "اطلع على المزيد"', 'nadiim' ),
+		'description' => __( 'عرض زر في أسفل القسم للانتقال إلى صفحة جميع الإصدارات', 'nadiim' ),
+		'section'     => 'nadiim_esdar_section',
+		'type'        => 'checkbox',
+	) );
+
+	// نص زر المزيد
+	$wp_customize->add_setting( 'esdar_section_more_button_text', array(
+		'default'           => __( 'استكشف جميع الإصدارات', 'nadiim' ),
+		'sanitize_callback' => 'sanitize_text_field',
+		'transport'         => 'postMessage',
+	) );
+
+	$wp_customize->add_control( 'esdar_section_more_button_text', array(
+		'label'           => __( 'نص الزر', 'nadiim' ),
+		'section'         => 'nadiim_esdar_section',
+		'type'            => 'text',
+		'active_callback' => function() {
+			return get_theme_mod( 'esdar_section_show_more_button', true );
+		},
+	) );
+
+	// رابط زر المزيد
+	$wp_customize->add_setting( 'esdar_section_more_button_link', array(
+		'default'           => '#',
+		'sanitize_callback' => 'esc_url_raw',
+		'transport'         => 'postMessage',
+	) );
+
+	$wp_customize->add_control( 'esdar_section_more_button_link', array(
+		'label'           => __( 'رابط الزر', 'nadiim' ),
+		'description'     => __( 'الرابط الذي سينتقل إليه المستخدم عند النقر', 'nadiim' ),
+		'section'         => 'nadiim_esdar_section',
+		'type'            => 'url',
+		'active_callback' => function() {
+			return get_theme_mod( 'esdar_section_show_more_button', true );
+		},
+	) );
 }
-add_action('customize_register', 'nadiim_esdar_customize_register');
+add_action( 'customize_register', 'nadiim_esdar_customizer_register' );
+
+/**
+ * دالة sanitize للأرقام العشرية
+ */
+function nadiim_sanitize_float( $value ) {
+	return floatval( $value );
+}
+
+/**
+ * CSS مخصص لقسم الإصدارات
+ */
+function nadiim_esdar_customizer_css() {
+	if ( ! is_front_page() ) {
+		return;
+	}
+
+	$overlay_opacity     = get_theme_mod( 'esdar_section_overlay_opacity', 0.30 );
+	$overlay_color       = get_theme_mod( 'esdar_section_overlay_color', '#000000' );
+	$bg_enable           = get_theme_mod( 'esdar_section_bg_enable', false );
+	$title_color         = get_theme_mod( 'esdar_section_title_color', '#1c2d27' );
+	$subtitle_color      = get_theme_mod( 'esdar_section_subtitle_color', '#5a6c64' );
+	$text_color_scheme   = get_theme_mod( 'esdar_section_text_color_scheme', 'auto' );
+
+	?>
+	<style type="text/css" id="nadiim-esdar-custom-css">
+		:root {
+			--esdar-overlay-opacity: <?php echo floatval( $overlay_opacity ); ?>;
+		}
+
+		<?php if ( ! get_theme_mod( 'esdar_section_enable', true ) ) : ?>
+		.esdar-section { display: none; }
+		<?php endif; ?>
+
+		<?php if ( $bg_enable ) : ?>
+		.esdar-section .section-bg-overlay {
+			background-color: <?php echo esc_attr( $overlay_color ); ?>;
+			opacity: <?php echo floatval( $overlay_opacity ); ?>;
+		}
+		<?php endif; ?>
+
+		/* ألوان النص */
+		.esdar-section .section-title {
+			color: <?php echo esc_attr( $title_color ); ?>;
+		}
+
+		.esdar-section .section-subtitle {
+			color: <?php echo esc_attr( $subtitle_color ); ?>;
+		}
+
+		<?php if ( $text_color_scheme === 'light' ) : ?>
+		.esdar-section.section-with-bg .section-title,
+		.esdar-section.section-with-bg .esdar-card-title,
+		.esdar-section.section-with-bg .esdar-card-excerpt,
+		.esdar-section.section-with-bg .esdar-card-meta {
+			color: rgba(255, 255, 255, 0.95);
+		}
+
+		.esdar-section.section-with-bg .section-subtitle {
+			color: rgba(255, 255, 255, 0.80);
+		}
+		<?php elseif ( $text_color_scheme === 'dark' ) : ?>
+		.esdar-section.section-with-bg .section-title {
+			color: #1c2d27;
+		}
+
+		.esdar-section.section-with-bg .section-subtitle {
+			color: #5a6c64;
+		}
+		<?php endif; ?>
+	</style>
+	<?php
+}
+add_action( 'wp_head', 'nadiim_esdar_customizer_css', 20 );
