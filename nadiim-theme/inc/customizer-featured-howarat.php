@@ -402,6 +402,8 @@ function nadiim_featured_howarat_customizer_css() {
 	<style type="text/css" id="nadiim-featured-howarat-custom-css">
 		:root {
 			--featured-howarat-overlay-opacity: <?php echo floatval( $overlay_opacity ); ?>;
+			--featured-howarat-title-color: <?php echo esc_attr( $title_color ); ?>;
+			--featured-howarat-description-color: <?php echo esc_attr( $description_color ); ?>;
 		}
 
 		<?php if ( ! get_theme_mod( 'featured_howarat_enable', true ) ) : ?>
@@ -416,15 +418,6 @@ function nadiim_featured_howarat_customizer_css() {
 			opacity: <?php echo floatval( $overlay_opacity ); ?>;
 		}
 		<?php endif; ?>
-
-		/* ألوان النص */
-		.featured-howarat-section .section-title {
-			color: <?php echo esc_attr( $title_color ); ?>;
-		}
-
-		.featured-howarat-section .section-description {
-			color: <?php echo esc_attr( $description_color ); ?>;
-		}
 	</style>
 	<?php
 }

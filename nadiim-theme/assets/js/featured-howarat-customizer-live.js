@@ -52,7 +52,7 @@
 	 */
 	customize('featured_howarat_title_color', function(value) {
 		value.bind(function(to) {
-			$('.featured-howarat-section .section-title').css('color', to);
+			document.documentElement.style.setProperty('--featured-howarat-title-color', to);
 		});
 	});
 
@@ -61,7 +61,7 @@
 	 */
 	customize('featured_howarat_description_color', function(value) {
 		value.bind(function(to) {
-			$('.featured-howarat-section .section-description').css('color', to);
+			document.documentElement.style.setProperty('--featured-howarat-description-color', to);
 		});
 	});
 
