@@ -278,6 +278,15 @@ function nadiim_send_contact_notification( $data ) {
 		return get_bloginfo( 'name' );
 	} );
 
+	// إضافة معالج لأخطاء wp_mail
+	$mail_error = '';
+	add_action( 'wp_mail_failed', function( $wp_error ) use ( &$mail_error ) {
+		$mail_error = $wp_error->get_error_message();
+		if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
+			error_log( 'Contact Form: wp_mail error: ' . $mail_error );
+		}
+	} );
+
 	// إرسال البريد
 	$sent = wp_mail( $receivers, $subject, $body, $headers );
 
@@ -289,10 +298,15 @@ function nadiim_send_contact_notification( $data ) {
 	if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
 		if ( $sent ) {
 			error_log( 'Contact Form: Email sent successfully to ' . implode( ', ', $receivers ) );
+			error_log( 'Contact Form: From: ' . get_option( 'admin_email' ) . ' (' . get_bloginfo( 'name' ) . ')' );
+			error_log( 'Contact Form: Subject: ' . $subject );
 		} else {
 			error_log( 'Contact Form: Failed to send email. Check wp_mail configuration.' );
 			error_log( 'Contact Form: Receivers: ' . implode( ', ', $receivers ) );
 			error_log( 'Contact Form: Subject: ' . $subject );
+			if ( ! empty( $mail_error ) ) {
+				error_log( 'Contact Form: Error details: ' . $mail_error );
+			}
 		}
 	}
 
