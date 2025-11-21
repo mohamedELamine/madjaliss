@@ -184,6 +184,57 @@ function nadiim_featured_howarat_customizer_register( $wp_customize ) {
 	) ) );
 
 	// ─────────────────────────────────────
+	// إعدادات زر "اطلع على المزيد"
+	// ─────────────────────────────────────
+
+	// إظهار زر المزيد
+	$wp_customize->add_setting( 'featured_howarat_show_more_button', array(
+		'default'           => true,
+		'sanitize_callback' => 'rest_sanitize_boolean',
+		'transport'         => 'postMessage',
+	) );
+
+	$wp_customize->add_control( 'featured_howarat_show_more_button', array(
+		'label'       => __( 'إظهار زر "اطلع على المزيد"', 'nadiim' ),
+		'description' => __( 'عرض زر في أسفل القسم للانتقال إلى صفحة جميع الحوارات', 'nadiim' ),
+		'section'     => 'nadiim_featured_howarat',
+		'type'        => 'checkbox',
+	) );
+
+	// نص زر المزيد
+	$wp_customize->add_setting( 'featured_howarat_more_button_text', array(
+		'default'           => __( 'اطلع على المزيد من الحوارات', 'nadiim' ),
+		'sanitize_callback' => 'sanitize_text_field',
+		'transport'         => 'postMessage',
+	) );
+
+	$wp_customize->add_control( 'featured_howarat_more_button_text', array(
+		'label'           => __( 'نص الزر', 'nadiim' ),
+		'section'         => 'nadiim_featured_howarat',
+		'type'            => 'text',
+		'active_callback' => function() {
+			return get_theme_mod( 'featured_howarat_show_more_button', true );
+		},
+	) );
+
+	// رابط زر المزيد
+	$wp_customize->add_setting( 'featured_howarat_more_button_link', array(
+		'default'           => '#',
+		'sanitize_callback' => 'esc_url_raw',
+		'transport'         => 'postMessage',
+	) );
+
+	$wp_customize->add_control( 'featured_howarat_more_button_link', array(
+		'label'           => __( 'رابط الزر', 'nadiim' ),
+		'description'     => __( 'الرابط الذي سينتقل إليه المستخدم عند النقر على الزر', 'nadiim' ),
+		'section'         => 'nadiim_featured_howarat',
+		'type'            => 'url',
+		'active_callback' => function() {
+			return get_theme_mod( 'featured_howarat_show_more_button', true );
+		},
+	) );
+
+	// ─────────────────────────────────────
 	// إعدادات خلفية القسم
 	// ─────────────────────────────────────
 

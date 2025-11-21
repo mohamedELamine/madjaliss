@@ -225,6 +225,42 @@
 	});
 
 	/**
+	 * إظهار/إخفاء زر "اطلع على المزيد"
+	 */
+	customize('featured_howarat_show_more_button', function(value) {
+		value.bind(function(to) {
+			const button = $('.featured-howarat-section .section-more-button');
+			if (to) {
+				button.fadeIn(300);
+			} else {
+				button.fadeOut(300);
+			}
+		});
+	});
+
+	/**
+	 * نص زر "اطلع على المزيد"
+	 */
+	customize('featured_howarat_more_button_text', function(value) {
+		value.bind(function(to) {
+			// العثور على العنصر النصي داخل الزر وتحديثه
+			const button = $('.featured-howarat-section .more-button');
+			// الحفاظ على SVG وتحديث النص فقط
+			const svg = button.find('svg');
+			button.text(to).append(svg);
+		});
+	});
+
+	/**
+	 * رابط زر "اطلع على المزيد"
+	 */
+	customize('featured_howarat_more_button_link', function(value) {
+		value.bind(function(to) {
+			$('.featured-howarat-section .more-button').attr('href', to);
+		});
+	});
+
+	/**
 	 * دالة مساعدة لإنشاء عنصر style
 	 */
 	function createStyleElement(id) {

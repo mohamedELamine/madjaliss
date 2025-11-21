@@ -110,6 +110,58 @@
 }
 
 /* ============================================
+   زر "اطلع على المزيد"
+   ============================================ */
+
+.featured-howarat-section .section-more-button {
+	margin-top: 48px;
+	text-align: center;
+}
+
+.featured-howarat-section .more-button {
+	display: inline-flex;
+	align-items: center;
+	gap: 10px;
+	padding: 16px 36px;
+	background-color: var(--color-primary);
+	color: #ffffff;
+	font-size: 17px;
+	font-weight: 600;
+	text-decoration: none;
+	border-radius: 50px;
+	transition: var(--transition-default);
+	border: 2px solid var(--color-primary);
+	box-shadow: 0 4px 12px rgba(51, 144, 99, 0.2);
+}
+
+.featured-howarat-section .more-button:hover {
+	background-color: var(--color-primary-hover);
+	border-color: var(--color-primary-hover);
+	transform: translateY(-2px);
+	box-shadow: 0 6px 20px rgba(51, 144, 99, 0.3);
+}
+
+.featured-howarat-section .more-button:focus {
+	outline: 3px solid var(--color-primary);
+	outline-offset: 3px;
+}
+
+.featured-howarat-section .more-button svg {
+	width: 20px;
+	height: 20px;
+	transition: transform 0.25s ease;
+}
+
+.featured-howarat-section .more-button:hover svg {
+	transform: translateX(4px);
+}
+
+/* RTL: حركة السهم لليسار */
+[dir="rtl"] .featured-howarat-section .more-button:hover svg {
+	transform: translateX(-4px);
+}
+
+/* ============================================
    Grid Layout
    ============================================ */
 

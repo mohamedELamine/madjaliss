@@ -156,6 +156,24 @@ if ( $bg_enable && ! empty( $bg_image ) ) {
 
 		<?php endif; ?>
 
+		<?php
+		// زر "اطلع على المزيد"
+		$show_more_button = get_theme_mod( 'featured_howarat_show_more_button', true );
+		if ( $show_more_button ) :
+			$button_text = get_theme_mod( 'featured_howarat_more_button_text', __( 'اطلع على المزيد من الحوارات', 'nadiim' ) );
+			$button_link = get_theme_mod( 'featured_howarat_more_button_link', '#' );
+		?>
+			<!-- زر المزيد -->
+			<div class="section-more-button">
+				<a href="<?php echo esc_url( $button_link ); ?>" class="more-button">
+					<?php echo esc_html( $button_text ); ?>
+					<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+						<path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/>
+					</svg>
+				</a>
+			</div><!-- .section-more-button -->
+		<?php endif; ?>
+
 	</div><!-- .container -->
 
 </section><!-- .featured-howarat-section -->
