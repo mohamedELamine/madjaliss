@@ -682,6 +682,7 @@ require_once NADIIM_THEME_DIR . '/inc/contact-handler.php';
 
 // تضمين ملفات صفحة من نحن
 require_once NADIIM_THEME_DIR . '/inc/customizer-about.php';
+require_once NADIIM_THEME_DIR . '/inc/user-about-meta.php';
 
 /**
  * تحميل أصول صفحة الاتصال (CSS & JS)

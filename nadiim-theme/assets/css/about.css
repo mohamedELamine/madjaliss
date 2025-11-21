@@ -203,6 +203,7 @@
    ======================================== */
 .about-cta {
     scroll-margin-top: 100px;
+    margin-bottom: 0 !important;
 }
 
 .cta-content {

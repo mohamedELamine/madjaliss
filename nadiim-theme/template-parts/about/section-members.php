@@ -12,59 +12,18 @@ if (!$members_enable) {
     return;
 }
 
-// Get members settings
-$members_json = get_theme_mod('about_members_json', '');
+// Get members columns setting
 $members_columns = get_theme_mod('about_members_columns', 3);
 
-// Parse members JSON
-$members = array();
-if (!empty($members_json)) {
-    $decoded = json_decode($members_json, true);
-    if (is_array($decoded)) {
-        // Filter only displayed members
-        $members = array_filter($decoded, function($member) {
-            return !isset($member['display']) || $member['display'] === true || $member['display'] === 'true';
-        });
-    }
-}
+// Get all users who should appear in About page
+$members_args = array(
+    'meta_key'     => 'show_in_about_page',
+    'meta_value'   => '1',
+    'orderby'      => 'display_name',
+    'order'        => 'ASC',
+);
 
-// Add demo members if empty
-if (empty($members)) {
-    $members = array(
-        array(
-            'name' => 'أحمد محمد',
-            'role' => 'المؤسس والمدير التنفيذي',
-            'short_bio' => 'كاتب وباحث في الأدب العربي، يهتم بنشر الثقافة والمعرفة في المجتمع العربي.',
-            'photo_id' => '',
-            'profile_link' => '',
-            'display' => true,
-        ),
-        array(
-            'name' => 'فاطمة عبدالله',
-            'role' => 'مديرة المحتوى',
-            'short_bio' => 'صحفية ومحررة، متخصصة في الكتابة الثقافية والأدبية.',
-            'photo_id' => '',
-            'profile_link' => '',
-            'display' => true,
-        ),
-        array(
-            'name' => 'عمر حسن',
-            'role' => 'مدير التواصل الاجتماعي',
-            'short_bio' => 'خبير في التسويق الرقمي والتواصل مع الجمهور عبر منصات التواصل الاجتماعي.',
-            'photo_id' => '',
-            'profile_link' => '',
-            'display' => true,
-        ),
-        array(
-            'name' => 'سارة إبراهيم',
-            'role' => 'منسقة الفعاليات',
-            'short_bio' => 'متخصصة في تنظيم الفعاليات الثقافية والأدبية وإدارة المشاريع.',
-            'photo_id' => '',
-            'profile_link' => '',
-            'display' => true,
-        ),
-    );
-}
+$members = get_users($members_args);
 
 if (empty($members)) {
     return;
@@ -100,42 +59,44 @@ switch ($members_columns) {
         <div class="members-grid" style="display: grid; grid-template-columns: <?php echo esc_attr($column_class); ?>; gap: 32px;">
 
             <?php foreach ($members as $member) :
-                $name = isset($member['name']) ? $member['name'] : '';
-                $role = isset($member['role']) ? $member['role'] : '';
-                $short_bio = isset($member['short_bio']) ? $member['short_bio'] : '';
-                $photo_id = isset($member['photo_id']) ? $member['photo_id'] : '';
-                $profile_link = isset($member['profile_link']) ? $member['profile_link'] : '';
+                $user_id = $member->ID;
+                $name = $member->display_name;
+                $role = get_user_meta($user_id, 'about_page_role', true);
+                $short_bio = get_user_meta($user_id, 'description', true);
+                $author_url = get_author_posts_url($user_id);
 
-                if (empty($name)) {
-                    continue;
-                }
-
-                // Get photo URL
-                $photo_url = '';
-                if ($photo_id) {
-                    $photo_url = wp_get_attachment_image_url($photo_id, 'medium');
-                }
+                // Get avatar URL
+                $avatar_url = get_avatar_url($user_id, array('size' => 200));
 
                 // Truncate bio to 2 lines (approximately 80 chars)
                 $truncated_bio = $short_bio;
                 if (mb_strlen($short_bio) > 80) {
                     $truncated_bio = mb_substr($short_bio, 0, 80) . '...';
                 }
+
+                // If no custom role, get user role
+                if (empty($role)) {
+                    $user_data = get_userdata($user_id);
+                    $user_roles = $user_data->roles;
+                    if (!empty($user_roles)) {
+                        $role_names = array(
+                            'administrator' => 'مدير',
+                            'editor'        => 'محرر',
+                            'author'        => 'كاتب',
+                            'contributor'   => 'مساهم',
+                        );
+                        $role = isset($role_names[$user_roles[0]]) ? $role_names[$user_roles[0]] : $user_roles[0];
+                    }
+                }
             ?>
 
-                <div class="member-card" style="background: linear-gradient(135deg, #ffffff 0%, #f9fffe 100%); border-radius: 12px; padding: 32px 24px; text-align: center; transition: transform 0.3s ease, box-shadow 0.3s ease; box-shadow: 0 4px 16px rgba(0,0,0,0.06); border-top: 4px solid var(--color-primary, #339063);">
+                <a href="<?php echo esc_url($author_url); ?>" class="member-card" style="background: linear-gradient(135deg, #ffffff 0%, #f9fffe 100%); border-radius: 12px; padding: 32px 24px; text-align: center; transition: transform 0.3s ease, box-shadow 0.3s ease; box-shadow: 0 4px 16px rgba(0,0,0,0.06); border-top: 4px solid var(--color-primary, #339063); text-decoration: none; display: block; color: inherit;">
 
                     <!-- Member Avatar -->
                     <div class="member-avatar" style="width: 140px; height: 140px; margin: 0 auto 20px; border-radius: 50%; overflow: hidden; border: 4px solid var(--color-primary, #339063); box-shadow: 0 4px 12px rgba(51, 144, 99, 0.2);">
-                        <?php if ($photo_url) : ?>
-                            <img src="<?php echo esc_url($photo_url); ?>"
-                                 alt="<?php echo esc_attr($name); ?>"
-                                 style="width: 100%; height: 100%; object-fit: cover;">
-                        <?php else : ?>
-                            <div style="width: 100%; height: 100%; background: linear-gradient(135deg, var(--color-primary, #339063), rgba(51, 144, 99, 0.7)); display: flex; align-items: center; justify-content: center; font-size: 3rem; font-weight: 700; color: #fff;">
-                                <?php echo esc_html(mb_substr($name, 0, 1)); ?>
-                            </div>
-                        <?php endif; ?>
+                        <img src="<?php echo esc_url($avatar_url); ?>"
+                             alt="<?php echo esc_attr($name); ?>"
+                             style="width: 100%; height: 100%; object-fit: cover;">
                     </div>
 
                     <!-- Member Name -->
@@ -157,23 +118,18 @@ switch ($members_columns) {
                         </p>
                     <?php endif; ?>
 
-                    <!-- Profile Link -->
-                    <?php if ($profile_link) : ?>
-                        <div class="member-link">
-                            <a href="<?php echo esc_url($profile_link); ?>"
-                               target="_blank"
-                               rel="noopener noreferrer"
-                               style="display: inline-flex; align-items: center; gap: 6px; color: var(--color-primary, #339063); font-weight: 600; font-size: 0.875rem; text-decoration: none; transition: gap 0.3s ease;">
-                                عرض الملف الشخصي
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <line x1="7" y1="17" x2="17" y2="7"></line>
-                                    <polyline points="7 7 17 7 17 17"></polyline>
-                                </svg>
-                            </a>
-                        </div>
-                    <?php endif; ?>
+                    <!-- View Profile Link -->
+                    <div class="member-link">
+                        <span style="display: inline-flex; align-items: center; gap: 6px; color: var(--color-primary, #339063); font-weight: 600; font-size: 0.875rem; transition: gap 0.3s ease;">
+                            عرض الملف الشخصي
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="5" y1="12" x2="19" y2="12"></line>
+                                <polyline points="12 5 19 12 12 19"></polyline>
+                            </svg>
+                        </span>
+                    </div>
 
-                </div>
+                </a>
 
             <?php endforeach; ?>
 
@@ -188,8 +144,12 @@ switch ($members_columns) {
     box-shadow: 0 12px 32px rgba(0,0,0,0.12) !important;
 }
 
-.member-link a:hover {
+.member-card:hover .member-link span {
     gap: 10px;
+}
+
+.member-card:hover .member-avatar {
+    transform: scale(1.05);
 }
 
 @media (max-width: 768px) {

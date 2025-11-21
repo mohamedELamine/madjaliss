@@ -288,18 +288,16 @@ function nadiim_about_customize_register($wp_customize) {
         ),
     ));
 
-    // Members JSON (hidden, managed by JS)
-    $wp_customize->add_setting('about_members_json', array(
-        'default'           => '',
-        'sanitize_callback' => 'nadiim_sanitize_members_json',
-        'transport'         => 'postMessage',
+    // Note about members management
+    $wp_customize->add_setting('about_members_note', array(
+        'sanitize_callback' => 'sanitize_text_field',
     ));
-    $wp_customize->add_control('about_members_json', array(
-        'label'       => __('بيانات الأعضاء (JSON)', 'nadiim'),
-        'description' => __('استخدم الواجهة أدناه لإدارة الأعضاء', 'nadiim'),
+    $wp_customize->add_control(new WP_Customize_Control($wp_customize, 'about_members_note', array(
+        'label'       => '',
+        'description' => __('يتم إدارة أعضاء الفريق من خلال صفحات المستخدمين. اذهب إلى <a href="' . admin_url('users.php') . '">المستخدمون</a> وحدد من يظهر في صفحة من نحن.', 'nadiim'),
         'section'     => 'nadiim_about_settings',
-        'type'        => 'textarea',
-    ));
+        'type'        => 'hidden',
+    )));
 
     // ========================================
     // CTA Settings
@@ -392,41 +390,6 @@ function nadiim_sanitize_timeline_json($input) {
 }
 
 /**
- * Sanitize Members JSON
- */
-function nadiim_sanitize_members_json($input) {
-    if (empty($input)) {
-        return '';
-    }
-
-    $data = json_decode($input, true);
-    if (!is_array($data)) {
-        return '';
-    }
-
-    // Sanitize each member
-    $sanitized = array();
-    foreach ($data as $member) {
-        if (!is_array($member)) {
-            continue;
-        }
-
-        $sanitized_member = array(
-            'name'         => isset($member['name']) ? sanitize_text_field($member['name']) : '',
-            'role'         => isset($member['role']) ? sanitize_text_field($member['role']) : '',
-            'short_bio'    => isset($member['short_bio']) ? sanitize_textarea_field($member['short_bio']) : '',
-            'photo_id'     => isset($member['photo_id']) ? absint($member['photo_id']) : 0,
-            'profile_link' => isset($member['profile_link']) ? esc_url_raw($member['profile_link']) : '',
-            'display'      => isset($member['display']) ? (bool)$member['display'] : true,
-        );
-
-        $sanitized[] = $sanitized_member;
-    }
-
-    return wp_json_encode($sanitized, JSON_UNESCAPED_UNICODE);
-}
-
-/**
  * Enqueue Customizer scripts
  */
 function nadiim_about_customizer_scripts() {
@@ -448,14 +411,6 @@ function nadiim_about_customizer_scripts() {
             'eventFullDesc'  => __('وصف كامل', 'nadiim'),
             'eventImage'     => __('رابط الصورة', 'nadiim'),
             'eventLink'      => __('رابط', 'nadiim'),
-            'addMember'      => __('إضافة عضو', 'nadiim'),
-            'removeMember'   => __('حذف', 'nadiim'),
-            'memberName'     => __('الاسم', 'nadiim'),
-            'memberRole'     => __('الدور', 'nadiim'),
-            'memberBio'      => __('نبذة قصيرة', 'nadiim'),
-            'memberPhoto'    => __('معرف الصورة', 'nadiim'),
-            'memberLink'     => __('رابط الملف الشخصي', 'nadiim'),
-            'memberDisplay'  => __('عرض', 'nadiim'),
         ),
     ));
 }
