@@ -73,37 +73,20 @@ $slides_count = count( $slides );
 
             </div><!-- .swiper-wrapper -->
 
-            <!-- عناصر التحكم -->
-            <div class="hero-slider-controls">
+            <!-- أزرار التنقل في وسط السلايدر -->
+            <button class="swiper-button-prev" aria-label="<?php esc_attr_e( 'الشريحة السابقة', 'nadiim' ); ?>">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
+                </svg>
+            </button>
+            <button class="swiper-button-next" aria-label="<?php esc_attr_e( 'الشريحة التالية', 'nadiim' ); ?>">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/>
+                </svg>
+            </button>
 
-                <!-- Pagination (Bullets) -->
-                <div class="swiper-pagination"></div>
-
-                <!-- Navigation -->
-                <div class="hero-slider-navigation">
-                    <button class="swiper-button-prev" aria-label="<?php esc_attr_e( 'الشريحة السابقة', 'nadiim' ); ?>">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                            <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
-                        </svg>
-                    </button>
-                    <button class="swiper-button-next" aria-label="<?php esc_attr_e( 'الشريحة التالية', 'nadiim' ); ?>">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                            <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/>
-                        </svg>
-                    </button>
-                </div>
-
-                <!-- Play/Pause -->
-                <button class="hero-slider-play-pause" aria-label="<?php esc_attr_e( 'إيقاف/تشغيل', 'nadiim' ); ?>" data-playing="true">
-                    <svg class="play-icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                        <path d="M8 5v14l11-7z"/>
-                    </svg>
-                    <svg class="pause-icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                        <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
-                    </svg>
-                </button>
-
-            </div><!-- .hero-slider-controls -->
+            <!-- Pagination (Bullets) في الأسفل -->
+            <div class="swiper-pagination"></div>
 
         </div><!-- .swiper -->
 
