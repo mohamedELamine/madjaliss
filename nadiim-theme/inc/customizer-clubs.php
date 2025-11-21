@@ -24,7 +24,7 @@ function nadiim_clubs_customizer_register( $wp_customize ) {
 		'title'       => __( 'نوادي القراءة', 'nadiim' ),
 		'description' => __( 'إعدادات قسم نوادي القراءة في الصفحة الرئيسية', 'nadiim' ),
 		'priority'    => 45,
-		'panel'       => 'nadiim_home_panel',
+		'panel'       => 'nadiim_front_page_panel',
 	) );
 
 	// ═══════════════════════════════════════════════════════════════

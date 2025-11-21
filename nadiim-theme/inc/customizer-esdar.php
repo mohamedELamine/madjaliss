@@ -24,7 +24,7 @@ function nadiim_esdar_customizer_register( $wp_customize ) {
 		'title'       => __( 'الإصدارات', 'nadiim' ),
 		'description' => __( 'إعدادات قسم الإصدارات في الصفحة الرئيسية', 'nadiim' ),
 		'priority'    => 42,
-		'panel'       => 'nadiim_home_panel',
+		'panel'       => 'nadiim_front_page_panel',
 	) );
 
 	// ═══════════════════════════════════════════════════════════════

@@ -16,23 +16,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 function nadiim_register_articles_section_customizer( $wp_customize ) {
 
 	// ========================================
-	// Panel: الصفحة الرئيسية
-	// ========================================
-	// التحقق من وجود Panel الصفحة الرئيسية، وإنشاؤه إذا لم يكن موجوداً
-	if ( ! $wp_customize->get_panel( 'nadiim_front_page' ) ) {
-		$wp_customize->add_panel( 'nadiim_front_page', array(
-			'title'       => __( 'الصفحة الرئيسية', 'nadiim' ),
-			'description' => __( 'إعدادات أقسام الصفحة الرئيسية', 'nadiim' ),
-			'priority'    => 30,
-		) );
-	}
-
-	// ========================================
 	// Section: قسم المقالات
 	// ========================================
 	$wp_customize->add_section( 'nadiim_articles_section', array(
 		'title'    => __( 'قسم المقالات', 'nadiim' ),
-		'panel'    => 'nadiim_front_page',
+		'panel'    => 'nadiim_front_page_panel',
 		'priority' => 60,
 	) );
 
