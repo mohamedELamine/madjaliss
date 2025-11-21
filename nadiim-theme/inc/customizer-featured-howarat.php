@@ -154,6 +154,36 @@ function nadiim_featured_howarat_customizer_register( $wp_customize ) {
 	) );
 
 	// ─────────────────────────────────────
+	// إعدادات ألوان النص
+	// ─────────────────────────────────────
+
+	// لون عنوان القسم
+	$wp_customize->add_setting( 'featured_howarat_title_color', array(
+		'default'           => '#1c2d27',
+		'sanitize_callback' => 'sanitize_hex_color',
+		'transport'         => 'postMessage',
+	) );
+
+	$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'featured_howarat_title_color', array(
+		'label'       => __( 'لون عنوان القسم', 'nadiim' ),
+		'description' => __( 'لون نص "الحوارات المميزة"', 'nadiim' ),
+		'section'     => 'nadiim_featured_howarat',
+	) ) );
+
+	// لون وصف القسم
+	$wp_customize->add_setting( 'featured_howarat_description_color', array(
+		'default'           => '#5a6c64',
+		'sanitize_callback' => 'sanitize_hex_color',
+		'transport'         => 'postMessage',
+	) );
+
+	$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'featured_howarat_description_color', array(
+		'label'       => __( 'لون وصف القسم', 'nadiim' ),
+		'description' => __( 'لون نص "تعرف على أهم الحوارات..."', 'nadiim' ),
+		'section'     => 'nadiim_featured_howarat',
+	) ) );
+
+	// ─────────────────────────────────────
 	// إعدادات خلفية القسم
 	// ─────────────────────────────────────
 
@@ -311,9 +341,11 @@ function nadiim_featured_howarat_customizer_css() {
 		return;
 	}
 
-	$overlay_opacity = get_theme_mod( 'featured_howarat_overlay_opacity', 0.30 );
-	$overlay_color   = get_theme_mod( 'featured_howarat_overlay_color', '#000000' );
-	$bg_enable       = get_theme_mod( 'featured_howarat_bg_enable', false );
+	$overlay_opacity    = get_theme_mod( 'featured_howarat_overlay_opacity', 0.30 );
+	$overlay_color      = get_theme_mod( 'featured_howarat_overlay_color', '#000000' );
+	$bg_enable          = get_theme_mod( 'featured_howarat_bg_enable', false );
+	$title_color        = get_theme_mod( 'featured_howarat_title_color', '#1c2d27' );
+	$description_color  = get_theme_mod( 'featured_howarat_description_color', '#5a6c64' );
 
 	?>
 	<style type="text/css" id="nadiim-featured-howarat-custom-css">
@@ -333,6 +365,15 @@ function nadiim_featured_howarat_customizer_css() {
 			opacity: <?php echo floatval( $overlay_opacity ); ?>;
 		}
 		<?php endif; ?>
+
+		/* ألوان النص */
+		.featured-howarat-section .section-title {
+			color: <?php echo esc_attr( $title_color ); ?>;
+		}
+
+		.featured-howarat-section .section-description {
+			color: <?php echo esc_attr( $description_color ); ?>;
+		}
 	</style>
 	<?php
 }

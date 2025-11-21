@@ -48,6 +48,24 @@
 	});
 
 	/**
+	 * لون عنوان القسم
+	 */
+	customize('featured_howarat_title_color', function(value) {
+		value.bind(function(to) {
+			$('.featured-howarat-section .section-title').css('color', to);
+		});
+	});
+
+	/**
+	 * لون وصف القسم
+	 */
+	customize('featured_howarat_description_color', function(value) {
+		value.bind(function(to) {
+			$('.featured-howarat-section .section-description').css('color', to);
+		});
+	});
+
+	/**
 	 * نوع التخطيط - يحتاج refresh
 	 */
 	customize('featured_howarat_layout', function(value) {

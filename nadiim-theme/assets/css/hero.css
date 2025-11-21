@@ -11,8 +11,8 @@
 
 :root {
     --color-primary: #339063;
-    --hero-height: 520px;
-    --hero-height-mobile: 400px;
+    --hero-height: 600px;
+    --hero-height-mobile: 420px;
     --container-max: 1200px;
     --transition-default: 0.3s ease;
 }
@@ -24,6 +24,7 @@
 .hero-slider-section {
     padding: 0;
     margin-top: 24px;
+    margin-bottom: 48px;
     background: #f8f9fa;
     position: relative;
 }
@@ -318,7 +319,7 @@
 /* Large Desktop (> 1440px) */
 @media screen and (min-width: 1441px) {
     :root {
-        --hero-height: 600px;
+        --hero-height: 650px;
     }
 
     .slide-content {
@@ -372,7 +373,7 @@
 /* Tablet (769px - 1024px) */
 @media screen and (max-width: 1024px) {
     :root {
-        --hero-height: 460px;
+        --hero-height: 500px;
     }
 
     .slide-content {
@@ -472,7 +473,7 @@
 /* Small Mobile (320px - 480px) */
 @media screen and (max-width: 480px) {
     :root {
-        --hero-height: 360px;
+        --hero-height: 400px;
     }
 
     .slide-content {
@@ -532,7 +533,7 @@
 /* Extra Small Mobile (< 360px) */
 @media screen and (max-width: 359px) {
     :root {
-        --hero-height: 320px;
+        --hero-height: 350px;
     }
 
     .slide-content {
