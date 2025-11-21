@@ -204,7 +204,11 @@ function nadiim_register_articles_section_customizer( $wp_customize ) {
 	) );
 
 	$authors_choices = array( '' => __( 'اختر كاتباً', 'nadiim' ) );
-	$authors = get_users( array( 'who' => 'authors' ) );
+	$authors = get_users( array(
+		'capability' => array( 'edit_posts' ), // بدلاً من 'who' => 'authors' المهجور
+		'orderby'    => 'display_name',
+		'order'      => 'ASC',
+	) );
 	foreach ( $authors as $author ) {
 		$authors_choices[ $author->ID ] = $author->display_name;
 	}

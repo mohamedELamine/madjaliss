@@ -212,10 +212,10 @@ function nadiim_get_tags_options() {
  */
 function nadiim_get_authors_options() {
     $authors = get_users( array(
-        'who' => 'authors',
+        'capability'          => array( 'edit_posts' ), // بدلاً من 'who' => 'authors' المهجور
         'has_published_posts' => array( 'post' ),
-        'orderby' => 'post_count',
-        'order' => 'DESC',
+        'orderby'             => 'post_count',
+        'order'               => 'DESC',
     ) );
 
     $current = nadiim_get_current_filter( 'article_author' );
