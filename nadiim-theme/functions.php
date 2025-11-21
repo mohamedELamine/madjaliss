@@ -684,8 +684,42 @@ require_once NADIIM_THEME_DIR . '/inc/contact-handler.php';
  * تحميل أصول صفحة الاتصال (CSS & JS)
  */
 function nadiim_contact_page_enqueue_assets() {
-	// تحميل الأصول في صفحة الاتصال أو عند استخدام Shortcode أو في Customizer
-	if ( is_page_template( 'page-contact.php' ) || has_shortcode( get_post_field( 'post_content', get_the_ID() ), 'nadiim_contact_form' ) || is_customize_preview() ) {
+	// في Customizer، نحمل الأصول دائماً
+	if ( is_customize_preview() ) {
+		wp_enqueue_style(
+			'nadiim-contact',
+			NADIIM_THEME_URI . '/assets/css/contact.css',
+			array( 'nadiim-main' ),
+			NADIIM_VERSION
+		);
+
+		wp_enqueue_script(
+			'nadiim-contact-frontend',
+			NADIIM_THEME_URI . '/assets/js/contact-frontend.js',
+			array(),
+			NADIIM_VERSION,
+			true
+		);
+		return;
+	}
+
+	// في الصفحات العادية، نتحقق من القالب أو Shortcode
+	$load_assets = false;
+
+	// التحقق من قالب الصفحة
+	if ( is_page_template( 'page-contact.php' ) ) {
+		$load_assets = true;
+	}
+
+	// التحقق من Shortcode
+	if ( ! $load_assets && get_the_ID() ) {
+		$post_content = get_post_field( 'post_content', get_the_ID() );
+		if ( $post_content && has_shortcode( $post_content, 'nadiim_contact_form' ) ) {
+			$load_assets = true;
+		}
+	}
+
+	if ( $load_assets ) {
 		// تحميل CSS
 		wp_enqueue_style(
 			'nadiim-contact',

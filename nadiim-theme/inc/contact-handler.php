@@ -264,17 +264,26 @@ function nadiim_send_contact_notification( $data ) {
 	$body = str_replace( array_keys( $replacements ), array_values( $replacements ), $body_template );
 
 	// إعداد رؤوس البريد
-	$from_email = get_option( 'admin_email' );
-	$from_name = get_bloginfo( 'name' );
-
 	$headers = array(
 		'Content-Type: text/plain; charset=UTF-8',
-		'From: ' . $from_name . ' <' . $from_email . '>',
 		'Reply-To: ' . $data['name'] . ' <' . $data['email'] . '>',
 	);
 
+	// تعيين From باستخدام فلاتر WordPress
+	add_filter( 'wp_mail_from', function() {
+		return get_option( 'admin_email' );
+	} );
+
+	add_filter( 'wp_mail_from_name', function() {
+		return get_bloginfo( 'name' );
+	} );
+
 	// إرسال البريد
 	$sent = wp_mail( $receivers, $subject, $body, $headers );
+
+	// إزالة الفلاتر بعد الإرسال
+	remove_all_filters( 'wp_mail_from' );
+	remove_all_filters( 'wp_mail_from_name' );
 
 	// Log result
 	if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
