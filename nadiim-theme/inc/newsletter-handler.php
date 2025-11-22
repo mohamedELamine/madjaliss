@@ -139,24 +139,26 @@ add_action( 'wp_ajax_nopriv_nadiim_subscribe_newsletter', 'nadiim_subscribe_news
 /**
  * الحصول على IP المستخدم
  */
-function nadiim_get_user_ip() {
-	$ip = '';
+if ( ! function_exists( 'nadiim_get_user_ip' ) ) {
+	function nadiim_get_user_ip() {
+		$ip = '';
 
-	if ( isset( $_SERVER['HTTP_CLIENT_IP'] ) ) {
-		$ip = sanitize_text_field( wp_unslash( $_SERVER['HTTP_CLIENT_IP'] ) );
-	} elseif ( isset( $_SERVER['HTTP_X_FORWARDED_FOR'] ) ) {
-		$ip = sanitize_text_field( wp_unslash( $_SERVER['HTTP_X_FORWARDED_FOR'] ) );
-	} elseif ( isset( $_SERVER['REMOTE_ADDR'] ) ) {
-		$ip = sanitize_text_field( wp_unslash( $_SERVER['REMOTE_ADDR'] ) );
+		if ( isset( $_SERVER['HTTP_CLIENT_IP'] ) ) {
+			$ip = sanitize_text_field( wp_unslash( $_SERVER['HTTP_CLIENT_IP'] ) );
+		} elseif ( isset( $_SERVER['HTTP_X_FORWARDED_FOR'] ) ) {
+			$ip = sanitize_text_field( wp_unslash( $_SERVER['HTTP_X_FORWARDED_FOR'] ) );
+		} elseif ( isset( $_SERVER['REMOTE_ADDR'] ) ) {
+			$ip = sanitize_text_field( wp_unslash( $_SERVER['REMOTE_ADDR'] ) );
+		}
+
+		// تنظيف IP (أخذ أول IP في حال وجود قائمة)
+		if ( strpos( $ip, ',' ) !== false ) {
+			$ips = explode( ',', $ip );
+			$ip  = trim( $ips[0] );
+		}
+
+		return substr( $ip, 0, 100 );
 	}
-
-	// تنظيف IP (أخذ أول IP في حال وجود قائمة)
-	if ( strpos( $ip, ',' ) !== false ) {
-		$ips = explode( ',', $ip );
-		$ip  = trim( $ips[0] );
-	}
-
-	return substr( $ip, 0, 100 );
 }
 
 /**
