@@ -13,14 +13,15 @@
    =================================================================== */
 
 :root {
-  /* الألوان */
+  /* الألوان - الهوية اللونية النهائية */
   --color-primary: #339063;
-  --color-primary-700: #26704A;
-  --color-accent: #F4A340;
+  --color-primary-hover: #2a7851;
+  --color-white: #FFFFFF;
   --color-bg: #FFFFFF;
-  --color-surface: #F6FFF9;
+  --color-bg-light: #F6F9F7;
+  --color-surface: #F6F9F7;
   --text-main: #1C2D27;
-  --text-muted: #425F54;
+  --text-muted: #6B7A72;
 
   /* الحواف المستديرة */
   --radius-sm: 6px;

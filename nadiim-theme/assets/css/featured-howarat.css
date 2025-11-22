@@ -702,27 +702,27 @@
 	}
 }
 /* ============================================
-   لمسات الأكسنت الذهبي - Accent Color Touches
+   لمسات اللون الأخضر - Primary Color Touches
    ============================================ */
 
-/* 1. حد سفلي ذهبي للبطاقة */
+/* 1. حد سفلي للبطاقة */
 .howarat-card {
-	border-bottom: 2px solid var(--color-accent);
+	border-bottom: 2px solid var(--color-primary);
 }
 
-/* 2. الأيقونات الصغيرة بلون ذهبي */
+/* 2. الأيقونات الصغيرة */
 .howarat-card .card-date svg {
-	color: var(--color-accent);
+	color: var(--color-primary);
 }
 
 .howarat-card .media-icon svg {
-	color: var(--color-accent) !important;
+	color: var(--color-primary) !important;
 }
 
 /* 3. نقطة الفصل بين الميتا */
 .howarat-card .card-meta::after {
 	content: '•';
-	color: var(--color-accent);
+	color: var(--color-primary);
 	margin: 0 8px;
 	font-weight: bold;
 }
@@ -733,8 +733,8 @@
 	position: absolute;
 	top: 12px;
 	right: 12px;
-	background: var(--color-accent);
-	color: var(--color-accent-text);
+	background: var(--color-primary);
+	color: #FFFFFF;
 	padding: 4px 12px;
 	border-radius: 4px;
 	font-size: 12px;
@@ -747,7 +747,7 @@
 	left: 12px;
 }
 
-/* 5. Hover effect مع ظل ذهبي خفيف */
+/* 5. Hover effect مع ظل خفيف */
 .howarat-card:hover {
-	box-shadow: var(--shadow-accent);
+	box-shadow: var(--card-shadow-hover);
 }

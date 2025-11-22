@@ -13,10 +13,12 @@
 :root {
 	/* الألوان */
 	--color-primary: #339063;
-	--color-primary-hover: #2a7a52;
-	--esdar-bg-surface: #F8FFF6;
+	--color-primary-hover: #2a7851;
+	--color-white: #FFFFFF;
+	--color-bg-light: #F6F9F7;
+	--esdar-bg-surface: #F6F9F7;
 	--text-main: #1C2D27;
-	--text-muted: #6b7a72;
+	--text-muted: #6B7A72;
 
 	/* القياسات */
 	--card-radius: 14px;

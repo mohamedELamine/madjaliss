@@ -21,17 +21,13 @@
 
 :root {
 	--howarat-primary: #339063;
-	--howarat-primary-dark: #26704A;
-	--howarat-primary-light: #4CAF7E;
-	--howarat-accent: #F4A340;
-	--howarat-accent-dark: #DC6347;
+	--howarat-primary-hover: #2a7851;
 	--howarat-bg: #FFFFFF;
-	--howarat-bg-light: #F6FFF9;
-	--howarat-bg-section: #F9FAFB;
+	--howarat-bg-light: #F6F9F7;
+	--howarat-bg-section: #F6F9F7;
 	--howarat-text: #1C2D27;
-	--howarat-text-dark: #1C2D27;
-	--howarat-text-muted: #425F54;
-	--howarat-text-light: #6B7280;
+	--howarat-text-main: #1C2D27;
+	--howarat-text-muted: #6B7A72;
 	--howarat-border: #E5E7EB;
 	--howarat-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 	--howarat-shadow-lg: 0 5px 20px rgba(0, 0, 0, 0.12);
@@ -142,7 +138,7 @@
 .howarat-type-badge {
 	display: inline-block;
 	padding: 12px 28px;
-	background: linear-gradient(135deg, #F4A340 0%, #f5b564 100%);
+	background: var(--howarat-primary);
 	color: #FFFFFF;
 	border-radius: 28px;
 	font-size: 16px;

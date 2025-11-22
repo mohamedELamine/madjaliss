@@ -11,14 +11,14 @@
    ============================================ */
 :root {
     --color-primary: #339063;
-    --color-primary-dark: #2a7850;
-    --color-primary-light: #4aaa7b;
+    --color-primary-hover: #2a7851;
+    --color-white: #FFFFFF;
     --color-text-main: #1C2D27;
-    --color-text-muted: #6b7a72;
-    --color-text-light: #9ca3a0;
-    --color-bg-primary: #ffffff;
-    --color-bg-secondary: #f9faf9;
-    --color-bg-tertiary: #f3f5f4;
+    --color-text-muted: #6B7A72;
+    --color-bg-primary: #FFFFFF;
+    --color-bg-light: #F6F9F7;
+    --color-bg-secondary: #F6F9F7;
+    --color-bg-tertiary: #F6F9F7;
     --color-border: #e5e8e6;
     --color-border-light: #f0f2f1;
     --container-max: 900px;

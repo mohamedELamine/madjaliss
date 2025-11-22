@@ -10,15 +10,15 @@
    ========================================== */
 
 :root {
-    --topbar-bg: #1c2d27;
-    --topbar-color: #ffffff;
+    --topbar-bg: #F6F9F7;
+    --topbar-color: #339063;
     --topbar-font-size: 14px;
     --topbar-align: center;
     --topbar-height: 42px;
 
-    --header-bg: #ffffff;
-    --header-color: #1c2d27;
-    --header-link-color: #1c2d27;
+    --header-bg: #FFFFFF;
+    --header-color: #1C2D27;
+    --header-link-color: #1C2D27;
     --header-link-hover: #339063;
     --header-border: rgba(0, 0, 0, 0.06);
     --header-radius: 14px;

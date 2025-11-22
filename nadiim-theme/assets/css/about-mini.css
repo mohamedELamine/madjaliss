@@ -13,10 +13,12 @@
 :root {
 	/* الألوان */
 	--color-primary: #339063;
-	--color-primary-hover: #2a7a52;
-	--about-mini-bg: #F6FFF9;
+	--color-primary-hover: #2a7851;
+	--color-white: #FFFFFF;
+	--color-bg-light: #F6F9F7;
+	--about-mini-bg: #F6F9F7;
 	--text-main: #1C2D27;
-	--text-muted: #6b7a72;
+	--text-muted: #6B7A72;
 
 	/* القياسات */
 	--container-max: 1200px;
