@@ -43,12 +43,7 @@ switch ( $source ) {
 		$cards = nadiim_get_featured_howarat_from_cpt( $count );
 }
 
-// Fallback إلى demo data إذا لم توجد بطاقات
-if ( empty( $cards ) ) {
-	$cards = nadiim_get_featured_howarat_demo();
-}
-
-// إذا ما زالت فارغة، لا تعرض شيئاً
+// إذا لم توجد بطاقات، لا تعرض القسم
 if ( empty( $cards ) ) {
 	return;
 }

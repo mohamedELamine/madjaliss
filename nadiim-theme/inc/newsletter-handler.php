@@ -49,7 +49,7 @@ add_action( 'after_switch_theme', 'nadiim_create_newsletter_table' );
  */
 function nadiim_subscribe_newsletter() {
 	// التحقق من nonce
-	if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( $_POST['nonce'], 'nadiim_newsletter_subscribe' ) ) {
+	if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( $_POST['nonce'], 'nadiim-front-page-nonce' ) ) {
 		wp_send_json_error( array(
 			'message' => 'خطأ في التحقق من الأمان. يرجى تحديث الصفحة والمحاولة مرة أخرى.',
 		) );
