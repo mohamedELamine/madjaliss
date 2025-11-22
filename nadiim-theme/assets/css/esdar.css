@@ -62,7 +62,8 @@
 	pointer-events: none;
 }
 
-.esdar-section .container {
+.esdar-section .container,
+.esdar-section .section-container {
 	position: relative;
 	z-index: 2;
 	max-width: var(--container-max);
@@ -686,7 +687,8 @@
 		padding: 40px 0;
 	}
 
-	.esdar-section .container {
+	.esdar-section .container,
+	.esdar-section .section-container {
 		padding: 0 20px;
 	}
 
@@ -905,6 +907,11 @@
 	overflow: hidden;
 	z-index: 0;
 	opacity: 0.4;
+}
+
+/* إخفاء الخلفية المتحركة عند وجود خلفية مخصصة */
+.esdar-section.section-with-bg .esdar-bg-pattern {
+	display: none;
 }
 
 .pattern-circle {

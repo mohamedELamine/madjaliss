@@ -45,11 +45,32 @@ if ( empty( $esdar_items ) ) {
 	return;
 }
 
+// إعدادات الخلفية
+$bg_enable = get_theme_mod( 'esdar_section_bg_enable', false );
+$bg_image  = get_theme_mod( 'esdar_section_bg_image', '' );
+
 // تحميل CSS الخاص بالقسم
 wp_enqueue_style( 'nadiim-esdar', get_template_directory_uri() . '/assets/css/esdar.css', array(), '2.1.0' );
+
+// بناء class للقسم
+$section_class = 'esdar-section-modern esdar-section section-padding';
+if ( $bg_enable && ! empty( $bg_image ) ) {
+	$section_class .= ' section-with-bg';
+}
+
+// بناء style للخلفية
+$section_style = '';
+if ( $bg_enable && ! empty( $bg_image ) ) {
+	$section_style = sprintf( 'background-image: url(%s);', esc_url( $bg_image ) );
+}
 ?>
 
-<section class="esdar-section-modern section-padding" aria-labelledby="esdar-section-title">
+<section class="<?php echo esc_attr( $section_class ); ?>" aria-labelledby="esdar-section-title" <?php if ( $section_style ) echo 'style="' . esc_attr( $section_style ) . '"'; ?>>
+
+	<?php if ( $bg_enable && ! empty( $bg_image ) ) : ?>
+		<!-- طبقة التعتيم -->
+		<div class="section-bg-overlay"></div>
+	<?php endif; ?>
 
 	<!-- خلفية متحركة -->
 	<div class="esdar-bg-pattern" aria-hidden="true">
