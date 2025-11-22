@@ -40,12 +40,7 @@ switch ( $source ) {
 		$esdar_items = nadiim_get_esdar_from_cpt( $count );
 }
 
-// Fallback إلى demo data إذا لم توجد إصدارات
-if ( empty( $esdar_items ) ) {
-	$esdar_items = nadiim_get_esdar_demo();
-}
-
-// إذا ما زالت فارغة، لا تعرض شيئاً
+// إذا لم توجد إصدارات حقيقية، لا تعرض القسم
 if ( empty( $esdar_items ) ) {
 	return;
 }
@@ -262,22 +257,3 @@ function nadiim_get_esdar_manual() {
 	return $items;
 }
 
-/**
- * دالة للحصول على demo data
- */
-function nadiim_get_esdar_demo() {
-	$demo_file = get_template_directory() . '/demo/esdar-demo.json';
-
-	if ( ! file_exists( $demo_file ) ) {
-		return array();
-	}
-
-	$json_string = file_get_contents( $demo_file );
-	$items = json_decode( $json_string, true );
-
-	if ( json_last_error() !== JSON_ERROR_NONE || ! is_array( $items ) ) {
-		return array();
-	}
-
-	return $items;
-}
