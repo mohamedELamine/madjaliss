@@ -65,8 +65,19 @@ switch ($members_columns) {
                 $short_bio = get_user_meta($user_id, 'description', true);
                 $author_url = get_author_posts_url($user_id);
 
-                // Get avatar URL
-                $avatar_url = get_avatar_url($user_id, array('size' => 200));
+                // Get avatar URL - use custom profile picture if available
+                $avatar_url = '';
+                $profile_picture_id = get_user_meta($user_id, 'profile_picture_id', true);
+
+                if ($profile_picture_id) {
+                    // استخدام الصورة المخصصة المرفوعة
+                    $avatar_url = wp_get_attachment_image_url($profile_picture_id, 'medium');
+                }
+
+                // If no custom picture, use Gravatar
+                if (!$avatar_url) {
+                    $avatar_url = get_avatar_url($user_id, array('size' => 200));
+                }
 
                 // Truncate bio to 2 lines (approximately 80 chars)
                 $truncated_bio = $short_bio;

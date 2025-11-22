@@ -154,9 +154,17 @@ while ( have_posts() ) :
 									if ( isset( $participant['photo_id'] ) && $participant['photo_id'] > 0 ) {
 										$photo_url = wp_get_attachment_image_url( $participant['photo_id'], 'thumbnail' );
 									}
-									// إذا كان مستخدماً، جلب صورة الملف الشخصي
+									// إذا كان مستخدماً، جلب صورة الملف الشخصي المخصصة أولاً
 									if ( ! $photo_url && isset( $participant['type'] ) && $participant['type'] === 'user' && isset( $participant['id'] ) ) {
-										$photo_url = get_avatar_url( $participant['id'], array( 'size' => 128 ) );
+										// محاولة جلب الصورة المخصصة أولاً
+										$profile_picture_id = get_user_meta( $participant['id'], 'profile_picture_id', true );
+										if ( $profile_picture_id ) {
+											$photo_url = wp_get_attachment_image_url( $profile_picture_id, 'thumbnail' );
+										}
+										// إذا لم توجد صورة مخصصة، استخدم Gravatar
+										if ( ! $photo_url ) {
+											$photo_url = get_avatar_url( $participant['id'], array( 'size' => 128 ) );
+										}
 									}
 
 									// جلب القيم بشكل آمن

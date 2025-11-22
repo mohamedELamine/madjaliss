@@ -12,6 +12,13 @@ $author_bio = get_the_author_meta( 'description' );
 $author_url = get_author_posts_url( $author_id );
 $author_posts_count = count_user_posts( $author_id, 'post' );
 
+// الحصول على صورة الملف الشخصي المخصصة
+$author_avatar = '';
+$profile_picture_id = get_user_meta( $author_id, 'profile_picture_id', true );
+if ( $profile_picture_id ) {
+    $author_avatar = wp_get_attachment_image_url( $profile_picture_id, 'thumbnail' );
+}
+
 // الحصول على featured_excerpt من user meta (يمكن إضافته لاحقاً)
 $author_excerpt = get_user_meta( $author_id, 'featured_excerpt', true );
 if ( empty( $author_excerpt ) && ! empty( $author_bio ) ) {
@@ -31,7 +38,11 @@ if ( empty( $author_excerpt ) && empty( $author_bio ) ) {
 <div class="article-author-box">
     <div class="author-box-content">
         <div class="author-box-avatar">
-            <?php echo get_avatar( $author_id, 72, '', $author_name ); ?>
+            <?php if ( $author_avatar ) : ?>
+                <img src="<?php echo esc_url( $author_avatar ); ?>" alt="<?php echo esc_attr( $author_name ); ?>" width="72" height="72" class="avatar avatar-72 photo" loading="lazy">
+            <?php else : ?>
+                <?php echo get_avatar( $author_id, 72, '', $author_name ); ?>
+            <?php endif; ?>
         </div>
 
         <div class="author-box-info">
