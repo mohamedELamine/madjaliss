@@ -282,16 +282,18 @@ wp_enqueue_style( 'nadiim-esdar-single', get_template_directory_uri() . '/assets
 
 				<!-- المحتوى الرئيسي -->
 				<?php if ( get_the_content() ) : ?>
-					<section class="esdar-content-section-modern" data-aos="fade-up">
-						<h2 class="section-title-modern">
-							<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-								<path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
-								<path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
-							</svg>
-							<?php _e( 'عن الإصدار', 'nadiim' ); ?>
-						</h2>
-						<div class="entry-content-modern">
-							<?php the_content(); ?>
+					<section class="esdar-content-section-modern esdar-content-centered" data-aos="fade-up">
+						<div class="content-wrapper-centered">
+							<h2 class="section-title-modern section-title-centered">
+								<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+									<path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+									<path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+								</svg>
+								<?php _e( 'عن الإصدار', 'nadiim' ); ?>
+							</h2>
+							<div class="entry-content-modern entry-content-centered">
+								<?php the_content(); ?>
+							</div>
 						</div>
 					</section>
 				<?php endif; ?>

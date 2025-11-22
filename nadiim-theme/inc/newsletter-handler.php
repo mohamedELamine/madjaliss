@@ -43,11 +43,28 @@ function nadiim_create_newsletter_table() {
 	dbDelta( $sql );
 }
 add_action( 'after_switch_theme', 'nadiim_create_newsletter_table' );
+add_action( 'admin_init', 'nadiim_create_newsletter_table' );
+
+/**
+ * التحقق من وجود الجدول وإنشاؤه عند الحاجة
+ */
+function nadiim_ensure_newsletter_table_exists() {
+	global $wpdb;
+	$table_name = $wpdb->prefix . 'nadiim_newsletter_subscribers';
+
+	// التحقق من وجود الجدول
+	if ( $wpdb->get_var( "SHOW TABLES LIKE '$table_name'" ) !== $table_name ) {
+		nadiim_create_newsletter_table();
+	}
+}
 
 /**
  * AJAX Handler للاشتراك في النشرة البريدية
  */
 function nadiim_subscribe_newsletter() {
+	// التأكد من وجود جدول المشتركين
+	nadiim_ensure_newsletter_table_exists();
+
 	// التحقق من nonce
 	if ( ! isset( $_POST['newsletter_nonce'] ) || ! wp_verify_nonce( $_POST['newsletter_nonce'], 'nadiim_newsletter_subscribe' ) ) {
 		wp_send_json_error( array(
@@ -281,6 +298,9 @@ add_action( 'admin_menu', 'nadiim_add_newsletter_admin_page' );
  * محتوى صفحة إدارة المشتركين
  */
 function nadiim_newsletter_admin_page() {
+	// التأكد من وجود الجدول
+	nadiim_ensure_newsletter_table_exists();
+
 	global $wpdb;
 	$table_name = $wpdb->prefix . 'nadiim_newsletter_subscribers';
 

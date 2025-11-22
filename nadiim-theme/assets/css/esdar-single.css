@@ -652,3 +652,50 @@
 		transform: none;
 	}
 }
+
+/* ═══════════════════════════════════════════════════════════
+   Centered Content Section - قسم المحتوى في الوسط
+   ═══════════════════════════════════════════════════════════ */
+
+.esdar-content-centered {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+}
+
+.content-wrapper-centered {
+	max-width: 800px;
+	margin: 0 auto;
+	width: 100%;
+}
+
+.section-title-centered {
+	justify-content: center;
+	text-align: center;
+}
+
+.entry-content-centered {
+	text-align: center;
+}
+
+.entry-content-centered p,
+.entry-content-centered ul,
+.entry-content-centered ol {
+	text-align: right;
+	max-width: 700px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+@media (max-width: 768px) {
+	.content-wrapper-centered {
+		max-width: 100%;
+	}
+
+	.entry-content-centered p,
+	.entry-content-centered ul,
+	.entry-content-centered ol {
+		max-width: 100%;
+	}
+}
