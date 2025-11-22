@@ -25,87 +25,71 @@
     function initCustomAudioPlayer() {
         $('.nadiim-audio-player').each(function() {
             const $player = $(this);
-            const $audio = $player.find('audio')[0];
+            const audioElement = $player.find('audio').get(0);
+
+            if (!audioElement) {
+                console.log('Audio element not found');
+                return;
+            }
+
             const $playBtn = $player.find('.audio-play-btn');
             const $progress = $player.find('.audio-progress-bar');
             const $progressFill = $player.find('.audio-progress-fill');
             const $currentTime = $player.find('.audio-current-time');
             const $duration = $player.find('.audio-duration');
             const $volumeBtn = $player.find('.audio-volume-btn');
-            const $volumeSlider = $player.find('.audio-volume-slider');
             const $speedBtn = $player.find('.audio-speed-btn');
-            const $downloadBtn = $player.find('.audio-download-btn');
-
-            if (!$audio) return;
 
             // تحميل البيانات الوصفية
-            $audio.addEventListener('loadedmetadata', function() {
-                $duration.text(formatTime($audio.duration));
+            $(audioElement).on('loadedmetadata', function() {
+                $duration.text(formatTime(this.duration));
             });
 
             // زر التشغيل/الإيقاف
             $playBtn.on('click', function() {
-                if ($audio.paused) {
-                    $audio.play();
-                    $playBtn.find('.play-icon').hide();
-                    $playBtn.find('.pause-icon').show();
+                if (audioElement.paused) {
+                    audioElement.play();
                     $playBtn.addClass('playing');
                 } else {
-                    $audio.pause();
-                    $playBtn.find('.play-icon').show();
-                    $playBtn.find('.pause-icon').hide();
+                    audioElement.pause();
                     $playBtn.removeClass('playing');
                 }
             });
 
             // تحديث شريط التقدم
-            $audio.addEventListener('timeupdate', function() {
-                const progress = ($audio.currentTime / $audio.duration) * 100;
-                $progressFill.css('width', progress + '%');
-                $currentTime.text(formatTime($audio.currentTime));
-
-                // حفظ موضع التشغيل
-                if ($audio.duration > 0) {
-                    localStorage.setItem('nadiim_audio_position_' + getPostId(), $audio.currentTime);
+            $(audioElement).on('timeupdate', function() {
+                if (this.duration > 0) {
+                    const progress = (this.currentTime / this.duration) * 100;
+                    $progressFill.css('width', progress + '%');
+                    $currentTime.text(formatTime(this.currentTime));
                 }
             });
 
             // عند انتهاء التشغيل
-            $audio.addEventListener('ended', function() {
-                $playBtn.find('.play-icon').show();
-                $playBtn.find('.pause-icon').hide();
+            $(audioElement).on('ended', function() {
                 $playBtn.removeClass('playing');
                 $progressFill.css('width', '0%');
-                localStorage.removeItem('nadiim_audio_position_' + getPostId());
             });
 
             // النقر على شريط التقدم
             $progress.on('click', function(e) {
                 const clickX = e.pageX - $(this).offset().left;
                 const width = $(this).width();
-                const duration = $audio.duration;
-
-                $audio.currentTime = (clickX / width) * duration;
+                const duration = audioElement.duration;
+                audioElement.currentTime = (clickX / width) * duration;
             });
 
             // التحكم في الصوت
             if ($volumeBtn.length) {
                 $volumeBtn.on('click', function() {
-                    if ($audio.muted) {
-                        $audio.muted = false;
-                        $(this).find('.volume-on-icon').show();
-                        $(this).find('.volume-off-icon').hide();
-                    } else {
-                        $audio.muted = true;
+                    audioElement.muted = !audioElement.muted;
+                    if (audioElement.muted) {
                         $(this).find('.volume-on-icon').hide();
                         $(this).find('.volume-off-icon').show();
+                    } else {
+                        $(this).find('.volume-on-icon').show();
+                        $(this).find('.volume-off-icon').hide();
                     }
-                });
-            }
-
-            if ($volumeSlider.length) {
-                $volumeSlider.on('input', function() {
-                    $audio.volume = $(this).val() / 100;
                 });
             }
 
@@ -116,41 +100,10 @@
 
                 $speedBtn.on('click', function() {
                     currentSpeed = (currentSpeed + 1) % speeds.length;
-                    $audio.playbackRate = speeds[currentSpeed];
+                    audioElement.playbackRate = speeds[currentSpeed];
                     $(this).text(speeds[currentSpeed] + 'x');
                 });
             }
-
-            // استعادة موضع التشغيل السابق
-            const savedPosition = localStorage.getItem('nadiim_audio_position_' + getPostId());
-            if (savedPosition && savedPosition > 0) {
-                $audio.currentTime = savedPosition;
-
-                // إظهار إشعار
-                showAudioNotification('هل تريد متابعة الاستماع من حيث توقفت؟', function() {
-                    $audio.play();
-                }, function() {
-                    $audio.currentTime = 0;
-                    localStorage.removeItem('nadiim_audio_position_' + getPostId());
-                });
-            }
-
-            // اختصارات لوحة المفاتيح
-            $(document).on('keydown', function(e) {
-                // مسافة: تشغيل/إيقاف
-                if (e.keyCode === 32 && e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') {
-                    e.preventDefault();
-                    $playBtn.trigger('click');
-                }
-                // سهم يمين: تقديم 10 ثواني
-                else if (e.keyCode === 39) {
-                    $audio.currentTime = Math.min($audio.currentTime + 10, $audio.duration);
-                }
-                // سهم يسار: ترجيع 10 ثواني
-                else if (e.keyCode === 37) {
-                    $audio.currentTime = Math.max($audio.currentTime - 10, 0);
-                }
-            });
         });
     }
 
