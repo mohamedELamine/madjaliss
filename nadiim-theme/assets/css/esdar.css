@@ -839,53 +839,6 @@
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   Dark Mode Support (Optional)
-   ═══════════════════════════════════════════════════════════════ */
-
-@media (prefers-color-scheme: dark) {
-	:root {
-		--text-main: #e8f0ed;
-		--text-muted: #a8b5b0;
-	}
-
-	.esdar-card {
-		background-color: #1a2420;
-		box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-	}
-
-	.esdar-card:hover {
-		box-shadow: 0 15px 45px rgba(0, 0, 0, 0.5);
-	}
-
-	.action-button.button-download {
-		background-color: transparent;
-		border-color: var(--color-primary);
-		color: var(--color-primary);
-	}
-
-	.action-button.button-download:hover {
-		background-color: var(--color-primary);
-		color: #ffffff;
-	}
-
-	.esdar-card-meta {
-		border-top-color: rgba(255, 255, 255, 0.1);
-	}
-
-	.swiper-button-prev,
-	.swiper-button-next {
-		background-color: #2a3930;
-		color: var(--color-primary);
-	}
-
-	.swiper-button-prev:hover,
-	.swiper-button-next:hover {
-		background-color: var(--color-primary);
-		color: #ffffff;
-	}
-}
-
-/* ═══════════════════════════════════════════════════════════════
    التصميم العصري الجديد - Modern Design 2.1
    ═══════════════════════════════════════════════════════════════ */
 

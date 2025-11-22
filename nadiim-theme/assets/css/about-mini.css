@@ -442,29 +442,3 @@
 		display: none;
 	}
 }
-
-/* ═══════════════════════════════════════════════════════════════
-   Dark Mode Support
-   ═══════════════════════════════════════════════════════════════ */
-
-@media (prefers-color-scheme: dark) {
-	:root {
-		--text-main: #e8f0ed;
-		--text-muted: #a8b5b0;
-		--about-mini-bg: #1a2420;
-	}
-
-	.about-mini-section:not(.section-with-bg) .value-card {
-		background-color: #243028;
-		box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
-		border-color: rgba(51, 144, 99, 0.2);
-	}
-
-	.about-mini-section .value-card:hover {
-		box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5);
-	}
-
-	.about-mini-section .value-icon {
-		background: linear-gradient(135deg, rgba(51, 144, 99, 0.15) 0%, rgba(16, 185, 129, 0.15) 100%);
-	}
-}

@@ -271,6 +271,7 @@ $newsletter_provider = get_theme_mod( 'home_newsletter_provider', 'mailchimp' );
 .newsletter-submit-modern {
 	display: flex;
 	align-items: center;
+	justify-content: center;
 	gap: 8px;
 	padding: 0 32px;
 	height: 56px;
@@ -289,6 +290,7 @@ $newsletter_provider = get_theme_mod( 'home_newsletter_provider', 'mailchimp' );
 	width: 20px;
 	height: 20px;
 	transition: transform 0.3s ease;
+	transform: scaleX(-1);
 }
 
 .newsletter-submit-modern:hover {
@@ -298,11 +300,7 @@ $newsletter_provider = get_theme_mod( 'home_newsletter_provider', 'mailchimp' );
 }
 
 .newsletter-submit-modern:hover svg {
-	transform: translateX(-4px);
-}
-
-[dir="rtl"] .newsletter-submit-modern:hover svg {
-	transform: translateX(4px);
+	transform: translateX(4px) scaleX(-1);
 }
 
 .newsletter-submit-modern:active {

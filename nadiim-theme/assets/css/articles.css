@@ -666,7 +666,7 @@
 
 .author-box-link:hover {
     color: var(--color-primary-dark);
-    transform: translateX(-4px);
+    transform: translateX(4px);
 }
 
 .author-box-link svg {
@@ -1115,7 +1115,7 @@
 
 .article-card-read-more:hover {
     color: var(--color-primary-dark);
-    transform: translateX(-4px);
+    transform: translateX(4px);
 }
 
 /* Pagination */
@@ -1338,14 +1338,14 @@
 }
 
 /* ============================================
-   RTL Support
+   LTR Support
    ============================================ */
-[dir="rtl"] .article-card-read-more:hover {
-    transform: translateX(4px);
+[dir="ltr"] .article-card-read-more:hover {
+    transform: translateX(-4px);
 }
 
-[dir="rtl"] .author-box-link:hover {
-    transform: translateX(4px);
+[dir="ltr"] .author-box-link:hover {
+    transform: translateX(-4px);
 }
 
 [dir="rtl"] .comment-reply-link {

@@ -1222,19 +1222,3 @@
 		transform: none;
 	}
 }
-
-/* Dark Mode */
-@media (prefers-color-scheme: dark) {
-	.clubs-section .club-card:not(.club-card-with-bg) {
-		background-color: #1a2420;
-		box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-	}
-
-	.clubs-section .club-card:hover {
-		box-shadow: 0 15px 45px rgba(0, 0, 0, 0.5);
-	}
-
-	.clubs-section .club-meta-info {
-		border-top-color: rgba(255, 255, 255, 0.1);
-	}
-}

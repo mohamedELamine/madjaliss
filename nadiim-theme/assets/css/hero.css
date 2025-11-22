@@ -173,10 +173,11 @@
 
 .cta-button svg {
     transition: transform var(--transition-default);
+    transform: scaleX(-1);
 }
 
 .cta-button:hover svg {
-    transform: translateX(-4px);
+    transform: translateX(4px) scaleX(-1);
 }
 
 /* ==========================================
@@ -573,15 +574,11 @@
    RTL Support
    ========================================== */
 
-[dir="rtl"] .cta-button svg {
-    transform: scaleX(-1);
-}
-
-[dir="rtl"] .cta-button:hover svg {
-    transform: translateX(4px) scaleX(-1);
-}
-
 /* LTR override */
+[dir="ltr"] .cta-button svg {
+    transform: none;
+}
+
 [dir="ltr"] .cta-button:hover svg {
     transform: translateX(4px);
 }

@@ -156,8 +156,8 @@
 	transform: translateX(4px);
 }
 
-/* RTL: حركة السهم لليسار */
-[dir="rtl"] .featured-howarat-section .more-button:hover svg {
+/* LTR: حركة السهم لليسار */
+[dir="ltr"] .featured-howarat-section .more-button:hover svg {
 	transform: translateX(-4px);
 }
 
@@ -357,12 +357,12 @@
 .howarat-card .cta-button:hover {
 	background-color: var(--color-primary-hover);
 	border-color: var(--color-primary-hover);
-	transform: translateX(-4px);
+	transform: translateX(4px);
 }
 
-/* RTL: حركة الزر لليمين */
-[dir="rtl"] .howarat-card .cta-button:hover {
-	transform: translateX(4px);
+/* LTR: حركة الزر لليسار */
+[dir="ltr"] .howarat-card .cta-button:hover {
+	transform: translateX(-4px);
 }
 
 .howarat-card .cta-button svg {
@@ -375,8 +375,8 @@
 	transform: translateX(4px);
 }
 
-/* RTL: حركة السهم لليسار */
-[dir="rtl"] .howarat-card .cta-button:hover svg {
+/* LTR: حركة السهم لليسار */
+[dir="ltr"] .howarat-card .cta-button:hover svg {
 	transform: translateX(-4px);
 }
 
