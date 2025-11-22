@@ -185,7 +185,7 @@
 				data: {
 					action: 'nadiim_subscribe_newsletter',
 					email: email,
-					nonce: newsletterForm.querySelector('[name="newsletter_nonce"]')?.value || '',
+					newsletter_nonce: newsletterForm.querySelector('[name="newsletter_nonce"]')?.value || '',
 				},
 				success: function (response) {
 					if (response.success) {
