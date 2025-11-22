@@ -187,7 +187,7 @@ function nadiim_get_esdar_from_cpt( $count = 8, $tag = '' ) {
 	$items = array();
 
 	if ( $query->have_posts() ) {
-		while ( $query->the_posts() ) {
+		while ( $query->have_posts() ) {
 			$query->the_post();
 			$post_id = get_the_ID();
 
