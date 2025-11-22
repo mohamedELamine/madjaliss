@@ -148,7 +148,8 @@
 	 * 3. معالجة نموذج النشرة البريدية
 	 */
 	function initNewsletterForm() {
-		const newsletterForm = document.querySelector('.newsletter-form');
+		// دعم كل من التصميم القديم والجديد
+		const newsletterForm = document.querySelector('.newsletter-form-modern, .newsletter-form');
 		if (!newsletterForm) {
 			return;
 		}
@@ -156,9 +157,9 @@
 		newsletterForm.addEventListener('submit', function (e) {
 			e.preventDefault();
 
-			const emailInput = newsletterForm.querySelector('.newsletter-input');
-			const submitBtn = newsletterForm.querySelector('.newsletter-submit-btn');
-			const messageDiv = document.querySelector('.newsletter-message');
+			const emailInput = newsletterForm.querySelector('.newsletter-input-modern, .newsletter-input');
+			const submitBtn = newsletterForm.querySelector('.newsletter-submit-modern, .newsletter-submit-btn');
+			const messageDiv = document.querySelector('.newsletter-message-modern, .newsletter-message');
 
 			if (!emailInput || !submitBtn || !messageDiv) {
 				return;
@@ -174,8 +175,8 @@
 
 			// تعطيل الزر أثناء الإرسال
 			submitBtn.disabled = true;
-			const originalText = submitBtn.textContent;
-			submitBtn.textContent = 'جارٍ الإرسال...';
+			const originalHTML = submitBtn.innerHTML;
+			submitBtn.innerHTML = '<span>جارٍ الإرسال...</span>';
 
 			// إرسال البيانات عبر AJAX
 			$.ajax({
@@ -188,7 +189,7 @@
 				},
 				success: function (response) {
 					if (response.success) {
-						showMessage(messageDiv, 'تم الاشتراك بنجاح! شكراً لك.', 'success');
+						showMessage(messageDiv, response.data.message || 'تم الاشتراك بنجاح! شكراً لك.', 'success');
 						emailInput.value = '';
 					} else {
 						showMessage(
@@ -204,7 +205,7 @@
 				complete: function () {
 					// إعادة تفعيل الزر
 					submitBtn.disabled = false;
-					submitBtn.textContent = originalText;
+					submitBtn.innerHTML = originalHTML;
 				},
 			});
 		});
@@ -242,8 +243,9 @@
 			link.addEventListener('click', function (e) {
 				const targetId = this.getAttribute('href');
 
-				// تجاهل الروابط الفارغة
+				// منع السلوك الافتراضي للروابط الفارغة
 				if (targetId === '#' || targetId === '#!') {
+					e.preventDefault();
 					return;
 				}
 

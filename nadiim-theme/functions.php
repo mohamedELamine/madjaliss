@@ -722,6 +722,9 @@ require_once NADIIM_THEME_DIR . '/inc/contact-handler.php';
 require_once NADIIM_THEME_DIR . '/inc/customizer-about.php';
 require_once NADIIM_THEME_DIR . '/inc/user-about-meta.php';
 
+// تضمين معالج النشرة البريدية
+require_once NADIIM_THEME_DIR . '/inc/newsletter-handler.php';
+
 /**
  * تحميل أصول صفحة الاتصال (CSS & JS)
  */
