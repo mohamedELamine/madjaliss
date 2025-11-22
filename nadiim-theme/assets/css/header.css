@@ -703,6 +703,11 @@
 
 /* Small Tablet & Large Mobile (481px - 768px) */
 @media screen and (max-width: 768px) {
+    :root {
+        --header-height: 70px;
+        --topbar-height: 38px;
+    }
+
     .site-topbar {
         height: auto;
         min-height: 38px;
@@ -886,6 +891,11 @@
 
 /* Small Mobile (320px - 480px) */
 @media screen and (max-width: 480px) {
+    :root {
+        --header-height: 65px;
+        --topbar-height: 36px;
+    }
+
     .site-topbar {
         min-height: 36px;
         padding: 6px 0;
@@ -989,6 +999,11 @@
 
 /* Extra Small Mobile (< 360px) */
 @media screen and (max-width: 359px) {
+    :root {
+        --header-height: 60px;
+        --topbar-height: 34px;
+    }
+
     .site-topbar {
         font-size: 11px;
         min-height: 34px;

@@ -24,9 +24,9 @@ Tags: rtl-language-support, right-to-left, custom-menu, featured-images, threade
   --color-primary-light: #4db080;
   --color-primary-dark: #267a4f;
 
-  /* لون الأكسنت الترابي الذهبي - استخدام 10% فقط */
-  --color-accent: #E6C66E;
-  --color-accent-bg: rgba(230, 198, 110, 0.18);
+  /* لون الأكسنت الأخضر الفاتح */
+  --color-accent: #4db080;
+  --color-accent-bg: rgba(77, 176, 128, 0.18);
   --color-accent-text: #1C2D27;
 
   /* الألوان المحايدة */
@@ -43,7 +43,7 @@ Tags: rtl-language-support, right-to-left, custom-menu, featured-images, threade
   --shadow-soft: 0 2px 12px rgba(0, 0, 0, 0.04);
   --shadow-medium: 0 4px 20px rgba(0, 0, 0, 0.08);
   --shadow-hover: 0 8px 30px rgba(51, 144, 99, 0.12);
-  --shadow-accent: 0 10px 30px rgba(230, 198, 110, 0.18);
+  --shadow-accent: 0 10px 30px rgba(77, 176, 128, 0.18);
 
   /* المسافات */
   --spacing-xs: 8px;
