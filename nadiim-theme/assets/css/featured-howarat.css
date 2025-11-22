@@ -701,3 +701,53 @@
 		border: 1px solid #dee2e6;
 	}
 }
+/* ============================================
+   لمسات الأكسنت الذهبي - Accent Color Touches
+   ============================================ */
+
+/* 1. حد سفلي ذهبي للبطاقة */
+.howarat-card {
+	border-bottom: 2px solid var(--color-accent);
+}
+
+/* 2. الأيقونات الصغيرة بلون ذهبي */
+.howarat-card .card-date svg {
+	color: var(--color-accent);
+}
+
+.howarat-card .media-icon svg {
+	color: var(--color-accent) !important;
+}
+
+/* 3. نقطة الفصل بين الميتا */
+.howarat-card .card-meta::after {
+	content: '•';
+	color: var(--color-accent);
+	margin: 0 8px;
+	font-weight: bold;
+}
+
+/* 4. Badge للحوارات المميزة */
+.howarat-card.featured-badge::before {
+	content: 'مميز';
+	position: absolute;
+	top: 12px;
+	right: 12px;
+	background: var(--color-accent);
+	color: var(--color-accent-text);
+	padding: 4px 12px;
+	border-radius: 4px;
+	font-size: 12px;
+	font-weight: 700;
+	z-index: 3;
+}
+
+[dir="ltr"] .howarat-card.featured-badge::before {
+	right: auto;
+	left: 12px;
+}
+
+/* 5. Hover effect مع ظل ذهبي خفيف */
+.howarat-card:hover {
+	box-shadow: var(--shadow-accent);
+}

@@ -1,0 +1,29 @@
+
+/* ============================================
+   لمسات الأكسنت الذهبي - Accent Color Touches
+   ============================================ */
+
+/* 1. خط تحت العنوان "روابط مهمة" */
+.footer-widget-title::after,
+.footer-section-title::after {
+	content: '';
+	display: block;
+	width: 40px;
+	height: 2px;
+	background: var(--color-accent);
+	margin-top: 8px;
+}
+
+/* 2. الأيقونات عند hover */
+.footer-social-links a:hover,
+.footer-link:hover {
+	color: var(--color-accent);
+}
+
+/* 3. خط فاصل بين الفوتر والحقوق */
+.footer-separator,
+.footer-divider {
+	background: var(--color-accent);
+	height: 1px;
+	opacity: 0.3;
+}

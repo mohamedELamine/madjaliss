@@ -1222,3 +1222,50 @@
 		transform: none;
 	}
 }
+
+/* ============================================
+   لمسات الأكسنت الذهبي - Accent Color Touches
+   ============================================ */
+
+/* 1. نقطة الموقع في الخريطة */
+.leaflet-marker-icon,
+.club-map-marker,
+.club-location-pin {
+	color: var(--color-accent) !important;
+	filter: hue-rotate(40deg) saturate(1.2);
+}
+
+/* 2. إطار حول صورة النادي */
+.club-card .club-image,
+.club-card-image,
+.reading-club-image {
+	border: 2px solid var(--color-accent);
+}
+
+/* 3. زر "انضم إلينا" بخلفية ذهبية */
+.club-join-button,
+.club-card .join-club-btn {
+	background: var(--color-accent);
+	color: var(--color-accent-text);
+}
+
+.club-join-button:hover,
+.club-card .join-club-btn:hover {
+	background: var(--color-primary);
+	color: #ffffff;
+}
+
+/* 4. شعار النادي أو أول حرف Icon */
+.club-logo-letter,
+.club-initial-icon,
+.club-card .club-icon {
+	color: var(--color-accent);
+	border-color: var(--color-accent);
+}
+
+/* 5. روابط التواصل الاجتماعي عند hover */
+.club-social-links a:hover,
+.club-contact-link:hover {
+	color: var(--color-accent);
+	border-color: var(--color-accent);
+}

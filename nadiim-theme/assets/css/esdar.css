@@ -1472,3 +1472,57 @@
 		transform: none;
 	}
 }
+
+/* ============================================
+   لمسات الأكسنت الذهبي - Accent Color Touches
+   ============================================ */
+
+/* 1. إطار ذهبي حول غلاف الكتاب */
+.esdar-card .book-cover,
+.esdar-card-modern .book-cover {
+	border: 1px solid var(--color-accent);
+}
+
+/* 2. Badge نوع الإصدار بخلفية ذهبية */
+.esdar-card .book-badge,
+.esdar-card-modern .book-badge,
+.esdar-card .type-badge {
+	background: var(--color-accent);
+	color: var(--color-accent-text);
+}
+
+/* 3. أيقونات التحميل والصفحات بلون ذهبي */
+.esdar-card .book-meta svg,
+.esdar-card-modern .book-meta svg,
+.esdar-download-btn svg,
+.book-pages-icon {
+	color: var(--color-accent);
+}
+
+/* 4. Hover effect مع ظل ذهبي */
+.esdar-card:hover,
+.esdar-card-modern:hover {
+	box-shadow: var(--shadow-accent);
+}
+
+/* 5. Active filter في الأرشيف */
+.esdar-filters .filter-button.active,
+.esdar-filters .filter-link.active {
+	color: var(--color-accent);
+	border-color: var(--color-accent);
+}
+
+/* 6. Pagination الصفحة الحالية */
+.pagination .page-numbers.current {
+	background: var(--color-accent);
+	color: var(--color-accent-text);
+	border-color: var(--color-accent);
+}
+
+/* 7. نقطة الفصل في الميتا */
+.esdar-card .book-meta::after,
+.book-meta-separator::after {
+	content: '•';
+	color: var(--color-accent);
+	margin: 0 8px;
+}

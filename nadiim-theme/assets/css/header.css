@@ -1096,3 +1096,26 @@ input:focus {
 .skip-link:focus {
     top: 6px;
 }
+
+/* ============================================
+   لمسات الأكسنت الذهبي - Accent Color Touches
+   ============================================ */
+
+/* 1. شارة الأحداث القادمة */
+.upcoming-event-badge,
+.event-badge {
+	background: var(--color-accent);
+	color: var(--color-accent-text);
+}
+
+/* 2. أيقونة "الجديد" */
+.new-badge,
+.header-new-icon {
+	color: var(--color-accent);
+}
+
+/* 3. Active menu item indicator */
+.main-nav a.current-menu-item::after,
+.main-nav a:hover::after {
+	background: var(--color-accent);
+}

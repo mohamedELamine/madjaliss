@@ -542,3 +542,27 @@ img {
         transition-duration: 0.01ms !important;
     }
 }
+
+/* ============================================
+   لمسات الأكسنت الذهبي - تحسينات عامة
+   ============================================ */
+
+/* 1. خطوط فاصلة خفيفة بين الأقسام */
+.section-divider,
+.content-separator {
+	border-top: 1px solid rgba(230, 198, 110, 0.30);
+}
+
+/* 2. Hover underline للروابط */
+a.text-link:hover {
+	background-size: 100% 2px;
+	background-image: linear-gradient(var(--color-accent), var(--color-accent));
+	background-repeat: no-repeat;
+	background-position: 0 100%;
+}
+
+/* 3. Focus outline بلون ذهبي */
+*:focus-visible {
+	outline: 2px solid var(--color-accent);
+	outline-offset: 2px;
+}

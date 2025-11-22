@@ -1413,3 +1413,70 @@ select:focus {
         transition-duration: 0.01ms !important;
     }
 }
+
+/* ============================================
+   لمسات الأكسنت الذهبي - Accent Color Touches
+   ============================================ */
+
+/* 1. أيقونة وقت القراءة بلون ذهبي */
+.reading-time svg,
+.article-reading-time svg,
+.article-card .reading-time-icon {
+	color: var(--color-accent);
+}
+
+/* 2. نقطة الفصل بين التاريخ والكاتب */
+.article-meta::after,
+.article-card-meta::after,
+.meta-separator::after {
+	content: '•';
+	color: var(--color-accent);
+	margin: 0 8px;
+}
+
+/* 3. زر "اقرأ الآن" الثانوي بخلفية ذهبية */
+.article-card .read-more-secondary,
+.article-read-more-alt {
+	background: var(--color-accent);
+	color: var(--color-accent-text);
+}
+
+.article-card .read-more-secondary:hover,
+.article-read-more-alt:hover {
+	background: var(--color-primary);
+	color: #ffffff;
+}
+
+/* 4. خط تحت العنوان في صفحة المقال */
+.single-post .entry-title::after,
+.article-single-title::after {
+	content: '';
+	display: block;
+	width: 60px;
+	height: 3px;
+	background: var(--color-accent);
+	margin: 16px auto 0;
+}
+
+/* 5. خلفية خلف اسم الكاتب */
+.article-author-label,
+.author-name-badge {
+	background: var(--color-accent-bg);
+	padding: 4px 12px;
+	border-radius: 4px;
+}
+
+/* 6. Tags بإطار ذهبي */
+.article-tags a,
+.post-tags a,
+.tag-link {
+	border: 1px solid var(--color-accent);
+	color: var(--color-text-secondary);
+}
+
+.article-tags a:hover,
+.post-tags a:hover,
+.tag-link:hover {
+	background: var(--color-accent);
+	color: var(--color-accent-text);
+}
