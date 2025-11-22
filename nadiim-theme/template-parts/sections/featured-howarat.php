@@ -12,14 +12,16 @@ if ( ! get_theme_mod( 'featured_howarat_enable', true ) ) {
 }
 
 // الحصول على الإعدادات
-$section_title       = get_theme_mod( 'featured_howarat_title', __( 'الحوارات المميزة', 'nadiim' ) );
-$section_description = get_theme_mod( 'featured_howarat_description', __( 'تعرف على أهم الحوارات والنقاشات الثقافية', 'nadiim' ) );
-$source              = get_theme_mod( 'featured_howarat_source', 'latest_howarat' );
-$count               = get_theme_mod( 'featured_howarat_count', 4 );
-$layout              = get_theme_mod( 'featured_howarat_layout', 'grid' );
-$bg_enable           = get_theme_mod( 'featured_howarat_bg_enable', false );
-$bg_image            = get_theme_mod( 'featured_howarat_bg_image', '' );
-$bg_embed            = get_theme_mod( 'featured_howarat_bg_embed', '' );
+$section_title        = get_theme_mod( 'featured_howarat_title', __( 'الحوارات المميزة', 'nadiim' ) );
+$section_description  = get_theme_mod( 'featured_howarat_description', __( 'تعرف على أهم الحوارات والنقاشات الثقافية', 'nadiim' ) );
+$source               = get_theme_mod( 'featured_howarat_source', 'latest_howarat' );
+$count                = get_theme_mod( 'featured_howarat_count', 4 );
+$layout               = get_theme_mod( 'featured_howarat_layout', 'grid' );
+$bg_enable            = get_theme_mod( 'featured_howarat_bg_enable', false );
+$bg_image             = get_theme_mod( 'featured_howarat_bg_image', '' );
+$bg_embed             = get_theme_mod( 'featured_howarat_bg_embed', '' );
+$title_color          = get_theme_mod( 'featured_howarat_title_color', '#1c2d27' );
+$description_color    = get_theme_mod( 'featured_howarat_description_color', '#5a6c64' );
 
 // مصفوفة البطاقات
 $cards = array();
@@ -59,15 +61,20 @@ if ( $layout === 'carousel' ) {
 	$section_classes[] = 'layout-grid';
 }
 
-// inline style للخلفية
-$section_style = '';
+// inline style للخلفية والألوان
+$section_style = sprintf(
+	'--featured-howarat-title-color: %s; --featured-howarat-description-color: %s;',
+	esc_attr( $title_color ),
+	esc_attr( $description_color )
+);
+
 if ( $bg_enable && ! empty( $bg_image ) ) {
-	$section_style = sprintf( 'background-image: url(%s);', esc_url( $bg_image ) );
+	$section_style .= sprintf( ' background-image: url(%s);', esc_url( $bg_image ) );
 }
 ?>
 
 <section class="<?php echo esc_attr( implode( ' ', $section_classes ) ); ?>"
-         <?php if ( ! empty( $section_style ) ) : ?>style="<?php echo esc_attr( $section_style ); ?>"<?php endif; ?>
+         style="<?php echo esc_attr( $section_style ); ?>"
          aria-labelledby="featured-howarat-title">
 
 	<?php if ( $bg_enable ) : ?>
