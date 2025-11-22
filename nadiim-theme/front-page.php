@@ -44,7 +44,32 @@ wp_localize_script( 'nadiim-front-page', 'nadiimFrontPage', array(
 
 	// عرض الأقسام حسب الترتيب المحدد
 	foreach ( $sections_order as $section ) {
-		$section_enabled = get_theme_mod( "home_{$section}_enable", true );
+		// تحديد اسم الإعداد الصحيح لكل قسم
+		$setting_name = "home_{$section}_enable";
+
+		// معالجة الأقسام التي لها أسماء إعدادات مختلفة
+		switch ( $section ) {
+			case 'esdar':
+				$setting_name = 'esdar_section_enable';
+				break;
+			case 'hero-slider':
+				$setting_name = 'hero_enable';
+				break;
+			case 'featured-howarat':
+				$setting_name = 'featured_howarat_enable';
+				break;
+			case 'clubs':
+				$setting_name = 'clubs_section_enable';
+				break;
+			case 'about-mini':
+				$setting_name = 'about_mini_enable';
+				break;
+			case 'articles':
+				$setting_name = 'articles_section_enable';
+				break;
+		}
+
+		$section_enabled = get_theme_mod( $setting_name, true );
 
 		if ( $section_enabled ) {
 			$template_file = "template-parts/sections/{$section}.php";
