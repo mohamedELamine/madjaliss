@@ -72,11 +72,15 @@ $animation_delay = ( $index * 50 );
 
 		<!-- شارة الصيغة -->
 		<?php if ( ! empty( $format ) ) : ?>
+			<?php
+			// التعامل مع الصيغة سواء كانت string أو array
+			$format_display = is_array( $format ) ? ( ! empty( $format ) ? $format[0] : 'PDF' ) : $format;
+			?>
 			<div class="format-badge">
 				<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
 					<path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zM6 20V4h7v5h5v11H6z"/>
 				</svg>
-				<span><?php echo esc_html( strtoupper( $format ) ); ?></span>
+				<span><?php echo esc_html( strtoupper( $format_display ) ); ?></span>
 			</div>
 		<?php endif; ?>
 	</div><!-- .esdar-card-cover -->
