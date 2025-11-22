@@ -26,6 +26,11 @@ $show_more_button    = get_theme_mod( 'articles_section_show_more', true );
 $more_button_text    = get_theme_mod( 'articles_section_more_text', __( 'جميع المقالات', 'nadiim' ) );
 $cta_button_text     = get_theme_mod( 'articles_section_cta_text', __( 'اقرأ المزيد', 'nadiim' ) );
 
+// إعدادات الخلفية
+$bg_image            = get_theme_mod( 'articles_section_bg_image', '' );
+$bg_position         = get_theme_mod( 'articles_section_bg_position', 'center' );
+$overlay_opacity     = get_theme_mod( 'articles_section_overlay_opacity', 0.35 );
+
 // بناء WP_Query arguments
 $args = array(
 	'post_type'      => 'post',
@@ -67,9 +72,32 @@ if ( ! $articles_query->have_posts() ) {
 // تحديد classes للقسم
 $section_classes = array( 'articles-section', 'section-padding' );
 $section_classes[] = 'layout-' . esc_attr( $layout_type );
+
+// إضافة class إذا كانت هناك صورة خلفية
+if ( ! empty( $bg_image ) ) {
+	$section_classes[] = 'section-with-bg';
+}
+
+// تحديد inline style للخلفية
+$section_style = '';
+if ( ! empty( $bg_image ) ) {
+	$section_style = sprintf(
+		'background-image: url(%s); --articles-bg-position: %s; --articles-overlay-opacity: %s;',
+		esc_url( $bg_image ),
+		esc_attr( $bg_position ),
+		esc_attr( $overlay_opacity )
+	);
+}
 ?>
 
-<section class="<?php echo esc_attr( implode( ' ', $section_classes ) ); ?>" aria-labelledby="articles-section-title">
+<section class="<?php echo esc_attr( implode( ' ', $section_classes ) ); ?>"
+         aria-labelledby="articles-section-title"
+         <?php if ( ! empty( $section_style ) ) : ?>style="<?php echo esc_attr( $section_style ); ?>"<?php endif; ?>>
+
+	<?php if ( ! empty( $bg_image ) ) : ?>
+		<div class="section-overlay"></div>
+	<?php endif; ?>
+
 	<div class="section-container">
 
 		<!-- رأس القسم -->

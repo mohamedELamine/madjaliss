@@ -1083,6 +1083,43 @@
 .articles-section {
   background-color: var(--color-bg);
   direction: rtl;
+  position: relative;
+  overflow: hidden;
+}
+
+/* الخلفية و Overlay */
+.articles-section.section-with-bg {
+  background-size: cover;
+  background-position: var(--articles-bg-position, center);
+  background-repeat: no-repeat;
+}
+
+.articles-section .section-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #000000;
+  opacity: var(--articles-overlay-opacity, 0.35);
+  z-index: 1;
+  pointer-events: none;
+}
+
+.articles-section .section-container {
+  position: relative;
+  z-index: 2;
+}
+
+/* التكيف مع الخلفية */
+.articles-section.section-with-bg .section-title {
+  color: rgba(255, 255, 255, 0.98);
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.articles-section.section-with-bg .section-description {
+  color: rgba(255, 255, 255, 0.92);
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
 }
 
 /* قائمة المقالات - List View (افتراضي) */

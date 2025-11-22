@@ -262,5 +262,69 @@ function nadiim_register_articles_section_customizer( $wp_customize ) {
 			return $wp_customize->get_setting( 'articles_section_show_more' )->value() === true;
 		},
 	) );
+
+	// ========================================
+	// Setting: صورة الخلفية
+	// ========================================
+	$wp_customize->add_setting( 'articles_section_bg_image', array(
+		'default'           => '',
+		'sanitize_callback' => 'esc_url_raw',
+		'transport'         => 'refresh',
+	) );
+
+	$wp_customize->add_control( new WP_Customize_Image_Control( $wp_customize, 'articles_section_bg_image', array(
+		'label'    => __( 'صورة الخلفية', 'nadiim' ),
+		'section'  => 'nadiim_articles_section',
+		'priority' => 130,
+	) ) );
+
+	// ========================================
+	// Setting: موضع الخلفية
+	// ========================================
+	$wp_customize->add_setting( 'articles_section_bg_position', array(
+		'default'           => 'center',
+		'sanitize_callback' => 'nadiim_sanitize_select',
+		'transport'         => 'refresh',
+	) );
+
+	$wp_customize->add_control( 'articles_section_bg_position', array(
+		'label'    => __( 'موضع الخلفية', 'nadiim' ),
+		'section'  => 'nadiim_articles_section',
+		'type'     => 'select',
+		'choices'  => array(
+			'top'    => __( 'أعلى', 'nadiim' ),
+			'center' => __( 'وسط', 'nadiim' ),
+			'bottom' => __( 'أسفل', 'nadiim' ),
+		),
+		'priority' => 140,
+		'active_callback' => function() use ( $wp_customize ) {
+			return ! empty( $wp_customize->get_setting( 'articles_section_bg_image' )->value() );
+		},
+	) );
+
+	// ========================================
+	// Setting: شفافية الطبقة
+	// ========================================
+	$wp_customize->add_setting( 'articles_section_overlay_opacity', array(
+		'default'           => 0.35,
+		'sanitize_callback' => 'nadiim_sanitize_float',
+		'transport'         => 'refresh',
+	) );
+
+	$wp_customize->add_control( 'articles_section_overlay_opacity', array(
+		'label'       => __( 'شفافية الطبقة الداكنة', 'nadiim' ),
+		'description' => __( 'من 0 (شفاف تماماً) إلى 1 (معتم تماماً)', 'nadiim' ),
+		'section'     => 'nadiim_articles_section',
+		'type'        => 'number',
+		'input_attrs' => array(
+			'min'  => 0,
+			'max'  => 1,
+			'step' => 0.05,
+		),
+		'priority'    => 150,
+		'active_callback' => function() use ( $wp_customize ) {
+			return ! empty( $wp_customize->get_setting( 'articles_section_bg_image' )->value() );
+		},
+	) );
 }
 add_action( 'customize_register', 'nadiim_register_articles_section_customizer' );

@@ -136,6 +136,13 @@
      */
     function initSmoothScroll() {
         $('a[href^="#"]').on('click', function(e) {
+            var href = $(this).attr('href');
+
+            // تجاهل الروابط الفارغة أو #
+            if (href === '#' || href === '#0') {
+                return;
+            }
+
             var target = $(this.hash);
             if (target.length) {
                 e.preventDefault();
