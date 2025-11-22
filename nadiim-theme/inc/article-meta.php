@@ -184,12 +184,11 @@ function nadiim_article_meta_box_callback( $post ) {
             >
 
             <input
-                type="text"
+                type="url"
                 id="nadiim_audio_url"
                 name="article_meta[audio_url]"
                 value="<?php echo esc_attr( $article_meta['audio_url'] ); ?>"
-                placeholder="رابط الملف الصوتي"
-                readonly
+                placeholder="https://example.com/audio.mp3"
             >
 
             <div class="nadiim-meta-actions">
@@ -238,7 +237,8 @@ function nadiim_article_meta_box_callback( $post ) {
             </div>
 
             <div class="description">
-                الصيغ المدعومة: MP3, WAV, OGG. الحجم الأقصى: 50 ميجابايت.
+                يمكنك رفع ملف صوتي من جهازك أو لصق رابط مباشر للملف الصوتي في الحقل أعلاه.<br>
+                الصيغ المدعومة: MP3, WAV, OGG. الحجم الأقصى للرفع: 50 ميجابايت.
             </div>
         </div>
 

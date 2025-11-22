@@ -17,6 +17,7 @@
         initReadingTimeCalculator();
         initAudioPreview();
         initAudioRemoval();
+        initManualUrlInput();
     });
 
     /**
@@ -339,5 +340,56 @@
 
     // تفعيل الحساب التلقائي (اختياري - يمكن التعليق على هذا السطر)
     // enableAutoCalculation();
+
+    /**
+     * معالجة إدخال رابط يدوي
+     */
+    function initManualUrlInput() {
+        const $urlInput = $('#nadiim_audio_url');
+        const $attachmentInput = $('#nadiim_audio_attachment_id');
+        const $removeBtn = $('#nadiim-remove-audio');
+        const $previewBtn = $('#nadiim-preview-audio');
+        const $audioPreview = $('#nadiim-audio-preview');
+
+        // عند تغيير حقل الرابط
+        $urlInput.on('input change', function() {
+            const url = $(this).val().trim();
+
+            if (url) {
+                // إظهار الأزرار
+                $removeBtn.show();
+                $previewBtn.show();
+
+                // تحديث مصدر المعاينة
+                $audioPreview.find('audio source').attr('src', url);
+                $audioPreview.find('audio')[0].load();
+
+                // مسح attachment ID لأنه رابط يدوي
+                if (!$attachmentInput.val()) {
+                    // فقط امسح إذا لم يكن هناك attachment ID
+                    $attachmentInput.val('');
+                }
+
+                // إظهار معلومات الملف
+                $('.nadiim-audio-info').remove();
+                const info = $('<div class="nadiim-audio-info"></div>');
+                info.append('<span class="dashicons dashicons-controls-volumeon"></span>');
+                info.append('<span>تم إضافة رابط ملف صوتي</span>');
+                $urlInput.after(info);
+
+            } else {
+                // إخفاء الأزرار إذا كان الحقل فارغًا
+                $removeBtn.hide();
+                $previewBtn.hide();
+                $('.nadiim-audio-info').remove();
+            }
+        });
+
+        // تحقق من وجود قيمة عند تحميل الصفحة
+        if ($urlInput.val().trim()) {
+            $removeBtn.show();
+            $previewBtn.show();
+        }
+    }
 
 })(jQuery);
