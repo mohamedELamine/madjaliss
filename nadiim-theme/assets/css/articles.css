@@ -1480,3 +1480,35 @@ select:focus {
 	background: var(--color-accent);
 	color: var(--color-accent-text);
 }
+
+/* ============================================
+   لمسات الأكسنت للملف الصوتي
+   ============================================ */
+
+/* 1. أيقونة الملف الصوتي بلون ذهبي */
+.nadiim-audio-player .audio-player-icon {
+	color: var(--color-accent);
+}
+
+/* 2. Progress bar fill ذهبي */
+.audio-progress-fill {
+	background: var(--color-accent) !important;
+}
+
+/* 3. زر التشغيل عند hover */
+.audio-play-btn:hover {
+	background: var(--color-accent) !important;
+	border-color: var(--color-accent) !important;
+}
+
+/* 4. أزرار التحكم عند hover */
+.audio-control-btn:hover {
+	color: var(--color-accent) !important;
+	border-color: var(--color-accent) !important;
+}
+
+/* 5. Duration badge ذهبي */
+.audio-duration-badge {
+	background: var(--color-accent) !important;
+	color: var(--color-accent-text) !important;
+}

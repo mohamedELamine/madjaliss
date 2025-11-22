@@ -65,8 +65,9 @@ $categories = get_the_category();
 <article id="post-<?php the_ID(); ?>" <?php post_class( 'article-wrapper' ); ?>>
 
     <?php
-    // مشغل الصوت
-    if ( $has_audio && ! empty( $article_meta['show_audio_player'] ) ) :
+    // مشغل الصوت - يظهر افتراضياً إذا كان هناك ملف صوتي
+    $show_audio = ! isset( $article_meta['show_audio_player'] ) || $article_meta['show_audio_player'];
+    if ( $has_audio && $show_audio ) :
         get_template_part( 'template-parts/post/audio', 'player' );
     endif;
     ?>
