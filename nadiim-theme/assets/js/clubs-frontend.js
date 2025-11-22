@@ -17,14 +17,12 @@
     function initLeafletMap(elementId, lat, lng, address, zoom) {
         // التحقق من وجود Leaflet
         if (typeof L === 'undefined') {
-            console.warn('Leaflet library is not loaded');
             return;
         }
 
         // الحصول على العنصر
         const mapElement = document.getElementById(elementId);
         if (!mapElement) {
-            console.warn('Map element not found:', elementId);
             return;
         }
 
@@ -98,10 +96,8 @@
             };
             scrollMessage.addTo(map);
 
-            console.log('Map initialized successfully:', elementId);
 
         } catch (error) {
-            console.error('Error initializing map:', error);
         }
     }
 
@@ -276,7 +272,6 @@
         enhanceAccessibility();
         setupSmoothScroll();
 
-        console.log('Reading Clubs frontend initialized');
     }
 
     // تشغيل عند استعداد DOM

@@ -71,7 +71,6 @@
 			}
 		})
 		.catch(error => {
-			console.error('Contact form error:', error);
 			showErrorMessage('حدث خطأ أثناء إرسال رسالتك. يُرجى المحاولة مرة أخرى.');
 		})
 		.finally(() => {
@@ -145,7 +144,6 @@
 			localStorage.setItem(DRAFT_KEY, JSON.stringify(draft));
 		} catch (e) {
 			// localStorage غير متاح
-			console.warn('localStorage not available');
 		}
 	}
 
@@ -162,7 +160,6 @@
 				}
 			});
 		} catch (e) {
-			console.warn('Error loading draft:', e);
 		}
 	}
 

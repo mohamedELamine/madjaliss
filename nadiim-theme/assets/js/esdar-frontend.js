@@ -17,7 +17,6 @@
 
             if (!downloadUrl) {
                 e.preventDefault();
-                console.warn('لا يوجد رابط تحميل');
                 return;
             }
 

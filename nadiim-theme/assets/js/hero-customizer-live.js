@@ -133,7 +133,6 @@
                 JSON.parse(to);
                 customize.preview.send('refresh');
             } catch (e) {
-                console.warn('Invalid JSON for hero slides:', e);
             }
         });
     });

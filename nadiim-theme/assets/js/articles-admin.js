@@ -71,7 +71,6 @@
                 // إظهار معلومات الملف
                 showAudioInfo(attachment);
 
-                console.log('تم رفع الملف الصوتي:', attachment);
             });
 
             // فتح الـ uploader
@@ -101,7 +100,6 @@
             $('#nadiim-audio-preview').removeClass('active');
             $('.nadiim-audio-info').remove();
 
-            console.log('تم إزالة الملف الصوتي');
         });
     }
 
@@ -204,7 +202,6 @@
         // إظهار رسالة نجاح
         showNotification('تم حساب وقت القراءة: ' + readingTime + ' دقيقة من ' + wordCount + ' كلمة', 'success');
 
-        console.log('عدد الكلمات:', wordCount, '- وقت القراءة:', readingTime);
     }
 
     /**

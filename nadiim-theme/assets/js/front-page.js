@@ -30,7 +30,6 @@
 	function initReleasesCarousel() {
 		// التحقق من وجود Swiper library
 		if (typeof Swiper === 'undefined') {
-			console.warn('Swiper library not loaded. Loading from CDN...');
 			loadSwiperLibrary();
 			return;
 		}

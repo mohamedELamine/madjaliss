@@ -10,7 +10,6 @@
 
 	// التحقق من وجود Swiper
 	if (typeof Swiper === 'undefined') {
-		console.warn('Swiper library is not loaded. Featured Howarat carousel will not work.');
 		return;
 	}
 
@@ -115,13 +114,11 @@
 			// الأحداث
 			on: {
 				init: function() {
-					console.log('Featured Howarat Swiper initialized');
 					handleImagesLoading(this);
 				},
 
 				slideChange: function() {
 					// يمكن إضافة تتبع تحليلات هنا
-					// console.log('Slide changed to:', this.activeIndex);
 				},
 
 				reachBeginning: function() {
@@ -183,7 +180,6 @@
 				// معالجة الأخطاء
 				img.addEventListener('error', function() {
 					img.classList.add('error');
-					console.warn('Failed to load image:', img.src);
 
 					// يمكن إضافة صورة placeholder هنا
 					// img.src = '/path/to/placeholder.jpg';

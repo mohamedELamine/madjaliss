@@ -55,7 +55,6 @@
             e.preventDefault();
 
             if (typeof esdarAdmin === 'undefined' || !esdarAdmin.authorRowTemplate) {
-                console.error('Author row template not found');
                 return;
             }
 

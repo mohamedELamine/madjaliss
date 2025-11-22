@@ -1,10 +1,11 @@
 <?php
 /**
- * ملف الدوال الرئيسية لقالب نديم
+ * ملف الدوال الرئيسية لقالب مجالس
  *
  * يحمل هذا الملف جميع الإعدادات والدوال الأساسية للقالب
  *
- * @package Nadiim
+ * @package Majalis
+ * @author محمد الأمين
  * @since 1.0.0
  */
 
@@ -332,8 +333,8 @@ require_once NADIIM_THEME_DIR . '/inc/template-tags.php';
 // تضمين ملف Home Enqueue (Hero Slider assets)
 require_once NADIIM_THEME_DIR . '/inc/home-enqueue.php';
 
-// تضمين ملف Demo Content
-require_once NADIIM_THEME_DIR . '/inc/demo-content.php';
+// تضمين ملف Demo Content (معطّل للإنتاج)
+// require_once NADIIM_THEME_DIR . '/inc/demo-content.php';
 
 /**
  * دالة مساعدة للحصول على مقتطف مخصص
@@ -680,6 +681,10 @@ require_once NADIIM_THEME_DIR . '/inc/user-about-meta.php';
 
 // تضمين معالج النشرة البريدية
 require_once NADIIM_THEME_DIR . '/inc/newsletter-handler.php';
+
+// تضمين ملفات SEO Schema
+require_once NADIIM_THEME_DIR . '/inc/howarat-schema.php';
+require_once NADIIM_THEME_DIR . '/inc/esdar-schema.php';
 
 /**
  * تحميل أصول صفحة الاتصال (CSS & JS)

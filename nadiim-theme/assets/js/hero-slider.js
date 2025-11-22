@@ -19,7 +19,6 @@
     function initHeroSlider() {
         // التحقق من وجود Swiper
         if (typeof Swiper === 'undefined') {
-            console.warn('Swiper is not loaded. Hero slider will not work.');
             return;
         }
 

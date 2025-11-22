@@ -25,7 +25,6 @@
                 timelineData = JSON.parse(existingData);
             }
         } catch (e) {
-            console.error('Error parsing timeline JSON:', e);
         }
 
         // Create repeater UI

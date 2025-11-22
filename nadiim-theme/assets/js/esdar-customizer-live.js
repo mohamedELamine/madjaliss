@@ -257,7 +257,6 @@
 				JSON.parse(to);
 				customize.preview.send('refresh');
 			} catch (e) {
-				console.warn('Invalid JSON for esdar manual data:', e);
 			}
 		});
 	});
@@ -285,7 +284,6 @@
 	 * مراقبة التغييرات العامة
 	 */
 	customize.preview.bind('active', function() {
-		console.log('Esdar Customizer Preview Active');
 
 		// تحديث Swiper بعد 500ms للسماح بتحميل كامل
 		setTimeout(updateSwiper, 500);

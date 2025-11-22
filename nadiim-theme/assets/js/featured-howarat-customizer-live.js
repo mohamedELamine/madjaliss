@@ -218,7 +218,6 @@
 				JSON.parse(to);
 				customize.preview.send('refresh');
 			} catch (e) {
-				console.warn('Invalid JSON for featured howarat cards:', e);
 				// يمكن إضافة رسالة خطأ للمستخدم هنا
 			}
 		});
@@ -283,7 +282,6 @@
 	 * مراقبة التغييرات العامة
 	 */
 	customize.preview.bind('active', function() {
-		console.log('Featured Howarat Customizer Preview Active');
 
 		// تحديث Swiper بعد 500ms للسماح بتحميل كامل
 		setTimeout(updateSwiper, 500);

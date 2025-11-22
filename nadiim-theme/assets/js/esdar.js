@@ -57,7 +57,6 @@
 
 		// التحقق من توفر Swiper
 		if (typeof Swiper === 'undefined') {
-			console.warn('Swiper library is not loaded');
 			return;
 		}
 
@@ -138,7 +137,6 @@
 			// Events
 			on: {
 				init: function() {
-					console.log('Esdar Swiper initialized');
 				},
 				slideChange: function() {
 					// يمكن إضافة تتبع تحليلي هنا

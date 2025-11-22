@@ -154,7 +154,6 @@
                     navigator.clipboard.writeText(link).then(function() {
                         showNotification('تم نسخ الرابط!');
                     }).catch(function(err) {
-                        console.error('Failed to copy:', err);
                     });
                 }
             });
@@ -234,8 +233,6 @@
         // Console log للتطوير
         // ==========================================
         if (nadiimAuthorVars && nadiimAuthorVars.debug === '1') {
-            console.log('Nadiim Author Page Scripts Loaded');
-            console.log('AJAX URL:', nadiimAuthorVars.ajaxUrl);
         }
 
     }); // End DOMContentLoaded
