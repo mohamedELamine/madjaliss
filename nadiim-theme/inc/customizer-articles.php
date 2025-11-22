@@ -326,5 +326,53 @@ function nadiim_register_articles_section_customizer( $wp_customize ) {
 			return ! empty( $wp_customize->get_setting( 'articles_section_bg_image' )->value() );
 		},
 	) );
+
+	// ========================================
+	// Setting: لون الطبقة
+	// ========================================
+	$wp_customize->add_setting( 'articles_section_overlay_color', array(
+		'default'           => '#000000',
+		'sanitize_callback' => 'sanitize_hex_color',
+		'transport'         => 'refresh',
+	) );
+
+	$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'articles_section_overlay_color', array(
+		'label'    => __( 'لون الطبقة', 'nadiim' ),
+		'section'  => 'nadiim_articles_section',
+		'priority' => 160,
+		'active_callback' => function() use ( $wp_customize ) {
+			return ! empty( $wp_customize->get_setting( 'articles_section_bg_image' )->value() );
+		},
+	) ) );
+
+	// ========================================
+	// Setting: لون العنوان
+	// ========================================
+	$wp_customize->add_setting( 'articles_section_title_color', array(
+		'default'           => '#1C2D27',
+		'sanitize_callback' => 'sanitize_hex_color',
+		'transport'         => 'refresh',
+	) );
+
+	$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'articles_section_title_color', array(
+		'label'    => __( 'لون العنوان', 'nadiim' ),
+		'section'  => 'nadiim_articles_section',
+		'priority' => 170,
+	) ) );
+
+	// ========================================
+	// Setting: لون الوصف
+	// ========================================
+	$wp_customize->add_setting( 'articles_section_description_color', array(
+		'default'           => '#425F54',
+		'sanitize_callback' => 'sanitize_hex_color',
+		'transport'         => 'refresh',
+	) );
+
+	$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'articles_section_description_color', array(
+		'label'    => __( 'لون الوصف', 'nadiim' ),
+		'section'  => 'nadiim_articles_section',
+		'priority' => 180,
+	) ) );
 }
 add_action( 'customize_register', 'nadiim_register_articles_section_customizer' );

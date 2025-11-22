@@ -26,10 +26,13 @@ $show_more_button    = get_theme_mod( 'articles_section_show_more', true );
 $more_button_text    = get_theme_mod( 'articles_section_more_text', __( 'جميع المقالات', 'nadiim' ) );
 $cta_button_text     = get_theme_mod( 'articles_section_cta_text', __( 'اقرأ المزيد', 'nadiim' ) );
 
-// إعدادات الخلفية
+// إعدادات الخلفية والألوان
 $bg_image            = get_theme_mod( 'articles_section_bg_image', '' );
 $bg_position         = get_theme_mod( 'articles_section_bg_position', 'center' );
 $overlay_opacity     = get_theme_mod( 'articles_section_overlay_opacity', 0.35 );
+$overlay_color       = get_theme_mod( 'articles_section_overlay_color', '#000000' );
+$title_color         = get_theme_mod( 'articles_section_title_color', '#1C2D27' );
+$description_color   = get_theme_mod( 'articles_section_description_color', '#425F54' );
 
 // بناء WP_Query arguments
 $args = array(
@@ -78,21 +81,27 @@ if ( ! empty( $bg_image ) ) {
 	$section_classes[] = 'section-with-bg';
 }
 
-// تحديد inline style للخلفية
-$section_style = '';
+// تحديد inline style للخلفية والألوان
+$section_style = sprintf(
+	'--articles-title-color: %s; --articles-description-color: %s;',
+	esc_attr( $title_color ),
+	esc_attr( $description_color )
+);
+
 if ( ! empty( $bg_image ) ) {
-	$section_style = sprintf(
-		'background-image: url(%s); --articles-bg-position: %s; --articles-overlay-opacity: %s;',
+	$section_style .= sprintf(
+		' background-image: url(%s); --articles-bg-position: %s; --articles-overlay-opacity: %s; --articles-overlay-color: %s;',
 		esc_url( $bg_image ),
 		esc_attr( $bg_position ),
-		esc_attr( $overlay_opacity )
+		esc_attr( $overlay_opacity ),
+		esc_attr( $overlay_color )
 	);
 }
 ?>
 
 <section class="<?php echo esc_attr( implode( ' ', $section_classes ) ); ?>"
          aria-labelledby="articles-section-title"
-         <?php if ( ! empty( $section_style ) ) : ?>style="<?php echo esc_attr( $section_style ); ?>"<?php endif; ?>>
+         style="<?php echo esc_attr( $section_style ); ?>">
 
 	<?php if ( ! empty( $bg_image ) ) : ?>
 		<div class="section-overlay"></div>
