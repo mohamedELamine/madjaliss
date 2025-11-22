@@ -74,6 +74,36 @@ function nadiim_clubs_customizer_register( $wp_customize ) {
 	) );
 
 	// ─────────────────────────────────────
+	// إعدادات الألوان
+	// ─────────────────────────────────────
+
+	// لون عنوان القسم
+	$wp_customize->add_setting( 'clubs_section_title_color', array(
+		'default'           => '#1C2D27',
+		'sanitize_callback' => 'sanitize_hex_color',
+		'transport'         => 'postMessage',
+	) );
+
+	$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'clubs_section_title_color', array(
+		'label'       => __( 'لون عنوان القسم', 'nadiim' ),
+		'description' => __( 'اختر لون العنوان الرئيسي', 'nadiim' ),
+		'section'     => 'nadiim_clubs_section',
+	) ) );
+
+	// لون وصف القسم
+	$wp_customize->add_setting( 'clubs_section_subtitle_color', array(
+		'default'           => '#5A6C64',
+		'sanitize_callback' => 'sanitize_hex_color',
+		'transport'         => 'postMessage',
+	) );
+
+	$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'clubs_section_subtitle_color', array(
+		'label'       => __( 'لون وصف القسم', 'nadiim' ),
+		'description' => __( 'اختر لون النص الوصفي', 'nadiim' ),
+		'section'     => 'nadiim_clubs_section',
+	) ) );
+
+	// ─────────────────────────────────────
 	// إعدادات المحتوى
 	// ─────────────────────────────────────
 
@@ -264,9 +294,11 @@ function nadiim_clubs_customizer_css() {
 		return;
 	}
 
-	$overlay_opacity = get_theme_mod( 'clubs_section_overlay_opacity', 0.30 );
-	$overlay_color   = get_theme_mod( 'clubs_section_overlay_color', '#000000' );
-	$bg_enable       = get_theme_mod( 'clubs_section_bg_enable', false );
+	$overlay_opacity  = get_theme_mod( 'clubs_section_overlay_opacity', 0.30 );
+	$overlay_color    = get_theme_mod( 'clubs_section_overlay_color', '#000000' );
+	$bg_enable        = get_theme_mod( 'clubs_section_bg_enable', false );
+	$title_color      = get_theme_mod( 'clubs_section_title_color', '#1C2D27' );
+	$subtitle_color   = get_theme_mod( 'clubs_section_subtitle_color', '#5A6C64' );
 
 	?>
 	<style type="text/css" id="nadiim-clubs-custom-css">
@@ -284,6 +316,18 @@ function nadiim_clubs_customizer_css() {
 			opacity: <?php echo floatval( $overlay_opacity ); ?>;
 		}
 		<?php endif; ?>
+
+		/* ألوان العنوان والوصف */
+		.clubs-section .section-title,
+		.clubs-section-title {
+			color: <?php echo esc_attr( $title_color ); ?>;
+		}
+
+		.clubs-section .section-subtitle,
+		.clubs-section-subtitle,
+		.clubs-section .section-description {
+			color: <?php echo esc_attr( $subtitle_color ); ?>;
+		}
 	</style>
 	<?php
 }
