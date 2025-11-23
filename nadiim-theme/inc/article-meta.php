@@ -42,7 +42,6 @@ function nadiim_article_meta_box_callback( $post ) {
         'reading_time_auto' => '',
         'audio_attachment_id' => '',
         'audio_url' => '',
-        'audio_duration' => '',
         'audio_caption' => '',
         'show_reading_time' => true,
         'show_audio_player' => true,
@@ -217,17 +216,6 @@ function nadiim_article_meta_box_callback( $post ) {
             <?php endif; ?>
 
             <div style="margin-top: 15px;">
-                <label for="nadiim_audio_duration">مدة الملف (اختياري - مثال: 15:30)</label>
-                <input
-                    type="text"
-                    id="nadiim_audio_duration"
-                    name="article_meta[audio_duration]"
-                    value="<?php echo esc_attr( $article_meta['audio_duration'] ); ?>"
-                    placeholder="15:30"
-                >
-            </div>
-
-            <div style="margin-top: 15px;">
                 <label for="nadiim_audio_caption">وصف للملف الصوتي (اختياري)</label>
                 <textarea
                     id="nadiim_audio_caption"
@@ -308,10 +296,6 @@ function nadiim_save_article_meta( $post_id ) {
 
         $article_meta['audio_url'] = isset( $_POST['article_meta']['audio_url'] )
             ? esc_url_raw( $_POST['article_meta']['audio_url'] )
-            : '';
-
-        $article_meta['audio_duration'] = isset( $_POST['article_meta']['audio_duration'] )
-            ? sanitize_text_field( $_POST['article_meta']['audio_duration'] )
             : '';
 
         $article_meta['audio_caption'] = isset( $_POST['article_meta']['audio_caption'] )
