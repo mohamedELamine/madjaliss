@@ -152,50 +152,6 @@ function nadiim_register_post_types() {
     register_post_type( 'reading_clubs', $reading_clubs_args );
 
     // ============================================
-    // CPT: الفعاليات (events)
-    // ============================================
-
-    $events_labels = array(
-        'name'                  => _x( 'الفعاليات', 'Post type general name', 'nadiim' ),
-        'singular_name'         => _x( 'فعالية', 'Post type singular name', 'nadiim' ),
-        'menu_name'             => _x( 'الفعاليات', 'Admin Menu text', 'nadiim' ),
-        'name_admin_bar'        => _x( 'فعالية', 'Add New on Toolbar', 'nadiim' ),
-        'add_new'               => __( 'إضافة فعالية جديدة', 'nadiim' ),
-        'add_new_item'          => __( 'إضافة فعالية جديدة', 'nadiim' ),
-        'new_item'              => __( 'فعالية جديدة', 'nadiim' ),
-        'edit_item'             => __( 'تحرير الفعالية', 'nadiim' ),
-        'view_item'             => __( 'عرض الفعالية', 'nadiim' ),
-        'all_items'             => __( 'جميع الفعاليات', 'nadiim' ),
-        'search_items'          => __( 'بحث في الفعاليات', 'nadiim' ),
-        'not_found'             => __( 'لم يُعثر على فعاليات', 'nadiim' ),
-        'not_found_in_trash'    => __( 'لم يُعثر على فعاليات في سلة المهملات', 'nadiim' ),
-        'featured_image'        => _x( 'صورة الفعالية', 'Overrides the "Featured Image" phrase', 'nadiim' ),
-        'set_featured_image'    => _x( 'تعيين صورة الفعالية', 'Overrides the "Set featured image" phrase', 'nadiim' ),
-        'remove_featured_image' => _x( 'إزالة صورة الفعالية', 'Overrides the "Remove featured image" phrase', 'nadiim' ),
-        'use_featured_image'    => _x( 'استخدام كصورة مميزة', 'Overrides the "Use as featured image" phrase', 'nadiim' ),
-        'archives'              => _x( 'أرشيف الفعاليات', 'The post type archive label', 'nadiim' ),
-    );
-
-    $events_args = array(
-        'labels'             => $events_labels,
-        'public'             => true,
-        'publicly_queryable' => true,
-        'show_ui'            => true,
-        'show_in_menu'       => true,
-        'query_var'          => true,
-        'rewrite'            => array( 'slug' => 'events', 'with_front' => false ),
-        'capability_type'    => 'post',
-        'has_archive'        => true,
-        'hierarchical'       => false,
-        'menu_position'      => 8,
-        'menu_icon'          => 'dashicons-calendar-alt',
-        'supports'           => array( 'title', 'editor', 'thumbnail', 'excerpt', 'comments', 'author' ),
-        'show_in_rest'       => true,
-    );
-
-    register_post_type( 'events', $events_args );
-
-    // ============================================
     // CPT: الاستفسارات (inquiries) - لصفحة اتصل بنا
     // ============================================
 
@@ -356,31 +312,5 @@ function nadiim_register_taxonomies() {
     );
 
     register_taxonomy( 'club_type', array( 'reading_clubs' ), $club_type_args );
-
-    // ============================================
-    // Taxonomy: نوع الفعالية (event_type)
-    // ============================================
-
-    $event_type_labels = array(
-        'name'          => _x( 'أنواع الفعاليات', 'taxonomy general name', 'nadiim' ),
-        'singular_name' => _x( 'نوع الفعالية', 'taxonomy singular name', 'nadiim' ),
-        'search_items'  => __( 'بحث في الأنواع', 'nadiim' ),
-        'all_items'     => __( 'جميع الأنواع', 'nadiim' ),
-        'edit_item'     => __( 'تحرير النوع', 'nadiim' ),
-        'add_new_item'  => __( 'إضافة نوع جديد', 'nadiim' ),
-        'menu_name'     => __( 'أنواع الفعاليات', 'nadiim' ),
-    );
-
-    $event_type_args = array(
-        'hierarchical'      => true,
-        'labels'            => $event_type_labels,
-        'show_ui'           => true,
-        'show_admin_column' => true,
-        'query_var'         => true,
-        'rewrite'           => array( 'slug' => 'event-type' ),
-        'show_in_rest'      => true,
-    );
-
-    register_taxonomy( 'event_type', array( 'events' ), $event_type_args );
 }
 add_action( 'init', 'nadiim_register_taxonomies' );
