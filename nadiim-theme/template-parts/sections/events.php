@@ -55,11 +55,6 @@ if ( ! $show_past_events ) {
 // تنفيذ الاستعلام
 $events_query = new WP_Query( $args );
 
-// إذا لم توجد فعاليات، لا تعرض القسم
-if ( ! $events_query->have_posts() ) {
-	return;
-}
-
 ?>
 
 <section class="events-section section-padding" id="events-section">
@@ -77,6 +72,7 @@ if ( ! $events_query->have_posts() ) {
 		</div>
 
 		<!-- Events Grid -->
+		<?php if ( $events_query->have_posts() ) : ?>
 		<div class="events-grid">
 
 			<?php
@@ -211,6 +207,11 @@ if ( ! $events_query->have_posts() ) {
 			<?php endwhile; wp_reset_postdata(); ?>
 
 		</div>
+		<?php else : ?>
+		<div class="no-events-message">
+			<p>لا توجد فعاليات قادمة حالياً. تابعونا لمعرفة الفعاليات الجديدة!</p>
+		</div>
+		<?php endif; ?>
 
 		<!-- زر عرض المزيد -->
 		<?php if ( $show_more_button ) : ?>
@@ -282,6 +283,20 @@ if ( ! $events_query->have_posts() ) {
     grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
     gap: 30px;
     margin-bottom: 50px;
+}
+
+.events-section .no-events-message {
+    text-align: center;
+    padding: 60px 20px;
+    background: #fff;
+    border-radius: 12px;
+    margin-bottom: 50px;
+}
+
+.events-section .no-events-message p {
+    font-size: 18px;
+    color: #6B7A72;
+    margin: 0;
 }
 
 .event-card-home {

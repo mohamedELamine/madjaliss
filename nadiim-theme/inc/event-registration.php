@@ -27,6 +27,8 @@ function nadiim_create_event_registrations_table() {
 		user_message text DEFAULT '',
 		registration_date datetime NOT NULL,
 		status varchar(20) DEFAULT 'pending',
+		email_sent tinyint(1) DEFAULT 0,
+		email_sent_date datetime DEFAULT NULL,
 		PRIMARY KEY  (id),
 		KEY event_id (event_id),
 		KEY user_email (user_email)
@@ -108,7 +110,21 @@ function nadiim_handle_event_registration() {
 	}
 
 	// إرسال إيميل تأكيد للمستخدم
-	nadiim_send_registration_confirmation_email( $event_id, $user_name, $user_email );
+	$email_sent = nadiim_send_registration_confirmation_email( $event_id, $user_name, $user_email );
+
+	// تحديث حالة الإيميل
+	if ( $email_sent ) {
+		$wpdb->update(
+			$table_name,
+			array(
+				'email_sent'      => 1,
+				'email_sent_date' => current_time( 'mysql' ),
+			),
+			array( 'user_email' => $user_email, 'event_id' => $event_id ),
+			array( '%d', '%s' ),
+			array( '%s', '%d' )
+		);
+	}
 
 	// إرسال إشعار للمسؤول (إذا كان مفعلاً)
 	$admin_notification_enabled = get_theme_mod( 'event_registration_admin_notification', true );
@@ -156,7 +172,7 @@ function nadiim_send_registration_confirmation_email( $event_id, $user_name, $us
 
 	// إرسال البريد
 	$headers = array( 'Content-Type: text/plain; charset=UTF-8' );
-	wp_mail( $user_email, $subject, $message, $headers );
+	return wp_mail( $user_email, $subject, $message, $headers );
 }
 
 /**
