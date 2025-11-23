@@ -42,7 +42,16 @@
 
             // تحميل البيانات الوصفية
             $(audioElement).on('loadedmetadata', function() {
-                $duration.text(formatTime(this.duration));
+                if (this.duration && !isNaN(this.duration) && isFinite(this.duration)) {
+                    $duration.text(formatTime(this.duration));
+                }
+            });
+
+            // تحميل البيانات عند الضغط على play
+            $(audioElement).on('loadeddata', function() {
+                if (this.duration && !isNaN(this.duration) && isFinite(this.duration)) {
+                    $duration.text(formatTime(this.duration));
+                }
             });
 
             // زر التشغيل/الإيقاف

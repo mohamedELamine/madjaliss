@@ -280,17 +280,21 @@
 
     /**
      * التحقق من الحقول قبل الحفظ (validation)
+     * ملاحظة: مدة الملف الصوتي اختيارية - لا يتم التحقق منها
      */
     $(document).on('submit', '#post', function(e) {
         const audioUrl = $('#nadiim_audio_url').val();
         const audioDuration = $('#nadiim_audio_duration').val();
 
-        // التحقق من صيغة مدة الملف
+        // التحقق من صيغة مدة الملف (اختياري - يمكن تركه فارغاً)
+        // تم تعطيل هذا التحقق لجعل المدة اختيارية بالكامل
+        /*
         if (audioDuration && !audioDuration.match(/^\d+:\d{2}$/)) {
             showNotification('صيغة مدة الملف غير صحيحة. استخدم صيغة دقائق:ثواني (مثال: 15:30)', 'error');
             $('#nadiim_audio_duration').focus();
             return false;
         }
+        */
 
         return true;
     });

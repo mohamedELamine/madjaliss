@@ -819,3 +819,32 @@ function nadiim_get_social_icon( $platform ) {
 
 	return isset( $icons[ $platform ] ) ? $icons[ $platform ] : '';
 }
+
+/**
+ * إضافة دعم MIME types للملفات الصوتية
+ * يحل مشكلة عدم عمل الملفات الصوتية على الاستضافة
+ */
+function nadiim_add_audio_mime_types( $mimes ) {
+	$mimes['mp3']  = 'audio/mpeg';
+	$mimes['m4a']  = 'audio/mp4';
+	$mimes['ogg']  = 'audio/ogg';
+	$mimes['wav']  = 'audio/wav';
+	$mimes['webm'] = 'audio/webm';
+	return $mimes;
+}
+add_filter( 'upload_mimes', 'nadiim_add_audio_mime_types' );
+
+/**
+ * السماح برفع الملفات الصوتية من قبل جميع المستخدمين
+ */
+function nadiim_allow_audio_uploads( $file ) {
+	$filetype = wp_check_filetype( $file['name'] );
+	$audio_types = array( 'audio/mpeg', 'audio/mp4', 'audio/ogg', 'audio/wav', 'audio/webm' );
+
+	if ( in_array( $filetype['type'], $audio_types ) ) {
+		$file['type'] = $filetype['type'];
+	}
+
+	return $file;
+}
+add_filter( 'wp_check_filetype_and_ext', 'nadiim_allow_audio_uploads', 10, 4 );

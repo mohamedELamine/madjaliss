@@ -24,8 +24,14 @@ if ( ! $audio ) {
         <?php endif; ?>
     </div>
 
-    <audio preload="metadata" style="display: none;">
+    <audio preload="none" style="display: none;" crossorigin="anonymous">
         <source src="<?php echo esc_url( $audio['url'] ); ?>" type="audio/mpeg">
+        <?php if ( ! empty( $audio['url'] ) && strpos( $audio['url'], '.ogg' ) !== false ) : ?>
+            <source src="<?php echo esc_url( $audio['url'] ); ?>" type="audio/ogg">
+        <?php endif; ?>
+        <?php if ( ! empty( $audio['url'] ) && strpos( $audio['url'], '.wav' ) !== false ) : ?>
+            <source src="<?php echo esc_url( $audio['url'] ); ?>" type="audio/wav">
+        <?php endif; ?>
         <?php esc_html_e( 'متصفحك لا يدعم تشغيل الملفات الصوتية.', 'nadiim' ); ?>
     </audio>
 
