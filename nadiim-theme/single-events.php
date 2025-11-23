@@ -247,6 +247,114 @@ while ( have_posts() ) :
 			<!-- Sidebar -->
 			<aside class="event-sidebar">
 
+
+			<!-- نموذج التسجيل (للفعاليات القادمة فقط) -->
+			<?php if ( $event_status === 'upcoming' ) : ?>
+				<div class="event-registration-widget">
+					<h3 class="widget-title">سجّل في الفعالية</h3>
+					<p class="widget-description">املأ النموذج أدناه للتسجيل في هذه الفعالية</p>
+
+					<form id="event-registration-form" class="event-registration-form">
+						<input type="hidden" name="event_id" value="<?php echo esc_attr( get_the_ID() ); ?>">
+
+						<div class="form-group">
+							<label for="user_name">الاسم الكامل <span class="required">*</span></label>
+							<input type="text" id="user_name" name="user_name" required>
+						</div>
+
+						<div class="form-group">
+							<label for="user_email">البريد الإلكتروني <span class="required">*</span></label>
+							<input type="email" id="user_email" name="user_email" required>
+						</div>
+
+						<div class="form-group">
+							<label for="user_phone">رقم الهاتف</label>
+							<input type="tel" id="user_phone" name="user_phone">
+						</div>
+
+						<div class="form-group">
+							<label for="user_message">ملاحظات إضافية</label>
+							<textarea id="user_message" name="user_message" rows="3"></textarea>
+						</div>
+
+						<div class="form-message"></div>
+
+						<button type="submit" class="btn-submit">
+							<span class="btn-text">تسجيل الآن</span>
+							<span class="btn-loader" style="display:none;">⏳ جارٍ التسجيل...</span>
+						</button>
+					</form>
+				</div>
+
+				<script>
+				jQuery(document).ready(function($) {
+					$('#event-registration-form').on('submit', function(e) {
+						e.preventDefault();
+
+						var $form = $(this);
+						var $submitBtn = $form.find('.btn-submit');
+						var $btnText = $submitBtn.find('.btn-text');
+						var $btnLoader = $submitBtn.find('.btn-loader');
+						var $message = $form.find('.form-message');
+
+						$submitBtn.prop('disabled', true);
+						$btnText.hide();
+						$btnLoader.show();
+						$message.html('').removeClass('success error');
+
+						$.ajax({
+							url: '<?php echo admin_url( "admin-ajax.php" ); ?>',
+							type: 'POST',
+							data: {
+								action: 'event_registration',
+								nonce: '<?php echo wp_create_nonce( "event_registration_nonce" ); ?>',
+								event_id: $form.find('[name="event_id"]').val(),
+								user_name: $form.find('[name="user_name"]').val(),
+								user_email: $form.find('[name="user_email"]').val(),
+								user_phone: $form.find('[name="user_phone"]').val(),
+								user_message: $form.find('[name="user_message"]').val()
+							},
+							success: function(response) {
+								if (response.success) {
+									$message.html('<p class="success">' + response.data.message + '</p>').addClass('success');
+									$form[0].reset();
+								} else {
+									$message.html('<p class="error">' + response.data.message + '</p>').addClass('error');
+								}
+							},
+							error: function() {
+								$message.html('<p class="error">حدث خطأ، يرجى المحاولة مرة أخرى</p>').addClass('error');
+							},
+							complete: function() {
+								$submitBtn.prop('disabled', false);
+								$btnText.show();
+								$btnLoader.hide();
+							}
+						});
+					});
+				});
+				</script>
+
+				<style>
+				.event-registration-widget{background:#fff;border:2px solid #339063;border-radius:12px;padding:24px;margin-bottom:30px}
+				.event-registration-widget .widget-title{font-size:20px;font-weight:700;color:#1C2D27;margin-bottom:8px}
+				.event-registration-widget .widget-description{font-size:14px;color:#6B7A72;margin-bottom:20px}
+				.event-registration-form .form-group{margin-bottom:16px}
+				.event-registration-form label{display:block;font-size:14px;font-weight:600;color:#1C2D27;margin-bottom:6px}
+				.event-registration-form .required{color:#e74c3c}
+				.event-registration-form input,.event-registration-form textarea{width:100%;padding:12px;border:1px solid #ddd;border-radius:8px;font-size:14px;font-family:inherit;transition:border-color .3s ease}
+				.event-registration-form input:focus,.event-registration-form textarea:focus{outline:none;border-color:#339063}
+				.event-registration-form textarea{resize:vertical;min-height:80px}
+				.event-registration-form .btn-submit{width:100%;padding:14px;background:#339063;color:#fff;border:none;border-radius:8px;font-size:16px;font-weight:600;cursor:pointer;transition:all .3s ease}
+				.event-registration-form .btn-submit:hover:not(:disabled){background:#2a7851;transform:translateY(-2px)}
+				.event-registration-form .btn-submit:disabled{opacity:.7;cursor:not-allowed}
+				.event-registration-form .form-message{margin:16px 0;padding:12px;border-radius:8px;font-size:14px}
+				.event-registration-form .form-message.success{background:#d4edda;color:#155724;border:1px solid #c3e6cb}
+				.event-registration-form .form-message.error{background:#f8d7da;color:#721c24;border:1px solid #f5c6cb}
+				.event-registration-form .form-message:empty{display:none}
+				</style>
+			<?php endif; ?>
+
 				<!-- فعاليات قادمة -->
 				<?php
 				$upcoming_args = array(

@@ -207,5 +207,88 @@ function nadiim_register_events_section_customizer( $wp_customize ) {
 		'section'  => 'nadiim_events_section',
 		'priority' => 110,
 	) ) );
+
+	// ========================================
+	// Setting: صورة الخلفية
+	// ========================================
+	$wp_customize->add_setting( 'events_section_bg_image', array(
+		'default'           => '',
+		'sanitize_callback' => 'esc_url_raw',
+		'transport'         => 'refresh',
+	) );
+
+	$wp_customize->add_control( new WP_Customize_Image_Control( $wp_customize, 'events_section_bg_image', array(
+		'label'       => __( 'صورة الخلفية', 'nadiim' ),
+		'description' => __( 'اختر صورة خلفية لقسم الفعاليات', 'nadiim' ),
+		'section'     => 'nadiim_events_section',
+		'priority'    => 120,
+	) ) );
+
+	// ========================================
+	// Setting: موضع الخلفية
+	// ========================================
+	$wp_customize->add_setting( 'events_section_bg_position', array(
+		'default'           => 'center',
+		'sanitize_callback' => 'nadiim_sanitize_select',
+		'transport'         => 'refresh',
+	) );
+
+	$wp_customize->add_control( 'events_section_bg_position', array(
+		'label'           => __( 'موضع الخلفية', 'nadiim' ),
+		'section'         => 'nadiim_events_section',
+		'type'            => 'select',
+		'choices'         => array(
+			'top'    => __( 'أعلى', 'nadiim' ),
+			'center' => __( 'وسط', 'nadiim' ),
+			'bottom' => __( 'أسفل', 'nadiim' ),
+		),
+		'priority'        => 130,
+		'active_callback' => function() use ( $wp_customize ) {
+			return ! empty( $wp_customize->get_setting( 'events_section_bg_image' )->value() );
+		},
+	) );
+
+	// ========================================
+	// Setting: شفافية الطبقة
+	// ========================================
+	$wp_customize->add_setting( 'events_section_overlay_opacity', array(
+		'default'           => 0.5,
+		'sanitize_callback' => 'nadiim_sanitize_float',
+		'transport'         => 'refresh',
+	) );
+
+	$wp_customize->add_control( 'events_section_overlay_opacity', array(
+		'label'           => __( 'شفافية الطبقة الداكنة', 'nadiim' ),
+		'description'     => __( 'من 0 (شفاف تماماً) إلى 1 (معتم تماماً)', 'nadiim' ),
+		'section'         => 'nadiim_events_section',
+		'type'            => 'number',
+		'input_attrs'     => array(
+			'min'  => 0,
+			'max'  => 1,
+			'step' => 0.05,
+		),
+		'priority'        => 140,
+		'active_callback' => function() use ( $wp_customize ) {
+			return ! empty( $wp_customize->get_setting( 'events_section_bg_image' )->value() );
+		},
+	) );
+
+	// ========================================
+	// Setting: لون الطبقة
+	// ========================================
+	$wp_customize->add_setting( 'events_section_overlay_color', array(
+		'default'           => '#000000',
+		'sanitize_callback' => 'sanitize_hex_color',
+		'transport'         => 'refresh',
+	) );
+
+	$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'events_section_overlay_color', array(
+		'label'           => __( 'لون الطبقة', 'nadiim' ),
+		'section'         => 'nadiim_events_section',
+		'priority'        => 150,
+		'active_callback' => function() use ( $wp_customize ) {
+			return ! empty( $wp_customize->get_setting( 'events_section_bg_image' )->value() );
+		},
+	) ) );
 }
 add_action( 'customize_register', 'nadiim_register_events_section_customizer' );

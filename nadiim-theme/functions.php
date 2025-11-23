@@ -324,6 +324,12 @@ require_once NADIIM_THEME_DIR . '/inc/customizer-articles.php';
 // تضمين ملف Customizer لقسم الفعاليات
 require_once NADIIM_THEME_DIR . '/inc/customizer-events.php';
 
+// تضمين ملف نظام التسجيل في الفعاليات
+require_once NADIIM_THEME_DIR . '/inc/event-registration.php';
+
+// تضمين ملف Customizer لإيميلات الفعاليات
+require_once NADIIM_THEME_DIR . '/inc/customizer-event-email.php';
+
 // تضمين ملف Customizer للصفحة الرئيسية
 require_once NADIIM_THEME_DIR . '/inc/front-page-customizer.php';
 

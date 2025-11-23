@@ -21,6 +21,15 @@ $show_past_events    = get_theme_mod( 'events_section_show_past', false );
 $show_more_button    = get_theme_mod( 'events_section_show_more', true );
 $more_button_text    = get_theme_mod( 'events_section_more_text', __( 'جميع الفعاليات', 'nadiim' ) );
 
+// إعدادات التنسيق والألوان
+$bg_color              = get_theme_mod( 'events_section_bg_color', '#F8F9F8' );
+$title_color           = get_theme_mod( 'events_section_title_color', '#1C2D27' );
+$description_color     = get_theme_mod( 'events_section_description_color', '#425F54' );
+$bg_image              = get_theme_mod( 'events_section_bg_image', '' );
+$bg_position           = get_theme_mod( 'events_section_bg_position', 'center' );
+$overlay_opacity       = get_theme_mod( 'events_section_overlay_opacity', 0.5 );
+$overlay_color         = get_theme_mod( 'events_section_overlay_color', '#000000' );
+
 // بناء WP_Query arguments
 $args = array(
 	'post_type'      => 'events',
@@ -219,9 +228,36 @@ if ( ! $events_query->have_posts() ) {
 <style>
 /* أنماط CSS لقسم الفعاليات في الصفحة الرئيسية */
 .events-section {
-    background: #fafafa;
+    background-color: <?php echo esc_attr( $bg_color ); ?>;
+    <?php if ( $bg_image ) : ?>
+    background-image: url('<?php echo esc_url( $bg_image ); ?>');
+    background-size: cover;
+    background-position: <?php echo esc_attr( $bg_position ); ?>;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    position: relative;
+    <?php endif; ?>
     padding: 80px 0;
 }
+
+<?php if ( $bg_image ) : ?>
+.events-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: <?php echo esc_attr( $overlay_color ); ?>;
+    opacity: <?php echo esc_attr( $overlay_opacity ); ?>;
+    z-index: 1;
+}
+
+.events-section > .container {
+    position: relative;
+    z-index: 2;
+}
+<?php endif; ?>
 
 .events-section .section-header {
     margin-bottom: 50px;
@@ -230,13 +266,13 @@ if ( ! $events_query->have_posts() ) {
 .events-section .section-title {
     font-size: 36px;
     font-weight: 700;
-    color: #1C2D27;
+    color: <?php echo esc_attr( $title_color ); ?>;
     margin-bottom: 15px;
 }
 
 .events-section .section-description {
     font-size: 18px;
-    color: #6B7A72;
+    color: <?php echo esc_attr( $description_color ); ?>;
     max-width: 600px;
     margin: 0 auto;
 }
