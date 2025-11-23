@@ -27,6 +27,12 @@
 
     <?php
     /**
+     * الشريط العلوي (Top Bar)
+     * يتم تحميله من template-parts/header/topbar.php
+     */
+    get_template_part( 'template-parts/header/topbar' );
+
+    /**
      * الهيدر الرئيسي (Main Header)
      * يتم تحميله من template-parts/header/main-header.php
      */
