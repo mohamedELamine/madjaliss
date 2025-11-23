@@ -195,7 +195,15 @@
      */
     function initSmoothScroll() {
         $('a[href^="#"]').on('click', function(e) {
-            const target = $(this.getAttribute('href'));
+            const href = this.getAttribute('href');
+
+            // تجاهل الروابط الفارغة أو التي تحتوي على # فقط
+            if (!href || href === '#' || href === '#!') {
+                e.preventDefault();
+                return false;
+            }
+
+            const target = $(href);
 
             if (target.length) {
                 e.preventDefault();

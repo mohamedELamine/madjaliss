@@ -1042,7 +1042,6 @@
 .article-card-meta {
     display: flex;
     flex-wrap: wrap;
-    gap: var(--spacing-sm);
     margin-bottom: var(--spacing-sm);
     font-size: 13px;
     color: var(--color-text-muted);
@@ -1094,7 +1093,6 @@
 .article-card-author {
     display: flex;
     align-items: center;
-    gap: var(--spacing-xs);
     font-size: 13px;
     color: var(--color-text-muted);
 }
