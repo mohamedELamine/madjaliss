@@ -61,14 +61,30 @@ if ( $sticky_shadow_enabled ) {
 
             <!-- القائمة الرئيسية (في الوسط في الشاشات الكبيرة، overlay كامل في الموبايل) -->
             <nav id="site-navigation" class="main-navigation" role="navigation" aria-label="<?php esc_attr_e( 'القائمة الرئيسية', 'nadiim' ); ?>">
+                <!-- زر الإغلاق (يظهر فقط في الموبايل) -->
+                <button class="mobile-menu-close" aria-label="<?php esc_attr_e( 'إغلاق القائمة', 'nadiim' ); ?>">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+
                 <?php
-                wp_nav_menu( array(
-                    'theme_location' => 'primary',
-                    'menu_id'        => 'primary-menu',
-                    'menu_class'     => 'primary-menu',
-                    'container'      => false,
-                    'fallback_cb'    => false,
-                ) );
+                if ( has_nav_menu( 'primary' ) ) {
+                    wp_nav_menu( array(
+                        'theme_location' => 'primary',
+                        'menu_id'        => 'primary-menu',
+                        'menu_class'     => 'primary-menu',
+                        'container'      => false,
+                        'fallback_cb'    => false,
+                    ) );
+                } else {
+                    // عرض قائمة افتراضية إذا لم تكن هناك قائمة معرّفة
+                    echo '<ul id="primary-menu" class="primary-menu">';
+                    echo '<li><a href="' . esc_url( home_url( '/' ) ) . '">الرئيسية</a></li>';
+                    wp_list_pages( array(
+                        'title_li' => '',
+                        'depth'    => 1,
+                    ) );
+                    echo '</ul>';
+                }
                 ?>
             </nav>
 

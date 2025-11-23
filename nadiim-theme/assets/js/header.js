@@ -55,6 +55,7 @@
      */
     function initMobileMenu() {
         const menuToggle = document.querySelector('.mobile-menu-toggle');
+        const menuClose = document.querySelector('.mobile-menu-close');
         const navigation = document.querySelector('.main-navigation');
 
         if (!menuToggle || !navigation) {
@@ -75,6 +76,13 @@
                 document.body.style.overflow = '';
             }
         });
+
+        // زر الإغلاق
+        if (menuClose) {
+            menuClose.addEventListener('click', function() {
+                closeMenu();
+            });
+        }
 
         // إغلاق القائمة عند النقر خارجها
         navigation.addEventListener('click', function(event) {
