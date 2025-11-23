@@ -251,6 +251,14 @@
 }
 
 /* ─────────────────────────────────────
+   زر إغلاق القائمة (مخفي في الشاشات الكبيرة)
+   ───────────────────────────────────── */
+
+.mobile-menu-close {
+    display: none; /* مخفي افتراضياً في الشاشات الكبيرة */
+}
+
+/* ─────────────────────────────────────
    البحث
    ───────────────────────────────────── */
 
@@ -494,11 +502,6 @@
         order: 3;
     }
 
-    /* إظهار زر الإغلاق في الموبايل */
-    .mobile-menu-close {
-        display: flex !important;
-    }
-
     /* القائمة overlay كامل */
     .main-navigation {
         position: fixed;
@@ -510,7 +513,7 @@
         box-shadow: -5px 0 20px rgba(0, 0, 0, 0.1);
         transition: right 0.3s ease;
         z-index: 10000;
-        padding: 20px 0;
+        padding: 80px 0 20px 0; /* إضافة padding-top لتجنب اختفاء العناصر تحت زر الإغلاق */
         overflow-y: auto;
         display: block !important; /* تأكد من أن القائمة معروضة */
     }
@@ -521,7 +524,7 @@
 
     /* زر إغلاق القائمة في الموبايل */
     .mobile-menu-close {
-        display: none; /* يظهر فقط في الموبايل */
+        display: flex; /* يظهر في الموبايل فقط */
         background: none;
         border: none;
         padding: 0;
@@ -535,6 +538,7 @@
         top: 15px;
         left: 15px;
         transition: all 0.3s ease;
+        z-index: 10001;
     }
 
     .mobile-menu-close i {
