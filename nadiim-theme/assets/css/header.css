@@ -483,6 +483,16 @@
         --header-logo-width: 140px;
     }
 
+    /* خفض z-index للـ topbar في الموبايل */
+    .site-topbar {
+        z-index: 1;
+    }
+
+    /* زيادة z-index للهيدر في الموبايل */
+    .site-header {
+        z-index: 999998;
+    }
+
     /* إظهار زر القائمة */
     .mobile-menu-toggle {
         display: flex;
