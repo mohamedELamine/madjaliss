@@ -64,11 +64,7 @@ if ( $sticky_shadow_enabled ) {
                         aria-controls="primary-menu"
                         aria-expanded="false"
                         aria-label="<?php esc_attr_e( 'القائمة', 'nadiim' ); ?>">
-                    <span class="menu-toggle-icon">
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                    </span>
+                    <i class="fa-solid fa-bars"></i>
                     <span class="menu-toggle-text"><?php esc_html_e( 'القائمة', 'nadiim' ); ?></span>
                 </button>
 

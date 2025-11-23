@@ -173,6 +173,14 @@ function nadiim_enqueue_scripts() {
         null
     );
 
+    // تحميل Font Awesome
+    wp_enqueue_style(
+        'font-awesome',
+        'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css',
+        array(),
+        '6.5.1'
+    );
+
     // تحميل ملف CSS الرئيسي
     wp_enqueue_style(
         'nadiim-style',
