@@ -248,8 +248,9 @@
             link.addEventListener('click', function(event) {
                 const href = this.getAttribute('href');
 
-                // تجاهل الروابط الفارغة أو #
+                // تجاهل الروابط الفارغة أو # ومنع السلوك الافتراضي
                 if (href === '#' || href === '#0') {
+                    event.preventDefault();
                     return;
                 }
 
