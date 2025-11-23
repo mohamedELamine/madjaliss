@@ -1,5 +1,5 @@
 /**
- * JavaScript للهيدر والشريط العلوي
+ * JavaScript للهيدر - تصميم جديد
  *
  * @package Nadiim
  * @since 1.0.0
@@ -13,7 +13,6 @@
         initStickyHeader();
         initMobileMenu();
         initSearchModal();
-        initMarquee();
         initDropdownMenus();
     });
 
@@ -55,13 +54,14 @@
      * تفعيل قائمة الموبايل
      */
     function initMobileMenu() {
-        const menuToggle = document.querySelector('.menu-toggle');
+        const menuToggle = document.querySelector('.mobile-menu-toggle');
         const navigation = document.querySelector('.main-navigation');
 
         if (!menuToggle || !navigation) {
             return;
         }
 
+        // فتح/إغلاق القائمة
         menuToggle.addEventListener('click', function() {
             const isExpanded = this.getAttribute('aria-expanded') === 'true';
 
@@ -76,29 +76,30 @@
             }
         });
 
+        // إغلاق القائمة عند النقر خارجها
+        navigation.addEventListener('click', function(event) {
+            if (event.target === this) {
+                closeMenu();
+            }
+        });
+
         // إغلاق القائمة عند تغيير حجم الشاشة
         let resizeTimer;
         window.addEventListener('resize', function() {
             clearTimeout(resizeTimer);
             resizeTimer = setTimeout(function() {
                 if (window.innerWidth > 768) {
-                    navigation.classList.remove('is-active');
-                    menuToggle.setAttribute('aria-expanded', 'false');
-                    document.body.style.overflow = '';
+                    closeMenu();
                 }
             }, 250);
         });
 
-        // إغلاق القائمة عند النقر خارجها
-        document.addEventListener('click', function(event) {
-            if (!navigation.contains(event.target) && !menuToggle.contains(event.target)) {
-                if (navigation.classList.contains('is-active')) {
-                    navigation.classList.remove('is-active');
-                    menuToggle.setAttribute('aria-expanded', 'false');
-                    document.body.style.overflow = '';
-                }
-            }
-        });
+        // دالة إغلاق القائمة
+        function closeMenu() {
+            navigation.classList.remove('is-active');
+            menuToggle.setAttribute('aria-expanded', 'false');
+            document.body.style.overflow = '';
+        }
     }
 
     /**
@@ -162,33 +163,6 @@
     }
 
     /**
-     * تفعيل حركة التمرير للشريط العلوي (Marquee)
-     */
-    function initMarquee() {
-        const marqueeElements = document.querySelectorAll('.topbar-marquee');
-
-        marqueeElements.forEach(function(marquee) {
-            const speed = marquee.getAttribute('data-speed') || 50;
-            const content = marquee.innerHTML;
-
-            // تكرار المحتوى لضمان استمرارية الحركة
-            marquee.innerHTML = content + ' ' + content;
-
-            // تعديل سرعة الأنيميشن
-            marquee.style.animationDuration = speed + 's';
-
-            // إيقاف الحركة عند التمرير
-            marquee.addEventListener('mouseenter', function() {
-                this.style.animationPlayState = 'paused';
-            });
-
-            marquee.addEventListener('mouseleave', function() {
-                this.style.animationPlayState = 'running';
-            });
-        });
-    }
-
-    /**
      * تفعيل القوائم المنسدلة (Dropdown Menus) للموبايل
      */
     function initDropdownMenus() {
@@ -210,7 +184,8 @@
             const arrow = document.createElement('button');
             arrow.className = 'submenu-toggle';
             arrow.setAttribute('aria-expanded', 'false');
-            arrow.innerHTML = '<span class="screen-reader-text">فتح القائمة الفرعية</span><span aria-hidden="true">▼</span>';
+            arrow.innerHTML = '<i class="fa-solid fa-chevron-down"></i>';
+            arrow.style.cssText = 'background: none; border: none; padding: 16px 12px; cursor: pointer; color: inherit;';
 
             link.parentNode.insertBefore(arrow, link.nextSibling);
 
@@ -237,120 +212,5 @@
             });
         });
     }
-
-    /**
-     * دالة مساعدة لإضافة Smooth Scroll للروابط الداخلية
-     */
-    function initSmoothScroll() {
-        const links = document.querySelectorAll('a[href^="#"]');
-
-        links.forEach(function(link) {
-            link.addEventListener('click', function(event) {
-                const href = this.getAttribute('href');
-
-                // تجاهل الروابط الفارغة أو # ومنع السلوك الافتراضي
-                if (href === '#' || href === '#0') {
-                    event.preventDefault();
-                    return;
-                }
-
-                const target = document.querySelector(href);
-
-                if (target) {
-                    event.preventDefault();
-
-                    const headerHeight = document.querySelector('.site-header').offsetHeight;
-                    const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - headerHeight - 20;
-
-                    window.scrollTo({
-                        top: targetPosition,
-                        behavior: 'smooth'
-                    });
-                }
-            });
-        });
-    }
-
-    // تفعيل Smooth Scroll
-    initSmoothScroll();
-
-    /**
-     * تحسين الأداء: Debounce Function
-     */
-    function debounce(func, wait, immediate) {
-        let timeout;
-        return function executedFunction() {
-            const context = this;
-            const args = arguments;
-            const later = function() {
-                timeout = null;
-                if (!immediate) func.apply(context, args);
-            };
-            const callNow = immediate && !timeout;
-            clearTimeout(timeout);
-            timeout = setTimeout(later, wait);
-            if (callNow) func.apply(context, args);
-        };
-    }
-
-    /**
-     * إضافة دعم للوحة المفاتيح للتنقل في القائمة
-     */
-    function initKeyboardNavigation() {
-        const menuItems = document.querySelectorAll('.primary-menu a');
-
-        menuItems.forEach(function(item, index) {
-            item.addEventListener('keydown', function(event) {
-                const parent = this.parentElement;
-                const submenu = parent.querySelector('.sub-menu');
-
-                // السهم للأسفل: فتح القائمة الفرعية
-                if (event.key === 'ArrowDown' && submenu) {
-                    event.preventDefault();
-                    const firstLink = submenu.querySelector('a');
-                    if (firstLink) {
-                        firstLink.focus();
-                    }
-                }
-
-                // السهم للأعلى: الانتقال للعنصر السابق
-                if (event.key === 'ArrowUp') {
-                    event.preventDefault();
-                    if (index > 0) {
-                        menuItems[index - 1].focus();
-                    }
-                }
-
-                // السهم لليمين/اليسار: التنقل بين العناصر
-                if (event.key === 'ArrowRight' || event.key === 'ArrowLeft') {
-                    event.preventDefault();
-                    const direction = event.key === 'ArrowRight' ? 1 : -1;
-                    const nextIndex = index + direction;
-
-                    if (menuItems[nextIndex]) {
-                        menuItems[nextIndex].focus();
-                    }
-                }
-            });
-        });
-    }
-
-    initKeyboardNavigation();
-
-    /**
-     * إضافة class للـ body عند التمرير
-     */
-    let scrollTimer = null;
-    window.addEventListener('scroll', function() {
-        if (scrollTimer !== null) {
-            clearTimeout(scrollTimer);
-        }
-
-        document.body.classList.add('is-scrolling');
-
-        scrollTimer = setTimeout(function() {
-            document.body.classList.remove('is-scrolling');
-        }, 100);
-    }, { passive: true });
 
 })();
