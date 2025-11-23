@@ -502,6 +502,26 @@
         order: 3;
     }
 
+    /* overlay خلفية للقائمة في الموبايل */
+    .main-navigation::before {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+        z-index: -1;
+    }
+
+    .main-navigation.is-active::before {
+        opacity: 1;
+        visibility: visible;
+    }
+
     /* القائمة overlay كامل */
     .main-navigation {
         position: fixed;
@@ -512,7 +532,7 @@
         background-color: var(--header-bg);
         box-shadow: -5px 0 20px rgba(0, 0, 0, 0.1);
         transition: right 0.3s ease;
-        z-index: 10000;
+        z-index: 999999; /* قيمة عالية جداً لتظهر فوق كل شيء بما في ذلك topbar */
         padding: 70px 0 20px 0; /* إضافة padding-top لتجنب اختفاء العناصر تحت زر الإغلاق */
         overflow-y: auto;
         display: block !important; /* تأكد من أن القائمة معروضة */
@@ -538,7 +558,7 @@
         top: 15px;
         right: 15px; /* على اليمين ليكون داخل القائمة */
         transition: all 0.3s ease;
-        z-index: 10001;
+        z-index: 1000000; /* أعلى من القائمة */
     }
 
     .mobile-menu-close i {
