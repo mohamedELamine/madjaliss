@@ -513,7 +513,7 @@
         box-shadow: -5px 0 20px rgba(0, 0, 0, 0.1);
         transition: right 0.3s ease;
         z-index: 10000;
-        padding: 80px 0 20px 0; /* إضافة padding-top لتجنب اختفاء العناصر تحت زر الإغلاق */
+        padding: 70px 0 20px 0; /* إضافة padding-top لتجنب اختفاء العناصر تحت زر الإغلاق */
         overflow-y: auto;
         display: block !important; /* تأكد من أن القائمة معروضة */
     }
@@ -536,7 +536,7 @@
         border-radius: 50%;
         position: absolute;
         top: 15px;
-        left: 15px;
+        right: 15px; /* على اليمين ليكون داخل القائمة */
         transition: all 0.3s ease;
         z-index: 10001;
     }
@@ -547,7 +547,11 @@
     }
 
     .mobile-menu-close:hover {
-        background-color: rgba(0, 0, 0, 0.05);
+        background-color: rgba(51, 144, 99, 0.1);
+    }
+
+    .mobile-menu-close:hover i {
+        color: var(--header-link-hover);
     }
 
     /* التأكد من أن القائمة مرئية */
