@@ -31,7 +31,6 @@ wp_localize_script( 'nadiim-front-page', 'nadiimFrontPage', array(
 	 * يمكن تغيير الترتيب من Customizer
 	 */
 	$sections_order = get_theme_mod( 'home_sections_order', array(
-		'topbar',
 		'hero-slider', // Hero Slider الجديد
 		'about-mini', // قسم من نحن المصغر
 		'featured-howarat', // الحوارات المميزة
