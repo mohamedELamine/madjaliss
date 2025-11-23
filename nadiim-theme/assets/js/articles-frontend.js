@@ -230,6 +230,9 @@
                     title: document.title,
                     text: $('meta[name="description"]').attr('content') || '',
                     url: window.location.href
+                }).catch(function(error) {
+                    console.log('Error sharing:', error);
+                });
             });
         }
     }

@@ -172,7 +172,7 @@
     gap: 40px;
     height: var(--header-height);
     transition: height 0.3s ease;
-    padding: 0 40px;
+    padding: 0;
 }
 
 /* ─────────────────────────────────────
@@ -638,7 +638,7 @@
 
     .header-inner {
         gap: 50px;
-        padding: 0 60px;
+        padding: 0;
     }
 
     .primary-menu {
@@ -659,7 +659,7 @@
 @media screen and (min-width: 1025px) and (max-width: 1440px) {
     .header-inner {
         gap: 40px;
-        padding: 0 40px;
+        padding: 0;
     }
 
     .primary-menu {
@@ -679,7 +679,7 @@
 
     .header-inner {
         gap: 25px;
-        padding: 0 30px;
+        padding: 0;
     }
 
     .primary-menu {
@@ -761,8 +761,8 @@
     }
 
     .main-navigation {
-        position: absolute;
-        top: 100%;
+        position: fixed;
+        top: 70px;
         right: 0;
         left: 0;
         background-color: var(--header-bg);
@@ -772,7 +772,6 @@
         overflow: hidden;
         transition: max-height 0.3s ease;
         z-index: 999;
-        order: 4;
         width: 100%;
     }
 
