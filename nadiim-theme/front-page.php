@@ -38,6 +38,7 @@ wp_localize_script( 'nadiim-front-page', 'nadiimFrontPage', array(
 		'dialogues',
 		'esdar', // قسم الإصدارات
 		'articles', // قسم المقالات الجديد
+		'events', // قسم الفعاليات
 		'clubs',
 		'newsletter',
 	) );
@@ -66,6 +67,9 @@ wp_localize_script( 'nadiim-front-page', 'nadiimFrontPage', array(
 				break;
 			case 'articles':
 				$setting_name = 'articles_section_enable';
+				break;
+			case 'events':
+				$setting_name = 'events_section_enable';
 				break;
 		}
 
