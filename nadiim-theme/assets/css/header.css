@@ -161,7 +161,7 @@
 .site-header .container {
     max-width: 1400px;
     margin: 0 auto;
-    padding: 0;
+    padding: 0 24px;
 }
 
 .header-inner {
@@ -682,9 +682,12 @@
         font-size: 16px;
     }
 
+    .site-header .container {
+        padding: 0 20px;
+    }
+
     .header-inner {
         gap: 25px;
-        padding: 0;
     }
 
     .primary-menu {
@@ -724,6 +727,10 @@
         padding: 0 20px;
     }
 
+    .site-header .container {
+        padding: 0 20px;
+    }
+
     .topbar-inner {
         display: block;
         text-align: center;
@@ -741,7 +748,6 @@
 
     .header-inner {
         height: 70px;
-        padding: 0 20px;
         gap: 15px;
     }
 
@@ -917,6 +923,10 @@
         padding: 0 16px;
     }
 
+    .site-header .container {
+        padding: 0 16px;
+    }
+
     .topbar-icon {
         font-size: 14px;
         margin-left: 4px;
@@ -924,7 +934,6 @@
 
     .header-inner {
         height: 65px;
-        padding: 0 16px;
         gap: 12px;
     }
 
@@ -1026,13 +1035,17 @@
         min-height: 34px;
     }
 
+    .site-topbar .container,
+    .site-header .container {
+        padding: 0 12px;
+    }
+
     .topbar-icon {
         font-size: 13px;
     }
 
     .header-inner {
         height: 60px;
-        padding: 0 12px;
         gap: 10px;
     }
 
