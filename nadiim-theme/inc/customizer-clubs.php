@@ -320,15 +320,15 @@ function nadiim_clubs_customizer_css() {
 		/* ألوان العنوان والوصف */
 		.clubs-section .section-title,
 		.clubs-section-title {
-			color: <?php echo esc_attr( $title_color ); ?>;
+			color: <?php echo esc_attr( $title_color ); ?> !important;
 		}
 
 		.clubs-section .section-subtitle,
 		.clubs-section-subtitle,
 		.clubs-section .section-description {
-			color: <?php echo esc_attr( $subtitle_color ); ?>;
+			color: <?php echo esc_attr( $subtitle_color ); ?> !important;
 		}
 	</style>
 	<?php
 }
-add_action( 'wp_head', 'nadiim_clubs_customizer_css', 20 );
+add_action( 'wp_head', 'nadiim_clubs_customizer_css', 999 );
