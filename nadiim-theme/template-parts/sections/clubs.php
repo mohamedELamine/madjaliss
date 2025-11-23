@@ -153,7 +153,7 @@ if ( $bg_enable && ! empty( $bg_image ) ) {
 				<a href="<?php echo esc_url( get_post_type_archive_link( 'reading_clubs' ) ); ?>" class="more-button">
 					<?php echo esc_html( $more_button_text ); ?>
 					<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-						<path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/>
+						<path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
 					</svg>
 				</a>
 			</div><!-- .section-more-button -->
