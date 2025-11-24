@@ -23,8 +23,107 @@ function nadiim_add_article_meta_box() {
         'normal',
         'high'
     );
+
+    // Meta Box لاختيار الكاتب (للأدمن فقط)
+    if ( current_user_can( 'edit_others_posts' ) ) {
+        add_meta_box(
+            'nadiim_article_author',
+            'كاتب المقال',
+            'nadiim_article_author_box_callback',
+            'post',
+            'side',
+            'default'
+        );
+    }
 }
 add_action( 'add_meta_boxes', 'nadiim_add_article_meta_box' );
+
+/**
+ * عرض Meta Box لاختيار الكاتب
+ */
+function nadiim_article_author_box_callback( $post ) {
+    // إضافة nonce للأمان
+    wp_nonce_field( 'nadiim_save_article_author', 'nadiim_article_author_nonce' );
+
+    $current_author_id = $post->post_author;
+    ?>
+    <div class="nadiim-author-box">
+        <style>
+            .nadiim-author-box {
+                padding: 10px 0;
+            }
+            .nadiim-author-box label {
+                display: block;
+                font-weight: 600;
+                margin-bottom: 8px;
+            }
+            .nadiim-author-box select {
+                width: 100%;
+                padding: 6px 8px;
+                border: 1px solid #ddd;
+                border-radius: 4px;
+            }
+            .nadiim-author-box .description {
+                margin-top: 8px;
+                color: #646970;
+                font-size: 13px;
+                font-style: italic;
+            }
+            .nadiim-current-author {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                padding: 10px;
+                background: #f9f9f9;
+                border-radius: 4px;
+                margin-bottom: 15px;
+            }
+            .nadiim-current-author img {
+                border-radius: 50%;
+            }
+            .nadiim-author-info {
+                flex: 1;
+            }
+            .nadiim-author-name {
+                font-weight: 600;
+                color: #1d2327;
+            }
+            .nadiim-author-email {
+                font-size: 12px;
+                color: #646970;
+            }
+        </style>
+
+        <div class="nadiim-current-author">
+            <?php echo get_avatar( $current_author_id, 40 ); ?>
+            <div class="nadiim-author-info">
+                <div class="nadiim-author-name">
+                    <?php echo esc_html( get_the_author_meta( 'display_name', $current_author_id ) ); ?>
+                </div>
+                <div class="nadiim-author-email">
+                    <?php echo esc_html( get_the_author_meta( 'user_email', $current_author_id ) ); ?>
+                </div>
+            </div>
+        </div>
+
+        <label for="nadiim_post_author">اختر الكاتب:</label>
+        <?php
+        wp_dropdown_users( array(
+            'name'             => 'nadiim_post_author',
+            'id'               => 'nadiim_post_author',
+            'selected'         => $current_author_id,
+            'include_selected' => true,
+            'show_option_none' => '-- اختر كاتب --',
+            'who'              => 'authors',
+        ) );
+        ?>
+
+        <p class="description">
+            يمكنك تغيير كاتب هذا المقال. سيظهر المقال في صفحة الكاتب المختار.
+        </p>
+    </div>
+    <?php
+}
 
 /**
  * عرض محتوى Meta Box
@@ -386,3 +485,45 @@ function nadiim_get_article_audio( $post_id = null ) {
 function nadiim_has_article_audio( $post_id = null ) {
     return nadiim_get_article_audio( $post_id ) !== false;
 }
+
+/**
+ * حفظ الكاتب المختار
+ */
+function nadiim_save_article_author( $post_id ) {
+    // التحقق من nonce
+    if ( ! isset( $_POST['nadiim_article_author_nonce'] ) ||
+         ! wp_verify_nonce( $_POST['nadiim_article_author_nonce'], 'nadiim_save_article_author' ) ) {
+        return;
+    }
+
+    // التحقق من autosave
+    if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
+        return;
+    }
+
+    // التحقق من الصلاحيات (فقط من يستطيع تحرير منشورات الآخرين)
+    if ( ! current_user_can( 'edit_others_posts', $post_id ) ) {
+        return;
+    }
+
+    // التحقق من نوع المنشور
+    if ( get_post_type( $post_id ) !== 'post' ) {
+        return;
+    }
+
+    // حفظ الكاتب الجديد
+    if ( isset( $_POST['nadiim_post_author'] ) && ! empty( $_POST['nadiim_post_author'] ) ) {
+        $new_author_id = absint( $_POST['nadiim_post_author'] );
+
+        // التحقق من أن المستخدم موجود
+        $user = get_userdata( $new_author_id );
+        if ( $user ) {
+            // تحديث الكاتب
+            wp_update_post( array(
+                'ID'          => $post_id,
+                'post_author' => $new_author_id,
+            ) );
+        }
+    }
+}
+add_action( 'save_post', 'nadiim_save_article_author', 10, 1 );
