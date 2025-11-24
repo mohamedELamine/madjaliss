@@ -514,15 +514,25 @@ function nadiim_save_article_author( $post_id ) {
     // حفظ الكاتب الجديد
     if ( isset( $_POST['nadiim_post_author'] ) && ! empty( $_POST['nadiim_post_author'] ) ) {
         $new_author_id = absint( $_POST['nadiim_post_author'] );
+        $current_author = get_post_field( 'post_author', $post_id );
 
-        // التحقق من أن المستخدم موجود
-        $user = get_userdata( $new_author_id );
-        if ( $user ) {
-            // تحديث الكاتب
-            wp_update_post( array(
-                'ID'          => $post_id,
-                'post_author' => $new_author_id,
-            ) );
+        // التحقق من أن الكاتب تغيّر فعلاً
+        if ( $new_author_id != $current_author ) {
+            // التحقق من أن المستخدم موجود
+            $user = get_userdata( $new_author_id );
+            if ( $user ) {
+                // إزالة hook مؤقتاً لتجنب infinite loop
+                remove_action( 'save_post', 'nadiim_save_article_author', 10 );
+
+                // تحديث الكاتب
+                wp_update_post( array(
+                    'ID'          => $post_id,
+                    'post_author' => $new_author_id,
+                ) );
+
+                // إعادة hook
+                add_action( 'save_post', 'nadiim_save_article_author', 10, 1 );
+            }
         }
     }
 }
