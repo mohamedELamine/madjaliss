@@ -14,6 +14,7 @@
         initMobileMenu();
         initSearchModal();
         initDropdownMenus();
+        initTopbarMarquee();
     });
 
     /**
@@ -219,6 +220,61 @@
                 item.classList.toggle('is-open');
             });
         });
+    }
+
+    /**
+     * تفعيل حركة التمرير للشريط العلوي (Marquee)
+     */
+    function initTopbarMarquee() {
+        const marqueeElement = document.querySelector('.topbar-marquee');
+
+        if (!marqueeElement) {
+            return;
+        }
+
+        const speed = parseInt(marqueeElement.getAttribute('data-speed')) || 50;
+        const content = marqueeElement.innerHTML;
+
+        // إنشاء نسخة مكررة من المحتوى للتمرير المستمر
+        marqueeElement.innerHTML = `
+            <span class="marquee-content">${content}</span>
+            <span class="marquee-content" aria-hidden="true">${content}</span>
+        `;
+
+        // إضافة الأنماط المطلوبة
+        marqueeElement.style.display = 'flex';
+        marqueeElement.style.overflow = 'hidden';
+        marqueeElement.style.whiteSpace = 'nowrap';
+
+        const marqueeContents = marqueeElement.querySelectorAll('.marquee-content');
+        marqueeContents.forEach(function(content) {
+            content.style.display = 'inline-block';
+            content.style.paddingLeft = '50px';
+            content.style.animation = `marqueeScroll ${speed}s linear infinite`;
+        });
+
+        // إضافة CSS animation إذا لم يكن موجوداً
+        if (!document.getElementById('marquee-animation-style')) {
+            const style = document.createElement('style');
+            style.id = 'marquee-animation-style';
+            style.textContent = `
+                @keyframes marqueeScroll {
+                    0% {
+                        transform: translateX(0);
+                    }
+                    100% {
+                        transform: translateX(-100%);
+                    }
+                }
+                .topbar-marquee {
+                    display: flex !important;
+                }
+                .topbar-marquee .marquee-content {
+                    flex-shrink: 0;
+                }
+            `;
+            document.head.appendChild(style);
+        }
     }
 
 })();
