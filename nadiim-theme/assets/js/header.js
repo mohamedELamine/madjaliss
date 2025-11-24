@@ -252,13 +252,28 @@
         marqueeElement.style.alignItems = 'center';
 
         const marqueeContents = marqueeElement.querySelectorAll('.marquee-content');
-        marqueeContents.forEach(function(content) {
-            content.style.display = 'inline-flex';
-            content.style.alignItems = 'center';
-            content.style.gap = '8px';
-            content.style.paddingLeft = '50px';
-            content.style.animation = `marqueeScroll ${speed}s linear infinite`;
-        });
+
+        // حساب عرض المحتوى ديناميكياً
+        const firstContent = marqueeContents[0];
+        if (firstContent) {
+            // تطبيق الأنماط الأساسية أولاً
+            firstContent.style.display = 'inline-flex';
+            firstContent.style.alignItems = 'center';
+            firstContent.style.gap = '8px';
+
+            // حساب عرض المحتوى
+            const contentWidth = firstContent.offsetWidth;
+
+            // تطبيق الأنماط على كل النسخ
+            marqueeContents.forEach(function(content) {
+                content.style.display = 'inline-flex';
+                content.style.alignItems = 'center';
+                content.style.gap = '8px';
+                // المسافة = عرض المحتوى + مسافة إضافية
+                content.style.paddingLeft = (contentWidth + 100) + 'px';
+                content.style.animation = `marqueeScroll ${speed}s linear infinite`;
+            });
+        }
 
         // إضافة CSS animation إذا لم يكن موجوداً
         if (!document.getElementById('marquee-animation-style')) {
