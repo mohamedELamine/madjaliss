@@ -21,14 +21,14 @@ $marquee_speed   = get_theme_mod( 'topbar_marquee_speed', 50 );
 <div class="site-topbar" role="banner">
     <div class="container">
         <div class="topbar-inner">
-            <?php if ( ! empty( $icon ) ) : ?>
-                <span class="topbar-icon" aria-hidden="true"><?php echo $icon; ?></span>
-            <?php endif; ?>
-
             <div class="topbar-content<?php echo $marquee_enabled ? ' topbar-marquee' : ''; ?>"
                  <?php if ( $marquee_enabled ) : ?>
                      data-speed="<?php echo esc_attr( $marquee_speed ); ?>"
+                     data-icon="<?php echo esc_attr( $icon ); ?>"
                  <?php endif; ?>>
+                <?php if ( ! empty( $icon ) && ! $marquee_enabled ) : ?>
+                    <span class="topbar-icon" aria-hidden="true"><?php echo $icon; ?></span>
+                <?php endif; ?>
                 <?php if ( $is_dynamic ) : ?>
                     <?php echo nadiim_get_topbar_dynamic_content(); ?>
                 <?php else : ?>

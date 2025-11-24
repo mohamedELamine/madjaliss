@@ -233,22 +233,29 @@
         }
 
         const speed = parseInt(marqueeElement.getAttribute('data-speed')) || 50;
-        const content = marqueeElement.innerHTML;
+        const icon = marqueeElement.getAttribute('data-icon') || '';
+        const content = marqueeElement.innerHTML.trim();
+
+        // إنشاء المحتوى مع الأيقونة
+        const contentWithIcon = icon ? `<span class="topbar-icon" aria-hidden="true">${icon}</span> ${content}` : content;
 
         // إنشاء نسخة مكررة من المحتوى للتمرير المستمر
         marqueeElement.innerHTML = `
-            <span class="marquee-content">${content}</span>
-            <span class="marquee-content" aria-hidden="true">${content}</span>
+            <span class="marquee-content">${contentWithIcon}</span>
+            <span class="marquee-content" aria-hidden="true">${contentWithIcon}</span>
         `;
 
         // إضافة الأنماط المطلوبة
         marqueeElement.style.display = 'flex';
         marqueeElement.style.overflow = 'hidden';
         marqueeElement.style.whiteSpace = 'nowrap';
+        marqueeElement.style.alignItems = 'center';
 
         const marqueeContents = marqueeElement.querySelectorAll('.marquee-content');
         marqueeContents.forEach(function(content) {
-            content.style.display = 'inline-block';
+            content.style.display = 'inline-flex';
+            content.style.alignItems = 'center';
+            content.style.gap = '8px';
             content.style.paddingLeft = '50px';
             content.style.animation = `marqueeScroll ${speed}s linear infinite`;
         });
@@ -268,9 +275,12 @@
                 }
                 .topbar-marquee {
                     display: flex !important;
+                    align-items: center !important;
                 }
                 .topbar-marquee .marquee-content {
                     flex-shrink: 0;
+                    display: inline-flex;
+                    align-items: center;
                 }
             `;
             document.head.appendChild(style);
