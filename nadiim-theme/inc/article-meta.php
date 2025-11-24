@@ -114,7 +114,7 @@ function nadiim_article_author_box_callback( $post ) {
             'selected'         => $current_author_id,
             'include_selected' => true,
             'show_option_none' => '-- اختر كاتب --',
-            'who'              => 'authors',
+            'capability'       => array( 'edit_posts' ),
         ) );
         ?>
 
