@@ -233,6 +233,17 @@ function nadiim_enqueue_scripts() {
         $enhancements_css_version
     );
 
+    // تحميل ملف إصلاحات التوافق مع الهاتف
+    $responsive_fixes_file = NADIIM_THEME_DIR . '/assets/css/responsive-fixes.css';
+    $responsive_fixes_version = file_exists( $responsive_fixes_file ) ? filemtime( $responsive_fixes_file ) : NADIIM_VERSION;
+
+    wp_enqueue_style(
+        'nadiim-responsive-fixes',
+        NADIIM_THEME_URI . '/assets/css/responsive-fixes.css',
+        array( 'nadiim-main', 'nadiim-enhancements' ),
+        $responsive_fixes_version
+    );
+
     // تحميل ملف CSS للهيدر
     wp_enqueue_style(
         'nadiim-header',

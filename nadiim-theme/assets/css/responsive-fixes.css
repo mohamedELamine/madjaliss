@@ -1,0 +1,352 @@
+/**
+ * إصلاحات التوافق مع الهاتف - Responsive Fixes
+ *
+ * حل مشاكل overflow الأفقي والتوافق مع الشاشات الصغيرة
+ *
+ * @package Nadiim
+ * @since 1.0.0
+ */
+
+/* =================================================================
+   منع Overflow الأفقي على مستوى الصفحة
+   ================================================================= */
+
+html {
+    overflow-x: hidden;
+    width: 100%;
+}
+
+body {
+    overflow-x: hidden;
+    width: 100%;
+    position: relative;
+}
+
+/* =================================================================
+   إصلاح Container والعناصر الأساسية
+   ================================================================= */
+
+.container {
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+/* التأكد من أن جميع الصور responsive */
+img,
+picture,
+video,
+canvas,
+svg {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* =================================================================
+   إصلاح مشاكل Swiper
+   ================================================================= */
+
+.swiper,
+.swiper-wrapper,
+.swiper-container {
+    max-width: 100%;
+    overflow: hidden;
+}
+
+.swiper-slide {
+    max-width: 100%;
+}
+
+/* =================================================================
+   إصلاح Grid والعناصر المرنة
+   ================================================================= */
+
+.row,
+[class*="grid"],
+[class*="flex"] {
+    max-width: 100%;
+}
+
+/* =================================================================
+   إصلاح العناصر ذات العرض الثابت
+   ================================================================= */
+
+/* التأكد من عدم تجاوز أي عنصر لعرض الشاشة */
+* {
+    max-width: 100%;
+}
+
+/* استثناءات للعناصر التي تحتاج عرض محدد */
+html,
+body,
+.swiper-wrapper {
+    max-width: none;
+}
+
+/* =================================================================
+   Media Queries للهاتف
+   ================================================================= */
+
+/* الهواتف الكبيرة والتابلت الصغير */
+@media screen and (max-width: 768px) {
+
+    /* تقليل padding على الجوانب */
+    .container {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+
+    /* تقليل المسافات الكبيرة */
+    section {
+        padding-top: 32px;
+        padding-bottom: 32px;
+    }
+
+    /* إصلاح الجداول */
+    table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    /* إصلاح pre و code blocks */
+    pre,
+    code {
+        max-width: 100%;
+        overflow-x: auto;
+        word-wrap: break-word;
+        white-space: pre-wrap;
+    }
+
+    /* إصلاح العناوين الطويلة */
+    h1, h2, h3, h4, h5, h6 {
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        hyphens: auto;
+    }
+}
+
+/* الهواتف الصغيرة */
+@media screen and (max-width: 480px) {
+
+    /* تقليل padding أكثر */
+    .container {
+        padding-left: 12px;
+        padding-right: 12px;
+    }
+
+    /* تقليل أحجام الخطوط للعناوين الكبيرة */
+    h1 {
+        font-size: 28px;
+    }
+
+    h2 {
+        font-size: 24px;
+    }
+
+    h3 {
+        font-size: 20px;
+    }
+
+    /* إصلاح الأزرار */
+    .btn,
+    .button,
+    a.btn {
+        padding: 10px 20px;
+        font-size: 15px;
+    }
+}
+
+/* الهواتف الصغيرة جداً */
+@media screen and (max-width: 360px) {
+
+    .container {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    h1 {
+        font-size: 24px;
+    }
+
+    h2 {
+        font-size: 20px;
+    }
+}
+
+/* =================================================================
+   إصلاح مشاكل محددة لأقسام معينة
+   ================================================================= */
+
+/* إصلاح Hero Slider */
+@media screen and (max-width: 768px) {
+    .hero-slider-section,
+    .hero-swiper {
+        margin-left: 0;
+        margin-right: 0;
+        width: 100%;
+    }
+
+    .hero-slide-card {
+        border-radius: 12px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .hero-slide-card {
+        border-radius: 8px;
+    }
+}
+
+/* إصلاح قسم المراجعات */
+@media screen and (max-width: 768px) {
+    .reviews-section,
+    .review-card {
+        max-width: 100%;
+        overflow: hidden;
+    }
+
+    .reviews-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+}
+
+/* إصلاح قسم الحوارات */
+@media screen and (max-width: 768px) {
+    .featured-howarat-section,
+    .howarat-grid {
+        max-width: 100%;
+        overflow: hidden;
+    }
+
+    .howarat-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+}
+
+/* إصلاح Header على الموبايل */
+@media screen and (max-width: 768px) {
+    .site-header {
+        padding: 12px 0;
+    }
+
+    .header-inner {
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+
+    .main-navigation {
+        width: 100%;
+    }
+}
+
+/* إصلاح Footer */
+@media screen and (max-width: 768px) {
+    .site-footer {
+        padding: 32px 0;
+    }
+
+    .footer-widgets {
+        grid-template-columns: 1fr;
+        gap: 24px;
+    }
+}
+
+/* =================================================================
+   إصلاح المشاكل الشائعة
+   ================================================================= */
+
+/* منع النص من التمدد خارج الحاوية */
+p, li, td, div, span {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+/* إصلاح iframe و embed */
+iframe,
+embed,
+object {
+    max-width: 100%;
+}
+
+/* إصلاح WordPress embeds */
+.wp-block-embed,
+.wp-block-embed__wrapper {
+    max-width: 100%;
+}
+
+.wp-block-embed iframe {
+    max-width: 100%;
+    width: 100%;
+}
+
+/* =================================================================
+   إصلاح Flexbox على الموبايل
+   ================================================================= */
+
+@media screen and (max-width: 768px) {
+
+    /* تحويل flex إلى عمود على الموبايل */
+    .flex-row-mobile-column {
+        flex-direction: column;
+    }
+
+    /* السماح بالالتفاف */
+    .flex-wrap-mobile {
+        flex-wrap: wrap;
+    }
+}
+
+/* =================================================================
+   إصلاح مشاكل RTL على الموبايل
+   ================================================================= */
+
+@media screen and (max-width: 768px) {
+
+    /* التأكد من RTL صحيح */
+    body {
+        direction: rtl;
+        text-align: right;
+    }
+
+    /* إصلاح المسافات في RTL */
+    [dir="rtl"] .container {
+        padding-right: 16px;
+        padding-left: 16px;
+    }
+}
+
+/* =================================================================
+   Utilities للتحكم في العرض
+   ================================================================= */
+
+/* إخفاء على الموبايل */
+@media screen and (max-width: 768px) {
+    .hide-mobile {
+        display: none !important;
+    }
+}
+
+/* إظهار فقط على الموبايل */
+.show-mobile {
+    display: none !important;
+}
+
+@media screen and (max-width: 768px) {
+    .show-mobile {
+        display: block !important;
+    }
+}
+
+/* عرض كامل على الموبايل */
+@media screen and (max-width: 768px) {
+    .full-width-mobile {
+        width: 100% !important;
+        max-width: 100% !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
+}
