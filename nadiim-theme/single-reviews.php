@@ -5,8 +5,7 @@
  * تجربة المستخدم النهائية:
  * - يشاهد المستخدم صفحة احترافية وهادئة للمراجعة
  * - هيرو كامل بصورة الغلاف، العنوان، التقييم، والبيانات الأساسية
- * - يقرأ المحتوى الكامل مع عرض الإيجابيات والسلبيات
- * - يرى الحكم النهائي بشكل مميز
+ * - يقرأ المحتوى الكامل للمراجعة
  * - يجد رابط الشراء/المشاهدة
  * - يرى في الـsidebar مراجعات مشابهة وأحدث المراجعات
  *
@@ -29,9 +28,6 @@ while ( have_posts() ) :
 	$publisher     = get_post_meta( get_the_ID(), '_review_publisher', true );
 	$publish_year  = get_post_meta( get_the_ID(), '_review_publish_year', true );
 	$isbn          = get_post_meta( get_the_ID(), '_review_isbn', true );
-	$pros          = get_post_meta( get_the_ID(), '_review_pros', true );
-	$cons          = get_post_meta( get_the_ID(), '_review_cons', true );
-	$verdict       = get_post_meta( get_the_ID(), '_review_verdict', true );
 	$buy_link      = get_post_meta( get_the_ID(), '_review_buy_link', true );
 
 	// الحصول على نوع المراجعة
@@ -180,105 +176,6 @@ while ( have_posts() ) :
 					</div>
 				</div>
 
-				<!-- الإيجابيات والسلبيات -->
-				<?php if ( $pros || $cons ) : ?>
-					<div class="reviews-pros-cons-section">
-						<div class="pros-cons-grid">
-
-							<!-- الإيجابيات -->
-							<?php if ( $pros ) : ?>
-								<div class="pros-box">
-									<h3 class="pros-title">
-										<span class="pros-icon">✅</span>
-										<?php _e( 'الإيجابيات', 'nadiim' ); ?>
-									</h3>
-									<div class="pros-content">
-										<?php
-										$pros_list = explode( "\n", trim( $pros ) );
-										if ( ! empty( $pros_list ) ) {
-											echo '<ul class="pros-list">';
-											foreach ( $pros_list as $pro ) {
-												$pro = trim( $pro );
-												if ( ! empty( $pro ) ) {
-													echo '<li>' . esc_html( $pro ) . '</li>';
-												}
-											}
-											echo '</ul>';
-										}
-										?>
-									</div>
-								</div>
-							<?php endif; ?>
-
-							<!-- السلبيات -->
-							<?php if ( $cons ) : ?>
-								<div class="cons-box">
-									<h3 class="cons-title">
-										<span class="cons-icon">⚠️</span>
-										<?php _e( 'السلبيات', 'nadiim' ); ?>
-									</h3>
-									<div class="cons-content">
-										<?php
-										$cons_list = explode( "\n", trim( $cons ) );
-										if ( ! empty( $cons_list ) ) {
-											echo '<ul class="cons-list">';
-											foreach ( $cons_list as $con ) {
-												$con = trim( $con );
-												if ( ! empty( $con ) ) {
-													echo '<li>' . esc_html( $con ) . '</li>';
-												}
-											}
-											echo '</ul>';
-										}
-										?>
-									</div>
-								</div>
-							<?php endif; ?>
-
-						</div>
-					</div>
-				<?php endif; ?>
-
-				<!-- الحكم النهائي -->
-				<?php if ( $verdict ) : ?>
-					<div class="reviews-verdict-section">
-						<h2 class="verdict-title">
-							<span class="verdict-icon">⚖️</span>
-							<?php _e( 'الحكم النهائي', 'nadiim' ); ?>
-						</h2>
-						<div class="verdict-content">
-							<div class="verdict-rating">
-								<div class="verdict-stars">
-									<?php
-									for ( $i = 1; $i <= 5; $i++ ) {
-										echo $i <= $rating ? '<span class="star star-filled">★</span>' : '<span class="star star-empty">☆</span>';
-									}
-									?>
-								</div>
-								<div class="verdict-rating-text">
-									<?php
-									// تحديد وصف التقييم
-									$rating_labels = array(
-										5 => __( 'ممتاز - يستحق التجربة بشدة', 'nadiim' ),
-										4 => __( 'جيد جداً - يستحق التجربة', 'nadiim' ),
-										3 => __( 'جيد - خيار مقبول', 'nadiim' ),
-										2 => __( 'مقبول - له عيوب واضحة', 'nadiim' ),
-										1 => __( 'ضعيف - لا أنصح به', 'nadiim' ),
-									);
-									echo '<span class="rating-label">' . esc_html( $rating_labels[ $rating ] ) . '</span>';
-									?>
-								</div>
-							</div>
-							<div class="verdict-text">
-								<?php echo wpautop( esc_html( $verdict ) ); ?>
-							</div>
-						</div>
-					</div>
-				<?php endif; ?>
-
-				<!-- التصنيفات والوسوم -->
-				<?php
-				$categories = get_the_category();
 				$tags       = get_the_tags();
 				if ( $categories || $tags ) :
 				?>

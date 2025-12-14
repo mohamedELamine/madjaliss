@@ -39,9 +39,6 @@ function nadiim_review_meta_box_callback( $post ) {
     $publisher     = get_post_meta( $post->ID, '_review_publisher', true );
     $publish_year  = get_post_meta( $post->ID, '_review_publish_year', true );
     $isbn          = get_post_meta( $post->ID, '_review_isbn', true );
-    $pros          = get_post_meta( $post->ID, '_review_pros', true );
-    $cons          = get_post_meta( $post->ID, '_review_cons', true );
-    $verdict       = get_post_meta( $post->ID, '_review_verdict', true );
     $buy_link      = get_post_meta( $post->ID, '_review_buy_link', true );
     ?>
 
@@ -145,27 +142,6 @@ function nadiim_review_meta_box_callback( $post ) {
                    placeholder="<?php _e( 'مثال: 978-0-452-28423-4', 'nadiim' ); ?>" />
         </div>
 
-        <!-- الإيجابيات -->
-        <div class="review-meta-field">
-            <label for="review_pros"><?php _e( 'الإيجابيات', 'nadiim' ); ?></label>
-            <textarea name="review_pros" id="review_pros" rows="4"><?php echo esc_textarea( $pros ); ?></textarea>
-            <small><?php _e( 'اكتب كل نقطة في سطر منفصل', 'nadiim' ); ?></small>
-        </div>
-
-        <!-- السلبيات -->
-        <div class="review-meta-field">
-            <label for="review_cons"><?php _e( 'السلبيات', 'nadiim' ); ?></label>
-            <textarea name="review_cons" id="review_cons" rows="4"><?php echo esc_textarea( $cons ); ?></textarea>
-            <small><?php _e( 'اكتب كل نقطة في سطر منفصل', 'nadiim' ); ?></small>
-        </div>
-
-        <!-- الحكم النهائي -->
-        <div class="review-meta-field">
-            <label for="review_verdict"><?php _e( 'الحكم النهائي', 'nadiim' ); ?></label>
-            <textarea name="review_verdict" id="review_verdict" rows="3"><?php echo esc_textarea( $verdict ); ?></textarea>
-            <small><?php _e( 'ملخص قصير للحكم النهائي على العمل', 'nadiim' ); ?></small>
-        </div>
-
         <!-- رابط الشراء/المشاهدة -->
         <div class="review-meta-field">
             <label for="review_buy_link"><?php _e( 'رابط الشراء/المشاهدة', 'nadiim' ); ?></label>
@@ -234,9 +210,6 @@ function nadiim_save_review_meta( $post_id ) {
         'review_publisher'    => 'sanitize_text_field',
         'review_publish_year' => 'absint',
         'review_isbn'         => 'sanitize_text_field',
-        'review_pros'         => 'sanitize_textarea_field',
-        'review_cons'         => 'sanitize_textarea_field',
-        'review_verdict'      => 'sanitize_textarea_field',
         'review_buy_link'     => 'esc_url_raw',
     );
 
