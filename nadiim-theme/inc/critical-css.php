@@ -100,22 +100,24 @@ function nadiim_add_critical_css() {
             transition:color var(--transition-speed);
         }
 
-        /* Hero Section - Above the fold مع aspect ratio لمنع CLS */
+        /* Hero Section - Above the fold مع dimensions ثابتة لمنع CLS */
         .hero-slider,.hero-section{
             position:relative;
-            min-height:400px;
-            aspect-ratio:16/9;
+            width:100%;
+            height:450px;
+            max-height:60vh;
             background:#f5f5f5;
-            contain:layout style paint;
+            contain:layout style;
+            overflow:hidden;
         }
 
         /* تثبيت أبعاد الصور لمنع CLS */
         .hero-slider img,
         .featured-image img{
             width:100%;
-            height:auto;
-            aspect-ratio:16/9;
+            height:100%;
             object-fit:cover;
+            object-position:center;
         }
 
         /* المحتوى الأساسي */
@@ -168,17 +170,13 @@ function nadiim_add_critical_css() {
             .site-branding img{max-width:140px}
             .primary-menu{display:none}
             .mobile-menu-toggle{display:block}
-            .hero-slider,.hero-section{min-height:300px}
+            .hero-slider,.hero-section{height:350px;max-height:50vh}
             .container{padding:0 0.75rem}
         }
 
-        /* منع FOUT بشكل جزئي (فقط للعناصر النصية) */
-        .wf-loading h1,.wf-loading h2,.wf-loading h3{
-            visibility:hidden;
-        }
-        .wf-active h1,.wf-active h2,.wf-active h3,
-        .wf-inactive h1,.wf-inactive h2,.wf-inactive h3{
-            visibility:visible;
+        /* منع FOUT - استخدام font fallback بدلاً من إخفاء النص */
+        body{
+            font-family:var(--font-primary);
         }
 
         /* تحسين CLS للعناصر الديناميكية */
@@ -205,14 +203,34 @@ function nadiim_performance_resource_hints() {
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    <!-- Preload الخط الرئيسي فقط -->
+    <?php
+    // Preload لصورة Hero (LCP element) في الصفحة الرئيسية
+    if ( is_front_page() ) {
+        // الحصول على صورة Hero من Customizer
+        $hero_image = get_theme_mod( 'hero_slider_slide_1_image' );
+        if ( $hero_image ) {
+            echo '<link rel="preload" href="' . esc_url( $hero_image ) . '" as="image" fetchpriority="high">';
+        }
+    }
+
+    // Preload للصورة المميزة في المقالات
+    if ( is_singular() && has_post_thumbnail() ) {
+        $thumbnail_url = get_the_post_thumbnail_url( get_the_ID(), 'full' );
+        if ( $thumbnail_url ) {
+            echo '<link rel="preload" href="' . esc_url( $thumbnail_url ) . '" as="image" fetchpriority="high">';
+        }
+    }
+    ?>
+
+    <!-- Preload الخط الرئيسي woff2 -->
     <link rel="preload" href="https://fonts.gstatic.com/s/cairo/v28/SLXgc1nY6HkvangtZmpcWmhzfH5lkSs2.woff2" as="font" type="font/woff2" crossorigin>
     <?php
 }
 add_action( 'wp_head', 'nadiim_performance_resource_hints', 0 );
 
 /**
- * تحميل الخطوط بطريقة محسّنة - منع CLS
+ * تحميل الخطوط بطريقة محسّنة - منع حظر LCP
+ * استخدام font-display: swap لتسريع LCP
  */
 function nadiim_optimized_fonts_loading() {
     ?>
@@ -227,8 +245,11 @@ function nadiim_optimized_fonts_loading() {
         line-gap-override: 0%;
     }
     </style>
-    <!-- تحميل الخطوط بشكل متزامن للوزن الأساسي فقط -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400&display=swap">
+    <!-- تحميل الخطوط بشكل غير محظر (non-blocking) -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400&display=swap">
+    </noscript>
     <?php
 }
 add_action( 'wp_head', 'nadiim_optimized_fonts_loading', 2 );
