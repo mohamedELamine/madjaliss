@@ -884,6 +884,9 @@ require_once NADIIM_THEME_DIR . '/inc/critical-css.php';
 // تضمين نظام تحسين الصور
 require_once NADIIM_THEME_DIR . '/inc/image-optimization.php';
 
+// تضمين نظام Browser Caching
+require_once NADIIM_THEME_DIR . '/inc/browser-caching.php';
+
 /**
  * تحميل أصول صفحة الاتصال (CSS & JS)
  */

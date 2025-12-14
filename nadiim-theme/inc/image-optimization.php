@@ -33,21 +33,25 @@ function nadiim_add_responsive_image_sizes() {
 add_action( 'after_setup_theme', 'nadiim_add_responsive_image_sizes' );
 
 /**
- * تحسين جودة الصور (ضغط أفضل)
+ * تحسين جودة الصور (ضغط عدواني للأداء)
  */
 function nadiim_optimize_image_quality( $quality, $mime_type ) {
-    // تقليل الجودة قليلاً لتقليل حجم الملف مع الحفاظ على الجودة
+    // ضغط عدواني مع الحفاظ على جودة مقبولة
     switch ( $mime_type ) {
         case 'image/jpeg':
-            return 82; // بدلاً من 90 الافتراضية
+            return 75; // ضغط أكثر من 82 - توفير ~30-40%
         case 'image/webp':
-            return 85;
+            return 80; // ضغط WebP أكثر
+        case 'image/png':
+            return 80; // ضغط PNG
         default:
             return $quality;
     }
 }
 add_filter( 'wp_editor_set_quality', 'nadiim_optimize_image_quality', 10, 2 );
 add_filter( 'jpeg_quality', 'nadiim_optimize_image_quality', 10, 2 );
+add_filter( 'png_quality', 'nadiim_optimize_image_quality', 10, 2 );
+add_filter( 'webp_quality', 'nadiim_optimize_image_quality', 10, 2 );
 
 /**
  * إضافة srcset للصور responsive

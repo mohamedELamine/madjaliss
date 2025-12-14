@@ -59,7 +59,6 @@ function nadiim_add_critical_css() {
             position:sticky;
             top:0;
             z-index:999;
-            will-change:transform;
         }
 
         .header-container{
@@ -229,8 +228,7 @@ function nadiim_performance_resource_hints() {
 add_action( 'wp_head', 'nadiim_performance_resource_hints', 0 );
 
 /**
- * تحميل الخطوط بطريقة محسّنة - منع حظر LCP
- * استخدام font-display: swap لتسريع LCP
+ * تحميل الخطوط بطريقة محسّنة - استخدام font-display: optional
  */
 function nadiim_optimized_fonts_loading() {
     ?>
@@ -238,34 +236,34 @@ function nadiim_optimized_fonts_loading() {
     /* Fallback font لمنع Layout Shift */
     @font-face {
         font-family: 'Cairo Fallback';
-        src: local('Arial');
+        src: local('Arial'), local('Helvetica');
         size-adjust: 105%;
         ascent-override: 95%;
         descent-override: 25%;
         line-gap-override: 0%;
     }
     </style>
-    <!-- تحميل الخطوط بشكل غير محظر (non-blocking) -->
-    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <!-- تحميل الخطوط مع font-display: optional لأقصى سرعة -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400&display=optional" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400&display=swap">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400&display=optional">
     </noscript>
     <?php
 }
 add_action( 'wp_head', 'nadiim_optimized_fonts_loading', 2 );
 
 /**
- * تحميل أوزان الخطوط الإضافية بشكل مؤجل
+ * تحميل أوزان الخطوط الإضافية بشكل مؤجل جداً
  */
 function nadiim_load_additional_font_weights() {
     ?>
-    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Cairo:wght@600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Cairo:wght@600;700&display=optional" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@600;700&display=swap">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@600;700&display=optional">
     </noscript>
     <?php
 }
-add_action( 'wp_head', 'nadiim_load_additional_font_weights', 3 );
+add_action( 'wp_footer', 'nadiim_load_additional_font_weights', 1 ); // نقلناها للفوتر!
 
 /**
  * تأجيل تحميل CSS غير الحرج فقط
@@ -346,37 +344,34 @@ function nadiim_remove_unused_assets() {
 add_action( 'init', 'nadiim_remove_unused_assets' );
 
 /**
- * تحسين الحركات لتجنب Layout Shift
- * استخدام محدود لـ will-change لتقليل الحركات المركبة
+ * تحسين الحركات - تقليل عدواني للحركات المركبة
  */
 function nadiim_optimize_animations_css() {
     ?>
     <style id="nadiim-animations-optimized">
-        /* استخدام GPU acceleration فقط للعناصر التي تتحرك فعلاً */
+        /* استخدام GPU acceleration فقط للـ slider */
         .hero-slider .slide {
             transform: translateZ(0);
             backface-visibility: hidden;
         }
 
-        /* إضافة will-change فقط عند الحاجة (hover/active) */
-        .card:hover,
-        .mobile-menu.active,
-        .search-modal.active {
-            will-change: transform;
-        }
+        /* إزالة will-change من جميع العناصر */
+        /* نضيفها فقط عند الحاجة الحقيقية */
 
-        /* استخدام transform بدلاً من top/left/margin */
-        .slide-animation,
+        /* استخدام transitions خفيفة جداً */
+        .card,
         .modal,
-        .dropdown-menu {
-            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease;
-            backface-visibility: hidden;
+        .dropdown-menu,
+        .mobile-menu {
+            transition: opacity 0.2s ease;
+            /* لا transform ولا will-change */
         }
 
         /* منع Forced Synchronous Layout */
         .hero-slider,
         .card-grid {
-            contain: layout style;
+            contain: layout;
+            /* إزالة style من contain */
         }
 
         /* تحسين الحركات للعناصر المتحركة */
