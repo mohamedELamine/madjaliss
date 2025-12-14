@@ -140,6 +140,32 @@
 }
 
 /* ─────────────────────────────────────
+   التقييم بالنجوم (للمراجعات)
+   ───────────────────────────────────── */
+
+.slide-rating {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin: 12px 0 16px 0;
+}
+
+.slide-rating .star-icon {
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+}
+
+.slide-rating .star-filled {
+    color: #fbbf24;
+}
+
+.slide-rating .star-empty {
+    color: rgba(255, 255, 255, 0.3);
+}
+
+/* ─────────────────────────────────────
    زر CTA (شفاف)
    ───────────────────────────────────── */
 

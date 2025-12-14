@@ -33,6 +33,14 @@ switch ( $hero_source ) {
         $slides = nadiim_get_hero_slides_from_posts( 'howarat', $hero_count );
         break;
 
+    case 'reviews':
+        $slides = nadiim_get_hero_slides_from_posts( 'reviews', $hero_count );
+        break;
+
+    case 'mixed':
+        $slides = nadiim_get_hero_slides_mixed();
+        break;
+
     case 'manual':
         $slides = nadiim_get_hero_slides_manual();
         break;
@@ -117,16 +125,17 @@ function nadiim_get_hero_slides_from_posts( $post_type = 'post', $count = 5, $ta
     if ( $query->have_posts() ) {
         while ( $query->have_posts() ) {
             $query->the_post();
+            $post_id = get_the_ID();
 
             // الحصول على الصورة المميزة
-            $image_url = get_the_post_thumbnail_url( get_the_ID(), 'full' );
+            $image_url = get_the_post_thumbnail_url( $post_id, 'full' );
             if ( ! $image_url ) {
                 $image_url = get_template_directory_uri() . '/assets/images/placeholder.jpg';
             }
 
             // معلومات إضافية
-            $has_audio = get_post_meta( get_the_ID(), 'has_audio', true ) ? true : false;
-            $read_time = get_post_meta( get_the_ID(), 'reading_time_manual', true );
+            $has_audio = get_post_meta( $post_id, 'has_audio', true ) ? true : false;
+            $read_time = get_post_meta( $post_id, 'reading_time_manual', true );
             if ( empty( $read_time ) ) {
                 // حساب وقت القراءة التقريبي
                 $content    = get_the_content();
@@ -135,26 +144,96 @@ function nadiim_get_hero_slides_from_posts( $post_type = 'post', $count = 5, $ta
                 $read_time  = sprintf( _n( '%s دقيقة', '%s دقائق', $minutes, 'nadiim' ), number_format_i18n( $minutes ) );
             }
 
+            // معلومات خاصة بالمراجعات
+            $rating = null;
+            if ( $post_type === 'reviews' ) {
+                $rating = get_post_meta( $post_id, 'review_rating', true );
+                $rating = $rating ? absint( $rating ) : null;
+            }
+
             // بناء مصفوفة الشريحة
-            $slides[] = array(
+            $slide_data = array(
                 'title'           => get_the_title(),
                 'excerpt'         => wp_trim_words( get_the_excerpt(), 25, '...' ),
                 'image'           => $image_url,
                 'bg_enable'       => false, // يمكن تخصيصه لاحقاً
                 'overlay_opacity' => get_theme_mod( 'hero_overlay_default_opacity', 0.35 ),
-                'cta_text'        => __( 'اقرأ المزيد', 'nadiim' ),
+                'cta_text'        => nadiim_get_hero_cta_text( $post_type ),
                 'cta_link'        => get_permalink(),
                 'cta_target'      => '_self',
                 'has_audio'       => $has_audio,
                 'read_time'       => $read_time,
                 'author_name'     => get_the_author(),
                 'type'            => $post_type,
+                'post_date'       => get_the_date( 'U' ), // Timestamp للترتيب
             );
+
+            // إضافة التقييم للمراجعات
+            if ( $rating ) {
+                $slide_data['rating'] = $rating;
+            }
+
+            $slides[] = $slide_data;
         }
         wp_reset_postdata();
     }
 
     return $slides;
+}
+
+/**
+ * دالة للحصول على نص CTA حسب نوع المحتوى
+ */
+function nadiim_get_hero_cta_text( $post_type ) {
+    $cta_texts = array(
+        'post'    => __( 'اقرأ المزيد', 'nadiim' ),
+        'howarat' => __( 'شاهد الحوار', 'nadiim' ),
+        'reviews' => __( 'اقرأ المراجعة', 'nadiim' ),
+    );
+
+    return isset( $cta_texts[ $post_type ] ) ? $cta_texts[ $post_type ] : __( 'اقرأ المزيد', 'nadiim' );
+}
+
+/**
+ * دالة للحصول على شرائح مختلطة (مقالات + حوارات + مراجعات)
+ */
+function nadiim_get_hero_slides_mixed() {
+    $posts_count    = get_theme_mod( 'hero_mixed_posts_count', 2 );
+    $howarat_count  = get_theme_mod( 'hero_mixed_howarat_count', 2 );
+    $reviews_count  = get_theme_mod( 'hero_mixed_reviews_count', 1 );
+    $order_type     = get_theme_mod( 'hero_mixed_order', 'date' );
+
+    $all_slides = array();
+
+    // جلب المقالات
+    if ( $posts_count > 0 ) {
+        $posts_slides = nadiim_get_hero_slides_from_posts( 'post', $posts_count );
+        $all_slides = array_merge( $all_slides, $posts_slides );
+    }
+
+    // جلب الحوارات
+    if ( $howarat_count > 0 ) {
+        $howarat_slides = nadiim_get_hero_slides_from_posts( 'howarat', $howarat_count );
+        $all_slides = array_merge( $all_slides, $howarat_slides );
+    }
+
+    // جلب المراجعات
+    if ( $reviews_count > 0 ) {
+        $reviews_slides = nadiim_get_hero_slides_from_posts( 'reviews', $reviews_count );
+        $all_slides = array_merge( $all_slides, $reviews_slides );
+    }
+
+    // ترتيب الشرائح
+    if ( $order_type === 'random' ) {
+        shuffle( $all_slides );
+    } elseif ( $order_type === 'date' ) {
+        // ترتيب حسب التاريخ (الأحدث أولاً)
+        usort( $all_slides, function( $a, $b ) {
+            return $b['post_date'] - $a['post_date'];
+        });
+    }
+
+    return $all_slides;
 }
 
 /**

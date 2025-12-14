@@ -58,6 +58,8 @@ function nadiim_hero_customizer_register( $wp_customize ) {
             'latest_posts' => __( 'أحدث المقالات', 'nadiim' ),
             'featured_tag' => __( 'مقالات مميزة (بتاج)', 'nadiim' ),
             'howarat'      => __( 'الحوارات', 'nadiim' ),
+            'reviews'      => __( 'المراجعات', 'nadiim' ),
+            'mixed'        => __( 'مختلط (مقالات + حوارات + مراجعات)', 'nadiim' ),
             'manual'       => __( 'يدوي (JSON)', 'nadiim' ),
         ),
     ) );
@@ -94,7 +96,94 @@ function nadiim_hero_customizer_register( $wp_customize ) {
             'step' => 1,
         ),
         'active_callback' => function() {
-            return get_theme_mod( 'hero_source', 'latest_posts' ) !== 'manual';
+            $source = get_theme_mod( 'hero_source', 'latest_posts' );
+            return $source !== 'manual' && $source !== 'mixed';
+        },
+    ) );
+
+    // ─────────────────────────────────────
+    // إعدادات المحتوى المختلط (Mixed)
+    // ─────────────────────────────────────
+
+    // عدد المقالات في المختلط
+    $wp_customize->add_setting( 'hero_mixed_posts_count', array(
+        'default'           => 2,
+        'sanitize_callback' => 'absint',
+    ) );
+
+    $wp_customize->add_control( 'hero_mixed_posts_count', array(
+        'label'       => __( 'عدد المقالات', 'nadiim' ),
+        'description' => __( 'عدد المقالات التي ستظهر في السلايدر', 'nadiim' ),
+        'section'     => 'nadiim_hero_slider',
+        'type'        => 'number',
+        'input_attrs' => array(
+            'min'  => 0,
+            'max'  => 10,
+            'step' => 1,
+        ),
+        'active_callback' => function() {
+            return get_theme_mod( 'hero_source', 'latest_posts' ) === 'mixed';
+        },
+    ) );
+
+    // عدد الحوارات في المختلط
+    $wp_customize->add_setting( 'hero_mixed_howarat_count', array(
+        'default'           => 2,
+        'sanitize_callback' => 'absint',
+    ) );
+
+    $wp_customize->add_control( 'hero_mixed_howarat_count', array(
+        'label'       => __( 'عدد الحوارات', 'nadiim' ),
+        'description' => __( 'عدد الحوارات التي ستظهر في السلايدر', 'nadiim' ),
+        'section'     => 'nadiim_hero_slider',
+        'type'        => 'number',
+        'input_attrs' => array(
+            'min'  => 0,
+            'max'  => 10,
+            'step' => 1,
+        ),
+        'active_callback' => function() {
+            return get_theme_mod( 'hero_source', 'latest_posts' ) === 'mixed';
+        },
+    ) );
+
+    // عدد المراجعات في المختلط
+    $wp_customize->add_setting( 'hero_mixed_reviews_count', array(
+        'default'           => 1,
+        'sanitize_callback' => 'absint',
+    ) );
+
+    $wp_customize->add_control( 'hero_mixed_reviews_count', array(
+        'label'       => __( 'عدد المراجعات', 'nadiim' ),
+        'description' => __( 'عدد المراجعات التي ستظهر في السلايدر', 'nadiim' ),
+        'section'     => 'nadiim_hero_slider',
+        'type'        => 'number',
+        'input_attrs' => array(
+            'min'  => 0,
+            'max'  => 10,
+            'step' => 1,
+        ),
+        'active_callback' => function() {
+            return get_theme_mod( 'hero_source', 'latest_posts' ) === 'mixed';
+        },
+    ) );
+
+    // طريقة الترتيب في المختلط
+    $wp_customize->add_setting( 'hero_mixed_order', array(
+        'default'           => 'date',
+        'sanitize_callback' => 'sanitize_text_field',
+    ) );
+
+    $wp_customize->add_control( 'hero_mixed_order', array(
+        'label'   => __( 'طريقة الترتيب', 'nadiim' ),
+        'section' => 'nadiim_hero_slider',
+        'type'    => 'select',
+        'choices' => array(
+            'date'   => __( 'حسب التاريخ (الأحدث أولاً)', 'nadiim' ),
+            'random' => __( 'عشوائي', 'nadiim' ),
+        ),
+        'active_callback' => function() {
+            return get_theme_mod( 'hero_source', 'latest_posts' ) === 'mixed';
         },
     ) );
 
