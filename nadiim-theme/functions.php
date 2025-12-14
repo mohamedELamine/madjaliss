@@ -163,9 +163,10 @@ add_action( 'widgets_init', 'nadiim_widgets_init' );
 
 /**
  * تحميل الأصول (CSS & JS)
+ * محسّن للأداء مع versioning ديناميكي
  */
 function nadiim_enqueue_scripts() {
-    // تحميل خط Cairo من Google Fonts
+    // تحميل خط Cairo من Google Fonts مع preconnect للأداء
     wp_enqueue_style(
         'nadiim-google-fonts',
         'https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap',
@@ -181,6 +182,16 @@ function nadiim_enqueue_scripts() {
         '6.5.1'
     );
 
+    // استخدام filemtime للـ versioning الديناميكي
+    $main_css_file = NADIIM_THEME_DIR . '/assets/css/main.css';
+    $main_css_version = file_exists( $main_css_file ) ? filemtime( $main_css_file ) : NADIIM_VERSION;
+
+    $header_css_file = NADIIM_THEME_DIR . '/assets/css/header.css';
+    $header_css_version = file_exists( $header_css_file ) ? filemtime( $header_css_file ) : NADIIM_VERSION;
+
+    $enhancements_css_file = NADIIM_THEME_DIR . '/assets/css/enhancements.css';
+    $enhancements_css_version = file_exists( $enhancements_css_file ) ? filemtime( $enhancements_css_file ) : NADIIM_VERSION;
+
     // تحميل ملف CSS الرئيسي
     wp_enqueue_style(
         'nadiim-style',
@@ -194,7 +205,7 @@ function nadiim_enqueue_scripts() {
         'nadiim-main',
         NADIIM_THEME_URI . '/assets/css/main.css',
         array( 'nadiim-style' ),
-        NADIIM_VERSION
+        $main_css_version
     );
 
     // تحميل ملف التحسينات الجمالية
@@ -202,7 +213,7 @@ function nadiim_enqueue_scripts() {
         'nadiim-enhancements',
         NADIIM_THEME_URI . '/assets/css/enhancements.css',
         array( 'nadiim-main' ),
-        NADIIM_VERSION
+        $enhancements_css_version
     );
 
     // تحميل ملف CSS للهيدر
@@ -210,15 +221,22 @@ function nadiim_enqueue_scripts() {
         'nadiim-header',
         NADIIM_THEME_URI . '/assets/css/header.css',
         array( 'nadiim-main' ),
-        NADIIM_VERSION
+        $header_css_version
     );
+
+    // استخدام filemtime للـ JavaScript أيضاً
+    $main_js_file = NADIIM_THEME_DIR . '/assets/js/main.js';
+    $main_js_version = file_exists( $main_js_file ) ? filemtime( $main_js_file ) : NADIIM_VERSION;
+
+    $header_js_file = NADIIM_THEME_DIR . '/assets/js/header.js';
+    $header_js_version = file_exists( $header_js_file ) ? filemtime( $header_js_file ) : NADIIM_VERSION;
 
     // تحميل JavaScript الرئيسي
     wp_enqueue_script(
         'nadiim-main',
         NADIIM_THEME_URI . '/assets/js/main.js',
         array( 'jquery' ),
-        NADIIM_VERSION,
+        $main_js_version,
         true
     );
 
@@ -227,7 +245,7 @@ function nadiim_enqueue_scripts() {
         'nadiim-header',
         NADIIM_THEME_URI . '/assets/js/header.js',
         array(),
-        NADIIM_VERSION,
+        $header_js_version,
         true
     );
 
@@ -247,6 +265,24 @@ function nadiim_enqueue_scripts() {
     }
 }
 add_action( 'wp_enqueue_scripts', 'nadiim_enqueue_scripts' );
+
+/**
+ * إضافة preconnect للـ Google Fonts للأداء
+ */
+function nadiim_resource_hints( $urls, $relation_type ) {
+    if ( 'preconnect' === $relation_type ) {
+        $urls[] = array(
+            'href' => 'https://fonts.googleapis.com',
+            'crossorigin',
+        );
+        $urls[] = array(
+            'href' => 'https://fonts.gstatic.com',
+            'crossorigin',
+        );
+    }
+    return $urls;
+}
+add_filter( 'wp_resource_hints', 'nadiim_resource_hints', 10, 2 );
 
 /**
  * تحميل ملفات CSS و JS للمحرر
@@ -346,26 +382,71 @@ require_once NADIIM_THEME_DIR . '/inc/home-enqueue.php';
 
 /**
  * دالة مساعدة للحصول على مقتطف مخصص
+ * محسّنة مع معالجة أخطاء ودعم أفضل للنصوص العربية
+ *
+ * @param int         $length  عدد الأحرف المطلوبة (افتراضي: 150)
+ * @param int|null    $post_id معرّف المنشور (افتراضي: المنشور الحالي)
+ * @return string المقتطف المنسّق
  */
-function nadiim_get_excerpt( $length = 30, $post_id = null ) {
-    $post_id = $post_id ?: get_the_ID();
-    $excerpt = get_the_excerpt( $post_id );
+function nadiim_get_excerpt( $length = 150, $post_id = null ) {
+    try {
+        // الحصول على معرّف المنشور
+        $post_id = $post_id ?: get_the_ID();
 
-    if ( empty( $excerpt ) ) {
-        $excerpt = get_the_content( null, false, $post_id );
-        $excerpt = strip_shortcodes( $excerpt );
-        $excerpt = wp_strip_all_tags( $excerpt );
+        if ( ! $post_id ) {
+            return '';
+        }
+
+        // التحقق من وجود المنشور
+        $post = get_post( $post_id );
+        if ( ! $post ) {
+            return '';
+        }
+
+        // محاولة الحصول على المقتطف أولاً
+        $excerpt = get_the_excerpt( $post_id );
+
+        // إذا لم يكن هناك مقتطف، استخدم المحتوى
+        if ( empty( $excerpt ) ) {
+            $excerpt = $post->post_content;
+            $excerpt = strip_shortcodes( $excerpt );
+            $excerpt = wp_strip_all_tags( $excerpt );
+        }
+
+        // تنظيف المحتوى
+        $excerpt = trim( preg_replace( '/\s+/', ' ', $excerpt ) );
+
+        // التعامل مع النصوص العربية بشكل صحيح
+        if ( function_exists( 'mb_strlen' ) && mb_strlen( $excerpt ) > $length ) {
+            // استخدام mb_substr للتعامل مع النصوص متعددة البايت
+            $excerpt = mb_substr( $excerpt, 0, $length );
+
+            // البحث عن آخر مسافة لعدم قطع الكلمات
+            $last_space = mb_strrpos( $excerpt, ' ' );
+            if ( $last_space !== false && $last_space > $length * 0.8 ) {
+                $excerpt = mb_substr( $excerpt, 0, $last_space );
+            }
+
+            $excerpt .= '...';
+        } elseif ( strlen( $excerpt ) > $length ) {
+            // Fallback للـ substr العادية
+            $excerpt = substr( $excerpt, 0, $length );
+            $last_space = strrpos( $excerpt, ' ' );
+            if ( $last_space !== false && $last_space > $length * 0.8 ) {
+                $excerpt = substr( $excerpt, 0, $last_space );
+            }
+            $excerpt .= '...';
+        }
+
+        return $excerpt;
+
+    } catch ( Exception $e ) {
+        // تسجيل الخطأ في وضع التطوير
+        if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
+            error_log( 'Nadiim Theme - Error in nadiim_get_excerpt(): ' . $e->getMessage() );
+        }
+        return '';
     }
-
-    if ( str_word_count( $excerpt ) > $length ) {
-        $words = str_word_count( $excerpt, 2, 'ءآأؤإئابةتثجحخدذرزسشصضطظعغفقكلمنهوىيٱٲٳٴٵٶٷٸٹٺٻټٽپٿڀځڂڃڄڅچڇڈډڊڋڌڍڎڏڐڑڒړڔڕږڗژڙښڛڜڝڞڟڠڡڢڣڤڥڦڧڨکڪګڬڭڮگڰڱڲڳڴڵڶڷڸڹںڻڼڽھڿۀہۂۃۄۅۆۇۈۉۊۋیۍێۏېۑےۓ۔ەۖۗۘۙۚۛۜ۝۞ۣ۟۠ۡۢۤۥۦۧۨ۩۪ۭ۫۬ۮۯ۰۱۲۳۴۵۶۷۸۹ۺۻۼ۽۾ۿ' );
-        $words = array_slice( $words, 0, $length, true );
-        end( $words );
-        $position = key( $words ) + strlen( current( $words ) );
-        $excerpt = substr( $excerpt, 0, $position ) . '...';
-    }
-
-    return $excerpt;
 }
 
 /**
@@ -791,24 +872,45 @@ add_action( 'admin_enqueue_scripts', 'nadiim_contact_admin_enqueue_assets' );
 
 /**
  * AJAX Handler لتحديث حالة الاستفسار
+ * محسّن للأمان والأداء
  */
 function nadiim_update_inquiry_status_ajax() {
-	check_ajax_referer( 'nadiim-nonce', 'nonce' );
+	// تحسين nonce verification مع معالجة خطأ واضحة
+	if ( ! check_ajax_referer( 'nadiim-nonce', 'nonce', false ) ) {
+		wp_send_json_error( array( 'message' => 'Invalid nonce' ), 403 );
+	}
 
+	// تحسين capability check
 	if ( ! current_user_can( 'edit_posts' ) ) {
-		wp_send_json_error( array( 'message' => 'Unauthorized' ) );
+		wp_send_json_error( array( 'message' => 'Unauthorized' ), 403 );
 	}
 
-	$post_id = isset( $_POST['post_id'] ) ? intval( $_POST['post_id'] ) : 0;
-	$status = isset( $_POST['status'] ) ? sanitize_text_field( $_POST['status'] ) : '';
+	// تحسين validation و sanitization
+	$post_id = isset( $_POST['post_id'] ) ? absint( $_POST['post_id'] ) : 0;
+	$status  = isset( $_POST['status'] ) ? sanitize_key( $_POST['status'] ) : '';
 
-	if ( ! $post_id || ! in_array( $status, array( 'new', 'seen', 'responded' ) ) ) {
-		wp_send_json_error( array( 'message' => 'Invalid parameters' ) );
+	// التحقق من وجود المنشور والتأكد من نوعه
+	if ( ! $post_id || get_post_type( $post_id ) !== 'inquiries' ) {
+		wp_send_json_error( array( 'message' => 'Invalid post' ), 400 );
 	}
 
-	update_post_meta( $post_id, '_inquiry_status', $status );
+	// استخدام strict comparison للأمان
+	$allowed_statuses = array( 'new', 'seen', 'responded' );
+	if ( ! in_array( $status, $allowed_statuses, true ) ) {
+		wp_send_json_error( array( 'message' => 'Invalid status' ), 400 );
+	}
 
-	wp_send_json_success( array( 'message' => 'Status updated', 'status' => $status ) );
+	// تحديث الحالة
+	$updated = update_post_meta( $post_id, '_inquiry_status', $status );
+
+	if ( $updated === false ) {
+		wp_send_json_error( array( 'message' => 'Failed to update status' ), 500 );
+	}
+
+	wp_send_json_success( array(
+		'message' => 'Status updated successfully',
+		'status'  => $status,
+	) );
 }
 add_action( 'wp_ajax_nadiim_update_inquiry_status', 'nadiim_update_inquiry_status_ajax' );
 

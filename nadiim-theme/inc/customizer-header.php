@@ -516,6 +516,7 @@ add_action( 'wp_head', 'nadiim_header_customizer_css', 999 );
 
 /**
  * دالة مساعدة للحصول على محتوى التوب بار الديناميكي
+ * محسّنة مع caching للأداء
  */
 function nadiim_get_topbar_dynamic_content() {
     if ( ! get_theme_mod( 'topbar_dynamic_enable', false ) ) {
@@ -526,11 +527,28 @@ function nadiim_get_topbar_dynamic_content() {
     $tag       = get_theme_mod( 'topbar_dynamic_tag', '' );
     $limit     = get_theme_mod( 'topbar_dynamic_limit', 1 );
 
+    // إنشاء cache key فريد بناءً على الإعدادات
+    $cache_key = 'nadiim_topbar_dynamic_' . md5( serialize( array(
+        'post_type' => $post_type,
+        'tag'       => $tag,
+        'limit'     => $limit,
+    ) ) );
+
+    // محاولة الحصول على المحتوى من الـ cache
+    $cached_content = get_transient( $cache_key );
+    if ( false !== $cached_content ) {
+        return $cached_content;
+    }
+
+    // بناء query محسّن للأداء
     $args = array(
-        'post_type'      => $post_type,
-        'posts_per_page' => $limit,
-        'orderby'        => 'date',
-        'order'          => 'DESC',
+        'post_type'              => $post_type,
+        'posts_per_page'         => $limit,
+        'orderby'                => 'date',
+        'order'                  => 'DESC',
+        'no_found_rows'          => true,  // تحسين الأداء
+        'update_post_meta_cache' => false, // تحسين الأداء
+        'update_post_term_cache' => ! empty( $tag ), // فقط إذا كان هناك tag
     );
 
     // إضافة فلتر التاج إن وجد
@@ -541,7 +559,10 @@ function nadiim_get_topbar_dynamic_content() {
     $query = new WP_Query( $args );
 
     if ( ! $query->have_posts() ) {
-        return __( 'لا توجد عناصر للعرض', 'nadiim' );
+        $empty_message = __( 'لا توجد عناصر للعرض', 'nadiim' );
+        // حفظ الرسالة الفارغة في cache لمدة دقيقة واحدة
+        set_transient( $cache_key, $empty_message, MINUTE_IN_SECONDS );
+        return $empty_message;
     }
 
     $output = '';
@@ -555,6 +576,9 @@ function nadiim_get_topbar_dynamic_content() {
         }
     }
     wp_reset_postdata();
+
+    // حفظ في cache لمدة 5 دقائق
+    set_transient( $cache_key, $output, 5 * MINUTE_IN_SECONDS );
 
     return $output;
 }
@@ -576,3 +600,17 @@ function nadiim_get_topbar_icon() {
 
     return isset( $icons[ $icon ] ) ? $icons[ $icon ] : '';
 }
+
+/**
+ * حذف cache التوب بار عند نشر أو تحديث منشور
+ */
+function nadiim_clear_topbar_cache() {
+    global $wpdb;
+    $wpdb->query(
+        "DELETE FROM {$wpdb->options}
+         WHERE option_name LIKE '_transient_nadiim_topbar_dynamic_%'
+            OR option_name LIKE '_transient_timeout_nadiim_topbar_dynamic_%'"
+    );
+}
+add_action( 'save_post', 'nadiim_clear_topbar_cache' );
+add_action( 'delete_post', 'nadiim_clear_topbar_cache' );

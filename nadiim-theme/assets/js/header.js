@@ -113,15 +113,61 @@
 
     /**
      * تفعيل نافذة البحث المنبثقة
+     * محسّن مع focus trap للوصولية
      */
     function initSearchModal() {
         const searchToggle = document.querySelector('.search-toggle');
         const searchModal = document.getElementById('search-modal');
         const searchClose = document.querySelector('.search-close');
         const searchOverlay = document.querySelector('.search-modal-overlay');
+        const searchField = searchModal ? searchModal.querySelector('.search-field') : null;
 
         if (!searchToggle || !searchModal) {
             return;
+        }
+
+        // الحصول على جميع العناصر القابلة للتركيز في Modal
+        const getFocusableElements = function() {
+            const focusableSelectors = [
+                'button:not([disabled])',
+                '[href]',
+                'input:not([disabled])',
+                'select:not([disabled])',
+                'textarea:not([disabled])',
+                '[tabindex]:not([tabindex="-1"])'
+            ];
+            return searchModal.querySelectorAll(focusableSelectors.join(', '));
+        };
+
+        // دالة focus trap
+        let previousActiveElement = null;
+
+        function trapFocus(event) {
+            if (event.key !== 'Tab') {
+                return;
+            }
+
+            const focusableElements = getFocusableElements();
+            if (focusableElements.length === 0) {
+                return;
+            }
+
+            const firstFocusable = focusableElements[0];
+            const lastFocusable = focusableElements[focusableElements.length - 1];
+
+            if (event.shiftKey) {
+                // Shift + Tab
+                if (document.activeElement === firstFocusable) {
+                    lastFocusable.focus();
+                    event.preventDefault();
+                }
+            } else {
+                // Tab
+                if (document.activeElement === lastFocusable) {
+                    firstFocusable.focus();
+                    event.preventDefault();
+                }
+            }
         }
 
         // فتح نافذة البحث
@@ -151,13 +197,18 @@
         });
 
         function openSearchModal() {
+            // حفظ العنصر النشط قبل فتح Modal
+            previousActiveElement = document.activeElement;
+
             searchModal.classList.add('is-active');
             searchToggle.setAttribute('aria-expanded', 'true');
             document.body.style.overflow = 'hidden';
 
+            // تفعيل focus trap
+            searchModal.addEventListener('keydown', trapFocus);
+
             // التركيز على حقل البحث
             setTimeout(function() {
-                const searchField = searchModal.querySelector('.search-field');
                 if (searchField) {
                     searchField.focus();
                 }
@@ -168,6 +219,15 @@
             searchModal.classList.remove('is-active');
             searchToggle.setAttribute('aria-expanded', 'false');
             document.body.style.overflow = '';
+
+            // إزالة focus trap
+            searchModal.removeEventListener('keydown', trapFocus);
+
+            // إرجاع التركيز للعنصر السابق
+            if (previousActiveElement) {
+                previousActiveElement.focus();
+                previousActiveElement = null;
+            }
         }
     }
 
