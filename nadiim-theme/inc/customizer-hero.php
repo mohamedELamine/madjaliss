@@ -55,12 +55,13 @@ function nadiim_hero_customizer_register( $wp_customize ) {
         'section' => 'nadiim_hero_slider',
         'type'    => 'select',
         'choices' => array(
-            'latest_posts' => __( 'أحدث المقالات', 'nadiim' ),
-            'featured_tag' => __( 'مقالات مميزة (بتاج)', 'nadiim' ),
-            'howarat'      => __( 'الحوارات', 'nadiim' ),
-            'reviews'      => __( 'المراجعات', 'nadiim' ),
-            'mixed'        => __( 'مختلط (مقالات + حوارات + مراجعات)', 'nadiim' ),
-            'manual'       => __( 'يدوي (JSON)', 'nadiim' ),
+            'latest_posts'     => __( 'أحدث المقالات', 'nadiim' ),
+            'featured_tag'     => __( 'مقالات مميزة (بتاج)', 'nadiim' ),
+            'howarat'          => __( 'الحوارات', 'nadiim' ),
+            'reviews'          => __( 'المراجعات', 'nadiim' ),
+            'mixed'            => __( 'مختلط (مقالات + حوارات + مراجعات)', 'nadiim' ),
+            'manual_selection' => __( 'اختيار يدوي (اختر منشورات محددة)', 'nadiim' ),
+            'manual'           => __( 'يدوي متقدم (JSON)', 'nadiim' ),
         ),
     ) );
 
@@ -184,6 +185,78 @@ function nadiim_hero_customizer_register( $wp_customize ) {
         ),
         'active_callback' => function() {
             return get_theme_mod( 'hero_source', 'latest_posts' ) === 'mixed';
+        },
+    ) );
+
+    // ─────────────────────────────────────
+    // إعدادات الاختيار اليدوي (Manual Selection)
+    // ─────────────────────────────────────
+
+    // IDs المقالات المحددة
+    $wp_customize->add_setting( 'hero_manual_post_ids', array(
+        'default'           => '',
+        'sanitize_callback' => 'sanitize_text_field',
+    ) );
+
+    $wp_customize->add_control( 'hero_manual_post_ids', array(
+        'label'       => __( 'المقالات المحددة', 'nadiim' ),
+        'description' => __( 'أدخل IDs المقالات مفصولة بفواصل (مثال: 12,45,67). للحصول على ID المقال، اذهب إلى المقالات واضغط على تحرير، ستجد ID في الرابط.', 'nadiim' ),
+        'section'     => 'nadiim_hero_slider',
+        'type'        => 'text',
+        'active_callback' => function() {
+            return get_theme_mod( 'hero_source', 'latest_posts' ) === 'manual_selection';
+        },
+    ) );
+
+    // IDs الحوارات المحددة
+    $wp_customize->add_setting( 'hero_manual_howarat_ids', array(
+        'default'           => '',
+        'sanitize_callback' => 'sanitize_text_field',
+    ) );
+
+    $wp_customize->add_control( 'hero_manual_howarat_ids', array(
+        'label'       => __( 'الحوارات المحددة', 'nadiim' ),
+        'description' => __( 'أدخل IDs الحوارات مفصولة بفواصل (مثال: 8,15,23)', 'nadiim' ),
+        'section'     => 'nadiim_hero_slider',
+        'type'        => 'text',
+        'active_callback' => function() {
+            return get_theme_mod( 'hero_source', 'latest_posts' ) === 'manual_selection';
+        },
+    ) );
+
+    // IDs المراجعات المحددة
+    $wp_customize->add_setting( 'hero_manual_review_ids', array(
+        'default'           => '',
+        'sanitize_callback' => 'sanitize_text_field',
+    ) );
+
+    $wp_customize->add_control( 'hero_manual_review_ids', array(
+        'label'       => __( 'المراجعات المحددة', 'nadiim' ),
+        'description' => __( 'أدخل IDs المراجعات مفصولة بفواصل (مثال: 5,11)', 'nadiim' ),
+        'section'     => 'nadiim_hero_slider',
+        'type'        => 'text',
+        'active_callback' => function() {
+            return get_theme_mod( 'hero_source', 'latest_posts' ) === 'manual_selection';
+        },
+    ) );
+
+    // طريقة الترتيب في الاختيار اليدوي
+    $wp_customize->add_setting( 'hero_manual_selection_order', array(
+        'default'           => 'custom',
+        'sanitize_callback' => 'sanitize_text_field',
+    ) );
+
+    $wp_customize->add_control( 'hero_manual_selection_order', array(
+        'label'   => __( 'طريقة الترتيب', 'nadiim' ),
+        'section' => 'nadiim_hero_slider',
+        'type'    => 'select',
+        'choices' => array(
+            'custom' => __( 'حسب الترتيب المدخل', 'nadiim' ),
+            'date'   => __( 'حسب التاريخ (الأحدث أولاً)', 'nadiim' ),
+            'random' => __( 'عشوائي', 'nadiim' ),
+        ),
+        'active_callback' => function() {
+            return get_theme_mod( 'hero_source', 'latest_posts' ) === 'manual_selection';
         },
     ) );
 
