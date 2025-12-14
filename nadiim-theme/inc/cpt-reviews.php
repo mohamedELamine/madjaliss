@@ -172,3 +172,19 @@ function nadiim_reviews_orderby_rating( $query ) {
     }
 }
 add_action( 'pre_get_posts', 'nadiim_reviews_orderby_rating' );
+
+/**
+ * إعادة تحديث permalinks عند تفعيل الثيم
+ */
+function nadiim_reviews_rewrite_flush() {
+	// تسجيل CPT
+	nadiim_register_reviews_post_type();
+	nadiim_register_reviews_taxonomies();
+
+	// إعادة تحديث rewrite rules
+	flush_rewrite_rules();
+}
+register_activation_hook( __FILE__, 'nadiim_reviews_rewrite_flush' );
+
+// أيضاً، عند تفعيل الثيم
+add_action( 'after_switch_theme', 'nadiim_reviews_rewrite_flush' );

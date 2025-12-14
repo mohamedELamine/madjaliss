@@ -176,6 +176,9 @@ while ( have_posts() ) :
 					</div>
 				</div>
 
+				<!-- التصنيفات والوسوم -->
+				<?php
+				$categories = get_the_category();
 				$tags       = get_the_tags();
 				if ( $categories || $tags ) :
 				?>
