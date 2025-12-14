@@ -1,0 +1,1333 @@
+/**
+ * ملف CSS للمراجعات (Reviews)
+ *
+ * يحتوي على جميع التنسيقات الخاصة بـ:
+ * 1. صفحة المراجعة المفردة (single-reviews.php)
+ * 2. صفحة أرشيف المراجعات (archive-reviews.php)
+ *
+ * التصميم:
+ * - ألوان هادئة تعتمد على #339063
+ * - مسافات كبيرة بين العناصر
+ * - RTL بالكامل
+ * - تأثيرات hover خفيفة وأنيقة
+ * - تركيز على التقييمات بالنجوم
+ *
+ * @package Nadiim
+ * @since 1.0.0
+ */
+
+/* ===================================================================
+   المتغيرات والألوان
+   =================================================================== */
+
+:root {
+	--reviews-primary: #339063;
+	--reviews-primary-hover: #2a7851;
+	--reviews-star-color: #f39c12;
+	--reviews-star-empty: #ddd;
+	--reviews-bg: #FFFFFF;
+	--reviews-bg-light: #F6F9F7;
+	--reviews-bg-section: #F6F9F7;
+	--reviews-text: #1C2D27;
+	--reviews-text-main: #1C2D27;
+	--reviews-text-muted: #6B7A72;
+	--reviews-border: #E5E7EB;
+	--reviews-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+	--reviews-shadow-lg: 0 5px 20px rgba(0, 0, 0, 0.12);
+	--reviews-radius: 12px;
+	--reviews-radius-lg: 16px;
+	--reviews-transition: all 0.3s ease;
+	--reviews-pros-color: #10b981;
+	--reviews-cons-color: #ef4444;
+}
+
+/* ===================================================================
+   1. صفحة المراجعة المفردة (Single)
+   =================================================================== */
+
+/* --- الهيرو --- */
+.reviews-hero {
+	position: relative;
+	width: 100%;
+	min-height: 520px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-bottom: 48px;
+	overflow: hidden;
+	background: linear-gradient(135deg, #1a4d3a 0%, #0d2820 100%);
+}
+
+.reviews-hero-image {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 1;
+}
+
+.reviews-hero-image img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	opacity: 0.4;
+}
+
+.reviews-hero-overlay {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: linear-gradient(135deg,
+		rgba(51, 144, 99, 0.75) 0%,
+		rgba(38, 112, 74, 0.85) 50%,
+		rgba(28, 45, 39, 0.92) 100%);
+	z-index: 2;
+}
+
+.reviews-hero-content {
+	position: relative;
+	z-index: 3;
+	width: 100%;
+	padding: 64px 24px;
+}
+
+.reviews-hero-container {
+	max-width: 900px;
+	margin: 0 auto;
+	text-align: center;
+	color: #FFFFFF;
+}
+
+/* شارة النوع */
+.reviews-type-badge {
+	display: inline-block;
+	padding: 12px 28px;
+	background: var(--reviews-primary);
+	color: #FFFFFF;
+	border-radius: 28px;
+	font-size: 16px;
+	font-weight: 700;
+	margin-bottom: 20px;
+	box-shadow: 0 4px 16px rgba(51, 144, 99, 0.4);
+	text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+	transition: var(--reviews-transition);
+}
+
+.reviews-type-badge:hover {
+	transform: translateY(-2px);
+	box-shadow: 0 6px 20px rgba(51, 144, 99, 0.5);
+}
+
+/* العنوان */
+.reviews-title {
+	font-size: 42px;
+	font-weight: 700;
+	line-height: 1.3;
+	margin-bottom: 32px;
+	color: #FFFFFF;
+}
+
+/* التقييم بالنجوم - عرض كبير في الهيرو */
+.reviews-rating-display {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 16px;
+	margin-bottom: 32px;
+	padding: 24px;
+	background: rgba(255, 255, 255, 0.1);
+	backdrop-filter: blur(10px);
+	border-radius: var(--reviews-radius-lg);
+	border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.rating-stars-large {
+	display: flex;
+	gap: 8px;
+	font-size: 40px;
+}
+
+.rating-stars-large .star {
+	transition: var(--reviews-transition);
+}
+
+.rating-stars-large .star-filled {
+	color: var(--reviews-star-color);
+	text-shadow: 0 2px 8px rgba(243, 156, 18, 0.5);
+}
+
+.rating-stars-large .star-empty {
+	color: rgba(255, 255, 255, 0.3);
+}
+
+.rating-number {
+	display: flex;
+	align-items: baseline;
+	gap: 4px;
+	font-size: 32px;
+	font-weight: 700;
+	color: #FFFFFF;
+}
+
+.rating-number .rating-max {
+	font-size: 20px;
+	opacity: 0.8;
+}
+
+/* البيانات الوصفية */
+.reviews-meta-info {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+	gap: 16px;
+	margin-bottom: 32px;
+	text-align: right;
+}
+
+.meta-info-item {
+	display: flex;
+	align-items: flex-start;
+	gap: 12px;
+	padding: 16px;
+	background: rgba(255, 255, 255, 0.1);
+	backdrop-filter: blur(10px);
+	border-radius: var(--reviews-radius);
+	border: 1px solid rgba(255, 255, 255, 0.15);
+	transition: var(--reviews-transition);
+}
+
+.meta-info-item:hover {
+	background: rgba(255, 255, 255, 0.15);
+	border-color: rgba(255, 255, 255, 0.25);
+	transform: translateY(-2px);
+}
+
+.meta-info-item .meta-icon {
+	font-size: 24px;
+	line-height: 1;
+}
+
+.meta-info-item .meta-content {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+}
+
+.meta-info-item .meta-label {
+	font-size: 13px;
+	opacity: 0.85;
+	font-weight: 600;
+	text-transform: uppercase;
+	letter-spacing: 0.5px;
+}
+
+.meta-info-item .meta-value {
+	font-size: 16px;
+	font-weight: 600;
+	color: #FFFFFF;
+}
+
+.meta-info-item.meta-item-title .meta-value {
+	font-size: 18px;
+	font-weight: 700;
+}
+
+/* أزرار CTA */
+.reviews-cta-buttons {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 16px;
+	flex-wrap: wrap;
+}
+
+.reviews-cta-btn {
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	padding: 16px 32px;
+	font-size: 18px;
+	font-weight: 700;
+	border-radius: var(--reviews-radius);
+	text-decoration: none;
+	transition: var(--reviews-transition);
+	cursor: pointer;
+}
+
+.reviews-cta-primary {
+	background: #FFFFFF;
+	color: var(--reviews-primary);
+	box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+}
+
+.reviews-cta-primary:hover {
+	background: #f7f7f7;
+	transform: translateY(-3px);
+	box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+}
+
+.reviews-cta-primary .cta-arrow {
+	font-size: 20px;
+	transition: var(--reviews-transition);
+}
+
+.reviews-cta-primary:hover .cta-arrow {
+	transform: translate(3px, -3px);
+}
+
+/* --- المحتوى الرئيسي --- */
+.reviews-main-container {
+	max-width: 1200px;
+	margin: 0 auto;
+	padding: 0 24px 64px;
+	display: grid;
+	grid-template-columns: 1fr 350px;
+	gap: 48px;
+}
+
+.reviews-content-wrapper {
+	min-width: 0;
+}
+
+/* عناوين الأقسام */
+.section-title {
+	font-size: 28px;
+	font-weight: 700;
+	color: var(--reviews-text-main);
+	margin-bottom: 24px;
+	padding-bottom: 16px;
+	border-bottom: 3px solid var(--reviews-primary);
+	display: inline-block;
+}
+
+/* ملخص المراجعة */
+.reviews-summary-section {
+	margin-bottom: 48px;
+	padding: 32px;
+	background: var(--reviews-bg-light);
+	border-radius: var(--reviews-radius-lg);
+	border-right: 4px solid var(--reviews-primary);
+}
+
+.reviews-summary-content {
+	font-size: 18px;
+	line-height: 1.8;
+	color: var(--reviews-text);
+}
+
+/* المحتوى الكامل */
+.reviews-content-section {
+	margin-bottom: 48px;
+}
+
+.reviews-content-body {
+	font-size: 18px;
+	line-height: 1.9;
+	color: var(--reviews-text);
+}
+
+.reviews-content-body p {
+	margin-bottom: 24px;
+}
+
+.reviews-content-body h2,
+.reviews-content-body h3,
+.reviews-content-body h4 {
+	color: var(--reviews-text-main);
+	margin-top: 32px;
+	margin-bottom: 16px;
+}
+
+.reviews-content-body ul,
+.reviews-content-body ol {
+	margin-bottom: 24px;
+	padding-right: 24px;
+}
+
+.reviews-content-body li {
+	margin-bottom: 8px;
+}
+
+/* الإيجابيات والسلبيات */
+.reviews-pros-cons-section {
+	margin-bottom: 48px;
+}
+
+.pros-cons-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+	gap: 24px;
+}
+
+.pros-box,
+.cons-box {
+	padding: 28px;
+	border-radius: var(--reviews-radius-lg);
+	box-shadow: var(--reviews-shadow);
+	transition: var(--reviews-transition);
+}
+
+.pros-box {
+	background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+	border: 2px solid #86efac;
+}
+
+.cons-box {
+	background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+	border: 2px solid #fca5a5;
+}
+
+.pros-box:hover,
+.cons-box:hover {
+	transform: translateY(-4px);
+	box-shadow: var(--reviews-shadow-lg);
+}
+
+.pros-title,
+.cons-title {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	font-size: 22px;
+	font-weight: 700;
+	margin-bottom: 20px;
+}
+
+.pros-title {
+	color: var(--reviews-pros-color);
+}
+
+.cons-title {
+	color: var(--reviews-cons-color);
+}
+
+.pros-icon,
+.cons-icon {
+	font-size: 28px;
+}
+
+.pros-list,
+.cons-list {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+.pros-list li,
+.cons-list li {
+	position: relative;
+	padding-right: 32px;
+	margin-bottom: 12px;
+	font-size: 16px;
+	line-height: 1.6;
+	color: var(--reviews-text);
+}
+
+.pros-list li::before {
+	content: "✓";
+	position: absolute;
+	right: 0;
+	top: 0;
+	width: 24px;
+	height: 24px;
+	background: var(--reviews-pros-color);
+	color: #FFFFFF;
+	border-radius: 50%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-weight: 700;
+	font-size: 14px;
+}
+
+.cons-list li::before {
+	content: "✕";
+	position: absolute;
+	right: 0;
+	top: 0;
+	width: 24px;
+	height: 24px;
+	background: var(--reviews-cons-color);
+	color: #FFFFFF;
+	border-radius: 50%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-weight: 700;
+	font-size: 14px;
+}
+
+/* الحكم النهائي */
+.reviews-verdict-section {
+	margin-bottom: 48px;
+	padding: 40px;
+	background: linear-gradient(135deg, #fef9f3 0%, #fef3c7 100%);
+	border-radius: var(--reviews-radius-lg);
+	border: 3px solid #fbbf24;
+	box-shadow: var(--reviews-shadow-lg);
+}
+
+.verdict-title {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	font-size: 28px;
+	font-weight: 700;
+	color: var(--reviews-text-main);
+	margin-bottom: 24px;
+}
+
+.verdict-icon {
+	font-size: 32px;
+}
+
+.verdict-content {
+	display: flex;
+	flex-direction: column;
+	gap: 24px;
+}
+
+.verdict-rating {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 16px;
+	padding: 24px;
+	background: rgba(255, 255, 255, 0.7);
+	border-radius: var(--reviews-radius);
+}
+
+.verdict-stars {
+	display: flex;
+	gap: 6px;
+	font-size: 36px;
+}
+
+.verdict-stars .star-filled {
+	color: var(--reviews-star-color);
+}
+
+.verdict-stars .star-empty {
+	color: var(--reviews-star-empty);
+}
+
+.verdict-rating-text {
+	font-size: 20px;
+	font-weight: 700;
+	color: var(--reviews-primary);
+	text-align: center;
+}
+
+.verdict-text {
+	font-size: 18px;
+	line-height: 1.8;
+	color: var(--reviews-text);
+	text-align: center;
+}
+
+/* التصنيفات والوسوم */
+.reviews-taxonomy-section {
+	margin-bottom: 32px;
+	padding: 24px;
+	background: var(--reviews-bg-light);
+	border-radius: var(--reviews-radius);
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+}
+
+.taxonomy-group {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	flex-wrap: wrap;
+}
+
+.taxonomy-label {
+	font-weight: 700;
+	color: var(--reviews-text-main);
+	white-space: nowrap;
+}
+
+.taxonomy-items {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	flex-wrap: wrap;
+}
+
+.taxonomy-item {
+	display: inline-block;
+	padding: 6px 16px;
+	background: #FFFFFF;
+	color: var(--reviews-primary);
+	border: 2px solid var(--reviews-border);
+	border-radius: 20px;
+	font-size: 14px;
+	font-weight: 600;
+	text-decoration: none;
+	transition: var(--reviews-transition);
+}
+
+.taxonomy-item:hover {
+	background: var(--reviews-primary);
+	color: #FFFFFF;
+	border-color: var(--reviews-primary);
+	transform: translateY(-2px);
+}
+
+/* أزرار المشاركة */
+.reviews-share-section {
+	margin-bottom: 32px;
+	padding: 24px;
+	background: var(--reviews-bg-light);
+	border-radius: var(--reviews-radius);
+	display: flex;
+	align-items: center;
+	gap: 16px;
+	flex-wrap: wrap;
+}
+
+.share-label {
+	font-weight: 700;
+	color: var(--reviews-text-main);
+}
+
+.share-buttons {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+}
+
+.share-btn {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 44px;
+	height: 44px;
+	border-radius: 50%;
+	color: #FFFFFF;
+	text-decoration: none;
+	font-size: 18px;
+	transition: var(--reviews-transition);
+}
+
+.share-facebook {
+	background: #1877f2;
+}
+
+.share-facebook:hover {
+	background: #0c63d4;
+	transform: translateY(-3px);
+}
+
+.share-twitter {
+	background: #1da1f2;
+}
+
+.share-twitter:hover {
+	background: #0d8bd9;
+	transform: translateY(-3px);
+}
+
+.share-whatsapp {
+	background: #25d366;
+}
+
+.share-whatsapp:hover {
+	background: #1ebe57;
+	transform: translateY(-3px);
+}
+
+/* التنقل بين المنشورات */
+.reviews-navigation {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+	gap: 24px;
+	margin-bottom: 48px;
+}
+
+.nav-prev,
+.nav-next {
+	display: flex;
+	align-items: center;
+	gap: 16px;
+	padding: 24px;
+	background: var(--reviews-bg-light);
+	border-radius: var(--reviews-radius);
+	text-decoration: none;
+	color: var(--reviews-text-main);
+	transition: var(--reviews-transition);
+	border: 2px solid var(--reviews-border);
+}
+
+.nav-prev:hover,
+.nav-next:hover {
+	background: var(--reviews-primary);
+	color: #FFFFFF;
+	border-color: var(--reviews-primary);
+	transform: translateY(-3px);
+	box-shadow: var(--reviews-shadow-lg);
+}
+
+.nav-arrow {
+	font-size: 24px;
+	font-weight: 700;
+}
+
+.nav-content {
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+	flex: 1;
+}
+
+.nav-label {
+	font-size: 13px;
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: 0.5px;
+	opacity: 0.8;
+}
+
+.nav-title {
+	font-size: 16px;
+	font-weight: 700;
+}
+
+.nav-next {
+	text-align: left;
+}
+
+/* التعليقات */
+.reviews-comments-section {
+	margin-top: 64px;
+	padding-top: 48px;
+	border-top: 3px solid var(--reviews-border);
+}
+
+/* --- Sidebar --- */
+.reviews-sidebar {
+	position: sticky;
+	top: 100px;
+	align-self: flex-start;
+}
+
+.sidebar-widget {
+	margin-bottom: 32px;
+	padding: 24px;
+	background: var(--reviews-bg-light);
+	border-radius: var(--reviews-radius-lg);
+	box-shadow: var(--reviews-shadow);
+}
+
+.widget-title {
+	font-size: 20px;
+	font-weight: 700;
+	color: var(--reviews-text-main);
+	margin-bottom: 20px;
+	padding-bottom: 12px;
+	border-bottom: 2px solid var(--reviews-primary);
+}
+
+.sidebar-related-posts,
+.sidebar-recent-posts {
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+}
+
+.sidebar-related-item,
+.sidebar-recent-item {
+	display: flex;
+	gap: 16px;
+	padding-bottom: 20px;
+	border-bottom: 1px solid var(--reviews-border);
+}
+
+.sidebar-related-item:last-child,
+.sidebar-recent-item:last-child {
+	padding-bottom: 0;
+	border-bottom: none;
+}
+
+.related-thumbnail {
+	flex-shrink: 0;
+	width: 80px;
+	height: 80px;
+	border-radius: var(--reviews-radius);
+	overflow: hidden;
+}
+
+.related-thumbnail img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	transition: var(--reviews-transition);
+}
+
+.related-thumbnail:hover img {
+	transform: scale(1.1);
+}
+
+.related-content {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+}
+
+.related-title {
+	margin: 0;
+	font-size: 15px;
+	font-weight: 600;
+	line-height: 1.4;
+}
+
+.related-title a {
+	color: var(--reviews-text-main);
+	text-decoration: none;
+	transition: var(--reviews-transition);
+}
+
+.related-title a:hover {
+	color: var(--reviews-primary);
+}
+
+.related-rating,
+.recent-rating {
+	display: flex;
+	align-items: center;
+	gap: 4px;
+	font-size: 14px;
+}
+
+.related-rating .star,
+.recent-rating .star {
+	color: var(--reviews-star-color);
+}
+
+.related-rating .star-empty,
+.recent-rating .star-empty {
+	color: var(--reviews-star-empty);
+}
+
+.rating-text {
+	margin-right: 6px;
+	font-weight: 600;
+	color: var(--reviews-text-muted);
+}
+
+.related-date,
+.recent-date {
+	font-size: 13px;
+	color: var(--reviews-text-muted);
+}
+
+.recent-title {
+	margin: 0 0 8px;
+	font-size: 15px;
+	font-weight: 600;
+	line-height: 1.4;
+}
+
+.recent-title a {
+	color: var(--reviews-text-main);
+	text-decoration: none;
+	transition: var(--reviews-transition);
+}
+
+.recent-title a:hover {
+	color: var(--reviews-primary);
+}
+
+/* ===================================================================
+   2. صفحة أرشيف المراجعات (Archive)
+   =================================================================== */
+
+/* هيرو الأرشيف */
+.reviews-archive-hero {
+	position: relative;
+	width: 100%;
+	min-height: 360px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-bottom: 64px;
+	overflow: hidden;
+	background: linear-gradient(135deg, #1a4d3a 0%, #0d2820 100%);
+}
+
+.reviews-archive-hero-overlay {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: linear-gradient(135deg,
+		rgba(51, 144, 99, 0.85) 0%,
+		rgba(28, 45, 39, 0.95) 100%);
+	z-index: 1;
+}
+
+.reviews-archive-hero-content {
+	position: relative;
+	z-index: 2;
+	width: 100%;
+	padding: 64px 24px;
+}
+
+.reviews-archive-hero-container {
+	max-width: 800px;
+	margin: 0 auto;
+	text-align: center;
+	color: #FFFFFF;
+}
+
+.archive-hero-badge {
+	display: inline-block;
+	padding: 10px 24px;
+	background: rgba(255, 255, 255, 0.2);
+	backdrop-filter: blur(10px);
+	border: 2px solid rgba(255, 255, 255, 0.3);
+	border-radius: 24px;
+	font-size: 15px;
+	font-weight: 700;
+	margin-bottom: 20px;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+}
+
+.archive-hero-title {
+	font-size: 48px;
+	font-weight: 700;
+	line-height: 1.2;
+	margin-bottom: 20px;
+	color: #FFFFFF;
+}
+
+.archive-hero-description {
+	font-size: 18px;
+	line-height: 1.7;
+	opacity: 0.95;
+	max-width: 600px;
+	margin: 0 auto 32px;
+}
+
+.archive-hero-stats {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 16px;
+	flex-wrap: wrap;
+	margin-top: 32px;
+}
+
+.archive-stat-item {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 6px;
+}
+
+.stat-number {
+	font-size: 32px;
+	font-weight: 800;
+	line-height: 1;
+	color: #FFFFFF;
+}
+
+.stat-label {
+	font-size: 14px;
+	opacity: 0.9;
+	font-weight: 600;
+}
+
+.stat-icon {
+	font-size: 28px;
+}
+
+.archive-stat-divider {
+	width: 2px;
+	height: 40px;
+	background: rgba(255, 255, 255, 0.3);
+}
+
+/* الحاوية الرئيسية */
+.archive-container {
+	max-width: 1200px;
+	margin: 0 auto;
+	padding: 0 24px 64px;
+}
+
+/* شبكة المراجعات */
+.reviews-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+	gap: 32px;
+	margin-bottom: 48px;
+}
+
+/* بطاقة المراجعة */
+.reviews-card {
+	background: var(--reviews-bg);
+	border-radius: var(--reviews-radius-lg);
+	overflow: hidden;
+	box-shadow: var(--reviews-shadow);
+	transition: var(--reviews-transition);
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+}
+
+.reviews-card:hover {
+	transform: translateY(-6px);
+	box-shadow: var(--reviews-shadow-lg);
+}
+
+.reviews-card-image {
+	position: relative;
+	width: 100%;
+	height: 280px;
+	overflow: hidden;
+}
+
+.reviews-card-image img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	transition: var(--reviews-transition);
+}
+
+.reviews-card:hover .reviews-card-image img {
+	transform: scale(1.05);
+}
+
+.card-type-badge {
+	position: absolute;
+	top: 16px;
+	right: 16px;
+	padding: 8px 16px;
+	background: rgba(51, 144, 99, 0.95);
+	backdrop-filter: blur(10px);
+	color: #FFFFFF;
+	font-size: 13px;
+	font-weight: 700;
+	border-radius: 20px;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.reviews-card-content {
+	padding: 24px;
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+	flex: 1;
+}
+
+.reviews-card-rating {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 12px;
+	padding: 12px 16px;
+	background: var(--reviews-bg-light);
+	border-radius: var(--reviews-radius);
+}
+
+.reviews-card-rating .rating-stars {
+	display: flex;
+	gap: 4px;
+	font-size: 18px;
+}
+
+.reviews-card-rating .star-filled {
+	color: var(--reviews-star-color);
+}
+
+.reviews-card-rating .star-empty {
+	color: var(--reviews-star-empty);
+}
+
+.reviews-card-rating .rating-value {
+	font-size: 16px;
+	font-weight: 700;
+	color: var(--reviews-text-main);
+}
+
+.reviews-card-title {
+	margin: 0;
+	font-size: 20px;
+	font-weight: 700;
+	line-height: 1.4;
+}
+
+.reviews-card-title a {
+	color: var(--reviews-text-main);
+	text-decoration: none;
+	transition: var(--reviews-transition);
+}
+
+.reviews-card-title a:hover {
+	color: var(--reviews-primary);
+}
+
+.reviews-card-meta {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+}
+
+.meta-item {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	font-size: 14px;
+	color: var(--reviews-text-muted);
+}
+
+.meta-icon {
+	font-size: 16px;
+}
+
+.meta-text {
+	font-weight: 600;
+}
+
+.reviews-card-excerpt {
+	font-size: 15px;
+	line-height: 1.6;
+	color: var(--reviews-text);
+	flex: 1;
+}
+
+.reviews-card-date {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	font-size: 13px;
+	color: var(--reviews-text-muted);
+	padding-top: 12px;
+	border-top: 1px solid var(--reviews-border);
+}
+
+.date-icon {
+	font-size: 14px;
+}
+
+.reviews-card-btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+	padding: 12px 24px;
+	background: var(--reviews-primary);
+	color: #FFFFFF;
+	border-radius: var(--reviews-radius);
+	font-size: 16px;
+	font-weight: 700;
+	text-decoration: none;
+	text-align: center;
+	transition: var(--reviews-transition);
+	margin-top: auto;
+}
+
+.reviews-card-btn:hover {
+	background: var(--reviews-primary-hover);
+	transform: translateY(-2px);
+	box-shadow: 0 4px 12px rgba(51, 144, 99, 0.3);
+}
+
+.reviews-card-btn .btn-arrow {
+	font-size: 18px;
+	transition: var(--reviews-transition);
+}
+
+.reviews-card-btn:hover .btn-arrow {
+	transform: translateX(-4px);
+}
+
+/* Pagination */
+.reviews-pagination {
+	margin-top: 48px;
+	text-align: center;
+}
+
+.reviews-pagination .page-numbers {
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+.reviews-pagination .page-numbers li {
+	list-style: none;
+}
+
+.reviews-pagination .page-numbers a,
+.reviews-pagination .page-numbers span {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-width: 44px;
+	height: 44px;
+	padding: 8px 12px;
+	background: var(--reviews-bg-light);
+	color: var(--reviews-text-main);
+	border: 2px solid var(--reviews-border);
+	border-radius: var(--reviews-radius);
+	font-weight: 700;
+	text-decoration: none;
+	transition: var(--reviews-transition);
+}
+
+.reviews-pagination .page-numbers a:hover {
+	background: var(--reviews-primary);
+	color: #FFFFFF;
+	border-color: var(--reviews-primary);
+	transform: translateY(-2px);
+}
+
+.reviews-pagination .page-numbers .current {
+	background: var(--reviews-primary);
+	color: #FFFFFF;
+	border-color: var(--reviews-primary);
+}
+
+.reviews-pagination .page-numbers .prev,
+.reviews-pagination .page-numbers .next {
+	padding: 8px 20px;
+	gap: 8px;
+}
+
+/* رسالة عدم وجود نتائج */
+.no-results {
+	text-align: center;
+	padding: 80px 24px;
+}
+
+.no-results-icon {
+	font-size: 64px;
+	margin-bottom: 24px;
+	opacity: 0.5;
+}
+
+.no-results h2 {
+	font-size: 28px;
+	font-weight: 700;
+	color: var(--reviews-text-main);
+	margin-bottom: 16px;
+}
+
+.no-results p {
+	font-size: 16px;
+	color: var(--reviews-text-muted);
+	margin-bottom: 32px;
+	max-width: 500px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.btn-primary {
+	display: inline-block;
+	padding: 14px 32px;
+	background: var(--reviews-primary);
+	color: #FFFFFF;
+	border-radius: var(--reviews-radius);
+	font-weight: 700;
+	text-decoration: none;
+	transition: var(--reviews-transition);
+}
+
+.btn-primary:hover {
+	background: var(--reviews-primary-hover);
+	transform: translateY(-2px);
+	box-shadow: 0 4px 12px rgba(51, 144, 99, 0.3);
+}
+
+/* ===================================================================
+   3. الاستجابة (Responsive)
+   =================================================================== */
+
+@media (max-width: 1024px) {
+	.reviews-main-container {
+		grid-template-columns: 1fr;
+	}
+
+	.reviews-sidebar {
+		position: static;
+	}
+}
+
+@media (max-width: 768px) {
+	.reviews-title {
+		font-size: 32px;
+	}
+
+	.archive-hero-title {
+		font-size: 36px;
+	}
+
+	.rating-stars-large {
+		font-size: 32px;
+	}
+
+	.rating-number {
+		font-size: 24px;
+	}
+
+	.reviews-meta-info {
+		grid-template-columns: 1fr;
+	}
+
+	.reviews-grid {
+		grid-template-columns: 1fr;
+		gap: 24px;
+	}
+
+	.pros-cons-grid {
+		grid-template-columns: 1fr;
+	}
+
+	.reviews-navigation {
+		grid-template-columns: 1fr;
+	}
+
+	.archive-hero-stats {
+		flex-direction: column;
+	}
+
+	.archive-stat-divider {
+		width: 40px;
+		height: 2px;
+	}
+}
+
+@media (max-width: 480px) {
+	.reviews-title {
+		font-size: 26px;
+	}
+
+	.archive-hero-title {
+		font-size: 28px;
+	}
+
+	.section-title {
+		font-size: 22px;
+	}
+
+	.reviews-hero-content,
+	.reviews-archive-hero-content {
+		padding: 48px 16px;
+	}
+
+	.reviews-main-container,
+	.archive-container {
+		padding: 0 16px 48px;
+	}
+}

@@ -877,6 +877,11 @@ require_once NADIIM_THEME_DIR . '/inc/newsletter-handler.php';
 require_once NADIIM_THEME_DIR . '/inc/howarat-schema.php';
 require_once NADIIM_THEME_DIR . '/inc/esdar-schema.php';
 
+// تضمين ملفات المراجعات (Reviews System)
+require_once NADIIM_THEME_DIR . '/inc/cpt-reviews.php';
+require_once NADIIM_THEME_DIR . '/inc/meta-reviews.php';
+require_once NADIIM_THEME_DIR . '/inc/customizer-reviews.php';
+
 // تضمين Critical CSS للأداء
 require_once NADIIM_THEME_DIR . '/inc/critical-css.php';
 

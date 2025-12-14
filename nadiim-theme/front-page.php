@@ -34,6 +34,7 @@ wp_localize_script( 'nadiim-front-page', 'nadiimFrontPage', array(
 		'hero-slider', // Hero Slider الجديد
 		'about-mini', // قسم من نحن المصغر
 		'featured-howarat', // الحوارات المميزة
+		'reviews', // قسم المراجعات
 		'dialogues',
 		'esdar', // قسم الإصدارات
 		'articles', // قسم المقالات الجديد
@@ -56,6 +57,9 @@ wp_localize_script( 'nadiim-front-page', 'nadiimFrontPage', array(
 				break;
 			case 'featured-howarat':
 				$setting_name = 'featured_howarat_enable';
+				break;
+			case 'reviews':
+				$setting_name = 'reviews_enable';
 				break;
 			case 'clubs':
 				$setting_name = 'clubs_section_enable';
