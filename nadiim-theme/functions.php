@@ -166,21 +166,38 @@ add_action( 'widgets_init', 'nadiim_widgets_init' );
  * محسّن للأداء مع versioning ديناميكي
  */
 function nadiim_enqueue_scripts() {
-    // تحميل خط Cairo من Google Fonts مع preconnect للأداء
+    // تحميل خط Cairo من Google Fonts مع font-display: swap
+    // استخدام preload للخطوط المهمة
     wp_enqueue_style(
         'nadiim-google-fonts',
         'https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap',
         array(),
-        null
+        null,
+        'all'
     );
 
-    // تحميل Font Awesome
+    // إضافة preload للخطوط
+    add_action( 'wp_head', function() {
+        echo '<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" />';
+    }, 1 );
+
+    // تحميل Font Awesome بشكل async
     wp_enqueue_style(
         'font-awesome',
         'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css',
         array(),
-        '6.5.1'
+        '6.5.1',
+        'all'
     );
+
+    // تحميل Font Awesome بشكل async (non-blocking)
+    add_filter( 'style_loader_tag', function( $html, $handle ) {
+        if ( 'font-awesome' === $handle ) {
+            $html = str_replace( "media='all'", "media='print' onload=\"this.media='all'\"", $html );
+            $html .= '<noscript>' . str_replace( "media='print' onload=\"this.media='all'\"", "media='all'", $html ) . '</noscript>';
+        }
+        return $html;
+    }, 10, 2 );
 
     // استخدام filemtime للـ versioning الديناميكي
     $main_css_file = NADIIM_THEME_DIR . '/assets/css/main.css';
@@ -231,23 +248,41 @@ function nadiim_enqueue_scripts() {
     $header_js_file = NADIIM_THEME_DIR . '/assets/js/header.js';
     $header_js_version = file_exists( $header_js_file ) ? filemtime( $header_js_file ) : NADIIM_VERSION;
 
-    // تحميل JavaScript الرئيسي
+    // تحميل JavaScript الرئيسي مع defer
     wp_enqueue_script(
         'nadiim-main',
         NADIIM_THEME_URI . '/assets/js/main.js',
         array( 'jquery' ),
         $main_js_version,
-        true
+        array(
+            'in_footer' => true,
+            'strategy'  => 'defer',
+        )
     );
 
-    // تحميل JavaScript للهيدر
+    // تحميل JavaScript للهيدر مع defer
     wp_enqueue_script(
         'nadiim-header',
         NADIIM_THEME_URI . '/assets/js/header.js',
         array(),
         $header_js_version,
-        true
+        array(
+            'in_footer' => true,
+            'strategy'  => 'defer',
+        )
     );
+
+    // إضافة defer لجميع السكربتات
+    add_filter( 'script_loader_tag', function( $tag, $handle ) {
+        // قائمة السكربتات التي نريد defer لها
+        $defer_scripts = array( 'nadiim-main', 'nadiim-header', 'jquery' );
+
+        if ( in_array( $handle, $defer_scripts, true ) ) {
+            return str_replace( ' src', ' defer src', $tag );
+        }
+
+        return $tag;
+    }, 10, 2 );
 
     // تمرير متغيرات إلى JavaScript
     wp_localize_script( 'nadiim-main', 'nadiimVars', array(
@@ -491,17 +526,84 @@ function nadiim_get_post_terms( $post_id, $taxonomy, $separator = ', ' ) {
 
 /**
  * إضافة دعم Lazy Loading للصور
+ * محسّن مع width/height لإصلاح CLS
  */
 function nadiim_add_lazy_loading( $content ) {
     if ( is_admin() ) {
         return $content;
     }
 
-    $content = str_replace( '<img ', '<img loading="lazy" ', $content );
+    // إضافة loading="lazy" و decoding="async"
+    $content = str_replace( '<img ', '<img loading="lazy" decoding="async" ', $content );
+
     return $content;
 }
 add_filter( 'the_content', 'nadiim_add_lazy_loading' );
 add_filter( 'post_thumbnail_html', 'nadiim_add_lazy_loading' );
+
+/**
+ * إضافة width و height للصور لإصلاح CLS
+ */
+function nadiim_add_image_dimensions( $html, $post_id, $post_thumbnail_id, $size ) {
+    if ( empty( $html ) ) {
+        return $html;
+    }
+
+    // الحصول على أبعاد الصورة
+    $image_meta = wp_get_attachment_metadata( $post_thumbnail_id );
+
+    if ( ! $image_meta ) {
+        return $html;
+    }
+
+    // إضافة width و height إذا لم تكن موجودة
+    if ( ! preg_match( '/width=/', $html ) && isset( $image_meta['width'] ) ) {
+        $html = str_replace( '<img ', '<img width="' . esc_attr( $image_meta['width'] ) . '" ', $html );
+    }
+
+    if ( ! preg_match( '/height=/', $html ) && isset( $image_meta['height'] ) ) {
+        $html = str_replace( '<img ', '<img height="' . esc_attr( $image_meta['height'] ) . '" ', $html );
+    }
+
+    // إضافة fetchpriority="high" لأول صورة (LCP optimization)
+    static $first_image = true;
+    if ( $first_image && ( is_singular() || is_front_page() ) ) {
+        $html = str_replace( '<img ', '<img fetchpriority="high" ', $html );
+        $first_image = false;
+    }
+
+    return $html;
+}
+add_filter( 'post_thumbnail_html', 'nadiim_add_image_dimensions', 10, 4 );
+
+/**
+ * دعم WebP للصور
+ */
+function nadiim_add_webp_support( $sources, $size_array, $image_src, $image_meta, $attachment_id ) {
+    // التحقق من دعم WebP
+    if ( ! function_exists( 'imagewebp' ) ) {
+        return $sources;
+    }
+
+    foreach ( $sources as $width => $source ) {
+        $image_path = get_attached_file( $attachment_id );
+
+        if ( ! $image_path ) {
+            continue;
+        }
+
+        // التحقق من وجود نسخة WebP
+        $webp_path = preg_replace( '/\.(jpg|jpeg|png)$/i', '.webp', $image_path );
+
+        if ( file_exists( $webp_path ) ) {
+            $sources[ $width ]['type'] = 'image/webp';
+            $sources[ $width ]['url'] = preg_replace( '/\.(jpg|jpeg|png)$/i', '.webp', $source['url'] );
+        }
+    }
+
+    return $sources;
+}
+add_filter( 'wp_calculate_image_srcset', 'nadiim_add_webp_support', 10, 5 );
 
 // تم نقل معالج النشرة البريدية إلى inc/newsletter-handler.php
 
@@ -774,6 +876,9 @@ require_once NADIIM_THEME_DIR . '/inc/newsletter-handler.php';
 // تضمين ملفات SEO Schema
 require_once NADIIM_THEME_DIR . '/inc/howarat-schema.php';
 require_once NADIIM_THEME_DIR . '/inc/esdar-schema.php';
+
+// تضمين Critical CSS للأداء
+require_once NADIIM_THEME_DIR . '/inc/critical-css.php';
 
 /**
  * تحميل أصول صفحة الاتصال (CSS & JS)
