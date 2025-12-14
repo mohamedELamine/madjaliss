@@ -21,6 +21,11 @@ $show_rating         = get_theme_mod( 'reviews_show_rating', true );
 $show_more_button    = get_theme_mod( 'reviews_show_more_button', true );
 $more_button_text    = get_theme_mod( 'reviews_more_button_text', __( 'اطلع على المزيد من المراجعات', 'nadiim' ) );
 $more_button_link    = get_theme_mod( 'reviews_more_button_link', get_post_type_archive_link( 'reviews' ) ?: '#' );
+$bg_enable           = get_theme_mod( 'reviews_bg_enable', false );
+$bg_image            = get_theme_mod( 'reviews_bg_image', '' );
+$bg_embed            = get_theme_mod( 'reviews_bg_embed', '' );
+$title_color         = get_theme_mod( 'reviews_title_color', '#1c2d27' );
+$description_color   = get_theme_mod( 'reviews_description_color', '#5a6c64' );
 
 // إعداد الاستعلام
 $args = array(
@@ -61,15 +66,42 @@ if ( ! $reviews_query->have_posts() ) {
 
 // تحديد classes للقسم
 $section_classes = array( 'reviews-section' );
+if ( $bg_enable ) {
+	$section_classes[] = 'section-with-bg';
+}
 if ( $layout === 'carousel' ) {
 	$section_classes[] = 'layout-carousel';
 } else {
 	$section_classes[] = 'layout-grid';
 }
+
+// inline style للخلفية والألوان
+$section_style = sprintf(
+	'--reviews-title-color: %s; --reviews-description-color: %s;',
+	esc_attr( $title_color ),
+	esc_attr( $description_color )
+);
+
+if ( $bg_enable && ! empty( $bg_image ) ) {
+	$section_style .= sprintf( ' background-image: url(%s);', esc_url( $bg_image ) );
+}
 ?>
 
 <section class="<?php echo esc_attr( implode( ' ', $section_classes ) ); ?>"
+         style="<?php echo esc_attr( $section_style ); ?>"
          aria-labelledby="reviews-title">
+
+	<?php if ( $bg_enable ) : ?>
+		<!-- طبقة التعتيم فوق الخلفية -->
+		<div class="section-bg-overlay" aria-hidden="true"></div>
+
+		<?php if ( ! empty( $bg_embed ) ) : ?>
+			<!-- Embed الخلفية (فيديو مثلاً) -->
+			<div class="section-bg-embed" aria-hidden="true">
+				<?php echo wp_kses_post( $bg_embed ); ?>
+			</div>
+		<?php endif; ?>
+	<?php endif; ?>
 
 	<div class="container">
 

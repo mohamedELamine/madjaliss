@@ -354,30 +354,9 @@ function nadiim_reviews_customizer_register( $wp_customize ) {
 	// إعدادات خلفية القسم
 	// ─────────────────────────────────────
 
-	// لون خلفية القسم
+	// تفعيل خلفية مخصصة
 	$wp_customize->add_setting(
-		'reviews_bg_color',
-		array(
-			'default'           => '#ffffff',
-			'sanitize_callback' => 'sanitize_hex_color',
-			'transport'         => 'postMessage',
-		)
-	);
-
-	$wp_customize->add_control(
-		new WP_Customize_Color_Control(
-			$wp_customize,
-			'reviews_bg_color',
-			array(
-				'label'   => __( 'لون خلفية القسم', 'nadiim' ),
-				'section' => 'nadiim_reviews',
-			)
-		)
-	);
-
-	// تفعيل صورة خلفية
-	$wp_customize->add_setting(
-		'reviews_bg_image_enable',
+		'reviews_bg_enable',
 		array(
 			'default'           => false,
 			'sanitize_callback' => 'rest_sanitize_boolean',
@@ -386,10 +365,10 @@ function nadiim_reviews_customizer_register( $wp_customize ) {
 	);
 
 	$wp_customize->add_control(
-		'reviews_bg_image_enable',
+		'reviews_bg_enable',
 		array(
-			'label'       => __( 'تفعيل صورة خلفية', 'nadiim' ),
-			'description' => __( 'إضافة صورة خلفية للقسم', 'nadiim' ),
+			'label'       => __( 'تفعيل خلفية مخصصة للقسم', 'nadiim' ),
+			'description' => __( 'إضافة صورة أو فيديو خلفية للقسم بأكمله', 'nadiim' ),
 			'section'     => 'nadiim_reviews',
 			'type'        => 'checkbox',
 		)
@@ -414,9 +393,32 @@ function nadiim_reviews_customizer_register( $wp_customize ) {
 				'description'     => __( 'اختر صورة خلفية للقسم', 'nadiim' ),
 				'section'         => 'nadiim_reviews',
 				'active_callback' => function () {
-					return get_theme_mod( 'reviews_bg_image_enable', false );
+					return get_theme_mod( 'reviews_bg_enable', false );
 				},
 			)
+		)
+	);
+
+	// Embed الخلفية (iframe)
+	$wp_customize->add_setting(
+		'reviews_bg_embed',
+		array(
+			'default'           => '',
+			'sanitize_callback' => 'wp_kses_post',
+			'transport'         => 'postMessage',
+		)
+	);
+
+	$wp_customize->add_control(
+		'reviews_bg_embed',
+		array(
+			'label'           => __( 'كود Embed للخلفية (اختياري)', 'nadiim' ),
+			'description'     => __( 'يمكنك إضافة iframe لفيديو خلفية مثلاً', 'nadiim' ),
+			'section'         => 'nadiim_reviews',
+			'type'            => 'textarea',
+			'active_callback' => function () {
+				return get_theme_mod( 'reviews_bg_enable', false );
+			},
 		)
 	);
 
@@ -424,7 +426,7 @@ function nadiim_reviews_customizer_register( $wp_customize ) {
 	$wp_customize->add_setting(
 		'reviews_overlay_opacity',
 		array(
-			'default'           => 0.05,
+			'default'           => 0.30,
 			'sanitize_callback' => 'nadiim_sanitize_float',
 			'transport'         => 'postMessage',
 		)
@@ -434,7 +436,7 @@ function nadiim_reviews_customizer_register( $wp_customize ) {
 		'reviews_overlay_opacity',
 		array(
 			'label'           => __( 'شفافية طبقة التعتيم', 'nadiim' ),
-			'description'     => __( '0 = شفاف تماماً، 1 = معتم تماماً', 'nadiim' ),
+			'description'     => __( '0 = شفاف تماماً، 1 = معتم تماماً. يُنصح بقيمة 0.3-0.5 لضمان وضوح النص', 'nadiim' ),
 			'section'         => 'nadiim_reviews',
 			'type'            => 'number',
 			'input_attrs'     => array(
@@ -443,8 +445,32 @@ function nadiim_reviews_customizer_register( $wp_customize ) {
 				'step' => 0.05,
 			),
 			'active_callback' => function () {
-				return get_theme_mod( 'reviews_bg_image_enable', false );
+				return get_theme_mod( 'reviews_bg_enable', false );
 			},
+		)
+	);
+
+	// لون الـ Overlay
+	$wp_customize->add_setting(
+		'reviews_overlay_color',
+		array(
+			'default'           => '#000000',
+			'sanitize_callback' => 'sanitize_hex_color',
+			'transport'         => 'postMessage',
+		)
+	);
+
+	$wp_customize->add_control(
+		new WP_Customize_Color_Control(
+			$wp_customize,
+			'reviews_overlay_color',
+			array(
+				'label'           => __( 'لون طبقة التعتيم', 'nadiim' ),
+				'section'         => 'nadiim_reviews',
+				'active_callback' => function () {
+					return get_theme_mod( 'reviews_bg_enable', false );
+				},
+			)
 		)
 	);
 
@@ -459,17 +485,17 @@ function nadiim_reviews_customizer_css() {
 		return;
 	}
 
+	$overlay_opacity   = get_theme_mod( 'reviews_overlay_opacity', 0.30 );
+	$overlay_color     = get_theme_mod( 'reviews_overlay_color', '#000000' );
+	$bg_enable         = get_theme_mod( 'reviews_bg_enable', false );
 	$title_color       = get_theme_mod( 'reviews_title_color', '#1c2d27' );
 	$description_color = get_theme_mod( 'reviews_description_color', '#5a6c64' );
 	$star_color        = get_theme_mod( 'reviews_star_color', '#f39c12' );
-	$bg_color          = get_theme_mod( 'reviews_bg_color', '#ffffff' );
-	$bg_image_enable   = get_theme_mod( 'reviews_bg_image_enable', false );
-	$bg_image          = get_theme_mod( 'reviews_bg_image', '' );
-	$overlay_opacity   = get_theme_mod( 'reviews_overlay_opacity', 0.05 );
 
 	?>
 	<style type="text/css" id="nadiim-reviews-custom-css">
 		:root {
+			--reviews-overlay-opacity: <?php echo floatval( $overlay_opacity ); ?>;
 			--reviews-title-color: <?php echo esc_attr( $title_color ); ?>;
 			--reviews-description-color: <?php echo esc_attr( $description_color ); ?>;
 			--reviews-star-custom-color: <?php echo esc_attr( $star_color ); ?>;
@@ -481,34 +507,10 @@ function nadiim_reviews_customizer_css() {
 		}
 		<?php endif; ?>
 
-		.reviews-section {
-			background-color: <?php echo esc_attr( $bg_color ); ?>;
-		}
-
-		<?php if ( $bg_image_enable && $bg_image ) : ?>
-		.reviews-section {
-			background-image: url(<?php echo esc_url( $bg_image ); ?>);
-			background-size: cover;
-			background-position: center;
-			background-repeat: no-repeat;
-			position: relative;
-		}
-
-		.reviews-section::before {
-			content: '';
-			position: absolute;
-			top: 0;
-			left: 0;
-			width: 100%;
-			height: 100%;
-			background-color: <?php echo esc_attr( $bg_color ); ?>;
+		<?php if ( $bg_enable ) : ?>
+		.reviews-section .section-bg-overlay {
+			background-color: <?php echo esc_attr( $overlay_color ); ?>;
 			opacity: <?php echo floatval( $overlay_opacity ); ?>;
-			z-index: 0;
-		}
-
-		.reviews-section > * {
-			position: relative;
-			z-index: 1;
 		}
 		<?php endif; ?>
 
