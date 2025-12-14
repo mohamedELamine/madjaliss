@@ -311,85 +311,9 @@ function nadiim_enqueue_scripts() {
 }
 add_action( 'wp_enqueue_scripts', 'nadiim_enqueue_scripts' );
 
-/**
- * إضافة preconnect للـ Google Fonts للأداء
- */
-function nadiim_resource_hints( $urls, $relation_type ) {
-    if ( 'preconnect' === $relation_type ) {
-        $urls[] = array(
-            'href' => 'https://fonts.googleapis.com',
-            'crossorigin',
-        );
-        $urls[] = array(
-            'href' => 'https://fonts.gstatic.com',
-            'crossorigin',
-        );
-    }
-    return $urls;
-}
-add_filter( 'wp_resource_hints', 'nadiim_resource_hints', 10, 2 );
-
-/**
- * تحميل Google Fonts بطريقة محسّنة للأداء
- */
-function nadiim_optimized_google_fonts() {
-    ?>
-    <!-- Optimized Google Fonts Loading -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" media="print" onload="this.media='all'">
-    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap"></noscript>
-    <?php
-}
-add_action( 'wp_head', 'nadiim_optimized_google_fonts', 1 );
-
-/**
- * إضافة lazy loading تلقائياً لجميع الصور
- */
-function nadiim_add_lazy_loading( $attr, $attachment ) {
-    $attr['loading'] = 'lazy';
-    $attr['decoding'] = 'async';
-    return $attr;
-}
-add_filter( 'wp_get_attachment_image_attributes', 'nadiim_add_lazy_loading', 10, 2 );
-
-/**
- * إضافة width وheight تلقائياً للصور لتحسين CLS
- */
-function nadiim_add_image_dimensions( $html, $id ) {
-    $image_meta = wp_get_attachment_metadata( $id );
-
-    if ( ! empty( $image_meta['width'] ) && ! empty( $image_meta['height'] ) ) {
-        // إذا لم يكن width و height موجودين في HTML
-        if ( strpos( $html, 'width=' ) === false && strpos( $html, 'height=' ) === false ) {
-            $html = str_replace( '<img ', sprintf( '<img width="%d" height="%d" ', $image_meta['width'], $image_meta['height'] ), $html );
-        }
-    }
-
-    return $html;
-}
-add_filter( 'wp_get_attachment_image', 'nadiim_add_image_dimensions', 10, 2 );
-
-/**
- * تحسين تحميل الصور - إضافة fetchpriority="high" للصور المهمة
- */
-function nadiim_high_priority_images( $attr, $attachment, $size ) {
-    // إضافة fetchpriority="high" لصور featured في Hero وأول صورة في المحتوى
-    if ( is_front_page() || is_singular() ) {
-        if ( $size === 'full' || $size === 'large' ) {
-            // فقط لأول صورة (hero/featured image)
-            static $first_image = true;
-            if ( $first_image ) {
-                $attr['fetchpriority'] = 'high';
-                $attr['loading'] = 'eager'; // لا تستخدم lazy للصورة الأولى
-                $first_image = false;
-            }
-        }
-    }
-    return $attr;
-}
-add_filter( 'wp_get_attachment_image_attributes', 'nadiim_high_priority_images', 5, 3 );
+// تم نقل تحسينات الأداء (Performance Optimizations) إلى:
+// - inc/critical-css.php (Critical CSS, Resource Hints, Font Loading)
+// - inc/image-optimization.php (Image Optimizations)
 
 /**
  * تحميل ملفات CSS و JS للمحرر
@@ -956,6 +880,9 @@ require_once NADIIM_THEME_DIR . '/inc/customizer-reviews.php';
 
 // تضمين Critical CSS للأداء
 require_once NADIIM_THEME_DIR . '/inc/critical-css.php';
+
+// تضمين نظام تحسين الصور
+require_once NADIIM_THEME_DIR . '/inc/image-optimization.php';
 
 /**
  * تحميل أصول صفحة الاتصال (CSS & JS)
