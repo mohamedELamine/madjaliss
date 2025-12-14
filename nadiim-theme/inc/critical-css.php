@@ -32,7 +32,7 @@ function nadiim_add_critical_css() {
             --color-text-primary:#2c3e50;
             --color-bg-light:#fafafa;
             --color-bg-lighter:#fff;
-            --font-primary:'Cairo',system-ui,-apple-system,sans-serif;
+            --font-primary:'Cairo','Cairo Fallback',system-ui,-apple-system,sans-serif;
             --transition-speed:0.2s;
         }
 
@@ -100,12 +100,22 @@ function nadiim_add_critical_css() {
             transition:color var(--transition-speed);
         }
 
-        /* Hero Section - Above the fold */
+        /* Hero Section - Above the fold مع aspect ratio لمنع CLS */
         .hero-slider,.hero-section{
             position:relative;
             min-height:400px;
+            aspect-ratio:16/9;
             background:#f5f5f5;
             contain:layout style paint;
+        }
+
+        /* تثبيت أبعاد الصور لمنع CLS */
+        .hero-slider img,
+        .featured-image img{
+            width:100%;
+            height:auto;
+            aspect-ratio:16/9;
+            object-fit:cover;
         }
 
         /* المحتوى الأساسي */
@@ -162,9 +172,14 @@ function nadiim_add_critical_css() {
             .container{padding:0 0.75rem}
         }
 
-        /* منع FOUT (Flash of Unstyled Text) */
-        .wf-loading body{opacity:0}
-        .wf-active body,.wf-inactive body{opacity:1;transition:opacity 0.2s}
+        /* منع FOUT بشكل جزئي (فقط للعناصر النصية) */
+        .wf-loading h1,.wf-loading h2,.wf-loading h3{
+            visibility:hidden;
+        }
+        .wf-active h1,.wf-active h2,.wf-active h3,
+        .wf-inactive h1,.wf-inactive h2,.wf-inactive h3{
+            visibility:visible;
+        }
 
         /* تحسين CLS للعناصر الديناميكية */
         .topbar-marquee,.search-modal{
@@ -187,39 +202,58 @@ function nadiim_performance_resource_hints() {
     <link rel="dns-prefetch" href="//cdnjs.cloudflare.com">
 
     <!-- Preconnect للموارد الحرجة -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    <!-- Preload للخطوط الحرجة -->
-    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" as="style">
-    <link rel="preload" href="https://fonts.gstatic.com/s/cairo/v28/SLXgc1nY6HkvangtZmpcWmhzfH5lkSs.woff2" as="font" type="font/woff2" crossorigin>
+    <!-- Preload الخط الرئيسي فقط -->
+    <link rel="preload" href="https://fonts.gstatic.com/s/cairo/v28/SLXgc1nY6HkvangtZmpcWmhzfH5lkSs2.woff2" as="font" type="font/woff2" crossorigin>
     <?php
 }
 add_action( 'wp_head', 'nadiim_performance_resource_hints', 0 );
 
 /**
- * تحميل الخطوط بطريقة محسّنة للأداء
+ * تحميل الخطوط بطريقة محسّنة - منع CLS
  */
 function nadiim_optimized_fonts_loading() {
     ?>
-    <!-- تحميل الخطوط المحسّن -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" media="print" onload="this.media='all';this.onload=null;">
-    <noscript>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap">
-    </noscript>
+    <style>
+    /* Fallback font لمنع Layout Shift */
+    @font-face {
+        font-family: 'Cairo Fallback';
+        src: local('Arial');
+        size-adjust: 105%;
+        ascent-override: 95%;
+        descent-override: 25%;
+        line-gap-override: 0%;
+    }
+    </style>
+    <!-- تحميل الخطوط بشكل متزامن للوزن الأساسي فقط -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400&display=swap">
     <?php
 }
 add_action( 'wp_head', 'nadiim_optimized_fonts_loading', 2 );
 
 /**
- * تأجيل تحميل CSS غير الحرج
+ * تحميل أوزان الخطوط الإضافية بشكل مؤجل
+ */
+function nadiim_load_additional_font_weights() {
+    ?>
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Cairo:wght@600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@600;700&display=swap">
+    </noscript>
+    <?php
+}
+add_action( 'wp_head', 'nadiim_load_additional_font_weights', 3 );
+
+/**
+ * تأجيل تحميل CSS غير الحرج فقط
+ * لا نؤجل header.css لمنع Layout Shift
  */
 function nadiim_defer_non_critical_css() {
-    // قائمة ملفات CSS التي سيتم تأجيل تحميلها
+    // قائمة ملفات CSS التي سيتم تأجيل تحميلها (غير حرجة فقط)
     $deferred_styles = array(
         'nadiim-enhancements',
-        'nadiim-header',
-        'nadiim-performance',
         'font-awesome'
     );
 
@@ -236,29 +270,33 @@ function nadiim_load_deferred_css() {
     ?>
     <script>
     // تحميل CSS المؤجلة بعد التحميل الكامل
-    if ('requestIdleCallback' in window) {
-        requestIdleCallback(function() {
-            loadDeferredStyles();
-        });
-    } else {
-        window.addEventListener('load', loadDeferredStyles);
-    }
+    (function() {
+        function loadDeferredStyles() {
+            var styles = [
+                '<?php echo esc_url( NADIIM_THEME_URI . '/assets/css/enhancements.css' ); ?>',
+                'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css'
+            ];
 
-    function loadDeferredStyles() {
-        var styles = [
-            '<?php echo esc_url( NADIIM_THEME_URI . '/assets/css/enhancements.css' ); ?>',
-            '<?php echo esc_url( NADIIM_THEME_URI . '/assets/css/header.css' ); ?>',
-            '<?php echo esc_url( NADIIM_THEME_URI . '/assets/css/performance.css' ); ?>',
-            'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css'
-        ];
+            styles.forEach(function(href) {
+                var link = document.createElement('link');
+                link.rel = 'stylesheet';
+                link.href = href;
+                link.media = 'all';
+                document.head.appendChild(link);
+            });
+        }
 
-        styles.forEach(function(href) {
-            var link = document.createElement('link');
-            link.rel = 'stylesheet';
-            link.href = href;
-            document.head.appendChild(link);
-        });
-    }
+        // استخدام requestIdleCallback أو load event
+        if ('requestIdleCallback' in window) {
+            requestIdleCallback(loadDeferredStyles, { timeout: 2000 });
+        } else {
+            if (document.readyState === 'complete') {
+                loadDeferredStyles();
+            } else {
+                window.addEventListener('load', loadDeferredStyles);
+            }
+        }
+    })();
     </script>
     <?php
 }
@@ -288,25 +326,36 @@ add_action( 'init', 'nadiim_remove_unused_assets' );
 
 /**
  * تحسين الحركات لتجنب Layout Shift
+ * استخدام محدود لـ will-change لتقليل الحركات المركبة
  */
 function nadiim_optimize_animations_css() {
     ?>
     <style id="nadiim-animations-optimized">
-        /* استخدام GPU acceleration للحركات */
-        .hero-slider .slide,
-        .card,
-        .modal,
-        .mobile-menu,
-        .search-modal,
-        .dropdown-menu {
-            will-change: transform, opacity;
+        /* استخدام GPU acceleration فقط للعناصر التي تتحرك فعلاً */
+        .hero-slider .slide {
             transform: translateZ(0);
             backface-visibility: hidden;
         }
 
+        /* إضافة will-change فقط عند الحاجة (hover/active) */
+        .card:hover,
+        .mobile-menu.active,
+        .search-modal.active {
+            will-change: transform;
+        }
+
         /* استخدام transform بدلاً من top/left/margin */
-        .slide-animation {
-            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        .slide-animation,
+        .modal,
+        .dropdown-menu {
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease;
+            backface-visibility: hidden;
+        }
+
+        /* منع Forced Synchronous Layout */
+        .hero-slider,
+        .card-grid {
+            contain: layout style;
         }
 
         /* تحسين الحركات للعناصر المتحركة */
