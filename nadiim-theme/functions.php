@@ -597,10 +597,10 @@ function nadiim_get_post_terms( $post_id, $taxonomy, $separator = ', ' ) {
 }
 
 /**
- * إضافة دعم Lazy Loading للصور
+ * إضافة دعم Lazy Loading للصور في المحتوى
  * محسّن مع width/height لإصلاح CLS
  */
-function nadiim_add_lazy_loading( $content ) {
+function nadiim_add_lazy_loading_content( $content ) {
     if ( is_admin() ) {
         return $content;
     }
@@ -610,13 +610,13 @@ function nadiim_add_lazy_loading( $content ) {
 
     return $content;
 }
-add_filter( 'the_content', 'nadiim_add_lazy_loading' );
-add_filter( 'post_thumbnail_html', 'nadiim_add_lazy_loading' );
+add_filter( 'the_content', 'nadiim_add_lazy_loading_content' );
+add_filter( 'post_thumbnail_html', 'nadiim_add_lazy_loading_content' );
 
 /**
- * إضافة width و height للصور لإصلاح CLS
+ * إضافة width و height للصور المميزة لإصلاح CLS
  */
-function nadiim_add_image_dimensions( $html, $post_id, $post_thumbnail_id, $size ) {
+function nadiim_add_image_dimensions_thumbnail( $html, $post_id, $post_thumbnail_id, $size ) {
     if ( empty( $html ) ) {
         return $html;
     }
@@ -646,7 +646,7 @@ function nadiim_add_image_dimensions( $html, $post_id, $post_thumbnail_id, $size
 
     return $html;
 }
-add_filter( 'post_thumbnail_html', 'nadiim_add_image_dimensions', 10, 4 );
+add_filter( 'post_thumbnail_html', 'nadiim_add_image_dimensions_thumbnail', 10, 4 );
 
 /**
  * دعم WebP للصور
